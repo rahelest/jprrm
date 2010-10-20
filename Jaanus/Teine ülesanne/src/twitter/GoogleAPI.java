@@ -14,26 +14,33 @@ import java.net.URL;
  *
  */
 public class GoogleAPI {
-	private String latitude;
-	private String longitude;
 	
-	public String getResponse(String loc) throws IOException {
-		URL google = null;
+	/**
+	 * @param loc This is the local variable for the desired location.
+	 * @return This function returns latitude and longitude of the requested 
+	 * location.
+	 * @throws IOException On mingi suvakas error:D
+	 */
+	public static String getResponse(String loc) throws IOException {
+		
+		String inputLine = null;
+		
 		try {
-			google = new URL(loc);
-		} catch (MalformedURLException e) {
-			System.out.println("VIGANE URL");
-			e.printStackTrace();
-		}
-		BufferedReader in = new BufferedReader(
+			URL google = new URL(loc);
+			BufferedReader brIn = new BufferedReader(
 					new InputStreamReader(
 					google.openStream()));
-		String inputLine;
-		while ((inputLine = in.readLine()) != null) {
-		    System.out.println(inputLine);
-		in.close();
+
+			while ((inputLine = brIn.readLine()) != null) {
+				System.out.println(inputLine);
+				return brIn.readLine();
+				}
+		} catch (MalformedURLException e) {
+			System.out.println("ERROR! MALFORMED URL!");
+			e.printStackTrace(); //This prints data prior to the exception.
+		} finally {
+			//brIn.close();
 		}
-		return loc;
-		
+		return inputLine;
 	}
 }

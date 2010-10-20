@@ -32,8 +32,8 @@ public class GoogleAPI {
 					google.openStream()));
 
 			while ((inputLine = brIn.readLine()) != null) {
-				System.out.println(inputLine);
-				return brIn.readLine();
+				//System.out.println(inputLine);
+				return inputLine;
 				}
 		} catch (MalformedURLException e) {
 			System.out.println("ERROR! MALFORMED URL!");

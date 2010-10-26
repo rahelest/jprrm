@@ -14,7 +14,6 @@ import java.net.URL;
  *
  */
 public class GoogleAPI {
-	
 	/**
 	 * @param loc This is the local variable for the desired location.
 	 * @return This function returns latitude and longitude of the requested 
@@ -35,6 +34,7 @@ public class GoogleAPI {
 				//System.out.println(inputLine);
 				return inputLine;
 				}
+			brIn.close();
 		} catch (MalformedURLException e) {
 			System.out.println("ERROR! MALFORMED URL!");
 			e.printStackTrace(); //This prints data prior to the exception.
@@ -43,4 +43,5 @@ public class GoogleAPI {
 		}
 		return inputLine;
 	}
+
 }

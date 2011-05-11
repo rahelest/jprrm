@@ -10,7 +10,7 @@ public class OutboundBuffer {
 		this.notifyAll();
 	}
 	
-	public synchronized String getMessage(String message) {
+	public synchronized String getMessage() {
 		try {
 			while (messages.isEmpty()) {
 				this.wait();

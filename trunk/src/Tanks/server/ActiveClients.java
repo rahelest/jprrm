@@ -1,5 +1,6 @@
 package Tanks.server;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +11,13 @@ public class ActiveClients {
 	
 	public synchronized void addClient(ClientSession client) {
 		clientList.add(client);
+	}
+
+	public Iterator<ClientSession> iterator() {
+		synchronized(iteratorLock) {
+			Iterator<ClientSession> i = clientList.iterator();
+			return i;
+		}
 	}
 	
 	

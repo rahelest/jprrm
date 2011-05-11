@@ -13,6 +13,7 @@ class ClientSession extends Thread {
 	private BufferedReader netIn;
 	private PrintWriter netOut;
 	
+	
 	public ClientSession(Socket sock) throws IOException {
 		this.sock = sock;
 		
@@ -24,6 +25,10 @@ class ClientSession extends Thread {
 		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
 		
 		start();
+	}
+	
+	public void sendMessage(String message) {
+		netOut.write(message);
 	}
 	
 	public void run() {

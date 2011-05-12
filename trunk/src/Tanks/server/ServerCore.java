@@ -21,7 +21,7 @@ public class ServerCore {
 					clientList.addClient(new ClientSession(clientSock));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
 				} catch (IOException e) {
 					clientSock.close();					// Kui ühendust ei loodud, sulgeme sokli
-				}				
+				}
 			}	
 		} catch (IOException e) {
 			System.out.println("IO viga :" + e.getMessage());

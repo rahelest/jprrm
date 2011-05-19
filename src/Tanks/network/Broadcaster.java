@@ -1,6 +1,9 @@
-package Tanks.server;
+package Tanks.network;
 
 import java.util.Iterator;
+
+import Tanks.server.ActiveClients;
+import Tanks.server.ClientSession;
 
 public class Broadcaster extends Thread {
 	OutboundBuffer out = new OutboundBuffer();

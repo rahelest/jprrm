@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-class ClientSession extends Thread {
+public class ClientSession extends Thread {
 	private Socket sock;
 	private BufferedReader netIn;
 	private PrintWriter netOut;
@@ -29,7 +29,7 @@ class ClientSession extends Thread {
 	
 	public void sendMessage(String message) {
 		netOut.write(message);
-	}
+	} 
 	
 	public void run() {
 		

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import Tanks.network.Broadcaster;
+
 public class ServerCore {
 	
 	public static void main(String[] args) {		

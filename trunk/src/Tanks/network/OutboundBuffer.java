@@ -1,4 +1,4 @@
-package Tanks.server;
+package Tanks.network;
 
 import java.util.LinkedList;
 

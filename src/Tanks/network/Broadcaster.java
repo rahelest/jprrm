@@ -6,7 +6,7 @@ import Tanks.server.ActiveClients;
 import Tanks.server.ClientSession;
 
 public class Broadcaster extends Thread {
-	OutboundBuffer out = new OutboundBuffer();
+	CommunicationBuffer out = new CommunicationBuffer();
 	ActiveClients activeClients = null;
 	
 	public Broadcaster(ActiveClients pointer) {

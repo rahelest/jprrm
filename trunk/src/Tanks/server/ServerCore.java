@@ -13,6 +13,7 @@ public class ServerCore {
 		ActiveClients clientList = new ActiveClients();
 //		OutboundBuffer outBound = new OutboundBuffer();
 		Broadcaster messenger = new Broadcaster(clientList);
+		GameCore game = new GameCore();
 		
 		try {
 			ServerSocket serv = new ServerSocket(port);

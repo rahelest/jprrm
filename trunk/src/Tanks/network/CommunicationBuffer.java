@@ -2,7 +2,7 @@ package Tanks.network;
 
 import java.util.LinkedList;
 
-public class OutboundBuffer {
+public class CommunicationBuffer {
 	private LinkedList<String> messages = new LinkedList<String>();
 	
 	public synchronized void addMessage(String message) {

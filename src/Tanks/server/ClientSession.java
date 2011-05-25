@@ -1,9 +1,7 @@
 package Tanks.server;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -13,15 +11,15 @@ import Tanks.mapElements.GameObject;
 
 public class ClientSession extends Thread {
 	private Socket sock;
-	private BufferedReader netIn;
 	private PrintWriter netOut;
 	private GameObject tank;
+	private int tankspeed = 1;
+	private int missilespeed = 1;
+	private int exp = 0;
 	
 	
 	public ClientSession(Socket sock) throws IOException {
 		this.sock = sock;
-		
-		netIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 
 		netOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sock.getOutputStream())), true);		
 
@@ -37,6 +35,9 @@ public class ClientSession extends Thread {
 	
 	public void run() {
 		tank = new Tank(100, 100);
+		while(true) {
+			//do something, pole kindel mida
+		}
 	}
 	
 }

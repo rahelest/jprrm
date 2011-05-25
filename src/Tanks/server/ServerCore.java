@@ -8,11 +8,12 @@ import Tanks.network.Broadcaster;
 
 public class ServerCore {
 	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {		
 		int port = 8888;
 		ActiveClients clientList = new ActiveClients();
 		Broadcaster messenger = new Broadcaster(clientList);
-		GameCore game = new GameCore();
+		GameCore game = new GameCore(clientList, messenger);
 		
 		try {
 			ServerSocket serv = new ServerSocket(port);

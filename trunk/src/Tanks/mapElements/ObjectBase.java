@@ -7,4 +7,5 @@ public interface ObjectBase {
 	public int getLocationY();
 	public int getWidth();
 	public int getHeight();
+	public boolean isBreakable();
 }

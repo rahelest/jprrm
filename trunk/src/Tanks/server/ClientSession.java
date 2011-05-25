@@ -9,13 +9,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import Tanks.gameElements.Tank;
-import Tanks.mapElements.ObjectBase;
+import Tanks.mapElements.GameObject;
 
 public class ClientSession extends Thread {
 	private Socket sock;
 	private BufferedReader netIn;
 	private PrintWriter netOut;
-	private ObjectBase tank;
+	private GameObject tank;
 	
 	
 	public ClientSession(Socket sock) throws IOException {

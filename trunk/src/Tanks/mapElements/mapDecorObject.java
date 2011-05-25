@@ -1,6 +1,6 @@
 package Tanks.mapElements;
 
-public class mapDecorObject extends ObjectBase {
+public class mapDecorObject extends GameObject {
 
 	public mapDecorObject(int x, int y, int width, int height) {
 		super(x, y, width, height, true, true);

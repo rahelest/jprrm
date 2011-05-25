@@ -10,13 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-//Input - collect player input
-//Control - update player and AI logic
-//Movement - move all objects to their desired locations
-//Collision - check for and resolve overlap
-//Render - render objects in your game world
-//Overlay - render interface elements
-
 public class ClientCore {
 	
 	private JTextField text;

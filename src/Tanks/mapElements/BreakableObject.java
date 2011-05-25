@@ -1,6 +1,6 @@
 package Tanks.mapElements;
 
-public class BreakableObject extends ObjectBase {
+public class BreakableObject extends GameObject {
 
 	protected Boolean breakable = true;
 	

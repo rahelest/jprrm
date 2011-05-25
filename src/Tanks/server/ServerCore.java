@@ -11,7 +11,6 @@ public class ServerCore {
 	public static void main(String[] args) {		
 		int port = 8888;
 		ActiveClients clientList = new ActiveClients();
-//		OutboundBuffer outBound = new OutboundBuffer();
 		Broadcaster messenger = new Broadcaster(clientList);
 		GameCore game = new GameCore();
 		

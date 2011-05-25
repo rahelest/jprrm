@@ -1,4 +1,7 @@
 package Tanks.mapElements;
+
+import Tanks.gameElements.GameObject;
+
 public abstract class ObjectBase {
 	
 	protected int locationX;
@@ -17,7 +20,7 @@ public abstract class ObjectBase {
 		this.bulletPassable = bPassability;
 	}
 
-	public boolean getCollision(ObjectBase otherObject) {
+	public boolean getCollision(GameObject otherObject) {
 		if(!passable) {
 			for (int i = 0; i <= width; i++) {
 				

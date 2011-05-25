@@ -8,10 +8,14 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Tanks.gameElements.Tank;
+import Tanks.mapElements.ObjectBase;
+
 public class ClientSession extends Thread {
 	private Socket sock;
 	private BufferedReader netIn;
 	private PrintWriter netOut;
+	private ObjectBase tank;
 	
 	
 	public ClientSession(Socket sock) throws IOException {
@@ -32,7 +36,7 @@ public class ClientSession extends Thread {
 	} 
 	
 	public void run() {
-		
+		tank = new Tank(100, 100);
 	}
 	
 }

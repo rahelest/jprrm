@@ -8,8 +8,9 @@ public abstract class GameObject implements ObjectBase {
 	protected int height;
 	protected boolean passable;
 	protected boolean bulletPassable;
+	protected boolean breakable;
 	
-	public GameObject(int x, int y, int width, int height, boolean passability, boolean bPassability) {
+	public GameObject(int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
 		this.locationX = x;
 		this.locationY = y;
 		this.height = height;
@@ -42,5 +43,9 @@ public abstract class GameObject implements ObjectBase {
 
 	public int getHeight() {
 		return height;
+	}
+	
+	public Boolean isBreakable() {
+		return breakable;
 	}
 }

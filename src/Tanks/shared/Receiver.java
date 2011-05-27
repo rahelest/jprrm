@@ -30,8 +30,8 @@ public class Receiver extends Thread {
 			}
 			if (fromClient != null) {
 				in.addMessage(fromClient);
+			}
 		}
-	}
 		
 	}
 }

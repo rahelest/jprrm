@@ -38,7 +38,7 @@ public class ClientSession extends Thread {
 	public void run() {
 		tank = new Tank(100, 100);
 		while(true) {
-			//do something, pole kindel mida
+			//teavita elusolekust, kui klient kaob, ootab nati ja üritab taasühendada
 		}
 	}
 	

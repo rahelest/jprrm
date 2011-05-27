@@ -15,7 +15,10 @@ public class GameCore extends Thread {
 	public void run() {
 		//siia tuleb mänguloogika
 		while(true) {
-			
+//			getInput();
+//			updateLocations();
+//			checkCollisions();
+//			broadcastResult();
 		}
 		//Input - collect player input
 		//Control - update player and AI logic

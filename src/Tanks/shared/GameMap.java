@@ -10,12 +10,12 @@ import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.mapElements.Water;
 
 public class GameMap {
 	
 	ArrayList<GameObject> elements = new ArrayList<GameObject>();
 	BufferedImage background;
-
 	
 	public GameMap() {
 		try {
@@ -29,9 +29,13 @@ public class GameMap {
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("General IO exception reading background image!");
-			e.printStackTrace();
-			
+			e.printStackTrace();			
 		}
+		
+		elements.add(new Water(200, 200));
+		elements.add(new Water(800, 200));
+		elements.add(new Water(800, 800));
+		elements.add(new Water(200, 800));
 	}
 
 	

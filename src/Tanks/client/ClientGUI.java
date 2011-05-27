@@ -11,14 +11,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Tanks.shared.GameMap;
+
 public class ClientGUI extends Thread {
 	
 	ClientCore clientCore;
 	private JTextField text;
 	
 	
-	public ClientGUI(ClientCore nclientCore) {
-		clientCore = nclientCore;
+	public ClientGUI(ClientCore nClientCore) {
+		clientCore = nClientCore;
 		JFrame window = new JFrame();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(1000, 980);
@@ -54,6 +56,10 @@ public class ClientGUI extends Thread {
 	
 	public void enableConnecting() {
 		text.setVisible(true);
+	}
+	
+	public void play() {
+		new GameMap();
 	}
 
 }

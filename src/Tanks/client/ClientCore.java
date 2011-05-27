@@ -28,7 +28,9 @@ public class ClientCore {
 		gui = new ClientGUI(this);	
 	}
 	
-	public void execute() {
+
+	
+	public void startGame() {
 		
 		//MUIDU PEAKS TA NENDE RECEIVERITEGA TEGELEMA, NEID AVAMA
 		BufferedReader netIn = new BufferedReader(
@@ -44,21 +46,11 @@ public class ClientCore {
 			receiveInstructions();
 			passGUIInstructions();
 			makeGUIDraw();
+			//updateGUI();
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		new ClientCore();
-
-//						System.out.println("Saadan serverisse: " + response);
-//						netOut.println(response);
-	}
 
 
-
-	
 	public boolean sendIP(String string) {
 		String[] splitted = string.split(":");
 		if (splitted.length != 2) return false;
@@ -104,16 +96,15 @@ public class ClientCore {
 				sock.close();
 			} catch (IOException e) {}
 		}
-		execute();
 		return true;
 	}
 	
-	public void startGame() {
-		// TODO Auto-generated method stub
-		while(true) {
-//				updateGUI();
-		}
+	public static void main(String[] args) {
+		
+		new ClientCore();
+
+//						System.out.println("Saadan serverisse: " + response);
+//						netOut.println(response);
 	}
-	
-	
+		
 }

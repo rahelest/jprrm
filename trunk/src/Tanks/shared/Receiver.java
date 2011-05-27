@@ -1,4 +1,4 @@
-package Tanks.network;
+package Tanks.shared;
 
 import java.io.BufferedReader;
 import java.io.IOException;

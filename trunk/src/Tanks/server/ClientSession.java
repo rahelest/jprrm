@@ -6,8 +6,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import Tanks.gameElements.Tank;
-import Tanks.mapElements.GameObject;
+import Tanks.shared.gameElements.Tank;
+import Tanks.shared.mapElements.GameObject;
 
 public class ClientSession extends Thread {
 	private Socket sock;

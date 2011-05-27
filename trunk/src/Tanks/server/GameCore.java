@@ -1,6 +1,6 @@
 package Tanks.server;
 
-import Tanks.network.Broadcaster;
+import Tanks.shared.Broadcaster;
 
 public class GameCore extends Thread {
 

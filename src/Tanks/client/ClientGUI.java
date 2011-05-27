@@ -43,7 +43,7 @@ public class ClientGUI extends Thread {
 				if (clientCore.sendIP(text.getText())) {
 					clientCore.startGame();
 					text.setVisible(false);
-					//muudab välimust 
+					//ALUSTA MÄNGUGA
 				}// else {
 //					enableConnecting();
 //				}
@@ -52,7 +52,7 @@ public class ClientGUI extends Thread {
 		});
 	}
 	
-	private void enableConnecting() {
+	public void enableConnecting() {
 		text.setVisible(true);
 	}
 

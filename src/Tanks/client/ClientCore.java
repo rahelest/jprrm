@@ -104,16 +104,59 @@ public class ClientCore {
 			String[] splitted = string.split(":");
 			if (splitted.length != 2) return false;
 			else {
-				splitted[0] = serverName;
-				splitted[1] = port;
-				
+				String serverName = splitted[0];
+				try {
+					int port = Integer.parseInt(splitted[1]);
+					if (connectToServer(serverName, port)) {
+						//startgame-----------------------------------------------------------------
+						return true;
+					} else {
+						return false;
+					}
+				} catch (NumberFormatException e) {
+					return false;
+				}
 			}
 		}
-
+		
+		private Socket sock;
+		private int connectionTries = 0;
+		
+		public boolean connectToServer(String serverName, int port) {
+			try {
+				InetAddress serverAddr = InetAddress.getByName(serverName);
+				sock = new Socket(serverAddr, port);
+			} catch (UnknownHostException e) {
+				gui.enableConnecting();
+				//tevita vigasest adrst
+				return false;
+			} catch (IOException e) {
+				if (connectionTries < 3) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e1) { }
+					connectionTries++;
+					connectToServer(serverName, port);
+					e.printStackTrace();
+				} else {
+					connectionTries = 0;
+					//teavita
+					return false;
+				}
+			} finally {
+				try {
+					sock.close();
+				} catch (IOException e) {}
+			}
+			return true;
+		}
+		
 		public void startGame() {
 			// TODO Auto-generated method stub
 			while(true) {
-				updateGUI();
+//				updateGUI();
 			}
 		}
+		
+		
 	}

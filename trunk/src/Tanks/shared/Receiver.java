@@ -9,17 +9,13 @@ public class Receiver extends Thread {
 	
 	private Socket sock;
 	private BufferedReader netIn;
-	CommunicationBuffer in = new CommunicationBuffer();
+	CommunicationBuffer in;
 	
-	public Receiver(Socket sock) throws IOException {
+	public Receiver(Socket sock, CommunicationBuffer inbound) throws IOException {
 		this.sock = sock;
-		
+		this.in = inbound;
 		netIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		start();
-	}
-	
-	public CommunicationBuffer getBuffer() {
-		return in;
 	}
 	
 	public void run() {

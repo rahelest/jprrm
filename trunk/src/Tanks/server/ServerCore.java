@@ -10,14 +10,13 @@ public class ServerCore {
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {		
-		int port = 8888;
-		ActiveClients clientList = new ActiveClients();
-		Broadcaster messenger = new Broadcaster(clientList);
-		GameCore game = new GameCore(clientList, messenger);
+		int port = 8888;	
 		
 		try {
 			ServerSocket serv = new ServerSocket(port);
-			
+			ActiveClients clientList = new ActiveClients();
+			Broadcaster messenger = new Broadcaster(clientList);			
+			GameCore game = new GameCore(clientList, messenger);
 			while (true) {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {

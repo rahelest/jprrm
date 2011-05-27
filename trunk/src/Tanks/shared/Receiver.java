@@ -18,6 +18,10 @@ public class Receiver extends Thread {
 		start();
 	}
 	
+	public CommunicationBuffer getBuffer() {
+		return in;
+	}
+	
 	public void run() {
 		while (true) {
 			String fromClient = null;

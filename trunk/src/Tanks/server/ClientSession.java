@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
@@ -16,7 +17,7 @@ public class ClientSession extends Thread {
 	private int tankspeed = 1;
 	private int missilespeed = 1;
 	private int exp = 0;
-	
+	Receiver receiver;
 	
 	public ClientSession(Socket sock) throws IOException {
 		this.sock = sock;
@@ -25,7 +26,7 @@ public class ClientSession extends Thread {
 
 		// Kui voogude loomine ebaõnnestub, peab väljakutsuv meetod 
 		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
-		
+		receiver =  new Receiver(sock);
 		start();
 	}
 	

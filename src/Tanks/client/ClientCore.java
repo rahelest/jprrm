@@ -20,27 +20,27 @@ public class ClientCore {
 	private ClientGUI gui;
 	private Socket sock;
 	private int connectionTries = 0;
-	private CommunicationBuffer comBuf;
+	private CommunicationBuffer inBuf;
+	private CommunicationBuffer outBuf;
 	private Broadcaster broadcaster;
 	private Receiver receiver;
 
 	public ClientCore() {
 		gui = new ClientGUI(this);	
 	}
-	
 
 	
 	public void startGame() {
 		
-		//MUIDU PEAKS TA NENDE RECEIVERITEGA TEGELEMA, NEID AVAMA
-		BufferedReader netIn = new BufferedReader(
-				new InputStreamReader(
-						sock.getInputStream()));
+		inBuf = new CommunicationBuffer();
+		receiver = new Receiver(sock, inBuf);
 	
 		PrintWriter netOut = new PrintWriter(
 					new BufferedWriter(
 							new OutputStreamWriter(
 									sock.getOutputStream())), true);
+		
+		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
 		while (true) {
 			receiveInstructions();

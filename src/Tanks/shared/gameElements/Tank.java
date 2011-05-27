@@ -1,13 +1,13 @@
-package Tanks.gameElements;
+package Tanks.shared.gameElements;
 
-import Tanks.mapElements.UnbreakableObject;
+import Tanks.shared.mapElements.BreakableObject;
 
-public class Missile extends UnbreakableObject {
+public class Tank extends BreakableObject {
 
 	protected String direction = "N";
 	
-	public Missile(int x, int y, int width, int height) {
-		super(x, y, 10, 15, true);
+	public Tank(int x, int y) {
+		super(x, y, 40, 40);
 		// TODO Auto-generated constructor stub
 	}
 

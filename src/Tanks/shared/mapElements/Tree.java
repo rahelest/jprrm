@@ -1,4 +1,4 @@
-package Tanks.mapElements;
+package Tanks.shared.mapElements;
 
 public class Tree extends mapDecorObject {
 

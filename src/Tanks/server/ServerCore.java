@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import Tanks.network.Broadcaster;
+import Tanks.shared.Broadcaster;
 
 public class ServerCore {
 	

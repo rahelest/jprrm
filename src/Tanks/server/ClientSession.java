@@ -6,6 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
@@ -19,14 +20,14 @@ public class ClientSession extends Thread {
 	private int exp = 0;
 	Receiver receiver;
 	
-	public ClientSession(Socket sock) throws IOException {
+	public ClientSession(Socket sock, CommunicationBuffer inbound) throws IOException {
 		this.sock = sock;
-
+		
 		netOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sock.getOutputStream())), true);		
 
 		// Kui voogude loomine ebaõnnestub, peab väljakutsuv meetod 
 		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
-		receiver =  new Receiver(sock);
+		receiver =  new Receiver(sock, inbound);
 		start();
 	}
 	

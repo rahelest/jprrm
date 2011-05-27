@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import Tanks.shared.Broadcaster;
+import Tanks.shared.CommunicationBuffer;
 
 public class ServerCore {
 	
@@ -15,12 +16,13 @@ public class ServerCore {
 		try {
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
-			Broadcaster messenger = new Broadcaster(clientList);			
-			GameCore game = new GameCore(clientList, messenger);
+			Broadcaster messenger = new Broadcaster(clientList);
+			CommunicationBuffer inbound = new CommunicationBuffer();
+			GameCore game = new GameCore(clientList, messenger, inbound);
 			while (true) {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {
-					clientList.addClient(new ClientSession(clientSock));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+					clientList.addClient(new ClientSession(clientSock, inbound));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
 				} catch (IOException e) {
 					clientSock.close();					// Kui ühendust ei loodud, sulgeme sokli
 				}

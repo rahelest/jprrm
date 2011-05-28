@@ -15,7 +15,7 @@ public class Message implements Serializable {
 	
 	public int receiver;
 	public int sender;
-	public String extraString;
+	public String extraString; //kui tüü kah
 	public GameObject object;
 	
 	public Message () {

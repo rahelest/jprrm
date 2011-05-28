@@ -6,8 +6,9 @@ import java.net.Socket;
 
 import Tanks.shared.Broadcaster;
 import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.CoreBase;
 
-public class ServerCore {
+public class ServerCore  extends CoreBase {
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {		

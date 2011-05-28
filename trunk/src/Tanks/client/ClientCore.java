@@ -1,21 +1,14 @@
 package Tanks.client;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.ConnectException;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.swing.JTextField;
-
 import Tanks.shared.*;
 
-public class ClientCore extends CoreBase {
+public class ClientCore {
 
 	private ClientGUI gui;
 	private Socket sock;
@@ -24,6 +17,7 @@ public class ClientCore extends CoreBase {
 	private CommunicationBuffer outBuf;
 	private Broadcaster broadcaster;
 	private Receiver receiver;
+	private ObjectOutputStream netOut;
 
 	public ClientCore() {
 		gui = new ClientGUI(this);	
@@ -34,7 +28,25 @@ public class ClientCore extends CoreBase {
 		
 		inBuf = new CommunicationBuffer();
 		try {
-			receiver = new Receiver(this, sock, inBuf);
+			receiver = new Receiver(sock, inBuf);
+		} catch (IOException e) {
+			System.out.println("Receiver creation error");
+			e.printStackTrace();
+		}
+		outBuf = new CommunicationBuffer();
+		
+		try {
+			netOut = new ObjectOutputStream(sock.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		
+		Message message = new Message();
+		message.extraString = "Hi!";
+		
+		try {
+			netOut.writeObject(message);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,16 +117,8 @@ public class ClientCore extends CoreBase {
 		inBuf.getMessage();
 	}
 	
-	private void connectionError() {
-		
-	}
-	
 	public static void main(String[] args) {
-		
 		new ClientCore();
-
-//						System.out.println("Saadan serverisse: " + response);
-//						netOut.println(response);
 	}
 		
 }

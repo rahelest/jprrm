@@ -17,8 +17,13 @@ public class Message implements Serializable {
 	public int sender;
 	public String extraString;
 	public GameObject object;
+	
+	public Message () {
+		counter++;
+	}
 
 	public Message(int clientID) {
+		super();
 		receiver = clientID;
 		sender = 0;
 		extraString = (Integer.toString(clientID));

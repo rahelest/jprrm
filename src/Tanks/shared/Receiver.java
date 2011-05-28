@@ -1,13 +1,9 @@
 package Tanks.shared;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-
-import Tanks.client.ClientCore;
-import Tanks.server.ServerCore;
 
 public class Receiver extends Thread {
 	
@@ -18,7 +14,11 @@ public class Receiver extends Thread {
 	public Receiver(Socket sock, CommunicationBuffer inbound) throws IOException {
 		this.sock = sock;
 		this.in = inbound;
-		netIn = new ObjectInputStream(sock.getInputStream());
+		System.out.println("alustan netIn-i loomist");
+		InputStream iS = sock.getInputStream();
+		System.out.println("vaheprintout");
+		netIn = new ObjectInputStream(iS);
+		System.out.println("netIn-i loomine valmis");
 		start();
 	}
 	

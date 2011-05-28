@@ -8,7 +8,7 @@ import Tanks.shared.Broadcaster;
 import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.CoreBase;
 
-public class ServerCore  extends CoreBase {
+public class ServerCore {
 	
 	@SuppressWarnings("unused")
 	public static void main(String[] args) {		

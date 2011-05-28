@@ -21,7 +21,7 @@ public class Message implements Serializable {
 	public Message(int clientID) {
 		receiver = clientID;
 		sender = 0;
-		extraString = ("ClientID =" + Integer.toString(clientID));
+		extraString = (Integer.toString(clientID));
 		object = null;
 	}
 	

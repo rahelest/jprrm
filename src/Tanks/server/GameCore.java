@@ -39,7 +39,10 @@ public class GameCore extends Thread {
 	}
 	
 	private Message getInput() {
-		return inbound.getMessage();
+		Message temp = inbound.getMessage();
+		System.out.println(temp.extraString);
+		return temp; 
+		
 	}
 
 	private void updateLocations(Message pointer) {

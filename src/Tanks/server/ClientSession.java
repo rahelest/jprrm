@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.CoreBase;
 import Tanks.shared.Message;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
@@ -49,6 +50,7 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(clientID));
 		while(true) {
 			//teavita elusolekust, kui klient kaob, ootab nati ja üritab taasühendada
+		
 		}
 	}
 	

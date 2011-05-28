@@ -17,6 +17,7 @@ public class ClientGUI extends Thread {
 	
 	private ClientCore clientCore;
 	private JTextField text;
+	JButton ok;
 	
 	
 	public ClientGUI(ClientCore nClientCore) {
@@ -37,7 +38,7 @@ public class ClientGUI extends Thread {
 		top.setLayout(new FlowLayout());
 		top.add(text);
 		
-		JButton ok = new JButton("OK");
+		ok = new JButton("OK");
 		top.add(ok);
 		
 		ok.addActionListener( new ActionListener() {
@@ -45,6 +46,7 @@ public class ClientGUI extends Thread {
 				if (clientCore.sendIP(text.getText())) {
 					clientCore.startGame();
 					text.setVisible(false);
+					ok.setVisible(false);
 					//ALUSTA MÄNGUGA
 				}// else {
 //					enableConnecting();
@@ -56,6 +58,7 @@ public class ClientGUI extends Thread {
 	
 	public void enableConnecting() {
 		text.setVisible(true);
+		ok.setVisible(true);
 	}
 	
 	public void play() {

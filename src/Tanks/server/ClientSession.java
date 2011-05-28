@@ -42,7 +42,7 @@ public class ClientSession extends Thread {
 	} 
 	
 	public void run() {
-		tank = new Tank(clientID, 100, 100);
+		tank = new Tank("T" + (Integer.toString(clientID)), 100, 100);
 		sendMessage(new Message(clientID));
 		while(true) {
 			

@@ -43,7 +43,7 @@ public class GameCore extends Thread {
 	}
 
 	private void updateLocations(Message pointer) {
-		pointer.
+		pointer.message
 	}
 	
 	private void checkCollisions() {

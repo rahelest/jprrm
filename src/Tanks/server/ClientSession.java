@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.Message;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
@@ -31,8 +32,8 @@ public class ClientSession extends Thread {
 		start();
 	}
 	
-	public void sendMessage(String message) {
-		netOut.write(message);
+	public void sendMessage(Message msg) {
+		netOut.write(msg);
 	} 
 	
 	public void run() {

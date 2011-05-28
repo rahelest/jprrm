@@ -15,7 +15,7 @@ public class Broadcaster extends Thread {
 	}
 	
 	public void run() {
-		String msg = out.getMessage();
+		Message msg = out.getMessage();
 		Iterator<ClientSession> active = activeClients.iterator();
 		while (active.hasNext()) {
 			ClientSession cli = active.next();

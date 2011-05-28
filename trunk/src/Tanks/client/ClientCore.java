@@ -33,8 +33,7 @@ public class ClientCore {
 			receiver = new Receiver(sock, inBuf);
 			outBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
-			Message message = new Message();
-			message.extraString = "Hi!";
+			Message message = new Message("Hi!");
 			netOut.writeObject(message);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,7 +56,7 @@ public class ClientCore {
 				if (message.extraString == null) {
 					//siis on object määratud
 					
-					gui.drawObject(message.object);
+//					gui.drawObject(message);
 				}
 			}
 		}
@@ -116,6 +115,36 @@ public class ClientCore {
 	
 	public static void main(String[] args) {
 		new ClientCore();
+	}
+
+
+	public void moveNorth() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void moveSouth() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void moveEast() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void moveWest() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void fire() {
+		// TODO Auto-generated method stub
+		
 	}
 		
 }

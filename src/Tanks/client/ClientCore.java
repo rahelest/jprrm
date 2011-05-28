@@ -18,6 +18,7 @@ public class ClientCore {
 	private Broadcaster broadcaster;
 	private Receiver receiver;
 	private ObjectOutputStream netOut;
+	private int myID;
 
 	public ClientCore() {
 		gui = new ClientGUI(this);	
@@ -33,6 +34,7 @@ public class ClientCore {
 			System.out.println("Receiver creation error");
 			e.printStackTrace();
 		}
+
 		outBuf = new CommunicationBuffer();
 		
 		try {
@@ -51,6 +53,10 @@ public class ClientCore {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		myID = Integer.parseInt(inBuf.getMessage().extraString);
+		System.out.println(myID);
+		
 		
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide

@@ -18,7 +18,7 @@ public class ClientCore {
 	private Broadcaster broadcaster;
 	private Receiver receiver;
 	private ObjectOutputStream netOut;
-	private int myID;
+	private int myID = -1;
 
 	public ClientCore() {
 		gui = new ClientGUI(this);	
@@ -27,45 +27,40 @@ public class ClientCore {
 	
 	public void startGame() {
 		
-		inBuf = new CommunicationBuffer();
+		
 		try {
+			inBuf = new CommunicationBuffer();
 			receiver = new Receiver(sock, inBuf);
-		} catch (IOException e) {
-			System.out.println("Receiver creation error");
-			e.printStackTrace();
-		}
-
-		outBuf = new CommunicationBuffer();
-		
-		try {
+			outBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-		
-		Message message = new Message();
-		message.extraString = "Hi!";
-		
-		try {
+			Message message = new Message();
+			message.extraString = "Hi!";
 			netOut.writeObject(message);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		myID = Integer.parseInt(inBuf.getMessage().extraString);
-		System.out.println(myID);
-		
 		
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
-//		while (true) {
-//			receiveInstructions();
-//			passGUIInstructions();
-//			makeGUIDraw();
-//			//updateGUI();
-//		}
+		while (true) {
+			Message message = inBuf.getMessage();
+			try {
+				int number = Integer.parseInt(message.extraString);
+				if (myID == -1) {
+					myID = number;
+					System.out.println(myID);
+					gui.play();
+				}
+				
+			} catch (NumberFormatException e) {
+				//siis ei ole int
+				if (message.extraString == null) {
+					//siis on object määratud
+					
+					gui.drawObject(message.object);
+				}
+			}
+		}
 	}
 
 
@@ -117,10 +112,6 @@ public class ClientCore {
 		}
 		System.out.println("Connection established!");
 		return true;
-	}
-	
-	private void receiveInstructions()  {
-		inBuf.getMessage();
 	}
 	
 	public static void main(String[] args) {

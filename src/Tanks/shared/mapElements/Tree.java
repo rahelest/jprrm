@@ -6,6 +6,7 @@ public class Tree extends mapDecorObject {
 	
 	public Tree(String ID, int x, int y) {
 		super(ID, x, y, 50, 50);
+		this.image = "selle aadress vms";
 		// TODO Auto-generated constructor stub
 	}
 

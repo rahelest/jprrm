@@ -8,6 +8,7 @@ public class Tank extends BreakableObject {
 	
 	public Tank(String ID, int x, int y) {
 		super(ID, x, y, 40, 40);
+		this.image = "selle aadress vms";
 		// TODO Auto-generated constructor stub
 	}
 

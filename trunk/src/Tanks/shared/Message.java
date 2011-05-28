@@ -8,9 +8,17 @@ public class Message implements Serializable {
 	
 	private int counter;
 	
-	public String receiver;
-	public String sender;
+	public int receiver;
+	public int sender;
 	public String extraString;
 	public GameObject object;
 
+	public Message(int clientID) {
+		receiver = clientID;
+		sender = 0;
+		extraString = ("ClientID =" + Integer.toString(clientID));
+		object = null;
+	}
+	
+	
 }

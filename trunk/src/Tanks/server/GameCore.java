@@ -26,7 +26,7 @@ public class GameCore extends Thread {
 		Message temp;
 		while(true) {
 			temp = getInput();
-			updateLocations();
+			updateLocations(temp);
 			checkCollisions();
 			broadcastResult();
 		}
@@ -43,7 +43,7 @@ public class GameCore extends Thread {
 	}
 
 	private void updateLocations(Message pointer) {
-		pointer.message
+		
 	}
 	
 	private void checkCollisions() {

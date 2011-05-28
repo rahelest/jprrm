@@ -23,8 +23,7 @@ public class Receiver extends Thread {
 		while (true) {
 			Message fromClient = null;
 			try {
-				fromClient = (Message) netIn.readObject();
-				
+				fromClient = (Message) netIn.readObject();				
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();
@@ -36,7 +35,6 @@ public class Receiver extends Thread {
 			if (fromClient != null) {
 				in.addMessage(fromClient);
 			}
-		}
-		
+		}		
 	}
 }

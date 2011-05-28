@@ -11,8 +11,8 @@ public abstract class GameObject implements ObjectBase {
 	protected boolean passable;
 	protected boolean bulletPassable;
 	protected boolean breakable;
-	protected HashSet<Integer> thisXcoord;
-	protected HashSet<Integer> thisYcoord;
+	protected HashSet<Integer> thisXcoord = new HashSet<Integer>();
+	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
 	public GameObject(int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
 		this.locationX = x;

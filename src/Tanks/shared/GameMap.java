@@ -15,9 +15,8 @@ import Tanks.shared.mapElements.Water;
 
 public class GameMap {
 
-	private HashMap<Integer, GameObject> objects = new HashMap<Integer, GameObject>();
+	private HashMap<String, GameObject> objects = new HashMap<String, GameObject>();
 	private BufferedImage background;
-	private int objectIndex = 0;
 	
 	public synchronized void addObject(GameObject objectToBeAdded) {
 		objects.put(objectToBeAdded.getID(), objectToBeAdded);

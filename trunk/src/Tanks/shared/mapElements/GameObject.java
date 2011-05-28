@@ -1,5 +1,6 @@
 package Tanks.shared.mapElements;
 
+import java.awt.image.BufferedImage;
 import java.util.HashSet;
 
 public abstract class GameObject implements ObjectBase {
@@ -14,6 +15,8 @@ public abstract class GameObject implements ObjectBase {
 	protected boolean breakable;
 	protected HashSet<Integer> thisXcoord = new HashSet<Integer>();
 	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
+	
+	protected String image;
 	
 	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
 		this.ID = ID;

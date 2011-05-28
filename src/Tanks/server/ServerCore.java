@@ -24,8 +24,8 @@ public class ServerCore {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {
 					clientList.addClient(new ClientSession(clientSock, inbound, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
-					clientID++;
-					System.out.println("Klient ühines edukalt");
+					System.out.println("Klient ühines edukalt, ID = " + clientID);
+					clientID++;					
 				} catch (IOException e) {
 					clientSock.close();					// Kui ühendust ei loodud, sulgeme sokli
 				}

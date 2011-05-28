@@ -23,12 +23,12 @@ public class Receiver extends Thread {
 		while (true) {
 			Message fromClient = null;
 			try {
-				fromClient = (Message) netIn.readObject();				
-			} catch (IOException e) {
-				System.out.println("General IO error, there's noone to complain to!");
-				e.printStackTrace();
+				fromClient = (Message) netIn.readObject();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Class not found, contact Your reseller and complain!");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();
 			}
 			

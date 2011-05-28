@@ -1,7 +1,13 @@
 package Tanks.shared.mapElements;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
+
+import javax.imageio.IIOException;
+import javax.imageio.ImageIO;
 
 public abstract class GameObject implements ObjectBase {
 	
@@ -17,6 +23,7 @@ public abstract class GameObject implements ObjectBase {
 	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
 	protected String image;
+	protected BufferedImage sprite;
 	
 	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
 		this.ID = ID;
@@ -28,6 +35,18 @@ public abstract class GameObject implements ObjectBase {
 		this.bulletPassable = bPassability;
 		createX();
 		createY();
+		try {
+			sprite = ImageIO.read(new File("src//" + image));
+		} catch (IIOException e) {			
+			System.out.println("The background image could not be loaded - image error!");
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			System.out.println("The backround image was not found - missing file!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("General IO exception reading background image!");
+			e.printStackTrace();			
+		}
 	}
 
 	public String getID() {

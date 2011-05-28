@@ -14,6 +14,10 @@ public class Broadcaster extends Thread {
 		start();
 	}
 	
+	public synchronized CommunicationBuffer getMainOutbound() {
+		return out;
+	}
+	
 	public void run() {
 		Message msg = out.getMessage();
 		Iterator<ClientSession> active = activeClients.iterator();

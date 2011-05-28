@@ -42,11 +42,10 @@ public class ClientSession extends Thread {
 	} 
 	
 	public void run() {
-		tank = new Tank(100, 100);
+		tank = new Tank(clientID, 100, 100);
 		sendMessage(new Message(clientID));
 		while(true) {
-			//teavita elusolekust, kui klient kaob, ootab nati ja üritab taasühendada
-		
+			
 		}
 	}
 	

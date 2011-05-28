@@ -8,6 +8,7 @@ public class Missile extends UnbreakableObject {
 	
 	public Missile(String ID, int x, int y, int width, int height) {
 		super(ID, x, y, 10, 15, true);
+		this.image = "selle aadress vms";
 		// TODO Auto-generated constructor stub
 	}
 

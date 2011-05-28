@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
@@ -13,9 +14,22 @@ import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.mapElements.Water;
 
 public class GameMap {
+
+	private HashMap<Integer, GameObject> objects = new HashMap<Integer, GameObject>();
+	private BufferedImage background;
+	private int objectIndex = 0;
 	
-	ArrayList<GameObject> elements = new ArrayList<GameObject>();
-	BufferedImage background;
+	public synchronized void addObject(GameObject objectToBeAdded) {
+		objects.put(objectToBeAdded.getID(), objectToBeAdded);
+	}
+
+	public BufferedImage getBackground() {
+		return background;
+	}
+
+	public synchronized void removeObject(int objectID) {
+		objects.remove(objectID);
+	}
 	
 	public GameMap() {
 		try {
@@ -31,10 +45,10 @@ public class GameMap {
 			e.printStackTrace();			
 		}
 		
-		elements.add(new Water(200, 200));
-		elements.add(new Water(800, 200));
-		elements.add(new Water(800, 800));
-		elements.add(new Water(200, 800));
+//		elements.add(new Water(200, 200));
+//		elements.add(new Water(800, 200));
+//		elements.add(new Water(800, 800));
+//		elements.add(new Water(200, 800));
 	}
 
 	

@@ -1,15 +1,10 @@
 package Tanks.server;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 import Tanks.shared.CommunicationBuffer;
-import Tanks.shared.CoreBase;
 import Tanks.shared.Message;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
@@ -34,6 +29,7 @@ public class ClientSession extends Thread {
 		receiver =  new Receiver(sock, inbound);
 		start();
 	}
+	
 	
 	public void sendMessage(Message msg) {
 		try {

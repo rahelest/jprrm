@@ -137,14 +137,13 @@ public class ClientCore {
 
 
 	public void moveWest() {
-		// TODO Auto-generated method stub
+		 
 		
 	}
 
 
 	public void fire() {
-		// TODO Auto-generated method stub
-		
+		outBuf.addMessage(new Message("FIRE!"));
 	}
 		
 }

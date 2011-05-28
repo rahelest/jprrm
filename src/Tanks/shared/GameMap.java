@@ -19,8 +19,7 @@ public class GameMap {
 	
 	public GameMap() {
 		try {
-			File image = new File("background.png");
-			background = ImageIO.read(image);			
+			background = ImageIO.read(new File("background.png"));			
 		} catch (IIOException e) {			
 			System.out.println("The background image could not be loaded - image error!");
 			e.printStackTrace();

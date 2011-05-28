@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public abstract class GameObject implements ObjectBase {
 	
-	protected int ID;
+	protected String ID;
 	protected int locationX;
 	protected int locationY;
 	protected int width;
@@ -15,7 +15,7 @@ public abstract class GameObject implements ObjectBase {
 	protected HashSet<Integer> thisXcoord = new HashSet<Integer>();
 	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
-	public GameObject(int ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
+	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
 		this.ID = ID;
 		this.locationX = x;
 		this.locationY = y;
@@ -27,7 +27,7 @@ public abstract class GameObject implements ObjectBase {
 		createY();
 	}
 
-	public int getID() {
+	public String getID() {
 		return ID;
 	}
 

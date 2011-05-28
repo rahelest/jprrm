@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import Tanks.shared.*;
 
-public class ClientCore {
+public class ClientCore extends CoreBase {
 
 	private ClientGUI gui;
 	private Socket sock;
@@ -34,7 +34,7 @@ public class ClientCore {
 		
 		inBuf = new CommunicationBuffer();
 		try {
-			receiver = new Receiver(sock, inBuf);
+			receiver = new Receiver(this, sock, inBuf);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,6 +89,11 @@ public class ClientCore {
 			} else {
 				connectionTries = 0;
 				System.out.println("Connecting failed");
+				try {
+					sock.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				return false;
 			}
 		}
@@ -98,6 +103,10 @@ public class ClientCore {
 	
 	private void receiveInstructions()  {
 		inBuf.getMessage();
+	}
+	
+	private void connectionError() {
+		
 	}
 	
 	public static void main(String[] args) {

@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Tanks.shared.GameMap;
+import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
 public class ClientGUI {
@@ -21,6 +24,7 @@ public class ClientGUI {
 	JFrame window = new JFrame();
 	private JTextField text = new JTextField();
 	JPanel top = new JPanel();
+	JPanel center = new JPanel();
 	JButton ok = new JButton("OK");
 	
 	
@@ -31,12 +35,14 @@ public class ClientGUI {
 		window.setVisible(true);
 		window.setLayout(new BorderLayout());
 		window.add(top, BorderLayout.NORTH);
+		window.add(center, BorderLayout.CENTER);
+		center.setLayout(null);
 
 		Dimension size = new Dimension(700, 30);
 		text.setPreferredSize(size);
 		top.setLayout(new FlowLayout());
 		top.add(text);
-
+		window.addKeyListener(new KeyListen());
 		top.add(ok);
 		
 		ok.addActionListener( new ActionListener() {
@@ -53,6 +59,7 @@ public class ClientGUI {
 				System.out.println(text.getText());
 			}
 		});
+		
 	}
 	
 	public void enableConnecting() {
@@ -61,20 +68,67 @@ public class ClientGUI {
 	}
 	
 	public void play() {
-		new GameMap();
+//		new GameMap();
 	}
 
 	public void drawObject(GameObject object) {
 		JPanel obj = new JPanel();
-		obj.setBackground(Color.BLACK);
+		
 		obj.setSize(object.getWidth(), object.getHeight());
 		obj.setLocation(object.getLocationX(), object.getLocationY());
-		window.add(obj);
+		obj.setBackground(Color.BLACK);
+		
+		center.add(obj);
 		
 	}
 	
 	public static void main(String[] args) {
-		new ClientGUI(null);
+		ClientGUI gui = new ClientGUI(null);
+		gui.drawObject(new Tank("ad", 50, 100));
 	}
 
-}
+
+class KeyListen implements KeyListener {
+
+	@Override
+	public void keyPressed(KeyEvent key) {
+		int code = key.getKeyCode();
+		if (code == KeyEvent.VK_UP) {
+			System.out.println("You pressed up");
+			clientCore.moveNorth();
+		} else if (code == KeyEvent.VK_DOWN) {
+			System.out.println("Down!");
+			clientCore.moveSouth();
+		} else if (code == KeyEvent.VK_LEFT) {
+			System.out.println("LEFT!");
+			clientCore.moveEast();
+		} else if (code == KeyEvent.VK_RIGHT) {
+			System.out.println("Right!");
+			clientCore.moveWest();
+		} else if (code == KeyEvent.VK_ENTER) {
+			System.out.println("FIRE!");
+			clientCore.fire();
+		}
+		
+		
+		
+		
+		
+	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent key) {
+		int code = key.getKeyCode();
+		if(code == KeyEvent.VK_ENTER) {
+		System.out.println("You released enter");
+		}
+	
+	}
+
+	@Override
+	public void keyTyped(KeyEvent key) {
+
+	}
+	
+}}

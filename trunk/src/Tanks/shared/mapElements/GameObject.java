@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 public abstract class GameObject implements ObjectBase {
 	
+	protected int ID;
 	protected int locationX;
 	protected int locationY;
 	protected int width;
@@ -14,7 +15,8 @@ public abstract class GameObject implements ObjectBase {
 	protected HashSet<Integer> thisXcoord = new HashSet<Integer>();
 	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
-	public GameObject(int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
+	public GameObject(int ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
+		this.ID = ID;
 		this.locationX = x;
 		this.locationY = y;
 		this.height = height;
@@ -23,6 +25,10 @@ public abstract class GameObject implements ObjectBase {
 		this.bulletPassable = bPassability;
 		createX();
 		createY();
+	}
+
+	public int getID() {
+		return ID;
 	}
 
 	private void createX() {

@@ -33,21 +33,31 @@ public class ClientCore {
 	public void startGame() {
 		
 		inBuf = new CommunicationBuffer();
-		receiver = new Receiver(sock, inBuf);
+		try {
+			receiver = new Receiver(sock, inBuf);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	
-		PrintWriter netOut = new PrintWriter(
-					new BufferedWriter(
-							new OutputStreamWriter(
-									sock.getOutputStream())), true);
+		try {
+			PrintWriter netOut = new PrintWriter(
+						new BufferedWriter(
+								new OutputStreamWriter(
+										sock.getOutputStream())), true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
-		while (true) {
-			receiveInstructions();
-			passGUIInstructions();
-			makeGUIDraw();
-			//updateGUI();
-		}
+//		while (true) {
+//			receiveInstructions();
+//			passGUIInstructions();
+//			makeGUIDraw();
+//			//updateGUI();
+//		}
 	}
 
 
@@ -97,6 +107,10 @@ public class ClientCore {
 			} catch (IOException e) {}
 		}
 		return true;
+	}
+	
+	private void receiveInstructions()  {
+		inBuf.getMessage();
 	}
 	
 	public static void main(String[] args) {

@@ -5,8 +5,8 @@ public class Tree extends mapDecorObject {
 	final int treesize = 50;
 	
 	public Tree(String ID, int x, int y) {
-		super(ID, x, y, 50, 50);
-		this.image = "selle aadress vms";
+		super(ID, x, y, 120, 120);
+		this.image = "tree.png";
 		// TODO Auto-generated constructor stub
 	}
 

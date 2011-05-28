@@ -7,6 +7,7 @@ import java.net.Socket;
 import Tanks.shared.Broadcaster;
 import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.CoreBase;
+import Tanks.shared.GameMap;
 
 public class ServerCore {
 	
@@ -20,11 +21,12 @@ public class ServerCore {
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
 			CommunicationBuffer inbound = new CommunicationBuffer();
-			GameCore game = new GameCore(clientList, messenger, inbound);
+			GameMap killingField = new GameMap(messenger);
+//			GameCore game = new GameCore(clientList, messenger, inbound);
 			while (true) {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {
-					clientList.addClient(new ClientSession(clientSock, inbound, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+					clientList.addClient(new ClientSession(clientSock, inbound, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
 					System.out.println("Klient ühines edukalt, ID = " + clientID);
 					clientID++;					
 				} catch (IOException e) {

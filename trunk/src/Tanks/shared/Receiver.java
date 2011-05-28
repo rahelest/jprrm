@@ -35,7 +35,7 @@ public class Receiver extends Thread {
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();
-				core.connectionError(this);
+				core.reConnect(this);
 				try {
 					wait();
 				} catch (InterruptedException e1) {

@@ -39,16 +39,6 @@ public class ClientCore {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		try {
-			PrintWriter netOut = new PrintWriter(
-						new BufferedWriter(
-								new OutputStreamWriter(
-										sock.getOutputStream())), true);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
@@ -86,7 +76,7 @@ public class ClientCore {
 			sock = new Socket(serverAddr, port);
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
-			//tevita vigasest adrst
+			System.out.println("There is something wrong with the address");
 			return false;
 		} catch (IOException e) {
 			if (connectionTries < 3) {
@@ -98,14 +88,11 @@ public class ClientCore {
 				e.printStackTrace();
 			} else {
 				connectionTries = 0;
-				//teavita
+				System.out.println("Connecting failed");
 				return false;
 			}
-		} finally {
-			try {
-				sock.close();
-			} catch (IOException e) {}
 		}
+		System.out.println("Connection established!");
 		return true;
 	}
 	

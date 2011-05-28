@@ -10,6 +10,7 @@ public class Message implements Serializable {
 	
 	public String receiver;
 	public String sender;
+	public String extraString;
 	public GameObject object;
 
 }

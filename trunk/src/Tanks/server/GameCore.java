@@ -3,6 +3,8 @@ package Tanks.server;
 import Tanks.shared.Broadcaster;
 import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.GameMap;
+import Tanks.shared.Message;
+import Tanks.shared.mapElements.GameObject;
 
 public class GameCore extends Thread {
 
@@ -21,8 +23,9 @@ public class GameCore extends Thread {
 
 	public void run() {
 		//siia tuleb mĆ¤nguloogika
+		Message temp;
 		while(true) {
-			getInput();
+			temp = getInput();
 			updateLocations();
 			checkCollisions();
 			broadcastResult();
@@ -35,12 +38,12 @@ public class GameCore extends Thread {
 		//Overlay - render interface elements
 	}
 	
-	private void getInput() {
-		inbound.getMessage();
+	private Message getInput() {
+		return inbound.getMessage();
 	}
-	
-	private void updateLocations() {
-		
+
+	private void updateLocations(Message pointer) {
+		pointer.
 	}
 	
 	private void checkCollisions() {

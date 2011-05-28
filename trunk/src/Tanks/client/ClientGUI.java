@@ -15,7 +15,7 @@ import Tanks.shared.GameMap;
 
 public class ClientGUI extends Thread {
 	
-	ClientCore clientCore;
+	private ClientCore clientCore;
 	private JTextField text;
 	
 	

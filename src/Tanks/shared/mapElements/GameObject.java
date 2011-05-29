@@ -12,6 +12,10 @@ import javax.imageio.ImageIO;
 
 public abstract class GameObject implements ObjectBase, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8547305178396375911L;
 	protected String ID;
 	protected int locationX;
 	protected int locationY;

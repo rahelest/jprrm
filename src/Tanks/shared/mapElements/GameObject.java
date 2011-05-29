@@ -25,7 +25,7 @@ public abstract class GameObject implements ObjectBase {
 	protected String image;
 	protected BufferedImage sprite;
 	
-	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability) {
+	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability, String image) {
 		this.ID = ID;
 		this.locationX = x;
 		this.locationY = y;
@@ -33,15 +33,17 @@ public abstract class GameObject implements ObjectBase {
 		this.width = width;
 		this.passable = passability;
 		this.bulletPassable = bPassability;
+		this.image = image;
 		createX();
 		createY();
 		try {
+			System.out.println(image);
 			sprite = ImageIO.read(new File("src//" + image));
-		} catch (IIOException e) {			
-			System.out.println("The background image could not be loaded - image error!");
-			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			System.out.println("The backround image was not found - missing file!");
+			e.printStackTrace();
+		} catch (IIOException e) {			
+			System.out.println("The background image could not be loaded - image error!");
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("General IO exception reading background image!");

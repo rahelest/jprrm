@@ -105,7 +105,7 @@ class KeyListen implements KeyListener {
 		} else if (code == KeyEvent.VK_RIGHT) {
 			System.out.println("Right!");
 			clientCore.moveWest();
-		} else if (code == KeyEvent.VK_ENTER) {
+		} else if (code == KeyEvent.VK_SPACE) {
 			System.out.println("FIRE!");
 			clientCore.fire();
 		}

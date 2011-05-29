@@ -5,17 +5,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 import Tanks.shared.mapElements.GameObject;
 
-public class GameMap {
+public class GameMap implements Serializable {
 
-	private HashMap<String, GameObject> objects = new HashMap<String, GameObject>();
-	private BufferedImage background;
-	private CommunicationBuffer outBuff;
+	public HashMap<String, GameObject> objects = new HashMap<String, GameObject>();
+	private transient BufferedImage background;
+	private transient CommunicationBuffer outBuff;
 	
 	public synchronized void addObject(GameObject objectToBeAdded) {
 		objects.put(objectToBeAdded.getID(), objectToBeAdded);

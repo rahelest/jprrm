@@ -1,5 +1,6 @@
 package Tanks.shared;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -17,7 +18,11 @@ public class Receiver extends Thread {
 		System.out.println("alustan netIn-i loomist");
 		InputStream iS = sock.getInputStream();
 		System.out.println("vaheprintout");
-		netIn = new ObjectInputStream(iS);
+		try {
+			netIn = new ObjectInputStream(iS);
+		} catch (EOFException e) {
+			 
+		}
 		System.out.println("netIn-i loomine valmis");
 		start();
 	}

@@ -48,19 +48,18 @@ public class ClientCore {
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
 		while (true) {
+			System.out.println("Ootan uut teadet");
 			Message message = inBuf.getMessage();
+			System.out.println("Sain uue teate!");
 			try {
 				int number = Integer.parseInt(message.extraString);
 				if (myID == -1) {
 					myID = number;
 					System.out.println("My new ID: " + myID);
-					gui.play();
 				}
 				
 			} catch (NumberFormatException e) {
-				//siis ei ole int
-				if (message.extraString == null) {
-					//siis on object määratud
+				if (message.extraString == null) { 
 					sendForDrawing(message.object);
 				}
 			}

@@ -24,10 +24,6 @@ public class GameMap {
 	public synchronized GameObject getObject(String ID) {
 		return objects.get(ID);
 	}
-	
-	public synchronized HashMap<String, GameObject> getObject() {
-		return objects;
-	}
 
 	public synchronized void removeObject(String objectID) {
 		objects.remove(objectID);
@@ -41,6 +37,12 @@ public class GameMap {
 		objects.remove(object.getID());
 		objects.put(object.getID(), object);
 		outBuff.addMessage(new Message(this));
+	}
+
+	public synchronized GameMap doYourStuffDontSend(GameObject object) {
+		objects.remove(object.getID());
+		objects.put(object.getID(), object);
+		return this;
 	}
 	
 	public GameMap(Broadcaster messenger) {
@@ -62,6 +64,10 @@ public class GameMap {
 //		elements.add(new Water(800, 200));
 //		elements.add(new Water(800, 800));
 //		elements.add(new Water(200, 800));
+	}
+
+	public HashMap<String, GameObject> getObject() {
+		return objects;	
 	}
 
 	

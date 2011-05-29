@@ -140,8 +140,7 @@ public class ClientCore {
 		tank.setLocationY(tank.getLocationY() - unit);
 		tank.setDirection("N");
 //		replaceAndSend(tank);
-		map.doYourStuff(tank);
-		outBuf.addMessage(new Message(map));
+		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
 	}
 
 
@@ -149,9 +148,7 @@ public class ClientCore {
 		Tank tank = (Tank) map.getObject(Integer.toString(myID));
 		tank.setLocationY(tank.getLocationY() + unit);
 		tank.setDirection("S");
-		map.doYourStuff(tank);
-		outBuf.addMessage(new Message(map));
-		
+		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
 	}
 
 
@@ -159,9 +156,7 @@ public class ClientCore {
 		Tank tank = (Tank) map.getObject(Integer.toString(myID));
 		tank.setLocationX(tank.getLocationX() + unit);
 		tank.setDirection("E");
-		map.doYourStuff(tank);
-		outBuf.addMessage(new Message(map));
-		
+		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
 	}
 
 
@@ -169,9 +164,7 @@ public class ClientCore {
 		Tank tank = (Tank) map.getObject(Integer.toString(myID));
 		tank.setLocationX(tank.getLocationX() - unit);
 		tank.setDirection("W");
-		map.doYourStuff(tank);
-		outBuf.addMessage(new Message(map)); 
-		
+		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
 	}
 
 

@@ -55,6 +55,7 @@ public class ClientSession extends Thread {
 		tank = new Tank(key , 100, 100);
 		map.addObject(tank);
 		sendMessage(new Message(clientID));
+		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
 			if (temp.object != null) {

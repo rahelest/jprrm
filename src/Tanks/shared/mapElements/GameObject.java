@@ -4,12 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashSet;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
-public abstract class GameObject implements ObjectBase {
+public abstract class GameObject implements ObjectBase, Serializable {
 	
 	protected String ID;
 	protected int locationX;
@@ -23,7 +24,7 @@ public abstract class GameObject implements ObjectBase {
 	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
 	protected String image;
-	protected BufferedImage sprite;
+	protected transient BufferedImage sprite;
 	
 	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability, String image) {
 		this.ID = ID;

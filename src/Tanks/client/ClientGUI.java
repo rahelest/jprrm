@@ -43,10 +43,10 @@ public class ClientGUI {
 
 		Dimension size = new Dimension(700, 30);
 		text.setPreferredSize(size);
-		top.setLayout(new FlowLayout());
-		top.add(text);
-		window.addKeyListener(new KeyListen());
-		top.add(ok);
+		top.setLayout(new BorderLayout());
+		
+		top.add(ok, BorderLayout.EAST);
+		top.add(text, BorderLayout.CENTER);
 		
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -55,6 +55,7 @@ public class ClientGUI {
 					text.setVisible(false);
 					ok.setVisible(false);
 					//ALUSTA MÄNGUGA
+					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
 					enableConnecting();
@@ -62,34 +63,34 @@ public class ClientGUI {
 				System.out.println(text.getText());
 			}
 		});
-		
+		window.addKeyListener(new KeyListen());
 	}
 	
 	public void enableConnecting() {
 		text.setVisible(true);
 		ok.setVisible(true);
 	}
-	
-	public void play() {
-//		new GameMap();
-	}
 
 	public void drawObject(GameObject object) {
+//		Drawer draw = new Drawer(object);
+//		draw.setSize(object.getWidth(), object.getHeight());
+//		draw.setLocation(object.getLocationX(), object.getLocationY());
+//		center.add(draw);
+//		draw.setBackground(Color.BLACK);
 		JPanel obj = new JPanel();
-		
+//		obj.getGraphics(g);
 		obj.setSize(object.getWidth(), object.getHeight());
 		obj.setLocation(object.getLocationX(), object.getLocationY());
 		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);
+		window.repaint();
 		
 	}
 	
-
-	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
-		gui.drawObject(new Tank("ad", 50, 100));
+		gui.drawObject(new Tank("hj", 100, 199));
 	}
 
 	class KeyListen implements KeyListener {

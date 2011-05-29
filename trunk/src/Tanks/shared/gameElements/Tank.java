@@ -4,6 +4,10 @@ import Tanks.shared.mapElements.BreakableObject;
 
 public class Tank extends BreakableObject {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3912186180720259310L;
 	protected String direction = "N";
 	
 	public Tank(String ID, int x, int y) {

@@ -14,6 +14,10 @@ import Tanks.shared.mapElements.GameObject;
 
 public class GameMap implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6541854117698278749L;
 	public HashMap<String, GameObject> objects = new HashMap<String, GameObject>();
 	private transient BufferedImage background;
 	private transient CommunicationBuffer outBuff;

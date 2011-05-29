@@ -5,8 +5,12 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Set;
 
 import Tanks.shared.*;
+import Tanks.shared.gameElements.Tank;
+import Tanks.shared.mapElements.GameObject;
 
 public class ClientCore {
 
@@ -18,7 +22,9 @@ public class ClientCore {
 	private Broadcaster broadcaster;
 	private Receiver receiver;
 	private ObjectOutputStream netOut;
+	private GameMap map;
 	private int myID = -1;
+	private int unit = 10;
 
 	public ClientCore() {
 		gui = new ClientGUI(this);	
@@ -47,7 +53,7 @@ public class ClientCore {
 				int number = Integer.parseInt(message.extraString);
 				if (myID == -1) {
 					myID = number;
-					System.out.println(myID);
+					System.out.println("My new ID: " + myID);
 					gui.play();
 				}
 				
@@ -55,10 +61,17 @@ public class ClientCore {
 				//siis ei ole int
 				if (message.extraString == null) {
 					//siis on object määratud
-					
-//					gui.drawObject(message);
+					sendForDrawing(message.object);
 				}
 			}
+		}
+	}
+	
+	public void sendForDrawing(GameMap map) {
+		HashMap<String, GameObject> objects = map.getObject();
+		Set<String> keys = objects.keySet();
+		for (String k : keys) {
+			gui.drawObject(objects.get(k));
 		}
 	}
 
@@ -117,27 +130,47 @@ public class ClientCore {
 		new ClientCore();
 	}
 
+//	private void replaceAndSend(GameObject tank) {
+//		map.doYourStuff(tank);
+//		outBuf.addMessage(new Message(map));
+//	}
 
 	public void moveNorth() {
-		// TODO Auto-generated method stub
-		
+		Tank tank = (Tank) map.getObject(Integer.toString(myID));
+		tank.setLocationY(tank.getLocationY() - unit);
+		tank.setDirection("N");
+//		replaceAndSend(tank);
+		map.doYourStuff(tank);
+		outBuf.addMessage(new Message(map));
 	}
 
 
 	public void moveSouth() {
-		// TODO Auto-generated method stub
+		Tank tank = (Tank) map.getObject(Integer.toString(myID));
+		tank.setLocationY(tank.getLocationY() + unit);
+		tank.setDirection("S");
+		map.doYourStuff(tank);
+		outBuf.addMessage(new Message(map));
 		
 	}
 
 
 	public void moveEast() {
-		// TODO Auto-generated method stub
+		Tank tank = (Tank) map.getObject(Integer.toString(myID));
+		tank.setLocationX(tank.getLocationX() + unit);
+		tank.setDirection("E");
+		map.doYourStuff(tank);
+		outBuf.addMessage(new Message(map));
 		
 	}
 
 
 	public void moveWest() {
-		 
+		Tank tank = (Tank) map.getObject(Integer.toString(myID));
+		tank.setLocationX(tank.getLocationX() - unit);
+		tank.setDirection("W");
+		map.doYourStuff(tank);
+		outBuf.addMessage(new Message(map)); 
 		
 	}
 

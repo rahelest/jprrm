@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,6 +28,7 @@ public class ClientGUI {
 	JPanel top = new JPanel();
 	JPanel center = new JPanel();
 	JButton ok = new JButton("OK");
+	GameMap map;
 	
 	
 	public ClientGUI(ClientCore nClientCore) {
@@ -82,53 +85,40 @@ public class ClientGUI {
 		
 	}
 	
+
+	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
 		gui.drawObject(new Tank("ad", 50, 100));
 	}
 
-
-class KeyListen implements KeyListener {
-
-	@Override
-	public void keyPressed(KeyEvent key) {
-		int code = key.getKeyCode();
-		if (code == KeyEvent.VK_UP) {
-			System.out.println("You pressed up");
-			clientCore.moveNorth();
-		} else if (code == KeyEvent.VK_DOWN) {
-			System.out.println("Down!");
-			clientCore.moveSouth();
-		} else if (code == KeyEvent.VK_LEFT) {
-			System.out.println("LEFT!");
-			clientCore.moveEast();
-		} else if (code == KeyEvent.VK_RIGHT) {
-			System.out.println("Right!");
-			clientCore.moveWest();
-		} else if (code == KeyEvent.VK_SPACE) {
-			System.out.println("FIRE!");
-			clientCore.fire();
+	class KeyListen implements KeyListener {
+	
+		@Override
+		public void keyPressed(KeyEvent key) {
+			int code = key.getKeyCode();
+			if (code == KeyEvent.VK_UP) {
+				System.out.println("You pressed up");
+				clientCore.moveNorth();
+			} else if (code == KeyEvent.VK_DOWN) {
+				System.out.println("Down!");
+				clientCore.moveSouth();
+			} else if (code == KeyEvent.VK_LEFT) {
+				System.out.println("LEFT!");
+				clientCore.moveEast();
+			} else if (code == KeyEvent.VK_RIGHT) {
+				System.out.println("Right!");
+				clientCore.moveWest();
+			} else if (code == KeyEvent.VK_SPACE) {
+				System.out.println("FIRE!");
+				clientCore.fire();
+			}
 		}
-		
-		
-		
-		
-		
+		@Override
+		public void keyReleased(KeyEvent key) {
+			}
 	
-	}
-
-	@Override
-	public void keyReleased(KeyEvent key) {
-		int code = key.getKeyCode();
-		if(code == KeyEvent.VK_ENTER) {
-		System.out.println("You released enter");
-		}
-	
-	}
-
-	@Override
-	public void keyTyped(KeyEvent key) {
-
-	}
-	
-}}
+		@Override
+		public void keyTyped(KeyEvent key) {
+		}}
+}

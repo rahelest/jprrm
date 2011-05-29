@@ -57,9 +57,16 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(clientID));
 		while(true) {
 			Message temp = inBuff.getMessage();
-			tank = temp.object.getObject(key);
+			if (temp.object != null) {
+				tank = temp.object.getObject(key);
 			map.doYourStuff(tank);
 			//siia tuleb mürsukontroll
+			} else {
+				if (temp.extraString == "FIRE!") {
+					//tulista!
+				} //võib veel asju olla, mõni query vms vb
+			}
+			
 			
 		}
 	}

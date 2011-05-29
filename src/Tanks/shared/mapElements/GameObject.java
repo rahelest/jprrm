@@ -100,6 +100,14 @@ public abstract class GameObject implements ObjectBase {
 		return locationY;
 	}
 
+	public void setLocationX(int locationX) {
+		this.locationX = locationX;
+	}
+
+	public void setLocationY(int locationY) {
+		this.locationY = locationY;
+	}
+
 	public int getWidth() {
 		return width;
 	}

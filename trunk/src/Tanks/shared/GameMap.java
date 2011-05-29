@@ -24,6 +24,10 @@ public class GameMap {
 	public synchronized GameObject getObject(String ID) {
 		return objects.get(ID);
 	}
+	
+	public synchronized HashMap<String, GameObject> getObject() {
+		return objects;
+	}
 
 	public synchronized void removeObject(String objectID) {
 		objects.remove(objectID);

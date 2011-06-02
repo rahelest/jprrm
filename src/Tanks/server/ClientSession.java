@@ -34,7 +34,7 @@ public class ClientSession extends Thread {
 		// Kui voogude loomine ebaõnnestub, peab väljakutsuv meetod 
 		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
 		
-		receiver =  new Receiver(sock, inbound);
+		receiver =  new Receiver(this, sock, inbound);
 		inBuff = inbound;
 		start();
 	}
@@ -70,6 +70,14 @@ public class ClientSession extends Thread {
 			
 			
 		}
+	}
+
+
+	public void notifyConnectionLoss(Receiver receiver2) {
+		
+		
+//		receiver.notify();
+		
 	}
 	
 }

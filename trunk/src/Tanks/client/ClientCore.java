@@ -16,6 +16,8 @@ public class ClientCore {
 
 	private ClientGUI gui;
 	private Socket sock;
+	private String serverName;
+	private int port;
 	private int connectionTries = 0;
 	private CommunicationBuffer inBuf;
 	private CommunicationBuffer outBuf;
@@ -36,7 +38,7 @@ public class ClientCore {
 		
 		try {
 			inBuf = new CommunicationBuffer();
-			receiver = new Receiver(sock, inBuf);
+			receiver = new Receiver(this, sock, inBuf);
 			outBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
 			Message message = new Message("Hi!");
@@ -79,9 +81,9 @@ public class ClientCore {
 		String[] splitted = string.split(":");
 		if (splitted.length != 2) return false;
 		else {
-			String serverName = splitted[0];
+			serverName = splitted[0];
 			try {
-				int port = Integer.parseInt(splitted[1]);
+				port = Integer.parseInt(splitted[1]);
 				if (connectToServer(serverName, port)) {
 					//startgame-----------------------------------------------------------------
 					return true;
@@ -103,7 +105,7 @@ public class ClientCore {
 			System.out.println("There is something wrong with the address");
 			return false;
 		} catch (IOException e) {
-			if (connectionTries < 3) {
+			if (connectionTries < 10) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e1) { }
@@ -169,6 +171,26 @@ public class ClientCore {
 
 	public void fire() {
 		outBuf.addMessage(new Message("FIRE!"));
+	}
+
+
+	public void notifyConnectionLoss(Receiver receiver2) {
+		try {
+			sock.close();
+			
+			if (connectToServer(serverName, port)) {
+//				receiver2.notify();
+				outBuf.addMessage(new  Message(myID));
+			} else {
+				gui.enableConnecting();
+				//nulli receiver kuidagi
+			}
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 		
 }

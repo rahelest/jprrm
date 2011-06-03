@@ -69,10 +69,14 @@ public class GameMap implements Serializable {
 			e.printStackTrace();			
 		}
 		
-		factory.createWater(200, 200);
-		factory.createWater(800, 200);
-		factory.createWater(800, 800);
-		factory.createWater(200, 800);
+		GameObject temp = factory.createWater(200, 200);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(800, 200);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(800, 800);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(200, 800);
+		objects.put(temp.getID(), temp);
 	}
 
 	public HashMap<String, GameObject> getObject() {

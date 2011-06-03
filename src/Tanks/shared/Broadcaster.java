@@ -10,6 +10,7 @@ public class Broadcaster extends Thread {
 	ActiveClients activeClients = null;
 	
 	public Broadcaster(ActiveClients pointer) {
+		this.setName("Broadcaster - " + pointer.toString());
 		activeClients = pointer;
 		start();
 	}

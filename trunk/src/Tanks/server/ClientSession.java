@@ -19,6 +19,7 @@ public class ClientSession extends Thread {
 	private Receiver receiver;
 	private CommunicationBuffer inBuff;
 	private InetAddress clientIP;
+	private Object clientMonitor = new Object();
 	
 	private GameMap map;
 	private GameObject tank;
@@ -29,7 +30,8 @@ public class ClientSession extends Thread {
 	private int exp = 0;
 
 	
-	public ClientSession(Socket sock, CommunicationBuffer inbound, GameMap killingField, int clientID) throws IOException {
+	public ClientSession(Socket sock, GameMap killingField, int clientID) throws IOException {
+		this.setName("ClientSession - " + clientID + " " + clientIP);
 		this.clientID = clientID;
 		this.sock = sock;
 		this.clientIP = sock.getInetAddress();
@@ -37,9 +39,9 @@ public class ClientSession extends Thread {
 		netOut = new ObjectOutputStream(sock.getOutputStream());       
 		// Kui voogude loomine ebaõnnestub, peab väljakutsuv meetod 
 		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
+		inBuff = new CommunicationBuffer();
+		receiver =  new Receiver(this, sock, inBuff);
 		
-		receiver =  new Receiver(this, sock, inbound);
-		inBuff = inbound;
 		start();
 	}
 	
@@ -96,19 +98,27 @@ public class ClientSession extends Thread {
 	public synchronized void notifyConnectionLoss() {
 		try {
 			System.out.println("clientsessioni wait algus");
-			this.wait();
+			synchronized(clientMonitor) {
+//				receiver.wait();
+				this.wait();
+			}
 			System.out.println("clientsessioni wait lopp");
 		} catch (InterruptedException e) {
 			System.out.println("receiveri notify algus");
-			receiver.notify();
+			synchronized (receiver.getMonitor()) {
+				receiver.notify();
+			}
 			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new Message(clientID));
 			System.out.println("receivery notify lopp");
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalMonitorStateException e) {
 			System.out.println("MONITOREXC");
 		}
+	}
+	
+	public Object getClientMonitor() {
+		return clientMonitor;
 	}
 	
 }

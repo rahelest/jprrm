@@ -14,11 +14,13 @@ public class Receiver extends Thread {
 	
 	private Socket sock;
 	private ObjectInputStream netIn;
-	CommunicationBuffer in;
-	ClientSession session;
-	ClientCore clientCore;
+	private CommunicationBuffer in;
+	private ClientSession session;
+	private ClientCore clientCore;
+	private Object receiverMonitor = new Object();
 	
 	private Receiver(Socket sock, CommunicationBuffer inbound) throws IOException {
+		this.setName("Receiver - " + sock.getInetAddress());
 		this.sock = sock;
 		this.in = inbound;
 		System.out.println("alustan netIn-i loomist");
@@ -33,6 +35,7 @@ public class Receiver extends Thread {
 		System.out.println("netIn-i loomine valmis");
 		start();
 	}
+	
 	public Receiver(ClientSession session, Socket sock, CommunicationBuffer inbound) throws IOException {
 		this(sock, inbound);
 		this.session = session;
@@ -56,8 +59,11 @@ public class Receiver extends Thread {
 				e.printStackTrace();
 				if (session != null) {
 					try {
+						System.out.println("Klient katkes");
 						System.out.println("receivery wait algus");
-						this.wait();
+						synchronized(receiverMonitor) {
+							this.wait();
+						}
 						System.out.println("receiveri notify lopp");
 					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
@@ -69,29 +75,25 @@ public class Receiver extends Thread {
 				} else {
 					try {
 						clientCore.notifyConnectionLoss(this);
-						this.wait();						
+						synchronized(receiverMonitor) {	
+							this.wait();
+						}
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+//						e1.printStackTrace();
 					}
-					
 				}
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();
-				
-//				try {
-//					wait();
-//				} catch (InterruptedException e1) {
-//					e1.printStackTrace();
-//				}
 			}
 			
 			if (fromClient != null) {
 				in.addMessage(fromClient);
 			}
-		}		
-
+		}
 	}
 
+	public Object getMonitor() {
+		return receiverMonitor;
+	}
 }

@@ -25,7 +25,7 @@ public class ClientGUI {
 	
 	private ClientCore clientCore;
 	JFrame window = new JFrame();
-	private JTextField text = new JTextField("localhost:8888");
+	private JTextField text = new JTextField("192.168.1.105:8888");
 	JPanel top = new JPanel();
 	JPanel center = new JPanel();
 	JButton ok = new JButton("OK");
@@ -76,7 +76,9 @@ public class ClientGUI {
 	public void drawObject(GameObject obj) {
 		System.out.println(obj);
 		obj.setSize(obj.getWidth(), obj.getHeight());
+		System.out.println(obj.getSize());
 		obj.setLocation(obj.getLocationX(), obj.getLocationY());
+		System.out.println(obj.getLocationX() + " " + obj.getLocationY());
 //		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);

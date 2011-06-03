@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import Tanks.shared.GameMap;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.mapElements.Water;
 
 public class ClientGUI {
 	
@@ -79,13 +80,15 @@ public class ClientGUI {
 //		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);
-//		window.repaint();
+		center.repaint();
 		
 	}
 	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
 		gui.drawObject(new Tank("hj", 100, 100));
+		gui.drawObject(new Water("hj2", 200, 200));
+		gui.drawObject(new Water("hj3", 300, 300));
 	}
 
 	class KeyListen implements KeyListener {

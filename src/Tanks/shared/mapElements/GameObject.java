@@ -98,11 +98,11 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		return false;
 	}
 
-	public HashSet<Integer> getXset() {
+	private HashSet<Integer> getXset() {
 		return thisXcoord;
 	}
 	
-	public HashSet<Integer> getYset() {
+	private HashSet<Integer> getYset() {
 		return thisYcoord;
 	}
 	

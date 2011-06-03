@@ -27,7 +27,11 @@ public class ServerCore {
 			while (true) {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {
-					clientList.addClient(new ClientSession(clientSock, inbound, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+					if(clientList.exists(clientSock.getInetAddress())) {
+						clientList.getExisting(clientSock.getInetAddress()).notify();
+					} else {
+						clientList.addClient(new ClientSession(clientSock, inbound, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+					}
 					System.out.println("Klient ühines edukalt, ID = " + clientID);
 					clientID++;					
 				} catch (IOException e) {
@@ -35,7 +39,7 @@ public class ServerCore {
 				}
 			}	
 		} catch (IOException e) {
-			System.out.println("IO viga :" + e.getMessage());
+			System.out.println("IO viga: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

@@ -105,14 +105,16 @@ public class ClientCore {
 			sock = new Socket(serverAddr, port);
 			
 		} catch (ConnectException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println("ConnectException!");
 			return tryConnecting();
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
 			System.out.println("There is something wrong with the address");
 			return false;
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.out.println("IOException!");
 			return tryConnecting();
 		}
 		startGame();

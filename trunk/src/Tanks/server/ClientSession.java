@@ -93,19 +93,22 @@ public class ClientSession extends Thread {
 			
 	}
 
-
-
-	public void notifyConnectionLoss(Receiver receiver2) {
+	public synchronized void notifyConnectionLoss() {
 		try {
+			System.out.println("clientsessioni wait algus");
 			this.wait();
-			
+			System.out.println("clientsessioni wait lopp");
 		} catch (InterruptedException e) {
+			System.out.println("receiveri notify algus");
+			receiver.notify();
+			System.out.println("saadan äratusteate kliendile");
+			sendMessage(new Message(clientID));
+			System.out.println("receivery notify lopp");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IllegalMonitorStateException e) {
+			System.out.println("MONITOREXC");
 		}
-		
-//		receiver.notify();
-		
 	}
 	
 }

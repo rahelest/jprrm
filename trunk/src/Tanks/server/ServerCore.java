@@ -12,7 +12,7 @@ import Tanks.shared.GameMap;
 public class ServerCore {
 	
 	@SuppressWarnings("unused")
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		int port = 8888;	
 		int clientID = 1;
 		
@@ -28,14 +28,19 @@ public class ServerCore {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus
 				try {
 					if(clientList.exists(clientSock.getInetAddress())) {
-						clientList.getExisting(clientSock.getInetAddress()).notify();
+						System.out.println("clientsessioni notify algus");
+						synchronized(clientList.getExisting(clientSock.getInetAddress())) {
+							clientList.getExisting(clientSock.getInetAddress()).notify();
+						}
+						System.out.println("clientsessioni notify lopp");
 					} else {
 						clientList.addClient(new ClientSession(clientSock, inbound, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+						System.out.println("Klient ühines edukalt, ID = " + clientID);
+						clientID++;	
 					}
-					System.out.println("Klient ühines edukalt, ID = " + clientID);
-					clientID++;					
+							
 				} catch (IOException e) {
-					clientSock.close();					// Kui ühendust ei loodud, sulgeme sokli
+					clientSock.close();	// Kui ühendust ei loodud, sulgeme sokli
 				}
 			}	
 		} catch (IOException e) {

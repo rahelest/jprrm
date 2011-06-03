@@ -45,7 +45,6 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		createX();
 		createY();
 		try {
-			System.out.println(image);
 			sprite = ImageIO.read(new File("src//" + image));
 		} catch (FileNotFoundException e) {
 			System.out.println("The backround image was not found - missing file!");
@@ -59,10 +58,9 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		}
 	}
 	
-	public void paintComponent(Graphics g) {
+	public final void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(sprite, 0, 0, this);
-		
 	}
 
 	public String getID() {

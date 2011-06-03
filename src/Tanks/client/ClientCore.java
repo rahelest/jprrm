@@ -13,7 +13,7 @@ import Tanks.shared.*;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
-public class ClientCore {
+public class ClientCore extends Thread{
 
 	private ClientGUI gui;
 	private Socket sock;
@@ -34,7 +34,7 @@ public class ClientCore {
 	}
 
 	
-	public void startGame() {
+	public void run() {
 		
 		
 		try {
@@ -42,8 +42,7 @@ public class ClientCore {
 			receiver = new Receiver(this, sock, inBuf);
 			outBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
-			Message message = new Message("Hi!");
-			netOut.writeObject(message);
+			netOut.writeObject(new Message("Hi!"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -64,7 +63,7 @@ public class ClientCore {
 			} catch (NumberFormatException e) {
 				if (message.extraString == null) { 
 					map = message.object;
-					System.out.println(map);
+//					System.out.println(map);
 					sendForDrawing(map);
 				}
 			}
@@ -76,6 +75,7 @@ public class ClientCore {
 		Set<String> keys = objects.keySet();
 		for (String k : keys) {
 			gui.drawObject(objects.get(k));
+			System.out.println(objects.get(k));
 		}
 	}
 
@@ -117,7 +117,7 @@ public class ClientCore {
 			System.out.println("IOException!");
 			return tryConnecting();
 		}
-		startGame();
+		run();
 		return true;
 	}
 	
@@ -128,7 +128,7 @@ public class ClientCore {
 			} catch (InterruptedException e1) { }
 			connectionTries++;
 			if (connectToServer(serverName, port)) {
-				startGame();
+				notify();
 				return true;
 			}
 		} else {

@@ -55,7 +55,7 @@ public class ClientGUI {
 //					clientCore.startGame();
 					text.setVisible(false);
 					ok.setVisible(false);
-					clientCore.startGame();
+//					clientCore.startGame();
 					//ALUSTA MÄNGUGA
 //					window.repaint();
 				} else {

@@ -103,6 +103,7 @@ public class ClientCore {
 		try {
 			InetAddress serverAddr = InetAddress.getByName(serverName);
 			sock = new Socket(serverAddr, port);
+			
 		} catch (ConnectException e) {
 			e.printStackTrace();
 			return tryConnecting();
@@ -114,6 +115,7 @@ public class ClientCore {
 			e.printStackTrace();
 			return tryConnecting();
 		}
+		startGame();
 		return true;
 	}
 	
@@ -124,6 +126,7 @@ public class ClientCore {
 			} catch (InterruptedException e1) { }
 			connectionTries++;
 			if (connectToServer(serverName, port)) {
+				startGame();
 				return true;
 			}
 		} else {

@@ -62,7 +62,9 @@ public class ClientCore {
 				
 			} catch (NumberFormatException e) {
 				if (message.extraString == null) { 
-					sendForDrawing(message.object);
+					map = message.object;
+					System.out.println(map);
+					sendForDrawing(map);
 				}
 			}
 		}

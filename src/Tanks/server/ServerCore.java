@@ -17,11 +17,12 @@ public class ServerCore {
 		int clientID = 1;
 		
 		try {
+			ObjectFactory factory = new ObjectFactory();
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
 			CommunicationBuffer inbound = new CommunicationBuffer();
-			GameMap killingField = new GameMap(messenger);
+			GameMap killingField = new GameMap(messenger, factory);
 //			GameCore game = new GameCore(clientList, messenger, inbound);
 			while (true) {
 				Socket clientSock = serv.accept();			// accept() jääb ootama, kuniks luuakse ühendus

@@ -24,7 +24,7 @@ public class ClientGUI {
 	
 	private ClientCore clientCore;
 	JFrame window = new JFrame();
-	private JTextField text = new JTextField();
+	private JTextField text = new JTextField("localhost:8888");
 	JPanel top = new JPanel();
 	JPanel center = new JPanel();
 	JButton ok = new JButton("OK");
@@ -41,8 +41,8 @@ public class ClientGUI {
 		window.add(center, BorderLayout.CENTER);
 		center.setLayout(null);
 
-		Dimension size = new Dimension(700, 30);
-		text.setPreferredSize(size);
+//		Dimension size = new Dimension(700, 30);
+//		text.setPreferredSize(size);
 		top.setLayout(new BorderLayout());
 		
 		top.add(ok, BorderLayout.EAST);
@@ -51,11 +51,12 @@ public class ClientGUI {
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
-					clientCore.startGame();
+//					clientCore.startGame();
 					text.setVisible(false);
 					ok.setVisible(false);
+					clientCore.startGame();
 					//ALUSTA MÄNGUGA
-					window.repaint();
+//					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
 					enableConnecting();
@@ -71,26 +72,20 @@ public class ClientGUI {
 		ok.setVisible(true);
 	}
 
-	public void drawObject(GameObject object) {
-//		Drawer draw = new Drawer(object);
-//		draw.setSize(object.getWidth(), object.getHeight());
-//		draw.setLocation(object.getLocationX(), object.getLocationY());
-//		center.add(draw);
-//		draw.setBackground(Color.BLACK);
-		JPanel obj = new JPanel();
-//		obj.getGraphics(g);
-		obj.setSize(object.getWidth(), object.getHeight());
-		obj.setLocation(object.getLocationX(), object.getLocationY());
-		obj.setBackground(Color.BLACK);
+	public void drawObject(GameObject obj) {
+		System.out.println(obj);
+		obj.setSize(obj.getWidth(), obj.getHeight());
+		obj.setLocation(obj.getLocationX(), obj.getLocationY());
+//		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);
-		window.repaint();
+//		window.repaint();
 		
 	}
 	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
-		gui.drawObject(new Tank("hj", 100, 199));
+		gui.drawObject(new Tank("hj", 100, 100));
 	}
 
 	class KeyListen implements KeyListener {

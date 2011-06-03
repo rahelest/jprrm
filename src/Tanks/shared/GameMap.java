@@ -10,7 +10,9 @@ import java.util.HashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
+import Tanks.server.ObjectFactory;
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.mapElements.Water;
 
 public class GameMap implements Serializable {
 
@@ -20,6 +22,7 @@ public class GameMap implements Serializable {
 	private static final long serialVersionUID = -6541854117698278749L;
 	public HashMap<String, GameObject> objects = new HashMap<String, GameObject>();
 	private transient BufferedImage background;
+	private transient ObjectFactory factory;
 	private transient CommunicationBuffer outBuff;
 	
 	public synchronized void addObject(GameObject objectToBeAdded) {
@@ -50,7 +53,8 @@ public class GameMap implements Serializable {
 		return this;
 	}
 	
-	public GameMap(Broadcaster messenger) {
+	public GameMap(Broadcaster messenger, ObjectFactory factory) {
+		this.factory = factory;
 		this.outBuff = messenger.getMainOutbound();
 		try {
 			background = ImageIO.read(new File("src//background.png"));
@@ -65,10 +69,10 @@ public class GameMap implements Serializable {
 			e.printStackTrace();			
 		}
 		
-//		elements.add(new Water(200, 200));
-//		elements.add(new Water(800, 200));
-//		elements.add(new Water(800, 800));
-//		elements.add(new Water(200, 800));
+		factory.createWater(200, 200);
+		factory.createWater(800, 200);
+		factory.createWater(800, 800);
+		factory.createWater(200, 800);
 	}
 
 	public HashMap<String, GameObject> getObject() {

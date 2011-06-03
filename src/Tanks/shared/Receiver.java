@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 import Tanks.client.ClientCore;
 import Tanks.server.ClientSession;
@@ -24,6 +25,7 @@ public class Receiver extends Thread {
 		InputStream iS = sock.getInputStream();
 		System.out.println("vaheprintout");
 		try {
+			System.out.println("netIn-i loomise algus");
 			netIn = new ObjectInputStream(iS);
 		} catch (EOFException e) {
 			 
@@ -50,14 +52,34 @@ public class Receiver extends Thread {
 			} catch (ClassNotFoundException e) {
 				System.out.println("Class not found, contact Your reseller and complain!");
 				e.printStackTrace();
+			} catch (SocketException e) {
+				e.printStackTrace();
+				if (session != null) {
+					try {
+						System.out.println("receivery wait algus");
+						this.wait();
+						System.out.println("receiveri notify lopp");
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IllegalMonitorStateException e2) {
+						System.out.println("MONITOREXC");
+					}
+					session.notifyConnectionLoss();
+				} else {
+					try {
+						clientCore.notifyConnectionLoss(this);
+						this.wait();						
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();
-				if (session != null) {
-					session.notifyConnectionLoss(this);
-				} else {
-					clientCore.notifyConnectionLoss(this);
-				}
+				
 //				try {
 //					wait();
 //				} catch (InterruptedException e1) {

@@ -2,6 +2,7 @@ package Tanks.client;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -102,77 +103,68 @@ public class ClientCore {
 		try {
 			InetAddress serverAddr = InetAddress.getByName(serverName);
 			sock = new Socket(serverAddr, port);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+			return tryConnecting();
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
 			System.out.println("There is something wrong with the address");
 			return false;
 		} catch (IOException e) {
-			if (connectionTries < 10) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) { }
-				connectionTries++;
-				connectToServer(serverName, port);
-				e.printStackTrace();
-			} else {
-				connectionTries = 0;
-				System.out.println("Connecting failed");
-				try {
-					sock.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				return false;
-			}
+			e.printStackTrace();
+			return tryConnecting();
 		}
-		System.out.println("Connection established!");
 		return true;
+	}
+	
+	private boolean tryConnecting() {
+		if (connectionTries < 10) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) { }
+			connectionTries++;
+			if (connectToServer(serverName, port)) {
+				return true;
+			}
+		} else {
+			connectionTries = 0;
+			System.out.println("Connecting failed");
+			try {
+				sock.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			return false;
+			}
+		return false;
 	}
 	
 	public static void main(String[] args) {
 		new ClientCore();
 	}
 
-//	private void replaceAndSend(GameObject tank) {
-//		map.doYourStuff(tank);
-//		outBuf.addMessage(new Message(map));
-//	}
-
 	public void moveNorth() {
-		Tank tank = (Tank) map.getObject(Integer.toString(myID));
-		tank.setLocationY(tank.getLocationY() - unit);
-		tank.setDirection("N");
-//		replaceAndSend(tank);
-		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
+		outBuf.addMessage(new Message("N"));
 	}
 
 
 	public void moveSouth() {
-		Tank tank = (Tank) map.getObject(Integer.toString(myID));
-		tank.setLocationY(tank.getLocationY() + unit);
-		tank.setDirection("S");
-		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
+		outBuf.addMessage(new Message("S"));
 	}
 
 
 	public void moveEast() {
-		Tank tank = (Tank) map.getObject(Integer.toString(myID));
-		tank.setLocationX(tank.getLocationX() + unit);
-		tank.setDirection("E");
-		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
+		outBuf.addMessage(new Message("E"));
 	}
 
 
 	public void moveWest() {
-		Tank tank = (Tank) map.getObject(Integer.toString(myID));
-		tank.setLocationX(tank.getLocationX() - unit);
-		tank.setDirection("W");
-		outBuf.addMessage(new Message(map.doYourStuffDontSend(tank)));
+		outBuf.addMessage(new Message("W"));
 	}
 
 
 	public void fire() {
-		outBuf.addMessage(new Message("FIRE!"));
+		outBuf.addMessage(new Message("F"));
 	}
 
 

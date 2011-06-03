@@ -173,7 +173,7 @@ public class ClientCore {
 			sock.close();
 			
 			if (connectToServer(serverName, port)) {
-//				receiver2.notify();
+				receiver2.notify();
 				outBuf.addMessage(new  Message(myID));
 			} else {
 				gui.enableConnecting();

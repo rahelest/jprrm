@@ -1,6 +1,8 @@
 package Tanks.shared.mapElements;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,8 +11,9 @@ import java.util.HashSet;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
-public abstract class GameObject implements ObjectBase, Serializable {
+public abstract class GameObject extends JPanel implements ObjectBase, Serializable {
 	
 	/**
 	 * 
@@ -54,6 +57,12 @@ public abstract class GameObject implements ObjectBase, Serializable {
 			System.out.println("General IO exception reading background image!");
 			e.printStackTrace();			
 		}
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(sprite, 0, 0, this);
+		
 	}
 
 	public String getID() {

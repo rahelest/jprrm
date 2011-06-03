@@ -14,6 +14,7 @@ public class Drawer extends JPanel {
 
 	public Drawer(GameObject object) {
 		this.object = object;
+		//imagesitt
 	
 	}
 	

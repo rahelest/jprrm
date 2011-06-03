@@ -32,6 +32,7 @@ public class ClientGUI {
 	GameMap map;
 	
 	
+	
 	public ClientGUI(ClientCore nClientCore) {
 		clientCore = nClientCore;
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,21 +42,13 @@ public class ClientGUI {
 		window.add(top, BorderLayout.NORTH);
 		window.add(center, BorderLayout.CENTER);
 		center.setLayout(null);
-
-//		Dimension size = new Dimension(700, 30);
-//		text.setPreferredSize(size);
-		top.setLayout(new BorderLayout());
-		
-		top.add(ok, BorderLayout.EAST);
-		top.add(text, BorderLayout.CENTER);
-		
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
 //					clientCore.startGame();
 					text.setVisible(false);
 					ok.setVisible(false);
-//					clientCore.startGame();
+					clientCore.run();
 					//ALUSTA MÄNGUGA
 //					window.repaint();
 				} else {
@@ -65,6 +58,11 @@ public class ClientGUI {
 				System.out.println(text.getText());
 			}
 		});
+//		Dimension size = new Dimension(700, 30);
+//		text.setPreferredSize(size);
+		top.setLayout(new BorderLayout());		
+		top.add(ok, BorderLayout.EAST);
+		top.add(text, BorderLayout.CENTER);		
 		window.addKeyListener(new KeyListen());
 	}
 	
@@ -74,11 +72,11 @@ public class ClientGUI {
 	}
 
 	public void drawObject(GameObject obj) {
-		System.out.println(obj);
+//		System.out.println(obj);
 		obj.setSize(obj.getWidth(), obj.getHeight());
-		System.out.println(obj.getSize());
+//		System.out.println(obj.getSize());
 		obj.setLocation(obj.getLocationX(), obj.getLocationY());
-		System.out.println(obj.getLocationX() + " " + obj.getLocationY());
+//		System.out.println(obj.getLocationX() + " " + obj.getLocationY());
 //		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);
@@ -117,9 +115,10 @@ public class ClientGUI {
 		}
 		@Override
 		public void keyReleased(KeyEvent key) {
-			}
+		}
 	
 		@Override
 		public void keyTyped(KeyEvent key) {
-		}}
+		}
+	}
 }

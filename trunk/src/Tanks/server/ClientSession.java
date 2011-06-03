@@ -73,8 +73,10 @@ public class ClientSession extends Thread {
 				//tulista
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
-				tank.setLocationY(tank.getLocationY() - tankspeed);
-				((Tank) tank).setDirection("N");
+
+					tank.setLocationY(tank.getLocationY() - tankspeed);
+					((Tank) tank).setDirection("N");
+
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tank.setLocationY(tank.getLocationY() + tankspeed);

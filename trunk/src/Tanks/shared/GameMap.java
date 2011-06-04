@@ -56,6 +56,19 @@ public class GameMap implements Serializable {
 	public GameMap(Broadcaster messenger, ObjectFactory factory) {
 		this.factory = factory;
 		this.outBuff = messenger.getMainOutbound();
+		loadBackGround();
+		
+		GameObject temp = factory.createWater(200, 200);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(800, 200);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(800, 800);
+		objects.put(temp.getID(), temp);
+		temp = factory.createWater(200, 800);
+		objects.put(temp.getID(), temp);
+	}
+
+	private void loadBackGround() {
 		try {
 			background = ImageIO.read(new File("src//background.png"));
 		} catch (IIOException e) {			
@@ -69,14 +82,10 @@ public class GameMap implements Serializable {
 			e.printStackTrace();			
 		}
 		
-		GameObject temp = factory.createWater(200, 200);
-		objects.put(temp.getID(), temp);
-		temp = factory.createWater(800, 200);
-		objects.put(temp.getID(), temp);
-		temp = factory.createWater(800, 800);
-		objects.put(temp.getID(), temp);
-		temp = factory.createWater(200, 800);
-		objects.put(temp.getID(), temp);
+	}
+
+	public GameMap() {
+		loadBackGround();
 	}
 
 	public HashMap<String, GameObject> getObject() {

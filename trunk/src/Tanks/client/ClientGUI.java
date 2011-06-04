@@ -1,9 +1,6 @@
 package Tanks.client;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,42 +16,39 @@ import javax.swing.JTextField;
 import Tanks.shared.GameMap;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.mapElements.Water;
 
-public class ClientGUI {
+public class ClientGUI extends Thread {
 	
 	private ClientCore clientCore;
-	JFrame window = new JFrame();
+	private JFrame window = new JFrame();
 	private JTextField text = new JTextField("localhost:8888");
-	JPanel top = new JPanel();
-	JPanel center = new JPanel();
-	JButton ok = new JButton("OK");
-	GameMap map;
-	
-	
+	private JPanel top = new JPanel();
+	private JPanel center = new JPanel();
+	private JButton ok = new JButton("OK");
+	private GameMap map;
+	private GameObject tank;	
 	
 	public ClientGUI(ClientCore nClientCore) {
 		clientCore = nClientCore;
+		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(1000, 980);
+		window.setSize(400, 500);
 		window.setVisible(true);
-		window.setLayout(new BorderLayout());
-		window.add(top, BorderLayout.NORTH);
-		window.add(center, BorderLayout.CENTER);
+		window.getContentPane().setLayout(new BorderLayout());
+		window.getContentPane().add(top, BorderLayout.NORTH);
+		window.getContentPane().add(center, BorderLayout.CENTER);
 		center.setLayout(null);
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
-//					clientCore.startGame();
 					text.setVisible(false);
 					ok.setVisible(false);
-					//ALUSTA MÄNGUGA
 //					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
 					enableConnecting();
 				}
-				System.out.println(text.getText());
+//				System.out.println(text.getText());
 			}
 		});
 //		Dimension size = new Dimension(700, 30);
@@ -63,19 +57,32 @@ public class ClientGUI {
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);		
 		window.addKeyListener(new KeyListen());
+		start();
 	}
 	
-	public void enableConnecting() {
-		text.setVisible(true);
-		ok.setVisible(true);
+	public void run() {
+		while(true) {
+//			map = clientCore.getMap();
+//			sendForDrawing(map);
+			center.repaint();
+		}
+	}
+	
+	private void sendForDrawing(GameMap map) {
+		HashMap<String, GameObject> objects = map.getObject();
+		Set<String> keys = objects.keySet();
+		for (String k : keys) {
+			drawObject(objects.get(k));
+//			System.out.println(objects.get(k));
+		}
 	}
 
 	public void drawObject(GameObject obj) {
-//		System.out.println(obj);
-		obj.setSize(obj.getWidth(), obj.getHeight());
-//		System.out.println(obj.getSize());
-		obj.setLocation(obj.getLocationX(), obj.getLocationY());
-//		System.out.println(obj.getLocationX() + " " + obj.getLocationY());
+		obj.loadImage();
+//		obj.setSize(obj.getWidth(), obj.getHeight());
+		System.out.println(obj.getSize());
+//		obj.setLocation(obj.getX(), obj.getY());
+		System.out.println(obj.getX() + " " + obj.getY());
 //		obj.setBackground(Color.BLACK);
 		
 		center.add(obj);
@@ -83,39 +90,56 @@ public class ClientGUI {
 		
 	}
 	
+	public void enableConnecting() {
+		text.setVisible(true);
+		ok.setVisible(true);
+	}
+	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
-		GameObject tank = new Tank("hj", 100, 100);
-		GameObject water = new Water("hj2", 100, 100);
-		GameObject water2 = new Water("hj3", 300, 300);
-		gui.drawObject(tank);
-		gui.drawObject(water);
-		gui.drawObject(water2);
-		System.out.println("Test: kollitud " + tank.getCollision(water));
-		System.out.println("Test: kollimata " + tank.getCollision(water2));
+		gui.tank = new Tank("hj", 100, 100);
+//		GameObject water = new Water("hj2", 100, 100);
+//		GameObject water2 = new Water("hj3", 300, 300);
+		gui.drawObject(gui.tank);
+//		gui.drawObject(water);
+//		gui.drawObject(water2);
+//		System.out.println("Test: kollitud " + gui.tank.getCollision(water));
+//		System.out.println("Test: kollimata " + gui.tank.getCollision(water2));
 	}
 
 	class KeyListen implements KeyListener {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
+			try{
 			int code = key.getKeyCode();
 			if (code == KeyEvent.VK_UP) {
-				System.out.println("You pressed up");
-				clientCore.moveNorth();
+				System.out.println("UP!");
+//				clientCore.moveNorth();
+				tank.setLocation(tank.getX(), tank.getY() - 10);
+				System.out.println("Tank " + tank.getY()) ;
 			} else if (code == KeyEvent.VK_DOWN) {
-				System.out.println("Down!");
-				clientCore.moveSouth();
+				System.out.println("DOWN!");
+//				clientCore.moveSouth();
+				tank.setLocation(tank.getX(), tank.getY() + 10);
 			} else if (code == KeyEvent.VK_LEFT) {
 				System.out.println("LEFT!");
-				clientCore.moveEast();
+//				clientCore.moveEast();
+				tank.setLocation(tank.getX() - 10, tank.getY());
 			} else if (code == KeyEvent.VK_RIGHT) {
-				System.out.println("Right!");
-				clientCore.moveWest();
+				System.out.println("RIGHT!");
+//				clientCore.moveWest();
+				tank.setLocation(tank.getX() + 10, tank.getY());
 			} else if (code == KeyEvent.VK_SPACE) {
 				System.out.println("FIRE!");
 				clientCore.fire();
 			}
+			} catch (NullPointerException e) {}
+			System.out.println(tank);
+//			drawObject(tank);
+			tank.repaint();
+			System.out.println(tank.getX() + " " + tank.getY());
+//			center.repaint();
 		}
 		@Override
 		public void keyReleased(KeyEvent key) {

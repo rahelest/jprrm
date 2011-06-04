@@ -1,6 +1,7 @@
 package Tanks.shared.gameElements;
 
 import Tanks.shared.mapElements.BreakableObject;
+import java.awt.*;
 
 public class Tank extends BreakableObject {
 
@@ -20,6 +21,15 @@ public class Tank extends BreakableObject {
 
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+	
+	public void paintComponent(Graphics g) {
+		g.drawImage(sprite, 0, 0, this);
+		 Graphics2D g2d = (Graphics2D) g;
+		 g2d.translate(getWidth()/2, getHeight()/2);
+		 System.out.println("Turning tank!");
+		 g2d.rotate(3);
+//		 g2d.tra
 	}
 
 }

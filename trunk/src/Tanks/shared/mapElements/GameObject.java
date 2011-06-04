@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import javax.imageio.IIOException;
@@ -66,6 +67,47 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	public String getID() {
 		return ID;
 	}
+	
+	public boolean getCollision(GameObject otherObject) {
+		if(checkCoordinates(otherObject, this.locationX, width) && checkCoordinates(otherObject, locationY, height)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean checkCoordinates(GameObject otherObject, int corner, int size) {
+		ArrayList<Integer> temp = new ArrayList<Integer>();
+//		int tempInt = width;
+		int x = 2;
+		
+		temp.add(corner); temp.add(corner + size);
+		if (getCollision(otherObject, temp)) {
+			return true;
+		}
+		temp.clear();
+//		System.out.println(width * 0 + " " + width);
+		
+		while(x <= size / 2) {
+			for (int i = 1; i < x; i += 1) {
+				temp.add(corner + (size / x) * i);
+			}
+			if (getCollision(otherObject, temp)) {
+				return true;
+			}
+			temp.clear();
+//			System.out.println();
+			x = x * 2;
+		}
+		for (int i = 1; i < size; i++) {
+			temp.add(corner + i);
+		}
+		if (getCollision(otherObject, temp)) {
+			return true;
+		}
+		return false;
+		
+	}
 
 	private void createX() {
 		for (int i = locationX; i <= (locationX + width); i++) {
@@ -79,9 +121,9 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		}
 	}
 	
-	public boolean getCollision(GameObject otherObject) {
+	private boolean getCollision(GameObject otherObject, ArrayList<Integer> temp) {
 		if(!passable) {
-			for (int i : thisXcoord) {
+			for (int i : temp) {
 				if (otherObject.getXset().contains(i)) {
 					return true;
 				}

@@ -25,7 +25,7 @@ public class ClientGUI {
 	
 	private ClientCore clientCore;
 	JFrame window = new JFrame();
-	private JTextField text = new JTextField("192.168.1.105:8888");
+	private JTextField text = new JTextField("localhost:8888");
 	JPanel top = new JPanel();
 	JPanel center = new JPanel();
 	JButton ok = new JButton("OK");
@@ -48,7 +48,6 @@ public class ClientGUI {
 //					clientCore.startGame();
 					text.setVisible(false);
 					ok.setVisible(false);
-					clientCore.run();
 					//ALUSTA MÄNGUGA
 //					window.repaint();
 				} else {
@@ -86,9 +85,14 @@ public class ClientGUI {
 	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
-		gui.drawObject(new Tank("hj", 100, 100));
-		gui.drawObject(new Water("hj2", 200, 200));
-		gui.drawObject(new Water("hj3", 300, 300));
+		GameObject tank = new Tank("hj", 100, 100);
+		GameObject water = new Water("hj2", 100, 100);
+		GameObject water2 = new Water("hj3", 300, 300);
+		gui.drawObject(tank);
+		gui.drawObject(water);
+		gui.drawObject(water2);
+		System.out.println("Test: kollitud " + tank.getCollision(water));
+		System.out.println("Test: kollimata " + tank.getCollision(water2));
 	}
 
 	class KeyListen implements KeyListener {

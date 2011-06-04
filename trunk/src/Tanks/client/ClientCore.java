@@ -13,7 +13,7 @@ import Tanks.shared.*;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
-public class ClientCore extends Thread{
+public class ClientCore extends Thread {
 
 	private ClientGUI gui;
 	private Socket sock;
@@ -27,8 +27,6 @@ public class ClientCore extends Thread{
 	private ObjectOutputStream netOut;
 	private GameMap map;
 	private int myID = -1;
-	private int unit = 10;
-
 	public ClientCore() {
 		gui = new ClientGUI(this);	
 	}

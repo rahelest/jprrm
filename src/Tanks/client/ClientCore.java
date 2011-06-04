@@ -6,12 +6,7 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.Set;
-
 import Tanks.shared.*;
-import Tanks.shared.gameElements.Tank;
-import Tanks.shared.mapElements.GameObject;
 
 public class ClientCore extends Thread {
 
@@ -25,10 +20,10 @@ public class ClientCore extends Thread {
 	private Broadcaster broadcaster;
 	private Receiver receiver;
 	private ObjectOutputStream netOut;
-	private GameMap map;
+	private GameMap map = new GameMap();
 	private int myID = -1;
 	public ClientCore() {
-		gui = new ClientGUI(this);	
+		gui = new ClientGUI(this);
 	}
 
 	
@@ -62,18 +57,8 @@ public class ClientCore extends Thread {
 				if (message.extraString == null) { 
 					map = message.object;
 //					System.out.println(map);
-					sendForDrawing(map);
-				}
+					}
 			}
-		}
-	}
-	
-	public void sendForDrawing(GameMap map) {
-		HashMap<String, GameObject> objects = map.getObject();
-		Set<String> keys = objects.keySet();
-		for (String k : keys) {
-			gui.drawObject(objects.get(k));
-			System.out.println(objects.get(k));
 		}
 	}
 
@@ -188,6 +173,11 @@ public class ClientCore extends Thread {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+	synchronized public GameMap getMap() {
+		return map;
 	}
 		
 }

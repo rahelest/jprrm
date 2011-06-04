@@ -1,6 +1,6 @@
 package Tanks.shared.mapElements;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,9 +59,9 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		}
 	}
 	
-	public final void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(sprite, 0, 0, this);
+
 	}
 
 	public String getID() {

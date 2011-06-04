@@ -73,21 +73,20 @@ public class ClientSession extends Thread {
 				//tulista
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
-
-					tank.setLocationY(tank.getLocationY() - tankspeed);
-					((Tank) tank).setDirection("N");
+				tank.setLocation(tank.getX(), tank.getY() - tankspeed);
+				((Tank) tank).setDirection("N");
 
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
-				tank.setLocationY(tank.getLocationY() + tankspeed);
+				tank.setLocation(tank.getX(), tank.getY() + tankspeed);
 				((Tank) tank).setDirection("S");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
-				tank.setLocationX(tank.getLocationX() - tankspeed);
+				tank.setLocation(tank.getX() - tankspeed, tank.getY());
 				((Tank) tank).setDirection("W");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
-				tank.setLocationX(tank.getLocationX() + tankspeed);
+				tank.setLocation(tank.getX() + tankspeed, tank.getY());
 				((Tank) tank).setDirection("E");
 			}
 			

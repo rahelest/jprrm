@@ -5,21 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Tanks.shared.GameMap;
-import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.mapElements.Tree;
-import Tanks.shared.mapElements.Water;
 
 public class ClientGUI extends Thread {
 	
@@ -30,7 +27,7 @@ public class ClientGUI extends Thread {
 	private JPanel center = new JPanel();
 	private JButton ok = new JButton("OK");
 	private GameMap map;
-	private GameObject tank;	
+	JLabel myName = new JLabel("My tank!",JLabel.CENTER);
 	
 	public ClientGUI(ClientCore nClientCore) {
 		setName("ClientGUI");
@@ -94,16 +91,13 @@ public class ClientGUI extends Thread {
 
 	public void drawObject(GameObject obj) {
 		obj.loadImage();
-//		System.out.println(obj.getClass().getSimpleName());
-//		obj.setSize(obj.getWidth(), obj.getHeight());
-//		System.out.println(obj.getSize());
-//		obj.setLocation(obj.getX(), obj.getY());
-//		System.out.println(obj.getX() + " " + obj.getY());
-//		obj.setBackground(Color.BLACK);
-
+		if (obj.getID().equals("T" + clientCore.getMyID())) {
+			System.out.println("SILT!");
+//			myName.setLabelFor(obj);
+			myName.setLocation(obj.getX() - 10, obj.getY());
+			center.add(myName);
+		}
 		center.add(obj);
-//		center.repaint();
-		
 	}
 	
 	public void enableConnecting() {
@@ -137,46 +131,24 @@ public class ClientGUI extends Thread {
 		public void keyPressed(KeyEvent key) {
 			int code = key.getKeyCode();
 			if (code == KeyEvent.VK_UP) {
-//					System.out.println("UP!");
 				clientCore.moveNorth();
-//					tank.setLocation(tank.getX(), tank.getY() - 2);
-//					System.out.println("Tank " + tank.getY()) ;
 			} else if (code == KeyEvent.VK_DOWN) {
-//					System.out.println("DOWN!");
 				clientCore.moveSouth();
-//					tank.setLocation(tank.getX(), tank.getY() + 2);
 			} else if (code == KeyEvent.VK_LEFT) {
-//					System.out.println("LEFT!");
 				clientCore.moveEast();
-//					tank.setLocation(tank.getX() - 2, tank.getY());
 			} else if (code == KeyEvent.VK_RIGHT) {
-//					System.out.println("RIGHT!");
 				clientCore.moveWest();
-//					tank.setLocation(tank.getX() + 2, tank.getY());
 			} else if (code == KeyEvent.VK_SPACE) {
-//					System.out.println("FIRE!");
 				clientCore.fire();
 			}
-			/*try {
-				wait(2);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			}*/
-//				System.out.println(tank);
-//				drawObject(tank);
-//				tank.repaint();
-//				System.out.println(tank.getX() + " " + tank.getY());
-//				center.repaint();
 		}
+		
 		@Override
 		public void keyReleased(KeyEvent key) {
-			
 		}
 	
 		@Override
 		public void keyTyped(KeyEvent key) {
-			
 		}
 	}
 }

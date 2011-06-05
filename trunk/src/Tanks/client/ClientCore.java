@@ -188,5 +188,10 @@ public class ClientCore extends Thread {
 	public synchronized GameMap getMap() {
 		return map;
 	}
+
+
+	public Object getMyID() {
+		return myID;
+	}
 		
 }

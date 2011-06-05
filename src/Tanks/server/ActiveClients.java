@@ -1,13 +1,14 @@
 package Tanks.server;
 
 import java.net.InetAddress;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ActiveClients {
 
-	private List<ClientSession> clientList = new LinkedList<ClientSession>();
+	private List<ClientSession> clientList = Collections.synchronizedList(new LinkedList<ClientSession>());
 	private Object iteratorLock = new Object();
 	
 	public void addClient(ClientSession client) {

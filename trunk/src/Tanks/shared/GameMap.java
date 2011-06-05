@@ -27,7 +27,6 @@ public class GameMap implements Serializable {
 	private static final long serialVersionUID = -6541854117698278749L;
 	private ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
 	private transient BufferedImage background;
-	private transient ObjectFactory factory;
 	private transient CommunicationBuffer outBuff;
 	private transient Object mapLock = new Object();
 	
@@ -35,8 +34,7 @@ public class GameMap implements Serializable {
 		loadBackGround();
 	}
 	
-	public GameMap(Broadcaster messenger, ObjectFactory factory) {
-		this.factory = factory;
+	public GameMap(Broadcaster messenger) {
 		this.outBuff = messenger.getMainOutbound();
 		loadBackGround();				
 	}

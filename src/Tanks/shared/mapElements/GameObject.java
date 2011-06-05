@@ -34,6 +34,8 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	protected transient BufferedImage sprite;
 	
 	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability, String image) {
+		setLayout(null);
+		setBackground(new Color(0,0,0,0));
 		this.ID = ID;
 		setLocation(x, y);
 		setSize(width, height);
@@ -61,7 +63,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
+		g.drawImage(sprite, 0, 0, this);
 	}
 
 	public String getID() {

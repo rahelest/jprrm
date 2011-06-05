@@ -4,20 +4,24 @@ import java.util.LinkedList;
 
 public class CommunicationBuffer {
 	private LinkedList<Message> messages = new LinkedList<Message>();
+	private Object bufferLock = new Object();
 	
 	public synchronized void addMessage(Message message) {
-		messages.add(message);
+		synchronized (bufferLock) {
+			messages.add(message);
+		}	
 		this.notifyAll();
 	}
 	
 	public synchronized Message getMessage() {
 		try {
 			while (messages.isEmpty()) {
-				this.wait();
-			}
+				this.wait();				}
 		} catch (InterruptedException e) {}
-		Message temp = messages.getFirst();
-		messages.removeFirst();
-		return temp;
+		synchronized (bufferLock) {
+			Message temp = messages.getFirst();
+			messages.removeFirst();
+			return temp;
+		}
 	}
 }

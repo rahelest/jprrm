@@ -69,29 +69,35 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
+			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 //			System.out.println("uus serveriteade");
 			if (temp.extraString.equals("F")) {
 				//tulista
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
-				tank.setLocation(tank.getX(), tank.getY() - tankspeed);
-				((Tank) tank).setDirection("N");
+				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);
+				((Tank) tempTank).setDirection("N");
 
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
-				tank.setLocation(tank.getX(), tank.getY() + tankspeed);
-				((Tank) tank).setDirection("S");
+				tempTank.setLocation(tank.getX(), tank.getY() + tankspeed);
+				((Tank) tempTank).setDirection("S");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
-				tank.setLocation(tank.getX() + tankspeed, tank.getY());
-				((Tank) tank).setDirection("W");
+				tempTank.setLocation(tank.getX() + tankspeed, tank.getY());
+				((Tank) tempTank).setDirection("W");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
-				tank.setLocation(tank.getX() - tankspeed, tank.getY());
-				((Tank) tank).setDirection("E");
+				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
+				((Tank) tempTank).setDirection("E");
+			}
+			if (tempTank.checkCollision(map)) {
+				System.out.println("Collision!!");
+			} else {
+				System.out.println("NotCollision!!");
+				map.doYourStuff(tank);
 			}
 			
-			map.doYourStuff(tank);
 		}
 			
 			

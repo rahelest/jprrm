@@ -69,18 +69,18 @@ public class Receiver extends Thread {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalMonitorStateException e2) {
-						System.out.println("MONITOREXC");
+						e2.printStackTrace();
 					}
 					session.notifyConnectionLoss();
 				} else {
 					try {
-						clientCore.notifyConnectionLoss(this);
 						synchronized(receiverMonitor) {	
 							this.wait();
 						}
 					} catch (InterruptedException e1) {
 //						e1.printStackTrace();
 					}
+					clientCore.notifyConnectionLoss(this);
 				}
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");

@@ -115,10 +115,10 @@ public class ClientSession extends Thread {
 			}
 			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new Message(clientID));
-			System.out.println("receivery notify lopp");
+			System.out.println("receiveri notify lopp");
 			e.printStackTrace();
 		} catch (IllegalMonitorStateException e) {
-			System.out.println("MONITOREXC");
+//			System.out.println("MONITOREXC");
 			e.printStackTrace();
 		}
 	}

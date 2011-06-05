@@ -44,7 +44,7 @@ public class ClientGUI extends Thread {
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
-					System.out.println("PRINT");
+//					System.out.println("PRINT");
 					text.setVisible(false);
 					ok.setVisible(false);
 					window.repaint();

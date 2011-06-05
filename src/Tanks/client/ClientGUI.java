@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -82,7 +83,7 @@ public class ClientGUI extends Thread {
 	
 	private void sendForDrawing(GameMap map) {
 		center.removeAll();
-		HashMap<String, GameObject> objects = map.getObject();
+		Hashtable<String, GameObject> objects = map.getObject();
 		Set<String> keys = objects.keySet();
 		for (String k : keys) {
 			drawObject(objects.get(k));

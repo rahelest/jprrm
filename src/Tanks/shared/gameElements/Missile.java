@@ -12,7 +12,8 @@ public class Missile extends UnbreakableObject implements Runnable {
 	
 	
 	public Missile(String ID, int x, int y, String direction) {
-		super(ID, x, y, 10, 15, true, "missile.png");
+		super(ID, x, y, 10, 15, true, "missile" + direction + ".png");
+		this.direction = direction;
 	}
 
 	public String getDirection() {

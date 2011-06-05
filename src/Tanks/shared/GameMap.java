@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
@@ -22,7 +23,7 @@ public class GameMap implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -6541854117698278749L;
-	private Hashtable<String, GameObject> objects = new Hashtable<String, GameObject>();
+	private ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
 	private transient BufferedImage background;
 	private transient ObjectFactory factory;
 	private transient CommunicationBuffer outBuff;
@@ -99,7 +100,7 @@ public class GameMap implements Serializable {
 		}
 	}
 
-	public synchronized Hashtable<String, GameObject> getObject() {
+	public synchronized ConcurrentHashMap<String, GameObject> getObject() {
 			return objects;
 	}
 	

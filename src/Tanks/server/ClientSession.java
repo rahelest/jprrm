@@ -20,6 +20,7 @@ public class ClientSession extends Thread {
 	private CommunicationBuffer inBuff;
 	private InetAddress clientIP;
 	private Object clientMonitor = new Object();
+	private Object senderLock = new Object();
 	
 	private GameMap map;
 	private GameObject tank;
@@ -51,11 +52,13 @@ public class ClientSession extends Thread {
 	}
 
 
-	public void sendMessage(Message msg) {
+	public synchronized void sendMessage(Message msg) {
 		try {
-			netOut.writeObject(msg);
-			netOut.flush();
-			netOut.reset();
+			synchronized (senderLock) {
+				netOut.writeObject(msg);
+				netOut.flush();
+				netOut.reset();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -69,6 +72,7 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
+			System.out.println("uus serveriteade");
 			if (temp.extraString.equals("F")) {
 				//tulista
 			} else if (temp.extraString.equals("N")) {
@@ -82,11 +86,11 @@ public class ClientSession extends Thread {
 				((Tank) tank).setDirection("S");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
-				tank.setLocation(tank.getX() - tankspeed, tank.getY());
+				tank.setLocation(tank.getX() + tankspeed, tank.getY());
 				((Tank) tank).setDirection("W");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
-				tank.setLocation(tank.getX() + tankspeed, tank.getY());
+				tank.setLocation(tank.getX() - tankspeed, tank.getY());
 				((Tank) tank).setDirection("E");
 			}
 			
@@ -115,6 +119,7 @@ public class ClientSession extends Thread {
 			e.printStackTrace();
 		} catch (IllegalMonitorStateException e) {
 			System.out.println("MONITOREXC");
+			e.printStackTrace();
 		}
 	}
 	

@@ -141,7 +141,7 @@ public class ClientGUI extends Thread {
 			} else if (code == KeyEvent.VK_SPACE) {
 				clientCore.fire();
 			}
-			System.out.println("reaktsiOOOOOOOOON!");
+//			System.out.println("reaktsiOOOOOOOOON!");
 		}
 		
 		@Override

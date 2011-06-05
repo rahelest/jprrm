@@ -10,7 +10,8 @@ public class Missile extends UnbreakableObject implements Runnable {
 	private static final long serialVersionUID = 1727024859906113013L;
 	protected String direction = "N";
 	
-	public Missile(String ID, int x, int y, int width, int height) {
+	
+	public Missile(String ID, int x, int y, String direction) {
 		super(ID, x, y, 10, 15, true, "missile.png");
 	}
 

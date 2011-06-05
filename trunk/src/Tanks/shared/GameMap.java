@@ -1,6 +1,7 @@
 package Tanks.shared;
 
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 
 import Tanks.server.ObjectFactory;
+import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.mapElements.Water;
 
@@ -58,6 +60,11 @@ public class GameMap implements Serializable {
 
 	public GameObject getObject(String ID) {
 			return objects.get(ID);
+	}
+	
+	public Rectangle betBounds() {
+		Tank tank = new Tank("test", 0, 0);
+		return new Rectangle(tank.getWidth(), tank.getHeight(), 900 - 2 * tank.getWidth(), 900 - 2 * tank.getHeight());
 	}
 
 	public void removeObject(String objectID) {

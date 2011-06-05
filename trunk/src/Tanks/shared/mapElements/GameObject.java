@@ -105,6 +105,9 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 			if(getBounds().intersects(map.getObject(s).getBounds())) {
 				return true;
 			}
+			if(!getBounds().intersects(map.betBounds())) {
+				return true;
+			}
 		}
 		return false;
 	}

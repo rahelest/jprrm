@@ -1,10 +1,12 @@
 package Tanks.shared.gameElements;
 
+import java.io.Serializable;
+
 import Tanks.server.ClientSession;
 import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.UnbreakableObject;
 
-public class Missile extends UnbreakableObject implements Runnable {
+public class Missile extends UnbreakableObject implements Runnable, Serializable {
 
 	/**
 	 * 

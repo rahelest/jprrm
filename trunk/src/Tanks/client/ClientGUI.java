@@ -157,12 +157,12 @@ public class ClientGUI extends Thread {
 //					System.out.println("FIRE!");
 				clientCore.fire();
 			}
-			try {
-				sleep(2);
+			/*try {
+				wait(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 //				e.printStackTrace();
-			}
+			}*/
 //				System.out.println(tank);
 //				drawObject(tank);
 //				tank.repaint();

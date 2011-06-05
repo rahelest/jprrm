@@ -27,7 +27,6 @@ public class Tank extends BreakableObject {
 		g.drawImage(sprite, 0, 0, this);
 		 Graphics2D g2d = (Graphics2D) g;
 		 g2d.translate(getWidth()/2, getHeight()/2);
-		 System.out.println("Turning tank!");
 		 g2d.rotate(3);
 //		 g2d.tra
 	}

@@ -4,26 +4,34 @@ import java.util.Random;
 
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
+import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.*;
 
 public class ObjectFactory {
 
 	int id = 0;
 	
-	public Water createWater(int x, int y) {
+	public Tank spawnTank(GameMap map, String name) {
+		Random rand = new Random();
+		GameObject tank = new Tank (name, rand.nextInt(900 - 60), rand.nextInt(900 - 30));
+		map = addingToMap(map, tank);
+		return (Tank) map.getObject(name);
+	}
+	
+	private Water createWater(int x, int y) {
 		return new Water("a" + ++id, x, y);
 	}
 	
 	
-	public Tree createTree(int x, int y) {
+	private Tree createTree(int x, int y) {
 		return new Tree("a" + ++id, x, y);
 	}
 	
-	public BrickWall createBrickWall(int x, int y) {
+	private BrickWall createBrickWall(int x, int y) {
 		return new BrickWall("a" + ++id, x, y);
 	}
 	
-	public IronWall createIronWall(int x, int y) {
+	private IronWall createIronWall(int x, int y) {
 		return new IronWall("a" + ++id, x, y);
 	}
 	

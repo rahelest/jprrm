@@ -12,7 +12,7 @@ public class Tank extends BreakableObject {
 	protected String direction = "N";
 	
 	public Tank(String ID, int x, int y) {
-		super(ID, x, y, 60, 30, "tank.png");
+		super(ID, x, y, 60, 30, "tankEAST.png");
 	}
 
 	public String getDirection() {

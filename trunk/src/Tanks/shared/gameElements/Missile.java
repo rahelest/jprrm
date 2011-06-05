@@ -2,7 +2,7 @@ package Tanks.shared.gameElements;
 
 import Tanks.shared.mapElements.UnbreakableObject;
 
-public class Missile extends UnbreakableObject {
+public class Missile extends UnbreakableObject implements Runnable {
 
 	/**
 	 * 
@@ -20,6 +20,12 @@ public class Missile extends UnbreakableObject {
 
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

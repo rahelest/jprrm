@@ -90,10 +90,7 @@ public class ClientSession extends Thread {
 				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
 				((Tank) tempTank).setDirection("E");
 			}
-			if (tempTank.checkCollision(map)) {
-				System.out.println("Collision!!");
-			} else {
-				System.out.println("NotCollision!!");
+			if (!tempTank.checkCollision(map)) {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 			}
 			map.doYourStuff(tank);

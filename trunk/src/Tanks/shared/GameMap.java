@@ -38,20 +38,7 @@ public class GameMap implements Serializable {
 	public GameMap(Broadcaster messenger, ObjectFactory factory) {
 		this.factory = factory;
 		this.outBuff = messenger.getMainOutbound();
-		loadBackGround();		
-		GameObject temp = factory.createWater(200, 200);
-		objects.put(temp.getID(), temp);
-		
-		temp = factory.createWater(800, 200);
-		objects.put(temp.getID(), temp);
-		
-		temp = factory.createWater(800, 800);
-		objects.put(temp.getID(), temp);
-		
-		temp = factory.createWater(200, 800);
-		objects.put(temp.getID(), temp);
-		
-		
+		loadBackGround();				
 	}
 	
 	public void addObject(GameObject objectToBeAdded) {

@@ -28,6 +28,7 @@ public class ServerCore {
 						ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
 						synchronized(exSessPointer) {
 							System.out.println("luku algus");
+							exSessPointer.updateOnReconnect(clientSock);
 							exSessPointer.notify();
 							System.out.println(exSessPointer);
 						}

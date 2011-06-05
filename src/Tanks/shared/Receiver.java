@@ -62,27 +62,29 @@ public class Receiver extends Thread {
 						System.out.println("Klient katkes");
 						System.out.println("receiveri wait algus");
 						synchronized(this) {
-							wait();
+							session.notifyConnectionLoss();
+							this.wait();
 						}
 						System.out.println("receiveri notify lopp");
-					} catch (InterruptedException e1) {
 						System.out.println("Receiveri wait lõpp");
+					} catch (InterruptedException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalMonitorStateException e2) {
 						e2.printStackTrace();
 					}
-					session.notifyConnectionLoss();
+					
 				} else {
 					try {
-						synchronized(this) {	
-							wait();
+						synchronized(this) {
+							clientCore.notifyConnectionLoss(this);
+							this.wait();
 						}
 					} catch (InterruptedException e1) {
 //						e1.printStackTrace();
 						System.out.println("Receiveri wait lõpp");
 					}
-					clientCore.notifyConnectionLoss(this);
+					
 				}
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");

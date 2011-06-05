@@ -14,10 +14,13 @@ public class CommunicationBuffer {
 	}
 	
 	public synchronized Message getMessage() {
-		try {
+//		try {
 			while (messages.isEmpty()) {
-				this.wait();				}
-		} catch (InterruptedException e) {}
+				try {
+					wait();
+				} catch (InterruptedException e) {}
+			}
+//		} catch (InterruptedException e) {}
 		synchronized (bufferLock) {
 			Message temp = messages.getFirst();
 			messages.removeFirst();

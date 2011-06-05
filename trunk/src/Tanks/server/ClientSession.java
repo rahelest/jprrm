@@ -31,18 +31,26 @@ public class ClientSession extends Thread {
 	private int exp = 0;
 
 	
-	public ClientSession(Socket sock, GameMap killingField, int clientID) throws IOException {
+	public ClientSession(Socket sock, GameMap killingField, int clientID) throws IOException{
 		this.clientID = clientID;
 		this.sock = sock;
 		this.clientIP = sock.getInetAddress();
 		this.map = killingField;
-		netOut = new ObjectOutputStream(sock.getOutputStream());       
-		inBuff = new CommunicationBuffer();
-		receiver =  new Receiver(this, sock, inBuff);
+		createComms();
 		this.setName("ClientSession - " + clientID + " " + clientIP);
 		start();
 	}
 	
+	public void updateOnReconnect(Socket sock) throws IOException{
+		this.sock = sock;
+		createComms();
+	}
+	
+	private void createComms() throws IOException {
+		netOut = new ObjectOutputStream(sock.getOutputStream());       
+		inBuff = new CommunicationBuffer();
+		receiver =  new Receiver(this, sock, inBuff);
+	}
 	
 	public InetAddress getClientIP() {
 		return clientIP;
@@ -69,6 +77,7 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
+			System.out.println("TEADE!");
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
@@ -93,21 +102,17 @@ public class ClientSession extends Thread {
 			if (!tempTank.checkCollision(map)) {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 			}
-			map.doYourStuff(tank);
-			
-		}
-			
-			
+			map.doYourStuff(tank);			
+		}			
 	}
 
-	public synchronized void notifyConnectionLoss() {
+	public void notifyConnectionLoss() {
 		try {
 			System.out.println("clientsessioni wait algus");
 			synchronized(this) {
-				wait();
+				this.wait();
 				System.out.println("proov clisess wait järel");
 			}
-		} catch (InterruptedException e) {
 			System.out.println("clientsessioni wait lopp");
 			System.out.println("receiveri notify algus");
 			synchronized (receiver) {
@@ -116,7 +121,9 @@ public class ClientSession extends Thread {
 			}
 			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new Message(clientID));
+			sendMessage(new Message(map));
 			System.out.println("receiveri notify lopp");
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (IllegalMonitorStateException e) {
 //			System.out.println("MONITOREXC");

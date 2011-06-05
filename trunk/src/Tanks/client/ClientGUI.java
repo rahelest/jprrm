@@ -46,6 +46,7 @@ public class ClientGUI extends Thread {
 //					System.out.println("PRINT");
 					text.setVisible(false);
 					ok.setVisible(false);
+					window.addKeyListener(new KeyListen());
 					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
@@ -58,8 +59,7 @@ public class ClientGUI extends Thread {
 //		text.setPreferredSize(size);
 		top.setLayout(new BorderLayout());		
 		top.add(ok, BorderLayout.EAST);
-		top.add(text, BorderLayout.CENTER);		
-		window.addKeyListener(new KeyListen());
+		top.add(text, BorderLayout.CENTER);
 		start();
 	}
 	
@@ -141,6 +141,7 @@ public class ClientGUI extends Thread {
 			} else if (code == KeyEvent.VK_SPACE) {
 				clientCore.fire();
 			}
+			System.out.println("reaktsiOOOOOOOOON!");
 		}
 		
 		@Override

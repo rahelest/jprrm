@@ -16,24 +16,21 @@ public class ClientCore extends Thread {
 	private int port;
 	private int connectionTries = 0;
 	private CommunicationBuffer inBuf;
-	private CommunicationBuffer outBuf;
-	private Broadcaster broadcaster;
-	private Receiver receiver;
 	private ObjectOutputStream netOut;
 	private GameMap map = new GameMap();
 	private int myID = -1;
+	
 	public ClientCore() {
+		setName("ClientCore");
 		gui = new ClientGUI(this);
 	}
 
 	
-	public void run() {
-		
+	public void run() {		
 		
 		try {
 			inBuf = new CommunicationBuffer();
-			receiver = new Receiver(this, sock, inBuf);
-			outBuf = new CommunicationBuffer();
+			new Receiver(this, sock, inBuf);
 			netOut = new ObjectOutputStream(sock.getOutputStream());
 			netOut.writeObject(new Message("Hi!"));
 		} catch (IOException e) {
@@ -58,6 +55,9 @@ public class ClientCore extends Thread {
 					map = message.object;
 //					System.out.println(map);
 					}
+			}
+			synchronized(gui) {
+				gui.notify();
 			}
 		}
 	}
@@ -100,7 +100,7 @@ public class ClientCore extends Thread {
 			System.out.println("IOException!");
 			return tryConnecting();
 		}
-		run();
+		start();
 		return true;
 	}
 	
@@ -127,32 +127,42 @@ public class ClientCore extends Thread {
 		return false;
 	}
 	
+	private void sendMessage(Message message) {
+		try {
+			netOut.writeObject(message);
+			netOut.flush();
+			netOut.reset();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void main(String[] args) {
 		new ClientCore();
 	}
 
 	public void moveNorth() {
-		outBuf.addMessage(new Message("N"));
+		sendMessage(new Message("N"));
 	}
 
 
 	public void moveSouth() {
-		outBuf.addMessage(new Message("S"));
+		sendMessage(new Message("S"));
 	}
 
 
 	public void moveEast() {
-		outBuf.addMessage(new Message("E"));
+		sendMessage(new Message("E"));
 	}
 
 
 	public void moveWest() {
-		outBuf.addMessage(new Message("W"));
+		sendMessage(new Message("W"));
 	}
 
 
 	public void fire() {
-		outBuf.addMessage(new Message("F"));
+		sendMessage(new Message("F"));
 	}
 
 
@@ -162,21 +172,20 @@ public class ClientCore extends Thread {
 			
 			if (connectToServer(serverName, port)) {
 				receiver2.notify();
-				outBuf.addMessage(new  Message(myID));
+				sendMessage(new  Message(myID));
 			} else {
 				gui.enableConnecting();
 				//nulli receiver kuidagi
 			}
 				
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
 
 
-	synchronized public GameMap getMap() {
+	public synchronized GameMap getMap() {
 		return map;
 	}
 		

@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import Tanks.shared.GameMap;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.mapElements.Tree;
+import Tanks.shared.mapElements.Water;
 
 public class ClientGUI extends Thread {
 	
@@ -29,6 +31,7 @@ public class ClientGUI extends Thread {
 	private GameObject tank;	
 	
 	public ClientGUI(ClientCore nClientCore) {
+		setName("ClientGUI");
 		clientCore = nClientCore;
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,9 +44,10 @@ public class ClientGUI extends Thread {
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
+					System.out.println("PRINT");
 					text.setVisible(false);
 					ok.setVisible(false);
-//					window.repaint();
+					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
 					enableConnecting();
@@ -62,13 +66,22 @@ public class ClientGUI extends Thread {
 	
 	public void run() {
 		while(true) {
-//			map = clientCore.getMap();
-//			sendForDrawing(map);
+			map = clientCore.getMap();
+			sendForDrawing(map);
 			center.repaint();
+			try {
+				synchronized(this) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
 		}
 	}
 	
 	private void sendForDrawing(GameMap map) {
+		center.removeAll();
 		HashMap<String, GameObject> objects = map.getObject();
 		Set<String> keys = objects.keySet();
 		for (String k : keys) {
@@ -79,14 +92,15 @@ public class ClientGUI extends Thread {
 
 	public void drawObject(GameObject obj) {
 		obj.loadImage();
+//		System.out.println(obj.getClass().getSimpleName());
 //		obj.setSize(obj.getWidth(), obj.getHeight());
-		System.out.println(obj.getSize());
+//		System.out.println(obj.getSize());
 //		obj.setLocation(obj.getX(), obj.getY());
-		System.out.println(obj.getX() + " " + obj.getY());
+//		System.out.println(obj.getX() + " " + obj.getY());
 //		obj.setBackground(Color.BLACK);
-		
+
 		center.add(obj);
-		center.repaint();
+//		center.repaint();
 		
 	}
 	
@@ -97,7 +111,13 @@ public class ClientGUI extends Thread {
 	
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
+		gui.map = new GameMap();
 		gui.tank = new Tank("hj", 100, 100);
+		gui.map.addObject(new Water("we", 32, 150));
+		gui.map.addObject(new Tank("we2", 43, 244));
+		gui.map.addObject(new Tree("we3", 143, 244));
+		
+		gui.sendForDrawing(gui.map);
 //		GameObject water = new Water("hj2", 100, 100);
 //		GameObject water2 = new Water("hj3", 300, 300);
 		gui.drawObject(gui.tank);
@@ -112,41 +132,43 @@ public class ClientGUI extends Thread {
 		@Override
 		public void keyPressed(KeyEvent key) {
 			try{
-			int code = key.getKeyCode();
-			if (code == KeyEvent.VK_UP) {
-				System.out.println("UP!");
-//				clientCore.moveNorth();
-				tank.setLocation(tank.getX(), tank.getY() - 10);
-				System.out.println("Tank " + tank.getY()) ;
-			} else if (code == KeyEvent.VK_DOWN) {
-				System.out.println("DOWN!");
-//				clientCore.moveSouth();
-				tank.setLocation(tank.getX(), tank.getY() + 10);
-			} else if (code == KeyEvent.VK_LEFT) {
-				System.out.println("LEFT!");
-//				clientCore.moveEast();
-				tank.setLocation(tank.getX() - 10, tank.getY());
-			} else if (code == KeyEvent.VK_RIGHT) {
-				System.out.println("RIGHT!");
-//				clientCore.moveWest();
-				tank.setLocation(tank.getX() + 10, tank.getY());
-			} else if (code == KeyEvent.VK_SPACE) {
-				System.out.println("FIRE!");
-				clientCore.fire();
-			}
+				int code = key.getKeyCode();
+				if (code == KeyEvent.VK_UP) {
+					System.out.println("UP!");
+					clientCore.moveNorth();
+//					tank.setLocation(tank.getX(), tank.getY() - 2);
+//					System.out.println("Tank " + tank.getY()) ;
+				} else if (code == KeyEvent.VK_DOWN) {
+					System.out.println("DOWN!");
+					clientCore.moveSouth();
+//					tank.setLocation(tank.getX(), tank.getY() + 2);
+				} else if (code == KeyEvent.VK_LEFT) {
+					System.out.println("LEFT!");
+					clientCore.moveEast();
+//					tank.setLocation(tank.getX() - 2, tank.getY());
+				} else if (code == KeyEvent.VK_RIGHT) {
+					System.out.println("RIGHT!");
+					clientCore.moveWest();
+//					tank.setLocation(tank.getX() + 2, tank.getY());
+				} else if (code == KeyEvent.VK_SPACE) {
+					System.out.println("FIRE!");
+					clientCore.fire();
+				}
 			} catch (NullPointerException e) {}
-			System.out.println(tank);
-//			drawObject(tank);
-			tank.repaint();
-			System.out.println(tank.getX() + " " + tank.getY());
-//			center.repaint();
+//				System.out.println(tank);
+//				drawObject(tank);
+//				tank.repaint();
+//				System.out.println(tank.getX() + " " + tank.getY());
+//				center.repaint();
 		}
 		@Override
 		public void keyReleased(KeyEvent key) {
+			
 		}
 	
 		@Override
 		public void keyTyped(KeyEvent key) {
+			
 		}
 	}
 }

@@ -92,7 +92,7 @@ public class ClientGUI extends Thread {
 	public void drawObject(GameObject obj) {
 		obj.loadImage();
 		if (obj.getID().equals("T" + clientCore.getMyID())) {
-			System.out.println("SILT!");
+//			System.out.println("SILT!");
 //			myName.setLabelFor(obj);
 			myName.setLocation(obj.getX() - 10, obj.getY());
 			center.add(myName);

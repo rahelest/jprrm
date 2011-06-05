@@ -9,6 +9,7 @@ import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.GameMap;
 import Tanks.shared.Message;
 import Tanks.shared.Receiver;
+import Tanks.shared.gameElements.Missile;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
@@ -71,7 +72,7 @@ public class ClientSession extends Thread {
 	
 	public void run() {
 		String key = "T" + (Integer.toString(clientID));
-		tank = ObjectFactory.spawnTank(map, key);
+		tank = new Tank(key , 100, 100);
 		map.addObject(tank);
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
@@ -81,6 +82,7 @@ public class ClientSession extends Thread {
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
+				new Missile("M" + clientID, (tank.getX()), (tank.getY()), ((Tank)tank).getDirection() , missilespeed);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);

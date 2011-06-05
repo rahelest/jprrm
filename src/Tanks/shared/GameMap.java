@@ -39,12 +39,17 @@ public class GameMap implements Serializable {
 		loadBackGround();		
 		GameObject temp = factory.createWater(200, 200);
 		objects.put(temp.getID(), temp);
+		
 		temp = factory.createWater(800, 200);
 		objects.put(temp.getID(), temp);
+		
 		temp = factory.createWater(800, 800);
 		objects.put(temp.getID(), temp);
+		
 		temp = factory.createWater(200, 800);
 		objects.put(temp.getID(), temp);
+		
+		
 	}
 	
 	public void addObject(GameObject objectToBeAdded) {

@@ -53,13 +53,42 @@ public class ServerCore {
 	public GameMap createMap(Broadcaster messenger, ObjectFactory factory, int water, int tree, int brick, int iron) {
 		GameMap map = new GameMap(messenger, factory);
 		Random rand = new Random();
-		for (int i = 0; i < iron; i++) {
-			GameObject object = factory.createIronWall(rand.nextInt(900), rand.nextInt(900));
-			if (map.getObject() != null && !object.checkCollision(map)) {
+		
+		GameObject object2 = factory.createIronWall(rand.nextInt(900), rand.nextInt(900));
+		map.addObject(object2);
+		for (int i = 1; i < iron; i++) {
+			GameObject object = factory.createIronWall(object2.getX() + object2.getWidth() + 1, object2.getY());
+			map = addingToMap(map, object);
+			object2 = object;
+		}
+		
+		for (int i = 0; i < brick; i++) {
+			GameObject object = factory.createBrickWall(rand.nextInt(900), rand.nextInt(900));
+			map = addingToMap(map, object);
+		}
+		
+		for (int i = 0; i < tree; i++) {
+			GameObject object = factory.createTree(rand.nextInt(900), rand.nextInt(900));
+			map = addingToMap(map, object);
+		}
+		
+		for (int i = 0; i < water; i++) {
+			GameObject object = factory.createWater(rand.nextInt(900), rand.nextInt(900));
+			map = addingToMap(map, object);
+		}
+		
+		return map;
+	}
+	
+	private GameMap addingToMap(GameMap map, GameObject object) {
+		Random rand = new Random();
+		while (true) {
+			if (!object.checkCollision(map)) {
 				map.addObject(object);
+				return map;
+			} else {
+				object.setLocation(rand.nextInt(900), rand.nextInt(900));
 			}
 		}
-		map.addObject(factory.createTree(x, y))
-		
 	}
 }

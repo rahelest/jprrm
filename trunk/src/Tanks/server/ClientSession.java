@@ -70,7 +70,6 @@ public class ClientSession extends Thread {
 		while(true) {
 			Message temp = inBuff.getMessage();
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
-//			System.out.println("uus serveriteade");
 			if (temp.extraString.equals("F")) {
 				//tulista
 			} else if (temp.extraString.equals("N")) {
@@ -95,8 +94,9 @@ public class ClientSession extends Thread {
 				System.out.println("Collision!!");
 			} else {
 				System.out.println("NotCollision!!");
-				map.doYourStuff(tank);
+				tank.setLocation(tempTank.getX(), tempTank.getY());
 			}
+			map.doYourStuff(tank);
 			
 		}
 			

@@ -135,9 +135,9 @@ public class ClientGUI extends Thread {
 			} else if (code == KeyEvent.VK_DOWN) {
 				clientCore.moveSouth();
 			} else if (code == KeyEvent.VK_LEFT) {
-				clientCore.moveEast();
-			} else if (code == KeyEvent.VK_RIGHT) {
 				clientCore.moveWest();
+			} else if (code == KeyEvent.VK_RIGHT) {
+				clientCore.moveEast();
 			} else if (code == KeyEvent.VK_SPACE) {
 				clientCore.fire();
 			}

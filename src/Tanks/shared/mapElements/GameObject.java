@@ -50,6 +50,14 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //		createY();
 	}
 	
+	public synchronized void setImage(String image) {
+		this.image = image;
+	}
+	
+	public synchronized String getImage() {
+		return image;
+	}
+	
 	public void loadImage() {
 		try {
 			sprite = ImageIO.read(new File("src//" + image));

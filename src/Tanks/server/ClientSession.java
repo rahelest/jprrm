@@ -85,24 +85,33 @@ public class ClientSession extends Thread {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);
 				((Tank) tempTank).setDirection("N");
-
+				tempTank.setSize(30, 60);
+				tempTank.setImage("tankNORTH.png");
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tempTank.setLocation(tank.getX(), tank.getY() + tankspeed);
 				((Tank) tempTank).setDirection("S");
+				tempTank.setSize(30, 60);
+				tempTank.setImage("tankSOUTH.png");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
-				tempTank.setLocation(tank.getX() + tankspeed, tank.getY());
+				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
 				((Tank) tempTank).setDirection("W");
+				tempTank.setSize(60, 30);
+				tempTank.setImage("tankWEST.png");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
-				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
+				tempTank.setLocation(tank.getX() + tankspeed, tank.getY());
 				((Tank) tempTank).setDirection("E");
+				tempTank.setSize(60, 30);
+				tempTank.setImage("tankEAST.png");
 			}
 			if (!tempTank.checkCollision(map)) {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
+				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
+				tank.setImage(tempTank.getImage());
 			}
-			map.doYourStuff(tank);			
+			map.doYourStuff(tank);
 		}			
 	}
 

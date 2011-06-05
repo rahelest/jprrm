@@ -132,7 +132,7 @@ public class ClientCore extends Thread {
 			netOut.writeObject(message);
 			netOut.flush();
 			netOut.reset();
-			System.out.println("Teade teel....");
+//			System.out.println("Teade teel....");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -61,7 +61,7 @@ public class Receiver extends Thread {
 					try {
 						System.out.println("Klient katkes");
 						System.out.println("receivery wait algus");
-						synchronized(receiverMonitor) {
+						synchronized(this) {
 							this.wait();
 						}
 						System.out.println("receiveri notify lopp");
@@ -74,7 +74,7 @@ public class Receiver extends Thread {
 					session.notifyConnectionLoss();
 				} else {
 					try {
-						synchronized(receiverMonitor) {	
+						synchronized(this) {	
 							this.wait();
 						}
 					} catch (InterruptedException e1) {

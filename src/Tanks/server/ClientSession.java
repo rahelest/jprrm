@@ -103,14 +103,14 @@ public class ClientSession extends Thread {
 	public synchronized void notifyConnectionLoss() {
 		try {
 			System.out.println("clientsessioni wait algus");
-			synchronized(clientMonitor) {
+			synchronized(this) {
 //				receiver.wait();
 				this.wait();
 			}
 			System.out.println("clientsessioni wait lopp");
 		} catch (InterruptedException e) {
 			System.out.println("receiveri notify algus");
-			synchronized (receiver.getMonitor()) {
+			synchronized (receiver) {
 				receiver.notify();
 			}
 			System.out.println("saadan äratusteate kliendile");

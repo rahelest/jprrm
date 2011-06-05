@@ -20,7 +20,7 @@ public class ServerCore {
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
-			GameMap killingField = factory.createMap(messenger, 5, 6, 4, 4);
+			GameMap killingField = factory.createMap(messenger, 3, 6, 4, 4);
 			while (true) {
 				Socket clientSock = serv.accept();
 				try {

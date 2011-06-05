@@ -17,16 +17,12 @@ public class ActiveClients {
 	private Object iteratorLock = new Object();
 	
 	public void addClient(ClientSession client) {
-		synchronized (iteratorLock) {
 			clientList.add(client);
-		}
 	}
 
 	public Iterator<ClientSession> iterator() {
-		synchronized(iteratorLock) {
 			Iterator<ClientSession> i = clientList.iterator();
 			return i;
-		}
 	}
 
 	public boolean exists(InetAddress inetAddress) {

@@ -24,11 +24,11 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //	protected int locationY;
 //	protected int width;
 //	protected int height;
-	protected boolean passable;
-	protected boolean bulletPassable;
-	protected boolean breakable;
-	protected HashSet<Integer> thisXcoord = new HashSet<Integer>();
-	protected HashSet<Integer> thisYcoord = new HashSet<Integer>();
+	protected transient boolean passable;
+	protected transient boolean bulletPassable;
+	protected transient boolean breakable;
+	protected transient HashSet<Integer> thisXcoord = new HashSet<Integer>();
+	protected transient HashSet<Integer> thisYcoord = new HashSet<Integer>();
 	
 	protected String image;
 	protected transient BufferedImage sprite;

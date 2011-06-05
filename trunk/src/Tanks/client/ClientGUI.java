@@ -24,7 +24,7 @@ public class ClientGUI extends Thread {
 	
 	private ClientCore clientCore;
 	private JFrame window = new JFrame();
-	private JTextField text = new JTextField("localhost:8888");
+	private JTextField text = new JTextField("192.168.1.101:8888");
 	private JPanel top = new JPanel();
 	private JPanel center = new JPanel();
 	private JButton ok = new JButton("OK");
@@ -36,7 +36,7 @@ public class ClientGUI extends Thread {
 		clientCore = nClientCore;
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(400, 500);
+		window.setSize(800, 500);
 		window.setVisible(true);
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);

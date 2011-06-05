@@ -1,14 +1,19 @@
 package Tanks.server;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ActiveClients {
 
-	private List<ClientSession> clientList = Collections.synchronizedList(new LinkedList<ClientSession>());
+	private CopyOnWriteArrayList<ClientSession> clientList = new CopyOnWriteArrayList<ClientSession>();
 	private Object iteratorLock = new Object();
 	
 	public void addClient(ClientSession client) {

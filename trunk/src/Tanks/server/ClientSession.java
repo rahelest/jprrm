@@ -71,7 +71,7 @@ public class ClientSession extends Thread {
 	
 	public void run() {
 		String key = "T" + (Integer.toString(clientID));
-		tank = new Tank(key , 100, 100);
+		tank = ObjectFactory.spawnTank(map, key);
 		map.addObject(tank);
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));

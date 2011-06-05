@@ -104,7 +104,7 @@ public class ClientSession extends Thread {
 		return clientIP;
 	}
 
-	public synchronized void sendMessage(Message msg) {
+	public void sendMessage(Message msg) {
 		try {
 			synchronized (senderLock) {
 				netOut.writeObject(msg);

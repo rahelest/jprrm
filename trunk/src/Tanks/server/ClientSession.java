@@ -42,34 +42,6 @@ public class ClientSession extends Thread {
 		start();
 	}
 	
-	public void updateOnReconnect(Socket sock) throws IOException{
-		this.sock = sock;
-		createComms();
-	}
-	
-	private void createComms() throws IOException {
-		netOut = new ObjectOutputStream(sock.getOutputStream());       
-		inBuff = new CommunicationBuffer();
-		receiver =  new Receiver(this, sock, inBuff);
-	}
-	
-	public InetAddress getClientIP() {
-		return clientIP;
-	}
-
-
-	public synchronized void sendMessage(Message msg) {
-		try {
-			synchronized (senderLock) {
-				netOut.writeObject(msg);
-				netOut.flush();
-				netOut.reset();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	} 
-	
 	public void run() {
 		String key = "T" + (Integer.toString(clientID));
 		tank = ObjectFactory.spawnTank(map, key);
@@ -78,11 +50,11 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
-			System.out.println("TEADE!");
+//			System.out.println("TEADE!");
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
-				new Missile("M" + clientID, (tank.getX()), (tank.getY()), ((Tank)tank).getDirection() , missilespeed);
+				new Missile("M" + clientID, (tank.getX()), (tank.getY()), this);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);
@@ -116,6 +88,33 @@ public class ClientSession extends Thread {
 			map.doYourStuff(tank);
 		}			
 	}
+	
+	public void updateOnReconnect(Socket sock) throws IOException{
+		this.sock = sock;
+		createComms();
+	}
+	
+	private void createComms() throws IOException {
+		netOut = new ObjectOutputStream(sock.getOutputStream());       
+		inBuff = new CommunicationBuffer();
+		receiver =  new Receiver(this, sock, inBuff);
+	}
+	
+	public InetAddress getClientIP() {
+		return clientIP;
+	}
+
+	public synchronized void sendMessage(Message msg) {
+		try {
+			synchronized (senderLock) {
+				netOut.writeObject(msg);
+				netOut.flush();
+				netOut.reset();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	} 	
 
 	public void notifyConnectionLoss() {
 		try {
@@ -142,9 +141,15 @@ public class ClientSession extends Thread {
 		}
 	}
 	
-	public Object getClientMonitor() {
-		System.out.println("Küsitakse monitori");
-		return clientMonitor;
+	public synchronized Tank getTank() {
+		return (Tank) tank;
 	}
 	
+	public synchronized GameMap getMap() {
+		return map;
+	}
+	
+	public synchronized int getMissileSpeed() {
+		return missilespeed;
+	}
 }

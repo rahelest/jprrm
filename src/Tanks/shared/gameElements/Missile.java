@@ -1,6 +1,7 @@
 package Tanks.shared.gameElements;
 
 import Tanks.server.ClientSession;
+import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.UnbreakableObject;
 
 public class Missile extends UnbreakableObject implements Runnable {
@@ -11,10 +12,12 @@ public class Missile extends UnbreakableObject implements Runnable {
 	private static final long serialVersionUID = 1727024859906113013L;
 	protected String direction = "N";
 	protected int speed;
+	protected ClientSession owner;
 	
-	public Missile(String ID, int x, int y, String direction, int speed) {
-		super(ID, x, y, 10, 15, true, "missile" + direction + ".png");
-		this.direction = direction;
+	public Missile(String ID, int x, int y, ClientSession owner) {
+		super(ID, x, y, 10, 15, true, "missile" + owner.getTank().getDirection() + ".png");
+		this.direction = owner.getTank().getDirection();
+		this.speed = owner.getMissileSpeed();
 		new Thread(this).start();
 	}
 
@@ -28,24 +31,20 @@ public class Missile extends UnbreakableObject implements Runnable {
 
 	@Override
 	public void run() {
-		if(direction.equals("N")) {
-			while(true) {
-				setLocation(getX() - speed, getY());
+		GameMap map = owner.getMap();
+		while(true) {		
+			if(direction.equals("N")) {
+					setLocation(getX() - speed, getY());
+			} else if (direction.equals("S")) {
+					setLocation(getX() + speed, getY());
+			} else if (direction.equals("E")) {
+					setLocation(getX(), getY() + speed);
+			} else if (direction.equals("W")) {
+					setLocation(getX(), getY() - speed);
 			}
-		} else if (direction.equals("S")) {
-			while(true) {
-				setLocation(getX() + speed, getY());
-			}
-		} else if (direction.equals("E")) {
-			while(true) {
-				setLocation(getX(), getY() + speed);
-			}
-		} else if (direction.equals("W")) {
-			while(true) {
-				setLocation(getX(), getY() - speed);
-			}
+			map.doYourStuff(this);
 		}
-
+		
 	}
 
 }

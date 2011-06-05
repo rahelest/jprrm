@@ -3,11 +3,8 @@ package Tanks.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Random;
-
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
-import Tanks.shared.mapElements.GameObject;
 
 public class ServerCore {
 	
@@ -20,7 +17,7 @@ public class ServerCore {
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
-			GameMap killingField = factory.createMap(messenger, 3, 6, 4, 4);
+			GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
 			while (true) {
 				Socket clientSock = serv.accept();
 				try {

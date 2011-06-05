@@ -60,12 +60,13 @@ public class Receiver extends Thread {
 				if (session != null) {
 					try {
 						System.out.println("Klient katkes");
-						System.out.println("receivery wait algus");
+						System.out.println("receiveri wait algus");
 						synchronized(this) {
 							this.wait();
 						}
 						System.out.println("receiveri notify lopp");
 					} catch (InterruptedException e1) {
+						System.out.println("Receiveri wait lõpp");
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalMonitorStateException e2) {
@@ -79,6 +80,7 @@ public class Receiver extends Thread {
 						}
 					} catch (InterruptedException e1) {
 //						e1.printStackTrace();
+						System.out.println("Receiveri wait lõpp");
 					}
 					clientCore.notifyConnectionLoss(this);
 				}

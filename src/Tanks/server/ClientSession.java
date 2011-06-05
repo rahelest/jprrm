@@ -32,17 +32,14 @@ public class ClientSession extends Thread {
 
 	
 	public ClientSession(Socket sock, GameMap killingField, int clientID) throws IOException {
-		this.setName("ClientSession - " + clientID + " " + clientIP);
 		this.clientID = clientID;
 		this.sock = sock;
 		this.clientIP = sock.getInetAddress();
 		this.map = killingField;
 		netOut = new ObjectOutputStream(sock.getOutputStream());       
-		// Kui voogude loomine ebaõnnestub, peab väljakutsuv meetod 
-		// sokli sulgema. Kui lõim läks käima, vastutab lõim selle eest
 		inBuff = new CommunicationBuffer();
 		receiver =  new Receiver(this, sock, inBuff);
-		
+		this.setName("ClientSession - " + clientID + " " + clientIP);
 		start();
 	}
 	
@@ -106,12 +103,14 @@ public class ClientSession extends Thread {
 			synchronized(this) {
 //				receiver.wait();
 				this.wait();
+				System.out.println("proov clisess wait järel");
 			}
-			System.out.println("clientsessioni wait lopp");
 		} catch (InterruptedException e) {
+			System.out.println("clientsessioni wait lopp");
 			System.out.println("receiveri notify algus");
 			synchronized (receiver) {
 				receiver.notify();
+				System.out.println("prooviprint receiverlock");
 			}
 			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new Message(clientID));

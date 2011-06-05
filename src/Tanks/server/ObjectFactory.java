@@ -1,7 +1,6 @@
 package Tanks.server;
 
-import Tanks.shared.mapElements.Tree;
-import Tanks.shared.mapElements.Water;
+import Tanks.shared.mapElements.*;
 
 public class ObjectFactory {
 
@@ -14,5 +13,13 @@ public class ObjectFactory {
 	
 	public Tree createTree(int x, int y) {
 		return new Tree("a" + ++id, x, y);
+	}
+	
+	public BrickWall createBrickWall(int x, int y) {
+		return new BrickWall("a" + ++id, x, y);
+	}
+	
+	public IronWall createIronWall(int x, int y) {
+		return new IronWall("a" + ++id, x, y);
 	}
 }

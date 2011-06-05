@@ -18,6 +18,7 @@ public class Missile extends UnbreakableObject implements Runnable {
 		super(ID, x, y, 10, 15, true, "missile" + owner.getTank().getDirection() + ".png");
 		this.direction = owner.getTank().getDirection();
 		this.speed = owner.getMissileSpeed();
+		this.owner = owner;
 		new Thread(this).start();
 	}
 

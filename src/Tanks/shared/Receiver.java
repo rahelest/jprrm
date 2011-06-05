@@ -62,7 +62,7 @@ public class Receiver extends Thread {
 						System.out.println("Klient katkes");
 						System.out.println("receiveri wait algus");
 						synchronized(this) {
-							this.wait();
+							wait();
 						}
 						System.out.println("receiveri notify lopp");
 					} catch (InterruptedException e1) {
@@ -76,7 +76,7 @@ public class Receiver extends Thread {
 				} else {
 					try {
 						synchronized(this) {	
-							this.wait();
+							wait();
 						}
 					} catch (InterruptedException e1) {
 //						e1.printStackTrace();

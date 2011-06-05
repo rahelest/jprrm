@@ -29,7 +29,7 @@ public class ServerCore {
 						synchronized(exSessPointer) {
 							System.out.println("luku algus");
 							exSessPointer.notify();
-							}
+						}
 						System.out.println("clientsessioni notify lopp");
 					} else {
 						clientList.addClient(new ClientSession(clientSock, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama

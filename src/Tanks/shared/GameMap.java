@@ -48,21 +48,16 @@ public class GameMap implements Serializable {
 	}
 	
 	public void addObject(GameObject objectToBeAdded) {
-		synchronized (mapLock) {
 			objects.put(objectToBeAdded.getID(), objectToBeAdded);
-		}
 	}
 
 	public GameObject getObject(String ID) {
-		synchronized (mapLock) {
 			return objects.get(ID);
-		}
 	}
 
 	public void removeObject(String objectID) {
-		synchronized (mapLock) {
 			objects.remove(objectID);
-		}
+
 	}
 	
 	public BufferedImage getBackground() {
@@ -70,19 +65,15 @@ public class GameMap implements Serializable {
 	}
 	
 	public void doYourStuff(GameObject object) {
-		synchronized (mapLock) {
 			objects.remove(object.getID());
 			objects.put(object.getID(), object);
 			outBuff.addMessage(new Message(this));
-		}
 	}
 
 	public GameMap doYourStuffDontSend(GameObject object) {
-		synchronized (mapLock) {
 			objects.remove(object.getID());
 			objects.put(object.getID(), object);
 			return this;
-		}
 	}
 
 	private void loadBackGround() {
@@ -100,7 +91,7 @@ public class GameMap implements Serializable {
 		}
 	}
 
-	public synchronized ConcurrentHashMap<String, GameObject> getObject() {
+	public ConcurrentHashMap<String, GameObject> getObject() {
 			return objects;
 	}
 	

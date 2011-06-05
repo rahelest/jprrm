@@ -101,8 +101,7 @@ public class ClientSession extends Thread {
 		try {
 			System.out.println("clientsessioni wait algus");
 			synchronized(this) {
-//				receiver.wait();
-				this.wait();
+				wait();
 				System.out.println("proov clisess wait järel");
 			}
 		} catch (InterruptedException e) {

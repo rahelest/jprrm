@@ -158,7 +158,7 @@ public class ClientGUI extends Thread {
 				clientCore.fire();
 			}
 			try {
-				sleep(10);
+				sleep(2);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 //				e.printStackTrace();

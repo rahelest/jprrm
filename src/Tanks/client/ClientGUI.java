@@ -110,7 +110,8 @@ public class ClientGUI extends Thread {
 		text.setVisible(true);
 		ok.setVisible(true);
 	}
-	
+
+/*
 	public static void main(String[] args) {
 		ClientGUI gui = new ClientGUI(null);
 		gui.map = new GameMap();
@@ -128,35 +129,40 @@ public class ClientGUI extends Thread {
 //		System.out.println("Test: kollitud " + gui.tank.getCollision(water));
 //		System.out.println("Test: kollimata " + gui.tank.getCollision(water2));
 	}
+*/
 
 	class KeyListen implements KeyListener {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
-			try{
-				int code = key.getKeyCode();
-				if (code == KeyEvent.VK_UP) {
+			int code = key.getKeyCode();
+			if (code == KeyEvent.VK_UP) {
 //					System.out.println("UP!");
-					clientCore.moveNorth();
+				clientCore.moveNorth();
 //					tank.setLocation(tank.getX(), tank.getY() - 2);
 //					System.out.println("Tank " + tank.getY()) ;
-				} else if (code == KeyEvent.VK_DOWN) {
+			} else if (code == KeyEvent.VK_DOWN) {
 //					System.out.println("DOWN!");
-					clientCore.moveSouth();
+				clientCore.moveSouth();
 //					tank.setLocation(tank.getX(), tank.getY() + 2);
-				} else if (code == KeyEvent.VK_LEFT) {
+			} else if (code == KeyEvent.VK_LEFT) {
 //					System.out.println("LEFT!");
-					clientCore.moveEast();
+				clientCore.moveEast();
 //					tank.setLocation(tank.getX() - 2, tank.getY());
-				} else if (code == KeyEvent.VK_RIGHT) {
+			} else if (code == KeyEvent.VK_RIGHT) {
 //					System.out.println("RIGHT!");
-					clientCore.moveWest();
+				clientCore.moveWest();
 //					tank.setLocation(tank.getX() + 2, tank.getY());
-				} else if (code == KeyEvent.VK_SPACE) {
+			} else if (code == KeyEvent.VK_SPACE) {
 //					System.out.println("FIRE!");
-					clientCore.fire();
-				}
-			} catch (NullPointerException e) {}
+				clientCore.fire();
+			}
+			try {
+				sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+//				e.printStackTrace();
+			}
 //				System.out.println(tank);
 //				drawObject(tank);
 //				tank.repaint();

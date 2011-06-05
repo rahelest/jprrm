@@ -28,7 +28,7 @@ public class ServerCore {
 						ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
 						synchronized(exSessPointer) {
 							System.out.println("luku algus");
-							exSessPointer.notify();
+							exSessPointer.interrupt();
 							System.out.println(exSessPointer);
 						}
 						System.out.println("clientsessioni notify lopp");

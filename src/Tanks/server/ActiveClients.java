@@ -40,6 +40,7 @@ public class ActiveClients {
 				break;
 			}		
 		}
+		System.out.println("Leidsin kliendi üles");
 		return temp;
 	}
 	

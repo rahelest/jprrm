@@ -135,24 +135,24 @@ public class ClientGUI extends Thread {
 			try{
 				int code = key.getKeyCode();
 				if (code == KeyEvent.VK_UP) {
-					System.out.println("UP!");
+//					System.out.println("UP!");
 					clientCore.moveNorth();
 //					tank.setLocation(tank.getX(), tank.getY() - 2);
 //					System.out.println("Tank " + tank.getY()) ;
 				} else if (code == KeyEvent.VK_DOWN) {
-					System.out.println("DOWN!");
+//					System.out.println("DOWN!");
 					clientCore.moveSouth();
 //					tank.setLocation(tank.getX(), tank.getY() + 2);
 				} else if (code == KeyEvent.VK_LEFT) {
-					System.out.println("LEFT!");
+//					System.out.println("LEFT!");
 					clientCore.moveEast();
 //					tank.setLocation(tank.getX() - 2, tank.getY());
 				} else if (code == KeyEvent.VK_RIGHT) {
-					System.out.println("RIGHT!");
+//					System.out.println("RIGHT!");
 					clientCore.moveWest();
 //					tank.setLocation(tank.getX() + 2, tank.getY());
 				} else if (code == KeyEvent.VK_SPACE) {
-					System.out.println("FIRE!");
+//					System.out.println("FIRE!");
 					clientCore.fire();
 				}
 			} catch (NullPointerException e) {}

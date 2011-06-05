@@ -29,6 +29,7 @@ public class ServerCore {
 						synchronized(exSessPointer) {
 							System.out.println("luku algus");
 							exSessPointer.notify();
+							System.out.println(exSessPointer);
 						}
 						System.out.println("clientsessioni notify lopp");
 					} else {

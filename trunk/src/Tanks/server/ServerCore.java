@@ -3,13 +3,14 @@ package Tanks.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
+import Tanks.shared.mapElements.GameObject;
 
 public class ServerCore {
 	
-	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		int port = 8888;	
 		int clientID = 1;
@@ -47,5 +48,18 @@ public class ServerCore {
 			System.out.println("IO viga: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	
+	public GameMap createMap(Broadcaster messenger, ObjectFactory factory, int water, int tree, int brick, int iron) {
+		GameMap map = new GameMap(messenger, factory);
+		Random rand = new Random();
+		for (int i = 0; i < iron; i++) {
+			GameObject object = factory.createIronWall(rand.nextInt(900), rand.nextInt(900));
+			if (map.getObject() != null && !object.checkCollision(map)) {
+				map.addObject(object);
+			}
+		}
+		map.addObject(factory.createTree(x, y))
+		
 	}
 }

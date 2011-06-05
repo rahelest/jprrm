@@ -72,7 +72,7 @@ public class ClientSession extends Thread {
 		sendMessage(new Message(map));
 		while(true) {
 			Message temp = inBuff.getMessage();
-			System.out.println("uus serveriteade");
+//			System.out.println("uus serveriteade");
 			if (temp.extraString.equals("F")) {
 				//tulista
 			} else if (temp.extraString.equals("N")) {

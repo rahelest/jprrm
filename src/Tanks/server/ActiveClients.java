@@ -10,8 +10,10 @@ public class ActiveClients {
 	private List<ClientSession> clientList = new LinkedList<ClientSession>();
 	private Object iteratorLock = new Object();
 	
-	public synchronized void addClient(ClientSession client) {
-		clientList.add(client);
+	public void addClient(ClientSession client) {
+		synchronized (iteratorLock) {
+			clientList.add(client);
+		}
 	}
 
 	public Iterator<ClientSession> iterator() {

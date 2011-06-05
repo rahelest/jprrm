@@ -124,6 +124,7 @@ public class ClientSession extends Thread {
 	}
 	
 	public Object getClientMonitor() {
+		System.out.println("Küsitakse monitori");
 		return clientMonitor;
 	}
 	

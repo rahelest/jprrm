@@ -25,10 +25,10 @@ public class ServerCore {
 				try {
 					if(clientList.exists(clientSock.getInetAddress())) {
 						System.out.println("clientsessioni notify algus");
-						synchronized(clientList.getExisting(clientSock.getInetAddress()).getClientMonitor()) {
+//						synchronized(clientList.getExisting(clientSock.getInetAddress()).getClientMonitor()) {
 							System.out.println("luku algus");
 							clientList.getExisting(clientSock.getInetAddress()).notify();
-						}
+//						}
 						System.out.println("clientsessioni notify lopp");
 					} else {
 						clientList.addClient(new ClientSession(clientSock, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama

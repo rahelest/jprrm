@@ -20,7 +20,7 @@ import Tanks.shared.GameMap;
 public abstract class GameObject extends JPanel implements ObjectBase, Serializable {
 	
 	/**
-	 * 
+	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = 8547305178396375911L;
 	protected String ID;

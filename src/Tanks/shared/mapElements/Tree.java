@@ -1,13 +1,23 @@
 package Tanks.shared.mapElements;
 
+/**
+ * The Tree object class.
+ * @author JPRRM
+ *
+ */
 public class Tree extends mapDecorObject {
 
 	/**
-	 * 
+	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = 3222753290111853094L;
-//	final int treesize = 50;
 	
+	/**
+	 * The constructor.
+	 * @param ID The name.
+	 * @param x The x location.
+	 * @param y The y location.
+	 */
 	public Tree(String ID, int x, int y) {
 		super(ID, x, y, 120, 120, "tree.png");
 	}

@@ -7,7 +7,7 @@ import Tanks.shared.mapElements.GameObject;
 public class Message implements Serializable {
 	
 	/**
-	 * 
+	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = -2075547926990832957L;
 

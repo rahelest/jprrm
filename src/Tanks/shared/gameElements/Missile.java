@@ -10,7 +10,7 @@ import Tanks.shared.mapElements.UnbreakableObject;
 public class Missile extends UnbreakableObject implements Serializable {
 
 	/**
-	 * 
+	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = 1727024859906113013L;
 	protected String direction = "N";

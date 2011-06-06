@@ -11,9 +11,13 @@ public interface ObjectBase {
 
 	/**
 	 * Checks collision with other objects.
-	 * @param map
-	 * @return
+	 * @param map The map.
+	 * @return The collidee;
 	 */
 	GameObject checkCollision(GameMap map);
+	/**
+	 * Returns the breakable field.
+	 * @return The breakable field.
+	 */
 	boolean isBreakable();
 }

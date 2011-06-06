@@ -99,9 +99,9 @@ public class ClientCore extends Thread {
 					if (!gui.isAlive()) {
 						gui.start();
 					}
-				} else if (message.extraString.equals("RESET")) {
+				} /*else if (message.extraString.equals("RESET")) {
 					gui.drawUnchangeable();
-				}
+				}*/
 			}
 			synchronized (gui) {
 				gui.notify();

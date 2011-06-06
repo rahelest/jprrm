@@ -188,7 +188,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	}
 
 	public void getDamaged() {
-		// TODO Auto-generated method stub
+		System.out.printf(this + ": \nsain pihta!\n\n");
 		
 	}
 }

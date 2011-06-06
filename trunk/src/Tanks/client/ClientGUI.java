@@ -112,7 +112,6 @@ public class ClientGUI extends Thread {
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
 			Set<String> keys = objects.keySet();
-			center.add(map, 0);
 			for (String k : keys) {
 //				drawObject(objects.get(k));				
 				GameObject obj = objects.get(k);
@@ -125,8 +124,9 @@ public class ClientGUI extends Thread {
 //				System.out.println(objects.get(k));
 				
 			}
+			center.add(map, 0);
 			center.validate();
-			center.repaint();
+//			center.repaint();
 			try {
 				synchronized (this) {
 					wait();

@@ -8,6 +8,7 @@ import Tanks.shared.GameMap;
 
 public class ServerCore {
 	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		int port = 8888;	
 		int clientID = 1;
@@ -18,6 +19,7 @@ public class ServerCore {
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
+			ServerCommandListener serverInput = new ServerCommandListener(clientList);
 			while (true) {
 				GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
 //				clientList.

@@ -152,4 +152,9 @@ public class ClientSession extends Thread {
 	public synchronized int getMissileSpeed() {
 		return missileSpeed;
 	}
+
+	public void reStart() {
+		// TODO Auto-generated method stub
+		start();
+	}
 }

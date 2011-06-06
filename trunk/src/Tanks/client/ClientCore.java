@@ -74,6 +74,7 @@ public class ClientCore extends Thread {
 			inBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
 			netOut.writeObject(new Message("Hi!"));
+			@SuppressWarnings("unused")
 			Receiver receiver = new Receiver(this, sock, inBuf);
 		} catch (IOException e) {
 			e.printStackTrace();

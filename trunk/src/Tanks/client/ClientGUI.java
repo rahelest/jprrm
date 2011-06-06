@@ -72,6 +72,7 @@ public class ClientGUI extends Thread {
 			center.removeAll();
 			map = clientCore.getMap();			
 			ConcurrentHashMap<String, GameObject> objects = map.getObject();
+			objects.putAll(map.getMissiles());
 			Set<String> keys = objects.keySet();
 			for (String k : keys) {
 //				drawObject(objects.get(k));

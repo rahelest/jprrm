@@ -10,26 +10,64 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.GameObject;
 
+/**
+ * 
+ * @author JPRRM
+ *
+ */
 public class ClientGUI extends Thread {
 	
-	private final int REPRESSLIMIT = 100;
+	/**
+	 * The time to sleep between key types.
+	 */
+	private final int repressLimit = 100;
+	/**
+	 * The saved time of the last key press.
+	 */
 	private long lastKeyPressed;
+	/**
+	 * Pointer for the client core object.
+	 */
 	private ClientCore clientCore;
+	/**
+	 * The whole window of the GUI.
+	 */
 	private JFrame window = new JFrame();
+	/**
+	 * The text field on the window.
+	 */
 	private JTextField text = new JTextField("192.168.1.101:8888");
+	 /**
+	  * The small top panel on the window. 
+	  */
 	private JPanel top = new JPanel();
+	/**
+	 * The center paner where the the tanks are.
+	 */
 	private JPanel center = new JPanel();
+	/**
+	 * The button which makes the client to connect.
+	 */
 	private JButton ok = new JButton("OK");
+	/**
+	 * The map variable with the game elements.
+	 */
 	private GameMap map;
-	private JLabel myName = new JLabel("My tank!",JLabel.CENTER);
+	/**
+	 * The label with the tank name.
+	 */
+//	private JLabel myName = new JLabel("My tank!", JLabel.CENTER);
 	
+	/**
+	 * The constructor for the GUI class.
+	 * @param nClientCore The client core pointer.
+	 */
 	public ClientGUI(ClientCore nClientCore) {
 		setName("ClientGUI");
 		clientCore = nClientCore;
@@ -42,12 +80,9 @@ public class ClientGUI extends Thread {
 		window.getContentPane().add(center, BorderLayout.CENTER);
 		center.setLayout(null);
 		window.createBufferStrategy(2);
-//		offscreenImage = java.awt.Toolkit.createImage(null, center.getX(), center.getY());
-//		offscr = offscreenImage.getGraphics();
-		ok.addActionListener( new ActionListener() {
+		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
-//					System.out.println("PRINT");
 					text.setVisible(false);
 					ok.setVisible(false);
 					window.addKeyListener(new KeyListen());
@@ -56,19 +91,19 @@ public class ClientGUI extends Thread {
 					System.out.println("Something went wrong, please check the address.");
 					enableConnecting();
 				}
-//				System.out.println(text.getText());
 			}
 		});
-//		Dimension size = new Dimension(700, 30);
-//		text.setPreferredSize(size);
 		top.setLayout(new BorderLayout());		
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);
 		start();
 	}
 	
+	/**
+	 * The thread's runner method.
+	 */
 	public void run() {
-		while(true) {
+		while (true) {
 			center.removeAll();
 			map = clientCore.getMap();			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
@@ -83,13 +118,10 @@ public class ClientGUI extends Thread {
 			}
 			center.repaint();
 			try {
-				synchronized(this) {
+				synchronized (this) {
 					wait();
 				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-//				e.printStackTrace();
-			}
+			} catch (InterruptedException e) { }
 		}
 	}
 	
@@ -114,6 +146,10 @@ public class ClientGUI extends Thread {
 //		center.add(obj);
 //	}
 	
+	/**
+	 * Makes the text field and button visible again
+	 * to enable the user to enter new connecting info.
+	 */
 	public void enableConnecting() {
 		text.setVisible(true);
 		ok.setVisible(true);
@@ -139,11 +175,14 @@ public class ClientGUI extends Thread {
 	}
 */
 
+	/**
+	 * Acts upon certain pressed keys.
+	 */
 	class KeyListen implements KeyListener {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
-			if (System.currentTimeMillis() - lastKeyPressed > REPRESSLIMIT) {
+			if (System.currentTimeMillis() - lastKeyPressed > repressLimit) {
 				int code = key.getKeyCode();
 				if (code == KeyEvent.VK_UP) {
 					clientCore.moveNorth();
@@ -156,8 +195,8 @@ public class ClientGUI extends Thread {
 				} else if (code == KeyEvent.VK_SPACE) {
 					clientCore.fire();
 				}
+				lastKeyPressed = System.currentTimeMillis();
 			}
-//			System.out.println("reaktsiOOOOOOOOON!");
 		}
 		
 		@Override

@@ -58,7 +58,9 @@ public class GameMap extends JPanel implements Serializable {
 	 * @param messenger The broadcaster.
 	 */
 	public GameMap(Broadcaster messenger) {
+		System.out.println("enne outboundi");
 		this.outBuff = messenger.getMainOutbound();
+		System.out.println("pärast outboundi");
 		setSize(900, 900);
 		setBackground(new Color(0, 0, 0, 0));
 		loadBackGround();				

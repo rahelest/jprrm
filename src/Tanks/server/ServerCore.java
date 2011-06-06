@@ -36,6 +36,7 @@ public final class ServerCore {
 //	        GameMap killingField =  ObjectFactory.loadFromFile(2, messenger);
 	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 1, 2, 2);
 //	        ObjectFactory.saveToFile(killingField);
+//	        System.out.println("Kaart loodud");
 	        ServerCommandListener serverInput = new ServerCommandListener(clientList, messenger);
 	        while (true) {
                 Socket clientSock = serv.accept();

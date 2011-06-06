@@ -147,9 +147,10 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //		ConcurrentHashMap mappy = map.getObject().clone();
 		
 		int x = getX(); int y = getY();
-		int mapX = map.getX() - getWidth();
-		int mapY = map.getY() - getHeight();
+		int mapX = map.getWidth() - getWidth();
+		int mapY = map.getHeight() - getHeight();
 		if(x < 0 || x > mapX || y < 0 || y > mapY) {
+//			System.out.printf("%d %d, %d, %d\n", x, mapX, y, mapY);
 			return this;
 		}		
 		Set<String> keys = map.getObjects().keySet();

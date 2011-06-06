@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import Tanks.shared.*;
 
@@ -76,6 +77,9 @@ public class ClientCore extends Thread {
 			netOut.writeObject(new Message("Hi!"));
 			@SuppressWarnings("unused")
 			Receiver receiver = new Receiver(this, sock, inBuf);
+		} catch (SocketException e) {
+			System.out.println("Kontrolli aadressi");
+			gui.enableConnecting();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

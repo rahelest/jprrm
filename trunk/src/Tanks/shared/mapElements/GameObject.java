@@ -62,13 +62,13 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		try {
 			sprite = ImageIO.read(new File("src//" + image));
 		} catch (FileNotFoundException e) {
-			System.out.println("The backround image was not found - missing file!");
+			System.out.println("The image was not found - missing file!");
 			e.printStackTrace();
 		} catch (IIOException e) {			
-			System.out.println("The background image could not be loaded - image error!");
+			System.out.println("The image could not be loaded - image error!");
 			e.printStackTrace();
 		} catch (IOException e) {
-			System.out.println("General IO exception reading background image!");
+			System.out.println("General IO exception reading image!");
 			e.printStackTrace();			
 		}
 	}

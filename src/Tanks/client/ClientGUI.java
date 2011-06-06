@@ -72,7 +72,6 @@ public class ClientGUI extends Thread {
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(800, 500);
-		window.setVisible(true);
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
@@ -94,6 +93,8 @@ public class ClientGUI extends Thread {
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);
 		start();
+		window.setVisible(true);
+		window.toFront();
 	}
 	
 	/**

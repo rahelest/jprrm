@@ -74,6 +74,7 @@ public class ClientCore extends Thread {
 			inBuf = new CommunicationBuffer();
 			netOut = new ObjectOutputStream(sock.getOutputStream());
 			netOut.writeObject(new Message("Hi!"));
+			Receiver receiver = new Receiver(this, sock, inBuf);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -81,9 +82,9 @@ public class ClientCore extends Thread {
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
 		while (true) {
-//			System.out.println("Ootan uut teadet");
+			System.out.println("Ootan uut teadet");
 			Message message = inBuf.getMessage();
-//			System.out.println("Sain uue teate!");
+			System.out.println("Sain uue teate!");
 			try {
 				int number = Integer.parseInt(message.extraString);
 				if (myID == -1) {

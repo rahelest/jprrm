@@ -1,6 +1,7 @@
 package Tanks.shared;
 
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,18 +33,10 @@ public class GameMap extends JPanel implements Serializable {
 	 * List with missiles.
 	 */
 	private ConcurrentHashMap<String, GameObject> missiles = new ConcurrentHashMap<String, GameObject>();
-	/**
-	 * The background's width.
-	 */
-	private int width = 900;
-	/**
-	 * The background's height.
-	 */
-	private int height = 900;
+
 	/**
 	 * The background image.
 	 */
-	@SuppressWarnings("unused")
 	private transient BufferedImage background;
 	/**
 	 * The outbound buffer.
@@ -66,6 +59,15 @@ public class GameMap extends JPanel implements Serializable {
 		this.outBuff = messenger.getMainOutbound();
 		setSize(900, 900);
 		loadBackGround();				
+	}
+	
+	/**
+	 * Paints the image.
+	 * @param g The graphins component.
+	 */
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(background, 0, 0, this);
 	}
 	
 	/**

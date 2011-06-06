@@ -83,9 +83,9 @@ public class ClientCore extends Thread {
 		//küsi kliente, stardi broadcaster
 		//anna guile vastuvõtja viide
 		while (true) {
-			System.out.println("Ootan uut teadet");
+//			System.out.println("Ootan uut teadet");
 			Message message = inBuf.getMessage();
-			System.out.println("Sain uue teate!");
+//			System.out.println("Sain uue teate!");
 			try {
 				int number = Integer.parseInt(message.extraString);
 				if (myID == -1) {

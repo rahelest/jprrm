@@ -6,7 +6,7 @@ import Tanks.server.ClientSession;
 import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.UnbreakableObject;
 
-public class Missile extends UnbreakableObject implements Runnable, Serializable {
+public class Missile extends UnbreakableObject implements Serializable {
 
 	/**
 	 * 
@@ -14,14 +14,13 @@ public class Missile extends UnbreakableObject implements Runnable, Serializable
 	private static final long serialVersionUID = 1727024859906113013L;
 	protected String direction = "N";
 	protected int speed;
-	protected ClientSession owner;
+	protected transient ClientSession owner;
 	
-	public Missile(String ID, int x, int y, ClientSession owner) {
+	public Missile(String ID, int x, int y) {
 		super(ID, x, y, 10, 15, true, "missile" + owner.getTank().getDirection() + ".png");
 		this.direction = owner.getTank().getDirection();
 		this.speed = owner.getMissileSpeed();
-		this.owner = owner;
-		new Thread(this).start();
+
 	}
 
 	public String getDirection() {

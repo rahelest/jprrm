@@ -45,8 +45,8 @@ public class ServerCore {
                 }       
 	        }
 	    } catch (IOException e) {
-	                    System.out.println("IO viga: " + e.getMessage());
-	                    e.printStackTrace();
+            System.out.println("IO viga: " + e.getMessage());
+            e.printStackTrace();
 	    }
     }
 }

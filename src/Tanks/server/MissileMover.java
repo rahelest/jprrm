@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.shared.gameElements.Missile;
 import Tanks.shared.gameElements.Tank;
+import Tanks.shared.mapElements.GameObject;
 
 public class MissileMover extends Thread {
 	
@@ -24,9 +25,7 @@ public class MissileMover extends Thread {
 		}
 		try {
 			sleep(waitTime);
-		} catch (InterruptedException e) {
-		}
-		
+		} catch (InterruptedException e) {}
 	}
 	
 	public static void newMissile(ClientSession client) {
@@ -36,6 +35,14 @@ public class MissileMover extends Thread {
 		System.out.println("Uus mürsk loodud");
 		missiles.put(m, client);
 		System.out.println("Uus mürsk lisatud");
+	}
+	
+	public static ConcurrentHashMap<String, GameObject> getMissiles() {
+		ConcurrentHashMap<String, GameObject> temp = new ConcurrentHashMap<String, GameObject>();
+		for ( Missile m : missiles.keySet()) {
+			temp.put(m.getID(), m);
+		}
+		return temp;
 	}
 
 	private static String getNr(ClientSession client) {

@@ -53,10 +53,7 @@ public class ClientSession extends Thread {
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
-				//tulista
-				System.out.println("Tulistamine alaku!");
 				MissileMover.newMissile(this);
-				System.out.println("Tulistamine saanud!");
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
@@ -87,6 +84,7 @@ public class ClientSession extends Thread {
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());
 			}
+			map.getObject().putAll(MissileMover.getMissiles());
 			map.doYourStuff(tank);
 		}			
 	}

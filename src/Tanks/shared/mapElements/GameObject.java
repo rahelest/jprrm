@@ -6,58 +6,91 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import Tanks.shared.GameMap;
 
+/**
+ * The base class for all objects with the necessary methods.
+ * @author JPRRM
+ *
+ */
 public abstract class GameObject extends JPanel implements ObjectBase, Serializable {
 	
 	/**
 	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = 8547305178396375911L;
+	/**
+	 * The objects unique ID.
+	 */
 	protected String ID;
-//	protected int locationX;
-//	protected int locationY;
-//	protected int width;
-//	protected int height;
+	/**
+	 * Whether the object is passable by other objects.
+	 */
 	protected transient boolean passable;
+	/**
+	 * Whether the object is passable by missiles.
+	 */
 	protected transient boolean bulletPassable;
+	/**
+	 * Whether the object is breakable by missiles.
+	 */
 	protected transient boolean breakable;
-	protected transient HashSet<Integer> thisXcoord = new HashSet<Integer>();
-	protected transient HashSet<Integer> thisYcoord = new HashSet<Integer>();
-	
+	/**
+	 * The object's image address.
+	 */
 	protected String image;
+	/**
+	 * The actual loaded image.
+	 */
 	protected transient BufferedImage sprite;
 	
-	public GameObject(String ID, int x, int y, int width, int height, boolean passability, boolean bPassability, boolean breakability, String image) {
+	/**
+	 * The constructor.
+	 * @param nID The unique id.
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param width The object's width.
+	 * @param height The object's height.
+	 * @param passability The passability field.
+	 * @param bPassability Bulletpassability field.
+	 * @param breakability The breakability field.
+	 * @param image The image address.
+	 */
+	public GameObject(String nID, int x, int y, int width,
+			int height, boolean passability, boolean bPassability, boolean breakability, String image) {
 		setLayout(null);
-		setBackground(new Color(0,0,0,0));
-		this.ID = ID;
+		setBackground(new Color(0, 0, 0, 0));
+		this.ID = nID;
 		setLocation(x, y);
 		setSize(width, height);
 		this.passable = passability;
 		this.bulletPassable = bPassability;
 		this.image = image;
-//		createX();
-//		createY();
 	}
 	
+	/**
+	 * Sets the new image address.
+	 * @param image The address.
+	 */
 	public synchronized void setImage(String image) {
 		this.image = image;
 	}
 	
+	/**
+	 * Asks the address.
+	 * @return The address.
+	 */
 	public synchronized String getImage() {
 		return image;
 	}
 	
+	/**
+	 * Loads the image to the sprite.
+	 */
 	public void loadImage() {
 		try {
 			sprite = ImageIO.read(new File("src//" + image));
@@ -73,28 +106,36 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		}
 	}
 	
+	/**
+	 * Paints the image.
+	 * @param g The graphins component.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(sprite, 0, 0, this);
 	}
 	
-	 public Rectangle getBounds() {
-	     return new Rectangle(getX(), getY(), getWidth(), getHeight());
-	 }
+	/**
+	 * Returns the object's bounds.
+	 * @return The bounds rectangle.
+	 */
+	public Rectangle getBounds() {
+	    return new Rectangle(getX(), getY(), getWidth(), getHeight());
+	}
 
-
+	/**
+	 * Asks the object's ID.
+	 * @return The ID.
+	 */
 	public String getID() {
 		return ID;
 	}
-	
-//	public boolean getCollision(GameObject otherObject) {
-//		if(checkCoordinates(otherObject, this.getX(), getWidth()) && checkCoordinates(otherObject, getY(), getHeight())) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//}
-	
+
+	/**
+	 * Checks for collision with other objects.
+	 * @param map The map with the objects.
+	 * @return The object collided with.
+	 */
 	public GameObject checkCollision(GameMap map) {
 		
 //		ConcurrentHashMap mappy = map.getObject().clone();
@@ -103,7 +144,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		
 		for (String s : keys) {
 			GameObject tempPointer = map.getObject(s);
-			if(getBounds().intersects(tempPointer.getBounds())) {
+			if (getBounds().intersects(tempPointer.getBounds())) {
 				return tempPointer;
 			}
 //			if(!getBounds().intersects(map.betBounds())) {
@@ -114,81 +155,19 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		return null;
 	}
 	
-//	private boolean checkCoordinates(GameObject otherObject, int corner, int size) {
-//		ArrayList<Integer> temp = new ArrayList<Integer>();
-//		int tempInt = width;
-//		int x = 2;
-//		
-//		temp.add(corner); temp.add(corner + size);
-//		if (getCollision(otherObject, temp)) {
-//			return true;
-//		}
-//		temp.clear();
-//		System.out.println(width * 0 + " " + width);
-//		
-//		while(x <= size / 2) {
-//			for (int i = 1; i < x; i += 1) {
-//				temp.add(corner + (size / x) * i);
-//			}
-//			if (getCollision(otherObject, temp)) {
-//				return true;
-//			}
-//			temp.clear();
-//			System.out.println();
-//			x = x * 2;
-//		}
-//		for (int i = 1; i < size; i++) {
-//			temp.add(corner + i);
-//		}
-//		if (getCollision(otherObject, temp)) {
-//			return true;
-//		}
-//		return false;
-//		
-//	}
-//
-//	private void createX() {
-//		for (int i = getX(); i <= (getX() + getWidth()); i++) {
-//			this.thisXcoord.add(i);
-//		}
-//	}
-//	
-//	private void createY() {
-//		for (int i = getY(); i <= (getY() + getHeight()); i++) {
-//			this.thisXcoord.add(i);
-//		}
-//	}
-//	
-//	private boolean getCollision(GameObject otherObject, ArrayList<Integer> temp) {
-//		if(!passable) {
-//			for (int i : temp) {
-//				if (otherObject.getXset().contains(i)) {
-//					return true;
-//				}
-//			}
-//			for (int i : thisYcoord) {
-//				if (otherObject.getYset().contains(i)) {
-//					return true;
-//				}
-//			}
-// nt kui moodustab objectidest setid ja siis hakkab ühekaupa kumbagi läbi käima, for each if contains....
-//		}
-//		return false;
-//	}
-//
-//	private HashSet<Integer> getXset() {
-//		return thisXcoord;
-//	}
-//	
-//	private HashSet<Integer> getYset() {
-//		return thisYcoord;
-//	}
-	
+	/**
+	 * Returns the breakable field value.
+	 * @return The field.
+	 */
 	public boolean isBreakable() {
 		return breakable;
 	}
 
+	/**
+	 * Applies received damage.
+	 */
 	public void getDamaged() {
+		//TODO 
 		System.out.printf(this + ": \nsain pihta!\n\n");
 		
 	}

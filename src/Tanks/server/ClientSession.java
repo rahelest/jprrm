@@ -136,21 +136,38 @@ public class ClientSession extends Thread {
 		}			
 	}
 	
-	public void updateOnReconnect(Socket sock) throws IOException{
-		this.sock = sock;
+	/**
+	 * Renews the socket field.
+	 * @param nSock The field.
+	 * @throws IOException An exception.
+	 */
+	public void updateOnReconnect(Socket nSock) throws IOException{
+		this.sock = nSock;
 		createComms();
 	}
 	
+	/**
+	 * Creates the important streams.
+	 * @throws IOException An exception.
+	 */
 	private void createComms() throws IOException {
 		netOut = new ObjectOutputStream(sock.getOutputStream());       
 		inBuff = new CommunicationBuffer();
 		receiver =  new Receiver(this, sock, inBuff);
 	}
 	
+	/**
+	 * Returns the clientIP.
+	 * @return The IP.
+	 */
 	public InetAddress getClientIP() {
 		return clientIP;
 	}
 
+	/**
+	 * Sends a new message.
+	 * @param msg The message.
+	 */
 	public void sendMessage(Message msg) {
 		try {
 			synchronized (senderLock) {
@@ -163,10 +180,13 @@ public class ClientSession extends Thread {
 		}
 	} 	
 
+	/**
+	 * What to do when connection is lost.
+	 */
 	public void notifyConnectionLoss() {
 		try {
 			System.out.println("clientsessioni wait algus");
-			synchronized(this) {
+			synchronized (this) {
 				this.wait();
 				System.out.println("proov clisess wait järel");
 			}

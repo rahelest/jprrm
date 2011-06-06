@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import Tanks.server.ClientSession;
 import Tanks.shared.GameMap;
+import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.mapElements.UnbreakableObject;
 
 public class Missile extends UnbreakableObject implements Serializable {
@@ -16,8 +17,8 @@ public class Missile extends UnbreakableObject implements Serializable {
 	protected int speed;
 	protected transient ClientSession owner;
 	
-	public Missile(String ID, int x, int y) {
-		super(ID, x, y, 10, 15, true, "missile" + owner.getTank().getDirection() + ".png");
+	public Missile(String ID, int x, int y, String direction) {
+		super(ID, x, y, 10, 15, true, "missile" + direction + ".png");
 		this.direction = owner.getTank().getDirection();
 		this.speed = owner.getMissileSpeed();
 
@@ -31,22 +32,23 @@ public class Missile extends UnbreakableObject implements Serializable {
 		this.direction = direction;
 	}
 
-	@Override
-	public void run() {
-		GameMap map = owner.getMap();
-		while(true) {		
-			if(direction.equals("N")) {
-					setLocation(getX() - speed, getY());
-			} else if (direction.equals("S")) {
-					setLocation(getX() + speed, getY());
-			} else if (direction.equals("E")) {
-					setLocation(getX(), getY() + speed);
-			} else if (direction.equals("W")) {
-					setLocation(getX(), getY() - speed);
-			}
-			map.doYourStuff(this);
+	public boolean move(GameMap map) {
+		if(direction.equals("N")) {
+			setLocation(getX() - speed, getY());
+		} else if (direction.equals("S")) {
+			setLocation(getX() + speed, getY());
+		} else if (direction.equals("E")) {
+			setLocation(getX(), getY() + speed);
+		} else if (direction.equals("W")) {
+			setLocation(getX(), getY() - speed);
 		}
 		
-	}
-
+		GameObject collidee = checkCollision(map);
+		if (collidee != null) {
+			collidee.getDamaged();
+			return false;
+		}
+			
+		return true;
+	} 
 }

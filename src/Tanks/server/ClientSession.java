@@ -80,7 +80,7 @@ public class ClientSession extends Thread {
 				tempTank.setSize(60, 30);
 				tempTank.setImage("tankEAST.png");
 			}
-			if (!tempTank.checkCollision(map)) {
+			if (tempTank.checkCollision(map) == null) {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());

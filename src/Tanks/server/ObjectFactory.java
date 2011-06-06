@@ -69,7 +69,7 @@ public class ObjectFactory {
 	private static GameMap addingToMap(GameMap map, GameObject object) {
 		Random rand = new Random();
 		while (true) {
-			if (!object.checkCollision(map)) {
+			if (object.checkCollision(map) == null) {
 				map.addObject(object);
 				return map;
 			} else {

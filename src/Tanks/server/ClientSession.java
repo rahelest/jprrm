@@ -175,7 +175,7 @@ public class ClientSession extends Thread {
 			synchronized (senderLock) {
 				netOut.writeObject(msg);
 				netOut.flush();
-				System.out.println("Teade teel " + msg);
+//				System.out.println("Teade teel " + msg);
 				netOut.reset();
 			}
 		} catch (IOException e) {

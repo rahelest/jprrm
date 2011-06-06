@@ -1,7 +1,6 @@
 package Tanks.shared.gameElements;
 
 import Tanks.shared.mapElements.BreakableObject;
-import java.awt.*;
 
 /**
  * The Tank object class.
@@ -14,6 +13,10 @@ public class Tank extends BreakableObject {
 	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = -3912186180720259310L;
+	
+	/**
+	 * The tank's direction.
+	 */
 	protected String direction = "N";
 	
 	/**
@@ -26,20 +29,19 @@ public class Tank extends BreakableObject {
 		super(ID, x, y, 60, 30, "tankEAST.png");
 	}
 
+	/**
+	 * Asks for the direction.
+	 * @return The direction.
+	 */
 	public String getDirection() {
 		return direction;
 	}
 
-	public void setDirection(String direction) {
-		this.direction = direction;
+	/**
+	 * Sets the new direction.
+	 * @param nDirection The new direction.
+	 */
+	public void setDirection(String nDirection) {
+		this.direction = nDirection;
 	}
-	
-	public void paintComponent(Graphics g) {
-		g.drawImage(sprite, 0, 0, this);
-		 Graphics2D g2d = (Graphics2D) g;
-		 g2d.translate(getWidth()/2, getHeight()/2);
-		 g2d.rotate(3);
-//		 g2d.tra
-	}
-
 }

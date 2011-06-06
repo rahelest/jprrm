@@ -1,5 +1,6 @@
 package Tanks.shared.gameElements;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 import Tanks.server.ClientSession;
@@ -19,6 +20,7 @@ public class Missile extends UnbreakableObject implements Serializable {
 	
 	public Missile(String ID, int x, int y, String direction, int speed) {
 		super(ID, x, y, 10, 15, true, "missile" + direction + ".png");
+		setBackground(Color.BLACK);
 		this.direction = direction;
 		this.speed = speed;
 

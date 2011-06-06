@@ -49,7 +49,7 @@ public class GameMap extends JPanel implements Serializable {
 	 */
 	public GameMap() {
 		setSize(900, 900);
-		setBackground(new Color(0, 0, 0, 255));
+		setBackground(new Color(0, 0, 0, 0));
 		loadBackGround();
 	}
 	
@@ -60,7 +60,7 @@ public class GameMap extends JPanel implements Serializable {
 	public GameMap(Broadcaster messenger) {
 		this.outBuff = messenger.getMainOutbound();
 		setSize(900, 900);
-		setBackground(new Color(0, 0, 0, 255));
+		setBackground(new Color(0, 0, 0, 0));
 		loadBackGround();				
 	}
 	

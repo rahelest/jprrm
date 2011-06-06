@@ -44,7 +44,10 @@ public class MissileMover extends Thread {
 					missiles.remove(m);
 				}
 			}
-			System.out.println("Liigutan: " + missiles);
+			if(!missiles.isEmpty()) {
+				System.out.println("Liigutan: " + missiles);
+			}
+			
 			try {
 				sleep(waitTime);
 			} catch (InterruptedException e) { }

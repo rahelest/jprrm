@@ -19,38 +19,34 @@ public class ServerCore {
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);
-			ServerCommandListener serverInput = new ServerCommandListener(clientList);
+			GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
+			ServerCommandListener serverInput = new ServerCommandListener(clientList, messenger);
 			while (true) {
-				GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
-//				clientList.
-				while (true) {
-					Socket clientSock = serv.accept();
-					try {
-						if(clientList.exists(clientSock.getInetAddress())) {
-							System.out.println("clientsessioni notify algus");
-							ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
-							exSessPointer.updateOnReconnect(clientSock);
-							synchronized(exSessPointer) {
-								System.out.println("luku algus");								
-								exSessPointer.notify();
-								
-								System.out.println(exSessPointer);
-							}
-							System.out.println("clientsessioni notify lopp");
-						} else {
-							clientList.addClient(new ClientSession(clientSock, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
-							System.out.println("Klient ühines edukalt, ID = " + clientID);
-							clientID++;	
+				Socket clientSock = serv.accept();
+				try {
+					if(clientList.exists(clientSock.getInetAddress())) {
+						System.out.println("clientsessioni notify algus");
+						ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
+						exSessPointer.updateOnReconnect(clientSock);
+						synchronized(exSessPointer) {
+							System.out.println("luku algus");								
+							exSessPointer.notify();							
+							System.out.println(exSessPointer);
 						}
-								
-					} catch (IOException e) {
-						clientSock.close();
+						System.out.println("clientsessioni notify lopp");
+					} else {
+						clientList.addClient(new ClientSession(clientSock, killingField, clientID));			// loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+						System.out.println("Klient ühines edukalt, ID = " + clientID);
+						clientID++;	
 					}
+							
+				} catch (IOException e) {
+					clientSock.close();
 				}	
 			}
-			} catch (IOException e) {
+		} catch (IOException e) {
 				System.out.println("IO viga: " + e.getMessage());
 				e.printStackTrace();
-			}
 		}
+	}
 }

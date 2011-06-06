@@ -32,7 +32,7 @@ public final class ObjectFactory {
 	 */
 	public static Tank spawnTank(GameMap map, String name) {
 		Random rand = new Random();
-		GameObject tank = new Tank(name, rand.nextInt(500 - 60), rand.nextInt(500 - 30));
+		GameObject tank = new Tank(name, rand.nextInt(map. - 60), rand.nextInt(500 - 30));
 		map = addingToMap(map, tank);
 		return (Tank) map.getObject(name);
 	}

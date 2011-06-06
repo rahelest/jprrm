@@ -1,7 +1,6 @@
 package Tanks.shared;
 
 
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +9,6 @@ import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
-import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
 /**
@@ -75,15 +73,17 @@ public class GameMap implements Serializable {
 			return objects.get(ID);
 	}
 	
-	/**
-	 * Returns the bounds.
-	 * @return A rectangle.
-	 */
-	public Rectangle betBounds() {
-		Tank tank = new Tank("test", 0, 0);
-		return new Rectangle(tank.getWidth(), tank.getHeight(),
-				900 - 2 * tank.getWidth(), 900 - 2 * tank.getHeight());
-	}
+//	/**
+//	 * Returns the bounds.
+//	 * @return A rectangle.
+//	 */
+//	public Rectangle betBounds() {
+//		Tank tank = new Tank("test", 0, 0);
+//		return new Rectangle(tank.getWidth(), tank.getHeight(),
+//				900 - 2 * tank.getWidth(), 900 - 2 * tank.getHeight());
+//	}
+	
+	
 
 	/**
 	 * Removes the object from the list.

@@ -18,23 +18,27 @@ public class MissileMover extends Thread {
 	}
 	
 	public void run() {
-		for (Missile m : missiles.keySet()) {
-			if (m.move(missiles.get(m).getMap())) {
-				missiles.remove(m);
+		while (true) {
+			for (Missile m : missiles.keySet()) {
+				if (m.move(missiles.get(m).getMap())) {
+					missiles.remove(m);
+				}
+				System.out.println(m);
 			}
+			try {
+				sleep(waitTime);
+			} catch (InterruptedException e) {}
 		}
-		try {
-			sleep(waitTime);
-		} catch (InterruptedException e) {}
+
 	}
 	
 	public static void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
-		System.out.println("Saan tankiviite");
+//		System.out.println("Saan tankiviite");
 		Missile m = new Missile(client.getId() + "M" + getNr(client), tank.getX(), tank.getY(), tank.getDirection(), client.getMissileSpeed());
-		System.out.println("Uus mürsk loodud");
+//		System.out.println("Uus mürsk loodud");
 		missiles.put(m, client);
-		System.out.println("Uus mürsk lisatud");
+//		System.out.println("Uus mürsk lisatud");
 	}
 	
 	public static ConcurrentHashMap<String, GameObject> getMissiles() {
@@ -47,20 +51,20 @@ public class MissileMover extends Thread {
 
 	private static String getNr(ClientSession client) {
 		int id = 1;
-		System.out.println("Loon numbrit");
+//		System.out.println("Loon numbrit");
 		Set<Missile> mi = missiles.keySet();
 		Set<String> ids = new HashSet<String>();
-		System.out.println("Hakkan lisama");
+//		System.out.println("Hakkan lisama");
 		for (Missile m: mi) {
 			if(missiles.get(m).equals(client)) {
 				ids.add(m.getID());
 			}
 		}
-		System.out.println("Hakkan otsima");
+//		System.out.println("Hakkan otsima");
 		do {
 			id++;
 		} while (ids.contains(Integer.toString(id)));		
-		System.out.println("GetNr valmis");
+//		System.out.println("GetNr valmis");
 		return Integer.toString(id);
 	}
 	

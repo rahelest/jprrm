@@ -79,7 +79,7 @@ public class ClientGUI extends Thread {
 				GameObject obj = objects.get(k);
 				obj.loadImage();
 				center.add(obj);
-//				System.out.println(objects.get(k));
+				System.out.println(objects.get(k));
 			}
 			center.repaint();
 			try {

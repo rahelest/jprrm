@@ -70,7 +70,9 @@ public class GameMap extends JPanel implements Serializable {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		loadBackGround();
+		if (background == null) {
+			loadBackGround();
+		}
 		g.drawImage(background, 0, 0, this);
 	}
 	

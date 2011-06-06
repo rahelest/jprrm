@@ -23,6 +23,8 @@ import Tanks.shared.mapElements.GameObject;
 
 public class ClientGUI extends Thread {
 	
+	private final int repressLimit = 50;
+	private long lastKeyPressed;
 	private ClientCore clientCore;
 	private JFrame window = new JFrame();
 	private JTextField text = new JTextField("192.168.1.101:8888");
@@ -144,7 +146,7 @@ public class ClientGUI extends Thread {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
-//			try {
+			if (System.currentTimeMillis() - lastKeyPressed > repressLimit){
 				int code = key.getKeyCode();
 				if (code == KeyEvent.VK_UP) {
 					clientCore.moveNorth();
@@ -157,10 +159,7 @@ public class ClientGUI extends Thread {
 				} else if (code == KeyEvent.VK_SPACE) {
 					clientCore.fire();
 				}
-//				sleep(20);
-//			} catch (InterruptedException e) {
-//				
-//			}
+			}
 //			System.out.println("reaktsiOOOOOOOOON!");
 		}
 		

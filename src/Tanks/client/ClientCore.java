@@ -11,7 +11,7 @@ import Tanks.shared.*;
 /**
  * The core application for the client. Manages 
  * receiving and sending messages.
- * @author Rahel
+ * @author JPRRM
  *
  */
 public class ClientCore extends Thread {

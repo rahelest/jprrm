@@ -245,6 +245,6 @@ public class ClientSession extends Thread {
 		exp = 0;
 		tankSpeed = 1;
 		missileSpeed = 1;
-		sendMessage(new Message("RESET"));
+//		sendMessage(new Message("RESET"));
 	}
 }

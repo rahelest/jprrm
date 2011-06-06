@@ -1,6 +1,19 @@
 package Tanks.server;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
@@ -174,5 +187,86 @@ public final class ObjectFactory {
 						rand.nextInt(mapHeight - object.getHeight()));
 			}
 		}
+	}
+	
+	/**
+	 * Saves the map to a file.
+	 * @param map The map.
+	 */
+	public static void saveToFile(GameMap map) {
+		int nr = 0;
+		do {
+			nr++;
+		} while (!new File("Map" + nr).exists());
+		
+		try {
+			PrintWriter writer = new PrintWriter(new BufferedWriter(
+				new OutputStreamWriter(new FileOutputStream("Map" + nr + ".txt"))));
+			
+			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
+			Collection<GameObject> values = objects.values();
+			
+			for (GameObject g : values) {
+				if (g instanceof IronWall) {
+					writer.print("IronWall " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+				} else if (g instanceof BrickWall) {
+					writer.print("BrickWall " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+				} else if (g instanceof Tree) {
+					writer.print("Tree " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+				} else if (g instanceof Water) {
+					writer.print("Water " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+				}
+			}	
+			writer.flush();
+			writer.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+		}	
+	}
+	
+	/**
+	 * Loads a map from a text file.
+	 * @param number The number.
+	 * @param messenger The broadcaster pointer.
+	 * @return The loaded map.
+	 */
+	public static GameMap loadFromFile(int number, Broadcaster messenger) {
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream("Map" + number + ".txt")));
+			
+			GameMap map = new GameMap(messenger);
+			String row = br.readLine();
+			while (row != null) {
+				String[] splitted = row.split(" ");
+				if (splitted.length == 4) {
+					String ID = splitted[1];
+					int x = Integer.parseInt(splitted[2]);
+					int y = Integer.parseInt(splitted[3]);
+					if (splitted[0].equals("Tree")) {
+						map.addObject(new Tree(ID, x, y));
+					} else if (splitted[0].equals("Water")) {
+						map.addObject(new Water(ID, x, y));
+					} else if (splitted[0].equals("IronWall")) {
+						map.addObject(new IronWall(ID, x, y));
+					} else if (splitted[0].equals("BrickWall")) {
+						map.addObject(new BrickWall(ID, x, y));
+					} else {
+						return null;
+					}
+				} else {
+					return null;
+				}
+				row = br.readLine();
+			}
+				
+			br.close();	
+			return map;
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found!");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

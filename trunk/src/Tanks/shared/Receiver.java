@@ -10,18 +10,43 @@ import java.net.SocketException;
 import Tanks.client.ClientCore;
 import Tanks.server.ClientSession;
 
+/**
+ * The receiver the receives messages.
+ * @author JPRRM
+ *
+ */
 public class Receiver extends Thread {
 	
+	/**
+	 * The receiver's socket.
+	 */
 	private Socket sock;
+	/**
+	 * The in stream.
+	 */
 	private ObjectInputStream netIn;
+	/**
+	 * The in buffer.
+	 */
 	private CommunicationBuffer in;
+	/**
+	 * The clientSession pointer.
+	 */
 	private ClientSession session;
+	/**
+	 * The clientCore pointer.
+	 */
 	private ClientCore clientCore;
-	private Object receiverMonitor = new Object();
-	
-	private Receiver(Socket sock, CommunicationBuffer inbound) throws IOException {
+
+	/**
+	 * The main constructor.
+	 * @param socket The socket.
+	 * @param inbound The buffer.
+	 * @throws IOException The exception.
+	 */
+	private Receiver(Socket socket, CommunicationBuffer inbound) throws IOException {
 		this.setName("Receiver - " + sock.getInetAddress());
-		this.sock = sock;
+		this.sock = socket;
 		this.in = inbound;
 		System.out.println("alustan netIn-i loomist");
 		InputStream iS = sock.getInputStream();
@@ -36,17 +61,33 @@ public class Receiver extends Thread {
 		start();
 	}
 	
-	public Receiver(ClientSession session, Socket sock, CommunicationBuffer inbound) throws IOException {
-		this(sock, inbound);
-		this.session = session;
+	/**
+	 * The constructor for the ClientSession.
+	 * @param nSession The pointer.
+	 * @param socket The socket.
+	 * @param inbound The buffer.
+	 * @throws IOException An exception.
+	 */
+	public Receiver(ClientSession nSession, Socket socket, CommunicationBuffer inbound) throws IOException {
+		this(socket, inbound);
+		this.session = nSession;
 	}
 	
-	public Receiver(ClientCore clientCore, Socket sock, CommunicationBuffer inbound) throws IOException {
-		this(sock, inbound);
-		this.clientCore = clientCore;
+	/**
+	 * The constructor for the ClientCore.
+	 * @param nClientCore The pointer.
+	 * @param socket The socket.
+	 * @param inbound The buffer.
+	 * @throws IOException An exception.
+	 */
+	public Receiver(ClientCore nClientCore, Socket socket, CommunicationBuffer inbound) throws IOException {
+		this(socket, inbound);
+		this.clientCore = nClientCore;
 	}
 	
-	
+	/**
+	 * The thread's run method.
+	 */
 	public void run() {
 		while (true) {
 			Message fromClient = null;
@@ -61,14 +102,13 @@ public class Receiver extends Thread {
 					try {
 						System.out.println("Klient katkes");
 						System.out.println("receiveri wait algus");
-						synchronized(this) {
+						synchronized (this) {
 							session.notifyConnectionLoss();
 							this.wait();
 						}
 						System.out.println("receiveri notify lopp");
 						System.out.println("Receiveri wait lõpp");
 					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} catch (IllegalMonitorStateException e2) {
 						e2.printStackTrace();
@@ -76,7 +116,7 @@ public class Receiver extends Thread {
 					
 				} else {
 					try {
-						synchronized(this) {
+						synchronized (this) {
 							clientCore.notifyConnectionLoss(this);
 							this.wait();
 						}
@@ -95,9 +135,5 @@ public class Receiver extends Thread {
 				in.addMessage(fromClient);
 			}
 		}
-	}
-
-	public Object getMonitor() {
-		return receiverMonitor;
 	}
 }

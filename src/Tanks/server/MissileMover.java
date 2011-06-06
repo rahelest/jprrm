@@ -1,7 +1,5 @@
 package Tanks.server;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.shared.gameElements.Missile;
@@ -24,6 +22,10 @@ public class MissileMover extends Thread {
 	 * Time to wait before updating locations.
 	 */
 	private static final int waitTime = 50;
+	/**
+	 * ID for missiles.
+	 */
+	private static int id = 0;
 	
 	/**
 	 * The constructor.
@@ -57,7 +59,7 @@ public class MissileMover extends Thread {
 		Tank tank = client.getTank();
 		int x = determineCoordinateX(tank, tank.getWidth(), tank.getX());
 		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY());
-		Missile m = new Missile(client.getId() + "M" + getNr(client),
+		Missile m = new Missile(client.getId() + "M" + ++id,
 				x, y, tank.getDirection(), client.getMissileSpeed());
 		missiles.put(m, client);
 	}
@@ -113,27 +115,4 @@ public class MissileMover extends Thread {
 		}
 		return temp;
 	}
-
-	/**
-	 * Gets a number for the missiles.
-	 * @param client The owner.
-	 * @return A new ID.
-	 */
-	private static String getNr(ClientSession client) {
-		int id = 1;
-		Set<Missile> mi = missiles.keySet();
-		Set<String> ids = new HashSet<String>();
-		for (Missile m : mi) {
-			if (missiles.get(m).equals(client)) {
-				ids.add(m.getID());
-			}
-		}
-		do {
-			id++;
-		} while (ids.contains(Integer.toString(id)));		
-		return Integer.toString(id);
-	}
-	
-	
-
 }

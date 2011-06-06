@@ -128,11 +128,11 @@ public class ClientGUI extends Thread {
 			}
 			center.validate();
 			center.repaint();
-//			try {
-//				synchronized (this) {
-//					wait();
-//				}
-//			} catch (InterruptedException e) { }
+			try {
+				synchronized (this) {
+					wait();
+				}
+			} catch (InterruptedException e) { }
 		}
 	}
 	

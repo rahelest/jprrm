@@ -119,6 +119,9 @@ public final class ObjectFactory {
 		Random rand = new Random();
 		GameObject object2;
 		
+		mapWidth = map.getWidth();
+		mapHeight = map.getHeight();
+		
 		if (iron > 0) {
 			IronWall test = new IronWall("Test", 0, 0);
 			int ironWidth = test.getWidth();
@@ -152,7 +155,7 @@ public final class ObjectFactory {
 		int waterWidth = test.getWidth();
 		int waterHeight = test.getHeight();
 		for (int i = 0; i < water; i++) {
-			GameObject object = createTree(rand.nextInt(mapWidth - waterWidth),
+			GameObject object = createWater(rand.nextInt(mapWidth - waterWidth),
 					rand.nextInt(mapHeight - waterHeight));
 			map = addingToMap(map, object);
 		}
@@ -161,7 +164,7 @@ public final class ObjectFactory {
 		int treeWidth = test.getWidth();
 		int treeHeight = test.getHeight();
 		for (int i = 0; i < tree; i++) {
-			GameObject object = createWater(rand.nextInt(mapWidth - treeWidth),
+			GameObject object = createTree(rand.nextInt(mapWidth - treeWidth),
 					rand.nextInt(mapHeight - treeHeight));
 			map = addingToMap(map, object);
 		}
@@ -194,11 +197,12 @@ public final class ObjectFactory {
 	 * @param map The map.
 	 */
 	public static void saveToFile(GameMap map) {
+		System.out.println("Hakkan salvestama!");
 		int nr = 0;
 		do {
 			nr++;
-		} while (!new File("Map" + nr).exists());
-		
+		} while (new File("Map" + nr + ".txt").exists());
+		System.out.println("Sain numbri: " + nr);
 		try {
 			PrintWriter writer = new PrintWriter(new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream("Map" + nr + ".txt"))));
@@ -208,17 +212,22 @@ public final class ObjectFactory {
 			
 			for (GameObject g : values) {
 				if (g instanceof IronWall) {
-					writer.print("IronWall " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+					writer.println("IronWall " + g.getID() + " " + g.getX() + " " + g.getY());
+					System.out.println("Kirjutan raua");
 				} else if (g instanceof BrickWall) {
-					writer.print("BrickWall " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+					writer.println("BrickWall " + g.getID() + " " + g.getX() + " " + g.getY());
+					System.out.println("Kirjutan tellise");
 				} else if (g instanceof Tree) {
-					writer.print("Tree " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+					writer.println("Tree " + g.getID() + " " + g.getX() + " " + g.getY());
+					System.out.println("Kirjutan puu");
 				} else if (g instanceof Water) {
-					writer.print("Water " + g.getID() + " " + g.getX() + " " + g.getY() + "\n");
+					writer.println("Water " + g.getID() + " " + g.getX() + " " + g.getY());
+					System.out.println("Kirjutan vee");
 				}
 			}	
 			writer.flush();
 			writer.close();
+			System.out.println("Salvestamine valmis!");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 		}	

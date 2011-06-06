@@ -96,8 +96,10 @@ public class ClientCore extends Thread {
 			} catch (NumberFormatException e) {
 				if (message.extraString == null) { 
 					map = message.object;
-//					System.out.println(map);
+					if (!gui.isAlive()) {
+						gui.start();
 					}
+				}
 			}
 			synchronized (gui) {
 				gui.notify();

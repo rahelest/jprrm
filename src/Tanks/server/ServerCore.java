@@ -33,9 +33,9 @@ public final class ServerCore {
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
 	        Broadcaster messenger = new Broadcaster(clientList);
-	        GameMap killingField =  ObjectFactory.loadFromFile(3, messenger);
-//	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
-//	        ObjectFactory.saveToFile(killingField);
+//	        GameMap killingField =  ObjectFactory.loadFromFile(2, messenger);
+	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 1, 2, 2);
+	        ObjectFactory.saveToFile(killingField);
 	        ServerCommandListener serverInput = new ServerCommandListener(clientList, messenger);
 	        while (true) {
                 Socket clientSock = serv.accept();

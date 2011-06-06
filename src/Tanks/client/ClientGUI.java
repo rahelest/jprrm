@@ -97,40 +97,46 @@ public class ClientGUI extends Thread {
 		top.setLayout(new BorderLayout());		
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);
-		start();
 		window.setVisible(true);
-		window.toFront();
 	}
 	
 	/**
 	 * The thread's runner method.
 	 */
 	public void run() {
-		while (true) {				
-			map = clientCore.getMap();			
-			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
-			objects.putAll(map.getMissiles());
-			Set<String> keys = objects.keySet();
-			center.add(map, 0);
-			for (String k : keys) {
-//				drawObject(objects.get(k));				
-				GameObject obj = objects.get(k);
+		map = clientCore.getMap();
+		System.out.println(map);
+		ConcurrentHashMap<String, GameObject> objects = map.getObjects();
+		for (GameObject obj : objects.values()) {
+			if (obj instanceof UnbreakableObject || obj instanceof MapDecorObject) {
 				obj.loadImage();
-				if (obj instanceof Tank || obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
+				center.add(obj, 0);
+			}
+		}
+		center.add(map, -1);
+		
+		while (true) {
+//			center.removeAll();
+			map = clientCore.getMap();			
+			objects = map.getObjects();
+			objects.putAll(map.getMissiles());
+			
+			for (GameObject obj : objects.values()) {
+				obj.loadImage();
+				if (obj instanceof BreakableObject) {
 					center.add(obj, 1);
-				} else if (obj instanceof MapDecorObject) {
-					center.add(obj, 2);
-				}
-//				System.out.println(objects.get(k));				
-			}			
+				}	
+			}
+		
 			center.validate();
 			center.repaint();
-			center.removeAll();	
+				
 			try {
 				synchronized (this) {
 					wait();
 				}
 			} catch (InterruptedException e) { }
+			center.remove(1);
 		}
 	}
 	

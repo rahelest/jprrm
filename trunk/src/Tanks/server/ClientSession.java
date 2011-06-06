@@ -76,10 +76,10 @@ public class ClientSession extends Thread {
 	 * @param nClientID The ID.
 	 * @throws IOException An exception.
 	 */
-	public ClientSession(Socket nSock, GameMap killingField, int nClientID) throws IOException{
+	public ClientSession(Socket nSock, GameMap killingField, int nClientID) throws IOException {
 		this.clientID = nClientID;
 		this.sock = nSock;
-		this.clientIP = sock.getInetAddress();
+		this.clientIP = nSock.getInetAddress();
 		this.map = killingField;
 		createComms();
 		this.setName("ClientSession - " + clientID + " " + clientIP);
@@ -173,6 +173,7 @@ public class ClientSession extends Thread {
 			synchronized (senderLock) {
 				netOut.writeObject(msg);
 				netOut.flush();
+				System.out.println("Teade teel " + msg);
 				netOut.reset();
 			}
 		} catch (IOException e) {

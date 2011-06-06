@@ -106,12 +106,12 @@ public class ClientGUI extends Thread {
 	 * The thread's runner method.
 	 */
 	public void run() {
-		while (true) {
-			center.removeAll();		
+		while (true) {				
 			map = clientCore.getMap();			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
 			Set<String> keys = objects.keySet();
+			center.add(map, 0);
 			for (String k : keys) {
 //				drawObject(objects.get(k));				
 				GameObject obj = objects.get(k);
@@ -121,12 +121,11 @@ public class ClientGUI extends Thread {
 				} else if (obj instanceof MapDecorObject) {
 					center.add(obj, 2);
 				}
-//				System.out.println(objects.get(k));
-				
-			}
-			center.add(map, 0);
+//				System.out.println(objects.get(k));				
+			}			
 			center.validate();
-//			center.repaint();
+			center.repaint();
+			center.removeAll();	
 			try {
 				synchronized (this) {
 					wait();

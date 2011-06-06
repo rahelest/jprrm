@@ -45,7 +45,7 @@ public class Receiver extends Thread {
 	 * @throws IOException The exception.
 	 */
 	private Receiver(Socket socket, CommunicationBuffer inbound) throws IOException {
-		this.setName("Receiver - " + sock.getInetAddress());
+		this.setName("Receiver - " + socket.getInetAddress());
 		this.sock = socket;
 		this.in = inbound;
 		System.out.println("alustan netIn-i loomist");

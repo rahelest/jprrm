@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Set;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
@@ -144,6 +145,13 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	public GameObject checkCollision(GameMap map) {
 		
 //		ConcurrentHashMap mappy = map.getObject().clone();
+		
+		int x = getX(); int y = getY();
+		int mapX = map.getX() + getWidth();
+		int mapY = map.getY() + getHeight();
+		if(x < 0 || x > mapX || y < 0 || y > mapY) {
+			return this;
+		}		
 		Set<String> keys = map.getObjects().keySet();
 		keys.remove(ID);
 		Boolean tempBool;

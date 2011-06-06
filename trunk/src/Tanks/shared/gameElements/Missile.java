@@ -76,8 +76,8 @@ public class Missile extends UnbreakableObject implements Serializable {
 		if (collidee != null) {
 			collidee.getDamaged();
 			return false;
+		} else {
+			return true;
 		}
-			
-		return true;
 	} 
 }

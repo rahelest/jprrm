@@ -8,25 +8,67 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import Tanks.shared.*;
 
+/**
+ * The core application for the client. Manages 
+ * receiving and sending messages.
+ * @author Rahel
+ *
+ */
 public class ClientCore extends Thread {
 
+	/**
+	 * The gui pointer where to send drawing
+	 * instructions.
+	 */
 	private ClientGUI gui;
+	/**
+	 * The socket variable for the connection.
+	 */
 	private Socket sock;
+	/**
+	 * The server name field for the connection.
+	 */
 	private String serverName;
+	/** 
+	 * The port number flied for the connection.
+	 */
 	private int port;
+	/**
+	 * The number that provides the number of
+	 * tries to connect to the server.
+	 */
 	private int connectionTries = 0;
+	/**
+	 * The field for the inbound buffer. 
+	 */
 	private CommunicationBuffer inBuf;
+	/**
+	 * The outbound buffer stream for
+	 * sending messages.
+	 */
 	private ObjectOutputStream netOut;
+	/**
+	 * The new GameMap object, initialized
+	 * for start of the game before the
+	 * first map is receiver from the server.
+	 */
 	private GameMap map = new GameMap();
+	/**
+	 * The client's unique ID number.
+	 */
 	private int myID = -1;
-	
+	/**
+	 * The ClientCore constructor.
+	 */
 	public ClientCore() {
 		setName("ClientCore");
 		gui = new ClientGUI(this);
 	}
 
-	
-	public void run() {		
+	/**
+	 * The run method of the thread.
+	 */
+	public final void run() {
 		
 		try {
 			inBuf = new CommunicationBuffer();
@@ -47,7 +89,7 @@ public class ClientCore extends Thread {
 				int number = Integer.parseInt(message.extraString);
 				if (myID == -1) {
 					myID = number;
-					System.out.println("My new ID: " + myID);
+					System.out.println("My ID: " + myID);
 				}
 				
 			} catch (NumberFormatException e) {
@@ -56,22 +98,28 @@ public class ClientCore extends Thread {
 //					System.out.println(map);
 					}
 			}
-			synchronized(gui) {
+			synchronized (gui) {
 				gui.notify();
 			}
 		}
 	}
 
-
-	public boolean sendIP(String string) {
+		/**
+		 * Receives the IP from the text field and
+		 * then passes the extracted variables to 
+		 * the method that connects to the server.
+		 * @param string The tet from the text fielt.
+		 * @return Whether the connecting succeeded.
+		 */
+		public boolean sendIP(String string) {
 		String[] splitted = string.split(":");
-		if (splitted.length != 2) return false;
-		else {
+		if (splitted.length != 2) {
+			return false;
+		} else {
 			serverName = splitted[0];
 			try {
 				port = Integer.parseInt(splitted[1]);
 				if (connectToServer(serverName, port)) {
-					//startgame-----------------------------------------------------------------
 					return true;
 				} else {
 					return false;
@@ -81,11 +129,17 @@ public class ClientCore extends Thread {
 			}
 		}
 	}
-		
-	public boolean connectToServer(String serverName, int port) {
+	
+	/**
+	 * Tries to connect to the server.
+	 * @param serversName The server's name.
+	 * @param porty The server's port.
+	 * @return Whether the connecting was successful.
+	 */
+	public boolean connectToServer(String serversName, int porty) {
 		try {
-			InetAddress serverAddr = InetAddress.getByName(serverName);
-			sock = new Socket(serverAddr, port);
+			InetAddress serverAddr = InetAddress.getByName(serversName);
+			sock = new Socket(serverAddr, porty);
 			
 		} catch (ConnectException e) {
 //			e.printStackTrace();
@@ -104,6 +158,10 @@ public class ClientCore extends Thread {
 		return true;
 	}
 	
+	/**
+	 * Manages the several tries of connecting to the server.
+	 * @return Whether the tries were successful.
+	 */
 	private boolean tryConnecting() {
 		if (connectionTries < 10) {
 			try {
@@ -127,6 +185,10 @@ public class ClientCore extends Thread {
 		return false;
 	}
 	
+	/**
+	 * Sends the message to the server.
+	 * @param message The message.
+	 */
 	private void sendMessage(Message message) {
 		try {
 			netOut.writeObject(message);
@@ -139,35 +201,53 @@ public class ClientCore extends Thread {
 		
 	}
 	
+	/**
+	 * The main method.
+	 * @param args Nuffin.
+	 */
 	public static void main(String[] args) {
 		new ClientCore();
 	}
 
+	/**
+	 * Sends the serves the command to move north.
+	 */
 	public void moveNorth() {
 		sendMessage(new Message("N"));
 	}
 
-
+	/**
+	 * Sends the serves the command to move south.
+	 */
 	public void moveSouth() {
 		sendMessage(new Message("S"));
 	}
 
-
+	/**
+	 * Sends the serves the command to move east.
+	 */
 	public void moveEast() {
 		sendMessage(new Message("E"));
 	}
 
-
+	/**
+	 * Sends the serves the command to move west.
+	 */
 	public void moveWest() {
 		sendMessage(new Message("W"));
 	}
 
-
+	/**
+	 * Sends the serves the command to fire a missile.
+	 */
 	public void fire() {
 		sendMessage(new Message("F"));
 	}
 
-
+	/**
+	 * Method to notify the client when the connection is lost.
+	 * @param receiver2 The receiver that gets the exception.
+	 */
 	public void notifyConnectionLoss(Receiver receiver2) {
 		try {
 			sock.close();
@@ -186,14 +266,21 @@ public class ClientCore extends Thread {
 		
 	}
 
-
+	/**
+	 * Gets the map received from the server.
+	 * @return The map that contains information
+	 * to draw the GUI.
+	 */
 	public synchronized GameMap getMap() {
 		return map;
 	}
 
-
-	public Object getMyID() {
-		return myID;
+	/**
+	 * Asks for the client's ID.
+	 * @return The ID number.
+	 */
+	public String getMyID() {
+		return Integer.toString(myID);
 	}
 		
 }

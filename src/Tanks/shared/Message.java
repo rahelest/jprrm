@@ -2,8 +2,11 @@ package Tanks.shared;
 
 import java.io.Serializable;
 
-import Tanks.shared.mapElements.GameObject;
-
+/**
+ * The serializable message class.
+ * @author JPRRM
+ *
+ */
 public class Message implements Serializable {
 	
 	/**
@@ -11,31 +14,39 @@ public class Message implements Serializable {
 	 */
 	private static final long serialVersionUID = -2075547926990832957L;
 
-//	private int counter;
+	/**
+	 * The string field.
+	 */
+	@SuppressWarnings("unused")
+	private String extraString;
+	/**
+	 * The map field.
+	 */
+	@SuppressWarnings("unused")
+	private GameMap object;
 	
-	public int receiver = -1;
-	public int sender = 0;
-	public String extraString; //kui tüü kah
-	public GameMap object;
-	
-	public Message (GameMap map) {
-//		counter++;
+	/**
+	 * Creates a message with the map. 
+	 * @param map The map.
+	 */
+	public Message(GameMap map) {
 		object = map;
 	}
 
+	/**
+	 * Generates a message with the ID.
+	 * @param clientID The ID number.
+	 */
 	public Message(int clientID) {
-//		super();
-		receiver = clientID;
-		sender = 0;
 		extraString = (Integer.toString(clientID));
 		object = null;
 	}
 	
+	/**
+	 * Generates a message with a string.
+	 * @param text The string.
+	 */
 	public Message(String text) {
 		extraString = text;
-		receiver = 0;
 	}
-	
-	
-	
 }

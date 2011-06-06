@@ -19,12 +19,13 @@ public final class ObjectFactory {
 	 */
 	static int id = 0;
 	/**
-	 * 
+	 * Width for the map.
 	 */
 	static int mapWidth;
+	/**
+	 * Height for the map.
+	 */
 	static int mapHeight;
-	static int tankWidth;
-	static int tankHeight;
 	
 	/**
 	 * The hiding constructor.
@@ -42,8 +43,8 @@ public final class ObjectFactory {
 		Tank test = new Tank("Test", 0, 0);
 		mapWidth = map.getWidth();
 		mapHeight = map.getHeight();
-		tankWidth = test.getWidth();
-		tankHeight = test.getHeight();
+		int tankWidth = test.getWidth();
+		int tankHeight = test.getHeight();
 		GameObject tank = new Tank(name, rand.nextInt(mapWidth - tankWidth),
 				rand.nextInt(mapHeight - tankHeight));
 		map = addingToMap(map, tank);
@@ -106,7 +107,11 @@ public final class ObjectFactory {
 		GameObject object2;
 		
 		if (iron > 0) {
-			object2 = createIronWall(rand.nextInt(900 - 60), rand.nextInt(900 - 30));
+			IronWall test = new IronWall("Test", 0, 0);
+			int ironWidth = test.getWidth();
+			int ironHeight = test.getHeight();
+			object2 = createIronWall(rand.nextInt(mapWidth - ironWidth),
+					rand.nextInt(mapHeight - ironHeight));
 			map.addObject(object2);
 			for (int i = 1; i < iron; i++) {
 				GameObject object = createIronWall(object2.getX()
@@ -117,7 +122,11 @@ public final class ObjectFactory {
 		}
 		
 		if (brick > 0) {
-			object2 = createBrickWall(rand.nextInt(900 - 60), rand.nextInt(900 - 30));
+			BrickWall test = new BrickWall("Test", 0, 0);
+			int brickWidth = test.getWidth();
+			int brickHeight = test.getHeight();
+			object2 = createBrickWall(rand.nextInt(mapWidth - brickWidth),
+					rand.nextInt(mapHeight - brickHeight));
 			map.addObject(object2);
 			for (int i = 1; i < brick; i++) {
 				GameObject object = createBrickWall(object2.getX()
@@ -126,13 +135,21 @@ public final class ObjectFactory {
 			}
 		}
 		
-		for (int i = 0; i < tree; i++) {
-			GameObject object = createTree(rand.nextInt(800), rand.nextInt(800));
+		for (int i = 0; i < water; i++) {
+			Water test = new Water("Test", 0, 0);
+			int waterWidth = test.getWidth();
+			int waterHeight = test.getHeight();
+			GameObject object = createTree(rand.nextInt(mapWidth - waterWidth),
+					rand.nextInt(mapHeight - waterHeight));
 			map = addingToMap(map, object);
 		}
 		
-		for (int i = 0; i < water; i++) {
-			GameObject object = createWater(rand.nextInt(800), rand.nextInt(800));
+		for (int i = 0; i < tree; i++) {
+			Tree test = new Tree("Test", 0, 0);
+			int treeWidth = test.getWidth();
+			int treeHeight = test.getHeight();
+			GameObject object = createWater(rand.nextInt(mapWidth - treeWidth),
+					rand.nextInt(mapHeight - treeHeight));
 			map = addingToMap(map, object);
 		}
 		
@@ -153,8 +170,8 @@ public final class ObjectFactory {
 				map.addObject(object);
 				return map;
 			} else {
-				object.setLocation(rand.nextInt(900 - object.getWidth()),
-						rand.nextInt(900) - object.getHeight());
+				object.setLocation(rand.nextInt(mapWidth - object.getWidth()),
+						rand.nextInt(mapHeight - object.getHeight()));
 			}
 		}
 	}

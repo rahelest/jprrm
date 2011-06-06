@@ -7,12 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.GameObject;
 
@@ -124,27 +122,6 @@ public class ClientGUI extends Thread {
 			} catch (InterruptedException e) { }
 		}
 	}
-	
-//	private void sendForDrawing(GameMap map) {
-//		center.removeAll();
-//		ConcurrentHashMap<String, GameObject> objects = map.getObject();
-//		Set<String> keys = objects.keySet();
-//		for (String k : keys) {
-//			drawObject(objects.get(k));
-////			System.out.println(objects.get(k));
-//		}
-//	}
-
-//	public void drawObject(GameObject obj) {
-//		obj.loadImage();
-////		if (obj.getID().equals("T" + clientCore.getMyID())) {
-//////			System.out.println("SILT!");
-//////			myName.setLabelFor(obj);
-////			myName.setLocation(obj.getX() - 10, obj.getY());
-////			center.add(myName);
-////		}
-//		center.add(obj);
-//	}
 	
 	/**
 	 * Makes the text field and button visible again

@@ -15,14 +15,14 @@ import Tanks.shared.mapElements.*;
 public final class ObjectFactory {
 	
 	/**
-	 * The hiding constructor.
-	 */
-	private ObjectFactory() { }
-	static GameMap map;
-	/**
 	 * The id number.
 	 */
 	static int id = 0;
+	
+	/**
+	 * The hiding constructor.
+	 */
+	private ObjectFactory() { }
 	
 	/**
 	 * Spawns a tank.
@@ -88,7 +88,7 @@ public final class ObjectFactory {
 	 * @return The new map.
 	 */
 	public static GameMap createMap(Broadcaster messenger, int water, int tree, int brick, int iron) {
-		map = new GameMap(messenger);
+		GameMap map = new GameMap(messenger);
 		Random rand = new Random();
 		GameObject object2;
 		

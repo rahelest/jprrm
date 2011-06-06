@@ -6,8 +6,22 @@ import java.net.Socket;
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
 
-public class ServerCore {
-        
+/**
+ * The server's core class.
+ * @author JPRRM
+ *
+ */
+public final class ServerCore {
+	
+	/**
+	 * The hiding constructor.
+	 */
+	private ServerCore() { }
+      
+	/**
+	 * The main method.
+	 * @param args Nuffin
+	 */
 	@SuppressWarnings("unused")
     public static void main(String[] args) {
 	    int port = 8888;        
@@ -24,18 +38,19 @@ public class ServerCore {
 	        while (true) {
                 Socket clientSock = serv.accept();
                 try {
-                    if(clientList.exists(clientSock.getInetAddress())) {
+                    if (clientList.exists(clientSock.getInetAddress())) {
                         System.out.println("clientsessioni notify algus");
                         ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
                         exSessPointer.updateOnReconnect(clientSock);
-                        synchronized(exSessPointer) {
-                                System.out.println("luku algus");                                                               
+                        synchronized (exSessPointer) {
+                                System.out.println("luku algus");
                                 exSessPointer.notify();                                                 
                                 System.out.println(exSessPointer);
                         }
                         System.out.println("clientsessioni notify lopp");
                     } else {
-                            clientList.addClient(new ClientSession(clientSock, killingField, clientID));                    // loome kliendiseansi lõime ning uuesti tagasi porti kuulama
+                            clientList.addClient(new ClientSession(clientSock,
+                            		killingField, clientID));
                             System.out.println("Klient ühines edukalt, ID = " + clientID);
                             clientID++;     
                     }

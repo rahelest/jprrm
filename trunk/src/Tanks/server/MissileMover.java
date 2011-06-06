@@ -32,7 +32,7 @@ public class MissileMover extends Thread {
 	public static void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
 		System.out.println("Saan tankiviite");
-		Missile m = new Missile(client.getId() + "M" + getNr(client), tank.getX(), tank.getY(), tank.getDirection());
+		Missile m = new Missile(client.getId() + "M" + getNr(client), tank.getX(), tank.getY(), tank.getDirection(), client.getMissileSpeed());
 		System.out.println("Uus mürsk loodud");
 		missiles.put(m, client);
 		System.out.println("Uus mürsk lisatud");
@@ -40,16 +40,20 @@ public class MissileMover extends Thread {
 
 	private static String getNr(ClientSession client) {
 		int id = 1;
+		System.out.println("Loon numbrit");
 		Set<Missile> mi = missiles.keySet();
 		Set<String> ids = new HashSet<String>();
+		System.out.println("Hakkan lisama");
 		for (Missile m: mi) {
 			if(missiles.get(m).equals(client)) {
 				ids.add(m.getID());
 			}
 		}
+		System.out.println("Hakkan otsima");
 		do {
 			id++;
-		} while (!ids.contains(Integer.toString(id)));		
+		} while (ids.contains(Integer.toString(id)));		
+		System.out.println("GetNr valmis");
 		return Integer.toString(id);
 	}
 	

@@ -17,10 +17,10 @@ public class Missile extends UnbreakableObject implements Serializable {
 	protected int speed;
 	protected transient ClientSession owner;
 	
-	public Missile(String ID, int x, int y, String direction) {
+	public Missile(String ID, int x, int y, String direction, int speed) {
 		super(ID, x, y, 10, 15, true, "missile" + direction + ".png");
-		this.direction = owner.getTank().getDirection();
-		this.speed = owner.getMissileSpeed();
+		this.direction = direction;
+		this.speed = speed;
 
 	}
 

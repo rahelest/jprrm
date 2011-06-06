@@ -31,6 +31,14 @@ public class GameMap implements Serializable {
 	 */
 	private ConcurrentHashMap<String, GameObject> missiles = new ConcurrentHashMap<String, GameObject>();
 	/**
+	 * The background's width.
+	 */
+	private int width = 900;
+	/**
+	 * The background's height.
+	 */
+	private int height = 900;
+	/**
 	 * The background image.
 	 */
 	@SuppressWarnings("unused")
@@ -145,6 +153,22 @@ public class GameMap implements Serializable {
 	public void addMissiles(ConcurrentHashMap<String, GameObject> nMissiles) {
 		this.missiles.clear();
 		this.missiles.putAll(nMissiles);
+	}
+
+	/**
+	 * Returns the width.
+	 * @return The width.
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Return the height.
+	 * @return The height.
+	 */
+	public int getHeight() {
+		return height;
 	}
 	
 }

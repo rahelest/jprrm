@@ -9,10 +9,15 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Tanks.shared.GameMap;
+import Tanks.shared.gameElements.Tank;
+import Tanks.shared.mapElements.BreakableObject;
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.mapElements.MapDecorObject;
+import Tanks.shared.mapElements.UnbreakableObject;
 
 /**
  * 
@@ -48,7 +53,7 @@ public class ClientGUI extends Thread {
 	/**
 	 * The center paner where the the tanks are.
 	 */
-	private JPanel center = new JPanel();
+	private JLayeredPane center = new JLayeredPane();
 	/**
 	 * The button which makes the client to connect.
 	 */
@@ -102,19 +107,25 @@ public class ClientGUI extends Thread {
 	 */
 	public void run() {
 		while (true) {
-			center.removeAll();
+			center.removeAll();		
 			map = clientCore.getMap();			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
 			Set<String> keys = objects.keySet();
+			center.add(map, 0);
 			for (String k : keys) {
-//				drawObject(objects.get(k));
+//				drawObject(objects.get(k));				
 				GameObject obj = objects.get(k);
 				obj.loadImage();
-				center.add(obj);
+				if (obj instanceof Tank || obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
+					center.add(obj, 1);
+				} else if (obj instanceof MapDecorObject) {
+					center.add(obj, 2);
+				}
 //				System.out.println(objects.get(k));
 				
 			}
+			center.validate();
 			center.repaint();
 			try {
 				synchronized (this) {

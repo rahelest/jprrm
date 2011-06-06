@@ -115,27 +115,34 @@ public final class ObjectFactory {
 	 * @return The new map.
 	 */
 	public static GameMap createMap(Broadcaster messenger, int water, int tree, int brick, int iron) {
+//		System.out.println("Enne gamemapi");
 		GameMap map = new GameMap(messenger);
+//		System.out.println("pärast gamemapi");
 		Random rand = new Random();
 		GameObject object2;
 		
 		mapWidth = map.getWidth();
 		mapHeight = map.getHeight();
-		
+//		System.out.println("Mõõtmed käes");
 		if (iron > 0) {
 			IronWall test = new IronWall("Test", 0, 0);
 			int ironWidth = test.getWidth();
 			int ironHeight = test.getHeight();
+//			System.out.println("Mõõtmed käes2");
 			object2 = createIronWall(rand.nextInt(mapWidth - ironWidth),
 					rand.nextInt(mapHeight - ironHeight));
 			map.addObject(object2);
+			System.out.println(" 1");
 			for (int i = 1; i < iron; i++) {
 				GameObject object = createIronWall(object2.getX()
 						+ object2.getWidth() + 1, object2.getY());
 				map = addingToMap(map, object);
+//				System.out.println("addingtomap valma");
 				object2 = object;
 			}
 		}
+		
+//		System.out.println("raud vaslma");
 		
 		if (brick > 0) {
 			BrickWall test = new BrickWall("Test", 0, 0);
@@ -151,6 +158,8 @@ public final class ObjectFactory {
 			}
 		}
 		
+//		System.out.println("Brick ");
+		
 		GameObject test = new Water("Test", 0, 0);
 		int waterWidth = test.getWidth();
 		int waterHeight = test.getHeight();
@@ -160,6 +169,8 @@ public final class ObjectFactory {
 			map = addingToMap(map, object);
 		}
 		
+//		System.out.println("Water");
+		
 		test = new Tree("Test", 0, 0);
 		int treeWidth = test.getWidth();
 		int treeHeight = test.getHeight();
@@ -168,6 +179,7 @@ public final class ObjectFactory {
 					rand.nextInt(mapHeight - treeHeight));
 			map = addingToMap(map, object);
 		}
+//		System.out.println("Tree");
 		
 		return map;
 	}
@@ -180,8 +192,11 @@ public final class ObjectFactory {
 	 * @return The map.
 	 */
 	private static GameMap addingToMap(GameMap map, GameObject object) {
+		System.out.println("Siin");
 		Random rand = new Random();
 		while (true) {
+//			System.out.println("Kordus????");
+//			System.out.println(object.checkCollision(map));
 			if (object.checkCollision(map) == null) {
 				map.addObject(object);
 				return map;

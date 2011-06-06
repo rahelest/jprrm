@@ -22,7 +22,7 @@ import Tanks.shared.mapElements.Water;
 public class GameMap implements Serializable {
 
 	/**
-	 * 
+	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = -6541854117698278749L;
 	private ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();

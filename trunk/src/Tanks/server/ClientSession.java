@@ -236,10 +236,12 @@ public class ClientSession extends Thread {
 	/**
 	 * Reset the client's parametres.
 	 */
-	public void reStart() {
+	public void reStart(GameMap newMap) {
 		// TODO Auto-generated method stub
+		map = newMap;
 		exp = 0;
 		tankSpeed = 1;
 		missileSpeed = 1;
+		
 	}
 }

@@ -94,11 +94,13 @@ public class ClientCore extends Thread {
 				}
 				
 			} catch (NumberFormatException e) {
-				if (message.extraString == null) { 
+				if (message.extraString == null) {
 					map = message.object;
 					if (!gui.isAlive()) {
 						gui.start();
 					}
+				} else if (message.extraString.equals("RESET")) {
+					gui.drawUnchangeable();
 				}
 			}
 			synchronized (gui) {

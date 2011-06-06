@@ -11,6 +11,7 @@ import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import Tanks.shared.GameMap;
+import Tanks.shared.gameElements.Missile;
 
 /**
  * The base class for all objects with the necessary methods.
@@ -145,10 +146,15 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //		ConcurrentHashMap mappy = map.getObject().clone();
 		Set<String> keys = map.getObjects().keySet();
 		keys.remove(ID);
-		
+		Boolean tempBool;
+		if (this instanceof Missile) {
+			tempBool = isBulletPassable();
+		} else {
+			tempBool = isPassable();
+		}
 		for (String s : keys) {
 			GameObject tempPointer = map.getObject(s);
-			if (getBounds().intersects(tempPointer.getBounds())) {
+			if (!tempBool && getBounds().intersects(tempPointer.getBounds())) {
 				return tempPointer;
 			}
 //			if(!getBounds().intersects(map.betBounds())) {
@@ -175,4 +181,19 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		System.out.printf(this + ": \nsain pihta!\n\n");
 		
 	}
+
+	/**
+	 * @return the passable
+	 */
+	public boolean isPassable() {
+		return passable;
+	}
+
+	/**
+	 * @return the bulletPassable
+	 */
+	public boolean isBulletPassable() {
+		return bulletPassable;
+	}
+	
 }

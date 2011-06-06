@@ -59,7 +59,7 @@ public class ClientSession extends Thread {
 	/**
 	 * The tank's speed.
 	 */
-	private int tankSpeed = 1;
+	private int tankSpeed = 5;
 	/**
 	 * The missile's speed.
 	 */

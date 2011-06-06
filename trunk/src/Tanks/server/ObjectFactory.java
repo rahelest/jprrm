@@ -272,7 +272,9 @@ public final class ObjectFactory {
 			br.close();	
 			return map;
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found!");
+			System.out.println("File not found, new map generated!");
+			Random rand = new Random();
+			return createMap(messenger, rand.nextInt(3), rand.nextInt(4), rand.nextInt(5), rand.nextInt(5));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -24,7 +24,7 @@ public final class ServerCore {
 	 */
 	@SuppressWarnings("unused")
     public static void main(String[] args) {
-	    int port = 8888;        
+	    int port = 8888;
 	    int clientID = 1;
 	    
 	    try {
@@ -33,7 +33,9 @@ public final class ServerCore {
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
 	        Broadcaster messenger = new Broadcaster(clientList);
-	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
+	        GameMap killingField =  ObjectFactory.loadFromFile(3, messenger);
+//	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
+//	        ObjectFactory.saveToFile(killingField);
 	        ServerCommandListener serverInput = new ServerCommandListener(clientList, messenger);
 	        while (true) {
                 Socket clientSock = serv.accept();

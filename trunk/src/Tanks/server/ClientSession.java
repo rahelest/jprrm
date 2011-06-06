@@ -69,6 +69,8 @@ public class ClientSession extends Thread {
 	 */
 	private int exp = 0;
 
+	private String key;
+	
 	/**
 	 * The constructor.
 	 * @param nSock The socket.
@@ -83,6 +85,7 @@ public class ClientSession extends Thread {
 		this.map = killingField;
 		createComms();
 		this.setName("ClientSession - " + clientID + " " + clientIP);
+		key = "T" + (Integer.toString(clientID));
 		start();
 	}
 	
@@ -90,7 +93,6 @@ public class ClientSession extends Thread {
 	 * The thread's run method.
 	 */
 	public void run() {
-		String key = "T" + (Integer.toString(clientID));
 		tank = ObjectFactory.spawnTank(map, key);
 		map.addObject(tank);
 		sendMessage(new Message(clientID));
@@ -239,6 +241,7 @@ public class ClientSession extends Thread {
 	public void reStart(GameMap newMap) {
 		// TODO Auto-generated method stub
 		map = newMap;
+		tank = ObjectFactory.spawnTank(map, key);
 		exp = 0;
 		tankSpeed = 1;
 		missileSpeed = 1;

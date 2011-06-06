@@ -102,8 +102,9 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		keys.remove(ID);
 		
 		for (String s : keys) {
-			if(getBounds().intersects(map.getObject(s).getBounds())) {
-				return map.getObject(s);
+			GameObject tempPointer = map.getObject(s);
+			if(getBounds().intersects(tempPointer.getBounds())) {
+				return tempPointer;
 			}
 //			if(!getBounds().intersects(map.betBounds())) {
 //				return true;

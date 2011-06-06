@@ -1,0 +1,7 @@
+Water a6 382 701
+Water a5 123 527
+Tree a7 515 208
+IronWall a2 384 462
+BrickWall a3 748 501
+BrickWall a4 799 501
+IronWall a1 333 462

@@ -41,8 +41,8 @@ public class MissileMover extends Thread {
 				if (m.move(missiles.get(m).getMap())) {
 					missiles.remove(m);
 				}
-				System.out.println(m);
 			}
+			System.out.println("Liigutan: " + missiles);
 			try {
 				sleep(waitTime);
 			} catch (InterruptedException e) { }

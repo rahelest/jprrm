@@ -113,10 +113,10 @@ public class ClientGUI extends Thread {
 				center.add(obj, 0);
 			}
 		}
-		center.add(map, -1);
-		
+		center.add(map, -1);		
 		while (true) {
 //			center.removeAll();
+			center.remove(1);
 			map = clientCore.getMap();			
 			objects = map.getObjects();
 			objects.putAll(map.getMissiles());
@@ -128,7 +128,7 @@ public class ClientGUI extends Thread {
 				}	
 			}
 		
-			center.validate();
+//			center.validate();
 			center.repaint();
 				
 			try {
@@ -136,7 +136,7 @@ public class ClientGUI extends Thread {
 					wait();
 				}
 			} catch (InterruptedException e) { }
-			center.remove(1);
+			
 		}
 	}
 	

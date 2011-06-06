@@ -19,6 +19,8 @@ public class ActiveClients {
 	public void addClient(ClientSession client) {
 			clientList.add(client);
 	}
+	
+	
 
 	public Iterator<ClientSession> iterator() {
 			Iterator<ClientSession> i = clientList.iterator();

@@ -84,7 +84,7 @@ public class ClientSession extends Thread {
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());
 			}
-			map.getObject().putAll(MissileMover.getMissiles());
+			map.addMissiles(MissileMover.getMissiles());
 			map.doYourStuff(tank);
 		}			
 	}

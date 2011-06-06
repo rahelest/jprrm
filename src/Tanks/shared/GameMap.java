@@ -26,6 +26,7 @@ public class GameMap implements Serializable {
 	 */
 	private static final long serialVersionUID = -6541854117698278749L;
 	private ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
+	private ConcurrentHashMap<String, GameObject> missiles = new ConcurrentHashMap<String, GameObject>();
 	private transient BufferedImage background;
 	private transient CommunicationBuffer outBuff;
 	private transient Object mapLock = new Object();
@@ -90,6 +91,15 @@ public class GameMap implements Serializable {
 
 	public ConcurrentHashMap<String, GameObject> getObject() {
 			return objects;
+	}
+	
+	public ConcurrentHashMap<String, GameObject> getMissiles() {
+		return missiles;
+	}
+
+	public void addMissiles(ConcurrentHashMap<String, GameObject> missiles) {
+		this.missiles.clear();
+		this.missiles.putAll(missiles);
 	}
 	
 }

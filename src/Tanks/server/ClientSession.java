@@ -54,31 +54,33 @@ public class ClientSession extends Thread {
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
+				System.out.println("Tulistamine alaku!");
 				MissileMover.newMissile(this);
+				System.out.println("Tulistamine saanud!");
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);
 				((Tank) tempTank).setDirection("N");
 				tempTank.setSize(30, 60);
-				tempTank.setImage("tankNORTH.png");
+				tempTank.setImage("tankN.png");
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tempTank.setLocation(tank.getX(), tank.getY() + tankspeed);
 				((Tank) tempTank).setDirection("S");
 				tempTank.setSize(30, 60);
-				tempTank.setImage("tankSOUTH.png");
+				tempTank.setImage("tankS.png");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
 				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
 				((Tank) tempTank).setDirection("W");
 				tempTank.setSize(60, 30);
-				tempTank.setImage("tankWEST.png");
+				tempTank.setImage("tankW.png");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
 				tempTank.setLocation(tank.getX() + tankspeed, tank.getY());
 				((Tank) tempTank).setDirection("E");
 				tempTank.setSize(60, 30);
-				tempTank.setImage("tankEAST.png");
+				tempTank.setImage("tankE.png");
 			}
 			if (tempTank.checkCollision(map) == null) {
 				tank.setLocation(tempTank.getX(), tempTank.getY());

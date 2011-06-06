@@ -106,17 +106,19 @@ public class ClientGUI extends Thread {
 	 * The thread's runner method.
 	 */
 	public void run() {
+		map = clientCore.getMap();
+		center.add(map, new Integer(0));
 		while (true) {
+			center.removeAll();
 			map = clientCore.getMap();			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
-//			Set<String> keys = objects.keySet();
-			center.add(map, new Integer(0));
+//			Set<String> keys = objects.keySet();			
 			for (GameObject obj : objects.values()) {
 //				drawObject(objects.get(k));				
 //				GameObject obj = objects.get(k);
 				obj.loadImage();
-				if (obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
+				if (obj instanceof Tank || obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
 					center.add(obj, new Integer(1));
 				} else if (obj instanceof MapDecorObject) {
 					center.add(obj, new Integer(2));
@@ -131,7 +133,6 @@ public class ClientGUI extends Thread {
 					wait();
 				}
 			} catch (InterruptedException e) { }
-			center.removeAll();
 		}
 	}
 	
@@ -143,26 +144,6 @@ public class ClientGUI extends Thread {
 		text.setVisible(true);
 		ok.setVisible(true);
 	}
-
-/*
-	public static void main(String[] args) {
-		ClientGUI gui = new ClientGUI(null);
-		gui.map = new GameMap();
-		gui.tank = new Tank("hj", 100, 100);
-		gui.map.addObject(new Water("we", 32, 150));
-		gui.map.addObject(new Tank("we2", 43, 244));
-		gui.map.addObject(new Tree("we3", 143, 244));
-		
-		gui.sendForDrawing(gui.map);
-//		GameObject water = new Water("hj2", 100, 100);
-//		GameObject water2 = new Water("hj3", 300, 300);
-		gui.drawObject(gui.tank);
-//		gui.drawObject(water);
-//		gui.drawObject(water2);
-//		System.out.println("Test: kollitud " + gui.tank.getCollision(water));
-//		System.out.println("Test: kollimata " + gui.tank.getCollision(water2));
-	}
-*/
 
 	/**
 	 * Acts upon certain pressed keys.

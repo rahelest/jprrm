@@ -27,8 +27,8 @@ public class ClientSession extends Thread {
 	private GameObject tank;
 
 	//siia tulevad mängija parameetrid
-	private int tankspeed = 1;
-	private int missilespeed = 1;
+	private int tankSpeed = 1;
+	private int missileSpeed = 1;
 	private int exp = 0;
 
 	
@@ -59,25 +59,25 @@ public class ClientSession extends Thread {
 				System.out.println("Tulistamine saanud!");
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
-				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);
+				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
 				((Tank) tempTank).setDirection("N");
 				tempTank.setSize(30, 60);
 				tempTank.setImage("tankN.png");
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
-				tempTank.setLocation(tank.getX(), tank.getY() + tankspeed);
+				tempTank.setLocation(tank.getX(), tank.getY() + tankSpeed);
 				((Tank) tempTank).setDirection("S");
 				tempTank.setSize(30, 60);
 				tempTank.setImage("tankS.png");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
-				tempTank.setLocation(tank.getX() - tankspeed, tank.getY());
+				tempTank.setLocation(tank.getX() - tankSpeed, tank.getY());
 				((Tank) tempTank).setDirection("W");
 				tempTank.setSize(60, 30);
 				tempTank.setImage("tankW.png");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
-				tempTank.setLocation(tank.getX() + tankspeed, tank.getY());
+				tempTank.setLocation(tank.getX() + tankSpeed, tank.getY());
 				((Tank) tempTank).setDirection("E");
 				tempTank.setSize(60, 30);
 				tempTank.setImage("tankE.png");
@@ -152,6 +152,6 @@ public class ClientSession extends Thread {
 	}
 	
 	public synchronized int getMissileSpeed() {
-		return missilespeed;
+		return missileSpeed;
 	}
 }

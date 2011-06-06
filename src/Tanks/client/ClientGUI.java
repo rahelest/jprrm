@@ -1,14 +1,17 @@
 package Tanks.client;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,7 +30,7 @@ public class ClientGUI extends Thread {
 	private JPanel center = new JPanel();
 	private JButton ok = new JButton("OK");
 	private GameMap map;
-	JLabel myName = new JLabel("My tank!",JLabel.CENTER);
+	private JLabel myName = new JLabel("My tank!",JLabel.CENTER);
 	
 	public ClientGUI(ClientCore nClientCore) {
 		setName("ClientGUI");
@@ -40,6 +43,9 @@ public class ClientGUI extends Thread {
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
 		center.setLayout(null);
+		window.createBufferStrategy(2);
+//		offscreenImage = java.awt.Toolkit.createImage(null, center.getX(), center.getY());
+//		offscr = offscreenImage.getGraphics();
 		ok.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
@@ -65,8 +71,17 @@ public class ClientGUI extends Thread {
 	
 	public void run() {
 		while(true) {
-			map = clientCore.getMap();
-			sendForDrawing(map);
+			center.removeAll();
+			map = clientCore.getMap();			
+			ConcurrentHashMap<String, GameObject> objects = map.getObject();
+			Set<String> keys = objects.keySet();
+			for (String k : keys) {
+//				drawObject(objects.get(k));
+				GameObject obj = objects.get(k);
+				obj.loadImage();
+				center.add(obj);
+//				System.out.println(objects.get(k));
+			}
 			center.repaint();
 			try {
 				synchronized(this) {
@@ -79,26 +94,26 @@ public class ClientGUI extends Thread {
 		}
 	}
 	
-	private void sendForDrawing(GameMap map) {
-		center.removeAll();
-		ConcurrentHashMap<String, GameObject> objects = map.getObject();
-		Set<String> keys = objects.keySet();
-		for (String k : keys) {
-			drawObject(objects.get(k));
-//			System.out.println(objects.get(k));
-		}
-	}
+//	private void sendForDrawing(GameMap map) {
+//		center.removeAll();
+//		ConcurrentHashMap<String, GameObject> objects = map.getObject();
+//		Set<String> keys = objects.keySet();
+//		for (String k : keys) {
+//			drawObject(objects.get(k));
+////			System.out.println(objects.get(k));
+//		}
+//	}
 
-	public void drawObject(GameObject obj) {
-		obj.loadImage();
-		if (obj.getID().equals("T" + clientCore.getMyID())) {
-//			System.out.println("SILT!");
-//			myName.setLabelFor(obj);
-			myName.setLocation(obj.getX() - 10, obj.getY());
-			center.add(myName);
-		}
-		center.add(obj);
-	}
+//	public void drawObject(GameObject obj) {
+//		obj.loadImage();
+////		if (obj.getID().equals("T" + clientCore.getMyID())) {
+//////			System.out.println("SILT!");
+//////			myName.setLabelFor(obj);
+////			myName.setLocation(obj.getX() - 10, obj.getY());
+////			center.add(myName);
+////		}
+//		center.add(obj);
+//	}
 	
 	public void enableConnecting() {
 		text.setVisible(true);
@@ -129,18 +144,23 @@ public class ClientGUI extends Thread {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
-			int code = key.getKeyCode();
-			if (code == KeyEvent.VK_UP) {
-				clientCore.moveNorth();
-			} else if (code == KeyEvent.VK_DOWN) {
-				clientCore.moveSouth();
-			} else if (code == KeyEvent.VK_LEFT) {
-				clientCore.moveWest();
-			} else if (code == KeyEvent.VK_RIGHT) {
-				clientCore.moveEast();
-			} else if (code == KeyEvent.VK_SPACE) {
-				clientCore.fire();
-			}
+//			try {
+				int code = key.getKeyCode();
+				if (code == KeyEvent.VK_UP) {
+					clientCore.moveNorth();
+				} else if (code == KeyEvent.VK_DOWN) {
+					clientCore.moveSouth();
+				} else if (code == KeyEvent.VK_LEFT) {
+					clientCore.moveWest();
+				} else if (code == KeyEvent.VK_RIGHT) {
+					clientCore.moveEast();
+				} else if (code == KeyEvent.VK_SPACE) {
+					clientCore.fire();
+				}
+//				sleep(20);
+//			} catch (InterruptedException e) {
+//				
+//			}
 //			System.out.println("reaktsiOOOOOOOOON!");
 		}
 		

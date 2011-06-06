@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
 import Tanks.shared.mapElements.GameObject;
 
 /**
@@ -16,7 +18,7 @@ import Tanks.shared.mapElements.GameObject;
  * @author JPRRM
  *
  */
-public class GameMap implements Serializable {
+public class GameMap extends JPanel implements Serializable {
 
 	/**
 	 * An unique serial number.
@@ -153,22 +155,5 @@ public class GameMap implements Serializable {
 	public void addMissiles(ConcurrentHashMap<String, GameObject> nMissiles) {
 		this.missiles.clear();
 		this.missiles.putAll(nMissiles);
-	}
-
-	/**
-	 * Returns the width.
-	 * @return The width.
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * Return the height.
-	 * @return The height.
-	 */
-	public int getHeight() {
-		return height;
-	}
-	
+	}	
 }

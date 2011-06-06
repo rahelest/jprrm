@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
 import Tanks.shared.Broadcaster;
+import Tanks.shared.GameMap;
 
 /**
  * 
@@ -46,13 +47,14 @@ public class ServerCommandListener extends Thread {
 				Iterator<ClientSession> active = clientList.iterator();
 				if (tempString.equalsIgnoreCase("RESET")) {
 					System.out.println("Sending RESET command, stand by!");
+					GameMap newMap = ObjectFactory.createMap(messenger, 2, 0, 0, 0);
 					while (active.hasNext()) {
 						ClientSession client = active.next();
 						if (client.isAlive()) {
-							client.reStart();
+							client.reStart(newMap);
 						}
 					}
-					ObjectFactory.createMap(messenger, 2, 0, 0, 0);
+					
 				}
 			} catch (IOException e) {
 				System.out.println("Error reading the input, please retry!");

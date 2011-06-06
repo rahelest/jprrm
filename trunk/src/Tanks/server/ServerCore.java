@@ -13,7 +13,7 @@ public class ServerCore {
 		int clientID = 1;
 		
 		try {
-			ObjectFactory factory = new ObjectFactory();
+//			ObjectFactory factory = new ObjectFactory();
 			ServerSocket serv = new ServerSocket(port);
 			ActiveClients clientList = new ActiveClients();
 			Broadcaster messenger = new Broadcaster(clientList);

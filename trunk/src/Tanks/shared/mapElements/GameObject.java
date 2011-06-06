@@ -95,7 +95,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //		}
 //}
 	
-	public boolean checkCollision(GameMap map) {
+	public GameObject checkCollision(GameMap map) {
 		
 //		ConcurrentHashMap mappy = map.getObject().clone();
 		Set<String> keys = map.getObject().keySet();
@@ -103,13 +103,14 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		
 		for (String s : keys) {
 			if(getBounds().intersects(map.getObject(s).getBounds())) {
-				return true;
+				return map.getObject(s);
 			}
-			if(!getBounds().intersects(map.betBounds())) {
-				return true;
-			}
+//			if(!getBounds().intersects(map.betBounds())) {
+//				return true;
+//			}
+			//TODO: KIRJUTA KAARDIÄÄREKONTROLIJA
 		}
-		return false;
+		return null;
 	}
 	
 //	private boolean checkCoordinates(GameObject otherObject, int corner, int size) {
@@ -184,5 +185,10 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	
 	public boolean isBreakable() {
 		return breakable;
+	}
+
+	public void getDamaged() {
+		// TODO Auto-generated method stub
+		
 	}
 }

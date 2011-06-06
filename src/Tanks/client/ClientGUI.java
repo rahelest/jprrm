@@ -79,7 +79,6 @@ public class ClientGUI extends Thread {
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
 		center.setLayout(null);
-		window.createBufferStrategy(2);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {

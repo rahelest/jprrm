@@ -31,8 +31,11 @@ public class MissileMover extends Thread {
 	
 	public static void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
+		System.out.println("Saan tankiviite");
 		Missile m = new Missile(client.getId() + "M" + getNr(client), tank.getX(), tank.getY(), tank.getDirection());
+		System.out.println("Uus mürsk loodud");
 		missiles.put(m, client);
+		System.out.println("Uus mürsk lisatud");
 	}
 
 	private static String getNr(ClientSession client) {

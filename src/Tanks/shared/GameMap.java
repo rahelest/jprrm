@@ -81,7 +81,7 @@ public class GameMap implements Serializable {
 			System.out.println("The background image could not be loaded - image error!");
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
-			System.out.println("The backround image was not found - missing file!");
+			System.out.println("The background image was not found - missing file!");
 			e.printStackTrace();
 		} catch (IOException e) {
 			System.out.println("General IO exception reading background image!");

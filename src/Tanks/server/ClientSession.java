@@ -12,27 +12,73 @@ import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
+/**
+ * The client maganging thread.
+ * @author JPRRM
+ *
+ */
 public class ClientSession extends Thread {
-	private int clientID;
-	private Socket sock;
-	private ObjectOutputStream netOut;
-	private Receiver receiver;
-	private CommunicationBuffer inBuff;
-	private InetAddress clientIP;
-	private Object senderLock = new Object();
 	
+	/**
+	 * The client's ID.
+	 */
+	private int clientID;
+	/**
+	 * The client's socket.
+	 */
+	private Socket sock;
+	/**
+	 * The out stream.
+	 */
+	private ObjectOutputStream netOut;
+	/**
+	 * The receiver's pointer.
+	 */
+	private Receiver receiver;
+	/**
+	 * The in buffer.
+	 */
+	private CommunicationBuffer inBuff;
+	/**
+	 * The client's IP address.
+	 */
+	private InetAddress clientIP;
+	/**
+	 * The lock for the sender.
+	 */
+	private Object senderLock = new Object();
+	/**
+	 * The map pointer.
+	 */
 	private GameMap map;
+	/**
+	 * The client's tank pointer.
+	 */
 	private GameObject tank;
 
-	//siia tulevad mängija parameetrid
+	/**
+	 * The tank's speed.
+	 */
 	private int tankSpeed = 1;
+	/**
+	 * The missile's speed.
+	 */
 	private int missileSpeed = 1;
+	/**
+	 * The experience gained.
+	 */
 	private int exp = 0;
 
-	
-	public ClientSession(Socket sock, GameMap killingField, int clientID) throws IOException{
-		this.clientID = clientID;
-		this.sock = sock;
+	/**
+	 * The constructor.
+	 * @param nSock The socket.
+	 * @param killingField The map.
+	 * @param nClientID The ID.
+	 * @throws IOException An exception.
+	 */
+	public ClientSession(Socket nSock, GameMap killingField, int nClientID) throws IOException{
+		this.clientID = nClientID;
+		this.sock = nSock;
 		this.clientIP = sock.getInetAddress();
 		this.map = killingField;
 		createComms();
@@ -40,13 +86,16 @@ public class ClientSession extends Thread {
 		start();
 	}
 	
+	/**
+	 * The thread's run method.
+	 */
 	public void run() {
 		String key = "T" + (Integer.toString(clientID));
 		tank = ObjectFactory.spawnTank(map, key);
 		map.addObject(tank);
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
-		while(true) {
+		while (true) {
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
@@ -139,18 +188,33 @@ public class ClientSession extends Thread {
 		}
 	}
 	
+	/**
+	 * Returns the tank.
+	 * @return The tank.
+	 */
 	public synchronized Tank getTank() {
 		return (Tank) tank;
 	}
 	
+	/**
+	 * Returns the map.
+	 * @return The map.
+	 */
 	public synchronized GameMap getMap() {
 		return map;
 	}
 	
+	/**
+	 * Returns the missile speed.
+	 * @return The missile speed.
+	 */
 	public synchronized int getMissileSpeed() {
 		return missileSpeed;
 	}
 
+	/**
+	 * Reset the client's parametres.
+	 */
 	public void reStart() {
 		// TODO Auto-generated method stub
 		exp = 0;

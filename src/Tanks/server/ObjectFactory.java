@@ -18,6 +18,13 @@ public final class ObjectFactory {
 	 * The id number.
 	 */
 	static int id = 0;
+	/**
+	 * 
+	 */
+	static int mapWidth;
+	static int mapHeight;
+	static int tankWidth;
+	static int tankHeight;
 	
 	/**
 	 * The hiding constructor.
@@ -32,7 +39,13 @@ public final class ObjectFactory {
 	 */
 	public static Tank spawnTank(GameMap map, String name) {
 		Random rand = new Random();
-		GameObject tank = new Tank(name, rand.nextInt(map. - 60), rand.nextInt(500 - 30));
+		Tank test = new Tank("Test", 0, 0);
+		mapWidth = map.getWidth();
+		mapHeight = map.getHeight();
+		tankWidth = test.getWidth();
+		tankHeight = test.getHeight();
+		GameObject tank = new Tank(name, rand.nextInt(mapWidth - tankWidth),
+				rand.nextInt(mapHeight - tankHeight));
 		map = addingToMap(map, tank);
 		return (Tank) map.getObject(name);
 	}

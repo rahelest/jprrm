@@ -97,39 +97,42 @@ public class ClientGUI extends Thread {
 		top.setLayout(new BorderLayout());		
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);
+		start();
 		window.setVisible(true);
+		window.toFront();
 	}
 	
 	/**
 	 * The thread's runner method.
 	 */
 	public void run() {
-		drawUnchangeable();		
 		while (true) {
-			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
-			center.add(map, new Integer(0));			
 			map = clientCore.getMap();			
-			objects = map.getObjects();
-			objects.putAll(map.getMissiles());			
+			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
+			objects.putAll(map.getMissiles());
+//			Set<String> keys = objects.keySet();
+			center.add(map, new Integer(0));
 			for (GameObject obj : objects.values()) {
+//				drawObject(objects.get(k));				
+//				GameObject obj = objects.get(k);
 				obj.loadImage();
-				if (obj instanceof BreakableObject) {
+				if (obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
 					center.add(obj, new Integer(1));
-				}	
+				} else if (obj instanceof MapDecorObject) {
+					center.add(obj, new Integer(2));
+				}
+//				System.out.println(objects.get(k));
+				
 			}
-		
 			center.validate();
 			center.repaint();
-				
 			try {
 				synchronized (this) {
 					wait();
 				}
 			} catch (InterruptedException e) { }
-			center.remove(1);
-			center.remove(0);
+			center.removeAll();
 		}
-		
 	}
 	
 	/**
@@ -139,18 +142,6 @@ public class ClientGUI extends Thread {
 	public void enableConnecting() {
 		text.setVisible(true);
 		ok.setVisible(true);
-	}
-	
-	public void drawUnchangeable() {
-		map = clientCore.getMap();
-		System.out.println(map);
-		ConcurrentHashMap<String, GameObject> objects = map.getObjects();
-		for (GameObject obj : objects.values()) {
-			if (obj instanceof UnbreakableObject || obj instanceof MapDecorObject) {
-				obj.loadImage();
-				center.add(obj, new Integer (2));
-			}
-		}
 	}
 
 /*

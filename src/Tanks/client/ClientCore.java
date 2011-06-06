@@ -48,6 +48,7 @@ public class ClientCore extends Thread {
 	 * sending messages.
 	 */
 	private ObjectOutputStream netOut;
+	private Receiver receiver;
 	/**
 	 * The new GameMap object, initialized
 	 * for start of the game before the
@@ -70,22 +71,7 @@ public class ClientCore extends Thread {
 	 * The run method of the thread.
 	 */
 	public final void run() {
-		
-		try {
-			inBuf = new CommunicationBuffer();
-			netOut = new ObjectOutputStream(sock.getOutputStream());
-			netOut.writeObject(new Message("Hi!"));
-			@SuppressWarnings("unused")
-			Receiver receiver = new Receiver(this, sock, inBuf);
-		} catch (SocketException e) {
-			System.out.println("Kontrolli aadressi");
-			gui.enableConnecting();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//küsi kliente, stardi broadcaster
-		//anna guile vastuvõtja viide
+
 		while (true) {
 //			System.out.println("Ootan uut teadet");
 			Message message = inBuf.getMessage();
@@ -111,6 +97,14 @@ public class ClientCore extends Thread {
 				gui.notify();
 			}
 		}
+	}
+	
+	private void createComms() throws SocketException, IOException {
+
+		inBuf = new CommunicationBuffer();
+		netOut = new ObjectOutputStream(sock.getOutputStream());
+		netOut.writeObject(new Message("Hi!"));
+		receiver = new Receiver(this, sock, inBuf);
 	}
 
 		/**
@@ -149,10 +143,10 @@ public class ClientCore extends Thread {
 		try {
 			InetAddress serverAddr = InetAddress.getByName(serversName);
 			sock = new Socket(serverAddr, porty);
-			
+			createComms();
 		} catch (ConnectException e) {
 //			e.printStackTrace();
-			System.out.println("ConnectException!");
+			System.out.println("Please check the address!");
 			return tryConnecting();
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
@@ -161,7 +155,7 @@ public class ClientCore extends Thread {
 		} catch (IOException e) {
 //			e.printStackTrace();
 			System.out.println("IOException!");
-			return tryConnecting();
+			return false;
 		}
 		start();
 		return true;

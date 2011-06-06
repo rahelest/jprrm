@@ -17,13 +17,11 @@ public class Message implements Serializable {
 	/**
 	 * The string field.
 	 */
-	@SuppressWarnings("unused")
-	private String extraString;
+	public String extraString;
 	/**
 	 * The map field.
 	 */
-	@SuppressWarnings("unused")
-	private GameMap object;
+	public GameMap object;
 	
 	/**
 	 * Creates a message with the map. 

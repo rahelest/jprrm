@@ -135,19 +135,19 @@ public final class ObjectFactory {
 			}
 		}
 		
+		GameObject test = new Water("Test", 0, 0);
+		int waterWidth = test.getWidth();
+		int waterHeight = test.getHeight();
 		for (int i = 0; i < water; i++) {
-			Water test = new Water("Test", 0, 0);
-			int waterWidth = test.getWidth();
-			int waterHeight = test.getHeight();
 			GameObject object = createTree(rand.nextInt(mapWidth - waterWidth),
 					rand.nextInt(mapHeight - waterHeight));
 			map = addingToMap(map, object);
 		}
 		
+		test = new Tree("Test", 0, 0);
+		int treeWidth = test.getWidth();
+		int treeHeight = test.getHeight();
 		for (int i = 0; i < tree; i++) {
-			Tree test = new Tree("Test", 0, 0);
-			int treeWidth = test.getWidth();
-			int treeHeight = test.getHeight();
 			GameObject object = createWater(rand.nextInt(mapWidth - treeWidth),
 					rand.nextInt(mapHeight - treeHeight));
 			map = addingToMap(map, object);

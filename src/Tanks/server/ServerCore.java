@@ -27,10 +27,11 @@ public class ServerCore {
 						if(clientList.exists(clientSock.getInetAddress())) {
 							System.out.println("clientsessioni notify algus");
 							ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
+							exSessPointer.updateOnReconnect(clientSock);
 							synchronized(exSessPointer) {
-								System.out.println("luku algus");
-								exSessPointer.updateOnReconnect(clientSock);
+								System.out.println("luku algus");								
 								exSessPointer.notify();
+								
 								System.out.println(exSessPointer);
 							}
 							System.out.println("clientsessioni notify lopp");

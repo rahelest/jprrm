@@ -54,6 +54,7 @@ public class GameMap extends JPanel implements Serializable {
 	 * The constructor.
 	 */
 	public GameMap() {
+		setSize(900, 900);
 		loadBackGround();
 	}
 	
@@ -63,6 +64,7 @@ public class GameMap extends JPanel implements Serializable {
 	 */
 	public GameMap(Broadcaster messenger) {
 		this.outBuff = messenger.getMainOutbound();
+		setSize(900, 900);
 		loadBackGround();				
 	}
 	

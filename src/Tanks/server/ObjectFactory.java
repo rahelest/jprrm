@@ -39,18 +39,25 @@ public class ObjectFactory {
 	public static GameMap createMap(Broadcaster messenger, int water, int tree, int brick, int iron) {
 		GameMap map = new GameMap(messenger);
 		Random rand = new Random();
+		GameObject object2;
 		
-		GameObject object2 = createIronWall(rand.nextInt(900 - 60), rand.nextInt(900 - 30));
-		map.addObject(object2);
-		for (int i = 1; i < iron; i++) {
-			GameObject object = createIronWall(object2.getX() + object2.getWidth() + 1, object2.getY());
-			map = addingToMap(map, object);
-			object2 = object;
+		if (iron > 0) {
+			object2 = createIronWall(rand.nextInt(900 - 60), rand.nextInt(900 - 30));
+			map.addObject(object2);
+			for (int i = 1; i < iron; i++) {
+				GameObject object = createIronWall(object2.getX() + object2.getWidth() + 1, object2.getY());
+				map = addingToMap(map, object);
+				object2 = object;
+			}
 		}
 		
-		for (int i = 0; i < brick; i++) {
-			GameObject object = createBrickWall(rand.nextInt(850), rand.nextInt(850));
-			map = addingToMap(map, object);
+		if (brick > 0) {
+			object2 = createBrickWall(rand.nextInt(900 - 60), rand.nextInt(900 - 30));
+			map.addObject(object2);
+			for (int i = 1; i < brick; i++) {
+				GameObject object = createBrickWall(object2.getX() + object2.getWidth() + 1, object2.getY());
+				map = addingToMap(map, object);
+			}
 		}
 		
 		for (int i = 0; i < tree; i++) {

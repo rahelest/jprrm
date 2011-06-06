@@ -51,7 +51,7 @@ public class ClientSession extends Thread {
 		while(true) {
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
-			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
+			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
 				System.out.println("Tulistamine alaku!");
@@ -60,25 +60,25 @@ public class ClientSession extends Thread {
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
-				((Tank) tempTank).setDirection("N");
+				tempTank.setDirection("N");
 				tempTank.setSize(30, 60);
 				tempTank.setImage("tankN.png");
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tempTank.setLocation(tank.getX(), tank.getY() + tankSpeed);
-				((Tank) tempTank).setDirection("S");
+				tempTank.setDirection("S");
 				tempTank.setSize(30, 60);
 				tempTank.setImage("tankS.png");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
 				tempTank.setLocation(tank.getX() - tankSpeed, tank.getY());
-				((Tank) tempTank).setDirection("W");
+				tempTank.setDirection("W");
 				tempTank.setSize(60, 30);
 				tempTank.setImage("tankW.png");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
 				tempTank.setLocation(tank.getX() + tankSpeed, tank.getY());
-				((Tank) tempTank).setDirection("E");
+				tempTank.setDirection("E");
 				tempTank.setSize(60, 30);
 				tempTank.setImage("tankE.png");
 			}

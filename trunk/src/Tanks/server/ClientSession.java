@@ -9,7 +9,6 @@ import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.GameMap;
 import Tanks.shared.Message;
 import Tanks.shared.Receiver;
-import Tanks.shared.gameElements.Missile;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
 
@@ -20,7 +19,6 @@ public class ClientSession extends Thread {
 	private Receiver receiver;
 	private CommunicationBuffer inBuff;
 	private InetAddress clientIP;
-	private Object clientMonitor = new Object();
 	private Object senderLock = new Object();
 	
 	private GameMap map;
@@ -155,6 +153,8 @@ public class ClientSession extends Thread {
 
 	public void reStart() {
 		// TODO Auto-generated method stub
-		start();
+		exp = 0;
+		tankSpeed = 1;
+		missileSpeed = 1;
 	}
 }

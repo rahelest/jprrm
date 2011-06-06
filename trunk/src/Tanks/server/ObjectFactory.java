@@ -8,7 +8,7 @@ import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.*;
 
 public class ObjectFactory {
-
+	static GameMap map;
 	static int id = 0;
 	
 	public static Tank spawnTank(GameMap map, String name) {
@@ -35,9 +35,8 @@ public class ObjectFactory {
 		return new IronWall("a" + ++id, x, y);
 	}
 	
-	
 	public static GameMap createMap(Broadcaster messenger, int water, int tree, int brick, int iron) {
-		GameMap map = new GameMap(messenger);
+		map = new GameMap(messenger);
 		Random rand = new Random();
 		GameObject object2;
 		

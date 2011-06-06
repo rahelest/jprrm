@@ -5,7 +5,7 @@ package Tanks.shared.mapElements;
  * @author JPRRM
  *
  */
-public class mapDecorObject extends GameObject {
+public class MapDecorObject extends GameObject {
 
 	/**
 	 * An unique serial number.
@@ -21,7 +21,7 @@ public class mapDecorObject extends GameObject {
 	 * @param height The objects height.
 	 * @param image Its image location.
 	 */
-	public mapDecorObject(String ID, int x, int y, int width, int height, String image) {
+	public MapDecorObject(String ID, int x, int y, int width, int height, String image) {
 		super(ID, x, y, width, height, true, true, false, image);
 		// TODO Auto-generated constructor stub
 	}

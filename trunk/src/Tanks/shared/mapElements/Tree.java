@@ -5,7 +5,7 @@ package Tanks.shared.mapElements;
  * @author JPRRM
  *
  */
-public class Tree extends mapDecorObject {
+public class Tree extends MapDecorObject {
 
 	/**
 	 * An unique serial number.

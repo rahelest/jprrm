@@ -54,7 +54,7 @@ public class ClientSession extends Thread {
 			GameObject tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				//tulista
-//				new Missile("M" + clientID, (tank.getX()), (tank.getY()), this);
+				MissileMover.newMissile(this);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankspeed);

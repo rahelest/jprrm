@@ -1,14 +1,10 @@
 package Tanks.client;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferStrategy;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +19,7 @@ import Tanks.shared.mapElements.GameObject;
 
 public class ClientGUI extends Thread {
 	
-	private final int repressLimit = 50;
+	private final int REPRESSLIMIT = 100;
 	private long lastKeyPressed;
 	private ClientCore clientCore;
 	private JFrame window = new JFrame();
@@ -146,7 +142,7 @@ public class ClientGUI extends Thread {
 	
 		@Override
 		public void keyPressed(KeyEvent key) {
-			if (System.currentTimeMillis() - lastKeyPressed > repressLimit){
+			if (System.currentTimeMillis() - lastKeyPressed > REPRESSLIMIT) {
 				int code = key.getKeyCode();
 				if (code == KeyEvent.VK_UP) {
 					clientCore.moveNorth();

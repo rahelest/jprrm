@@ -23,7 +23,7 @@ public class MissileMover extends Thread {
 	/**
 	 * Time to wait before updating locations.
 	 */
-	private static int waitTime = 50; 
+	private static final int waitTime = 50;
 	
 	/**
 	 * The constructor.

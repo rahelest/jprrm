@@ -98,7 +98,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	public GameObject checkCollision(GameMap map) {
 		
 //		ConcurrentHashMap mappy = map.getObject().clone();
-		Set<String> keys = map.getObject().keySet();
+		Set<String> keys = map.getObjects().keySet();
 		keys.remove(ID);
 		
 		for (String s : keys) {

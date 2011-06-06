@@ -34,13 +34,13 @@ public class Missile extends UnbreakableObject implements Serializable {
 
 	public boolean move(GameMap map) {
 		if(direction.equals("N")) {
-			setLocation(getX() - speed, getY());
-		} else if (direction.equals("S")) {
-			setLocation(getX() + speed, getY());
-		} else if (direction.equals("E")) {
-			setLocation(getX(), getY() + speed);
-		} else if (direction.equals("W")) {
 			setLocation(getX(), getY() - speed);
+		} else if (direction.equals("S")) {
+			setLocation(getX(), getY() + speed);
+		} else if (direction.equals("E")) {
+			setLocation(getX() + speed, getY());
+		} else if (direction.equals("W")) {
+			setLocation(getX() - speed, getY());
 		}
 		
 		GameObject collidee = checkCollision(map);

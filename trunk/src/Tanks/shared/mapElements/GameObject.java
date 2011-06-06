@@ -58,10 +58,11 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	 * @param passability The passability field.
 	 * @param bPassability Bulletpassability field.
 	 * @param breakability The breakability field.
-	 * @param image The image address.
+	 * @param nImage The image address.
 	 */
 	public GameObject(String nID, int x, int y, int width,
-			int height, boolean passability, boolean bPassability, boolean breakability, String image) {
+			int height, boolean passability, boolean bPassability,
+			boolean breakability, String nImage) {
 		setLayout(null);
 		setBackground(new Color(0, 0, 0, 0));
 		this.ID = nID;
@@ -69,15 +70,15 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		setSize(width, height);
 		this.passable = passability;
 		this.bulletPassable = bPassability;
-		this.image = image;
+		this.image = nImage;
 	}
 	
 	/**
 	 * Sets the new image address.
-	 * @param image The address.
+	 * @param nImage The address.
 	 */
-	public synchronized void setImage(String image) {
-		this.image = image;
+	public synchronized void setImage(String nImage) {
+		this.image = nImage;
 	}
 	
 	/**

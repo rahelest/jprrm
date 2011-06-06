@@ -29,10 +29,9 @@ public class MissileMover extends Thread {
 				sleep(waitTime);
 			} catch (InterruptedException e) {}
 		}
-
 	}
 	
-	public static void newMissile(ClientSession client) {
+	public static synchronized void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
 		int x = determineCoordinateX(tank, tank.getWidth(), tank.getX());
 		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY());
@@ -43,31 +42,29 @@ public class MissileMover extends Thread {
 //		System.out.println("Uus mürsk lisatud");
 	}
 	
-	private static int determineCoordinateX(Tank tank, int size, int place) {
-		String dir = tank.getDirection();
-			
+	private static int determineCoordinateX(Tank tank, int width, int location) {
+		String dir = tank.getDirection();	
 		if (dir.equals("N") || dir.equals("S")) {
-			return place + size / 2;
+			return location + width / 2;
 		} else if (dir.equals("E")) {
-			return place + size + 2;
+			return location + width + 2;
 		} else if (dir.equals("W")) {
-			return place - 2;
+			return location - 2;
 		} else return 0;
 	}
 	
-	private static int determineCoordinateY(Tank tank, int size, int place) {
+	private static int determineCoordinateY(Tank tank, int height, int location) {
 		String dir = tank.getDirection();
-			
 		if (dir.equals("E") || dir.equals("W")) {
-			return place + size / 2;
+			return location + height / 2;
 		} else if (dir.equals("S")) {
-			return place + size + 2;
+			return location + height + 2;
 		} else if (dir.equals("N")) {
-			return place - 2;
+			return location - 2;
 		} else return 0;
 	}
 		
-	public static ConcurrentHashMap<String, GameObject> getMissiles() {
+	public static synchronized ConcurrentHashMap<String, GameObject> getMissiles() {
 		ConcurrentHashMap<String, GameObject> temp = new ConcurrentHashMap<String, GameObject>();
 		for ( Missile m : missiles.keySet()) {
 			temp.put(m.getID(), m);

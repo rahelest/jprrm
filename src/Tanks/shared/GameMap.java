@@ -89,7 +89,7 @@ public class GameMap implements Serializable {
 		}
 	}
 
-	public ConcurrentHashMap<String, GameObject> getObject() {
+	public ConcurrentHashMap<String, GameObject> getObjects() {
 			return objects;
 	}
 	

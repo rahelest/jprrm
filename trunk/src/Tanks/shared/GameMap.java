@@ -1,6 +1,7 @@
 package Tanks.shared;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -48,6 +49,7 @@ public class GameMap extends JPanel implements Serializable {
 	 */
 	public GameMap() {
 		setSize(900, 900);
+		setBackground(new Color(0, 0, 0, 255));
 		loadBackGround();
 	}
 	
@@ -58,6 +60,7 @@ public class GameMap extends JPanel implements Serializable {
 	public GameMap(Broadcaster messenger) {
 		this.outBuff = messenger.getMainOutbound();
 		setSize(900, 900);
+		setBackground(new Color(0, 0, 0, 255));
 		loadBackGround();				
 	}
 	
@@ -67,6 +70,7 @@ public class GameMap extends JPanel implements Serializable {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		loadBackGround();
 		g.drawImage(background, 0, 0, this);
 	}
 	

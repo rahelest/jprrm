@@ -52,8 +52,9 @@ public class MissileMover extends Thread {
 			}
 			if (!missiles.isEmpty()) {
 				System.out.println("Liigutan: " + missiles);
+				outBuf.sendMissiles(getMissiles());
 			}
-			outBuf.sendMissiles(getMissiles());
+			
 			
 			try {
 				sleep(waitTime);

@@ -43,7 +43,7 @@ public class Tank extends BreakableObject {
 	 */
 	public synchronized void setDirection(String nDirection) {
 		this.direction = nDirection;
-		System.out.println(direction);
+//		System.out.println(direction);
 		this.image = "tank" + direction + ".png";
 	}
 }

@@ -61,11 +61,12 @@ public class MissileMover extends Thread {
 	 */
 	public static synchronized void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
+		System.out.println("clintdirection ! " + tank.getDirection());
 		int x = determineCoordinateX(tank, tank.getWidth(), tank.getX());
 		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY());
 		Missile m = new Missile(client.getId() + "M" + ++id,
 				x, y, tank.getDirection(), client.getMissileSpeed());
-		System.out.println("Uus mürsk! " + tank.getDirection());
+		System.out.println("MIssile! " + tank.getDirection());
 		missiles.put(m, client);
 	}
 	

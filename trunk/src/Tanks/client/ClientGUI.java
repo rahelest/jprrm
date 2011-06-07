@@ -52,7 +52,7 @@ public class ClientGUI extends Thread {
 	  */
 	private JPanel top = new JPanel();
 	/**
-	 * The center paner where the the tanks are.
+	 * The center panel where the tanks are.
 	 */
 	private JLayeredPane center = new JLayeredPane();
 	/**

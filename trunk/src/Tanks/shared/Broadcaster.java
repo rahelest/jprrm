@@ -1,6 +1,7 @@
 package Tanks.shared;
 
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.server.ActiveClients;
 import Tanks.server.ClientSession;
@@ -8,10 +9,12 @@ import Tanks.server.ClientSession;
 /**
  * The class that sends messages to everyone.
  * @author JPRRM
- *
+ * 
  */
 public class Broadcaster extends Thread {
 	
+	private long lastScoreUpdate;
+	private final long scoreUpdateInterval = 1000;
 	/**
 	 * The outbound buffer where the messages are taken from.
 	 */
@@ -61,6 +64,18 @@ public class Broadcaster extends Thread {
 				} else { 
 					active.remove(); // 
 				}
+			}
+			if (System.currentTimeMillis() - lastScoreUpdate > scoreUpdateInterval) {
+				active = activeClients.iterator();
+				ConcurrentHashMap<ClientSession, Integer> scores
+				= new ConcurrentHashMap<ClientSession, Integer>();
+				while (active.hasNext()) {
+					ClientSession cli = active.next();
+					if (cli.isAlive()) {
+						scores.put(cli, cli.getExp());
+					}
+				}
+				out.addMessage(new Message(scores));
 			}
 		}
 	}

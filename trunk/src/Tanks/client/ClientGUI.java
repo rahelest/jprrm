@@ -1,6 +1,7 @@
 package Tanks.client;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,9 +74,9 @@ public class ClientGUI extends Thread {
 	 */
 	protected JList scores = new JList();
 	/**
-	 * The label with the tank name.
+	 * The size of the main window.
 	 */
-//	private JLabel myName = new JLabel("My tank!", JLabel.CENTER);
+	private Dimension mainSize = new Dimension(1000, 900);
 	
 	/**
 	 * The constructor for the GUI class.
@@ -86,7 +87,7 @@ public class ClientGUI extends Thread {
 		clientCore = nClientCore;
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(1000, 900);
+		window.setSize(mainSize);
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);

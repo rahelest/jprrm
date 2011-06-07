@@ -91,12 +91,12 @@ public class ClientGUI extends Thread {
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
 		window.getContentPane().add(scores, BorderLayout.EAST);
+		center.setLayout(null);
+		center.setDoubleBuffered(true);
 		center.setFocusable(true);
 		center.setRequestFocusEnabled(true);
 		center.grabFocus();
-		center.setLayout(null);
-		center.setDoubleBuffered(true);
-		System.out.println(center.isDoubleBuffered());
+		
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {

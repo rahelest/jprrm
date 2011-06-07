@@ -103,7 +103,7 @@ public class ClientSession extends Thread {
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				System.out.println();
-				MissileMoverScorePusher.newMissile(this);
+				MissileMover.newMissile(this);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
@@ -135,7 +135,7 @@ public class ClientSession extends Thread {
 				tank.setImage(tempTank.getImage());
 				((Tank)tank).setDirection(tempTank.getDirection());
 			}
-			map.addMissiles(MissileMoverScorePusher.getMissiles());
+			map.addMissiles(MissileMover.getMissiles());
 			map.doYourStuff(tank);
 		}			
 	}
@@ -248,5 +248,33 @@ public class ClientSession extends Thread {
 		tankSpeed = 1;
 		missileSpeed = 1;
 //		sendMessage(new Message("RESET"));
+	}
+
+	/**
+	 * @param tankSpeed the tankSpeed to set
+	 */
+	public void setTankSpeed(int tankSpeed) {
+		this.tankSpeed = tankSpeed;
+	}
+
+	/**
+	 * @param missileSpeed the missileSpeed to set
+	 */
+	public void setMissileSpeed(int missileSpeed) {
+		this.missileSpeed = missileSpeed;
+	}
+
+	/**
+	 * @return the exp
+	 */
+	public int getExp() {
+		return exp;
+	}
+
+	/**
+	 * @param exp the exp to set
+	 */
+	public void setExp(int exp) {
+		this.exp = exp;
 	}
 }

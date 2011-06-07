@@ -11,7 +11,7 @@ import Tanks.shared.mapElements.GameObject;
  * @author JPRRM
  *
  */
-public class MissileMoverScorePusher extends Thread {
+public class MissileMover extends Thread {
 	
 	/**
 	 * List with the missiles.
@@ -31,7 +31,7 @@ public class MissileMoverScorePusher extends Thread {
 	/**
 	 * The constructor.
 	 */
-	public MissileMoverScorePusher() {
+	public MissileMover() {
 		start();
 	}
 	

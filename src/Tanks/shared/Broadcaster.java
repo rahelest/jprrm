@@ -2,8 +2,6 @@ package Tanks.shared;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentHashMap;
-
 import Tanks.server.ActiveClients;
 import Tanks.server.ClientSession;
 

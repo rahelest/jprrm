@@ -61,9 +61,10 @@ public class MissileMover extends Thread {
 	 */
 	public static synchronized void newMissile(ClientSession client) {
 		Tank tank = client.getTank();
+		Missile test = new Missile("test", 0, 0, tank.getDirection(), 0);
 		System.out.println("clintdirection ! " + tank.getDirection());
-		int x = determineCoordinateX(tank, tank.getWidth(), tank.getX());
-		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY());
+		int x = determineCoordinateX(tank, tank.getWidth(), tank.getX(), test.getWidth());
+		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY(), test.getHeight());
 		Missile m = new Missile(client.getId() + "M" + ++id,
 				x, y, tank.getDirection(), client.getMissileSpeed());
 		System.out.println("MIssile! " + tank.getDirection());
@@ -75,16 +76,17 @@ public class MissileMover extends Thread {
 	 * @param tank The owner tank.
 	 * @param width The tank's width.
 	 * @param location The tank's x coordinate.
+	 * @param i 
 	 * @return The x:
 	 */
-	private static int determineCoordinateX(Tank tank, int width, int location) {
+	private static int determineCoordinateX(Tank tank, int width, int location, int mWidth) {
 		String dir = tank.getDirection();	
 		if (dir.equals("N") || dir.equals("S")) {
-			return location + width / 2;
+			return location + width / 2 - mWidth / 2;
 		} else if (dir.equals("E")) {
-			return location + width + 2;
+			return location + width + mWidth + 2;
 		} else if (dir.equals("W")) {
-			return location - 2;
+			return location - mWidth - 2;
 		} else {
 			return 0;
 		}
@@ -95,16 +97,17 @@ public class MissileMover extends Thread {
 	 * @param tank The owner tank.
 	 * @param height The tank's height.
 	 * @param location The tank's y coordinate.
+	 * @param i 
 	 * @return The y.
 	 */
-	private static int determineCoordinateY(Tank tank, int height, int location) {
+	private static int determineCoordinateY(Tank tank, int height, int location, int mHeight) {
 		String dir = tank.getDirection();
 		if (dir.equals("E") || dir.equals("W")) {
-			return location + height / 2;
+			return location + height / 2 - mHeight / 2;
 		} else if (dir.equals("S")) {
-			return location + height + 2;
+			return location + height + mHeight + 2;
 		} else if (dir.equals("N")) {
-			return location - 2;
+			return location - mHeight - 2;
 		} else {
 			return 0;
 		}

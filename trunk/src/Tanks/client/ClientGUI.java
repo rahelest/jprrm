@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Tanks.shared.GameMap;
@@ -62,6 +63,8 @@ public class ClientGUI extends Thread {
 	 * The map variable with the game elements.
 	 */
 	private GameMap map;
+	
+	protected JList scores = new JList();
 	/**
 	 * The label with the tank name.
 	 */
@@ -80,13 +83,18 @@ public class ClientGUI extends Thread {
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
+//		scores.set
+		window.getContentPane().add(scores, BorderLayout.EAST);
+		center.setFocusable(true);
+		center.setRequestFocusEnabled(true);
+		center.grabFocus();
 		center.setLayout(null);
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
 					text.setVisible(false);
 					ok.setVisible(false);
-					window.addKeyListener(new KeyListen());
+					center.addKeyListener(new KeyListen());
 					window.repaint();
 				} else {
 					System.out.println("Something went wrong, please check the address.");
@@ -111,7 +119,7 @@ public class ClientGUI extends Thread {
 		while (true) {
 			center.removeAll();
 			map = clientCore.getMap();
-			center.add(map, new Integer(0));
+			center.add(map, JLayeredPane.DEFAULT_LAYER);
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
 //			Set<String> keys = objects.keySet();			
@@ -119,9 +127,9 @@ public class ClientGUI extends Thread {
 //				drawObject(objects.get(k));				
 //				GameObject obj = objects.get(k);
 				if (obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
-					center.add(obj, new Integer(1));
+					center.add(obj, JLayeredPane.MODAL_LAYER);
 				} else if (obj instanceof MapDecorObject) {
-					center.add(obj, new Integer(2));
+					center.add(obj, JLayeredPane.DRAG_LAYER);
 				}
 //				System.out.println(objects.get(k));
 				

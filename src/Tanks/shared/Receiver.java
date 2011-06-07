@@ -37,6 +37,9 @@ public class Receiver extends Thread {
 	 * The clientCore pointer.
 	 */
 	private ClientCore clientCore;
+	/**
+	 * The pointer to the MAKER OF THIS GODDAMN RECEIVER!
+	 */
 	private ConnectionManage connectionManage;
 
 	/**
@@ -49,11 +52,11 @@ public class Receiver extends Thread {
 		this.setName("Receiver - " + socket.getInetAddress());
 		this.sock = socket;
 		this.in = inbound;
-		System.out.println("alustan netIn-i loomist");
+//		System.out.println("alustan netIn-i loomist");
 		InputStream iS = sock.getInputStream();
-		System.out.println("vaheprintout");
+//		System.out.println("vaheprintout");
 		try {
-			System.out.println("netIn-i loomise algus");
+//			System.out.println("netIn-i loomise algus");
 			netIn = new ObjectInputStream(iS);
 		} catch (EOFException e) {
 			 
@@ -81,12 +84,20 @@ public class Receiver extends Thread {
 	 * @param inbound The buffer.
 	 * @throws IOException An exception.
 	 */
-	public Receiver(ClientCore nClientCore, Socket socket, CommunicationBuffer inbound) throws IOException {
+	public Receiver(ClientCore nClientCore, Socket socket, 
+			CommunicationBuffer inbound) throws IOException {
 		this(socket, inbound);
 		this.clientCore = nClientCore;
 	}
-	
-	public Receiver(ConnectionManage conn, Socket socket, CommunicationBuffer inbound) throws IOException {
+	/**
+	 * An alternative overloaded constructor for creating the receiver.
+	 * @param conn the creator
+	 * @param socket the socket used for comms
+	 * @param inbound the inbound buffer
+	 * @throws IOException a general error
+	 */
+	public Receiver(ConnectionManage conn, Socket socket, 
+			CommunicationBuffer inbound) throws IOException {
 		this(socket, inbound);
 		this.connectionManage = conn;
 	}
@@ -106,14 +117,14 @@ public class Receiver extends Thread {
 //				e.printStackTrace();				
 				if (session != null) {
 				try {
-					System.out.println("Ühendus katkes");
-					System.out.println("receiveri wait algus");
+					System.out.println("The connection was lost");
+//					System.out.println("receiveri wait algus");
 					synchronized (this) {
 //						connectionManage.notifyConnectionLoss(this);
 						this.wait();
 					}
-					System.out.println("receiveri notify lopp");
-					System.out.println("Receiveri wait lõpp");
+//					System.out.println("receiveri notify lopp");
+//					System.out.println("Receiveri wait lõpp");
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -148,8 +159,8 @@ public class Receiver extends Thread {
 //					
 //				}
 			} catch (IOException e) {
-				System.out.println("General IO error, there's noone to complain to!");
-				e.printStackTrace();
+				System.out.println("A general IO error ocurred , there's noone to complain to!");
+//				e.printStackTrace();
 			}
 			
 			if (fromClient != null) {

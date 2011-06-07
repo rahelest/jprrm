@@ -95,6 +95,8 @@ public class ClientGUI extends Thread {
 		center.setRequestFocusEnabled(true);
 		center.grabFocus();
 		center.setLayout(null);
+		center.setDoubleBuffered(true);
+		System.out.println(center.isDoubleBuffered());
 		ok.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (clientCore.sendIP(text.getText())) {
@@ -120,14 +122,18 @@ public class ClientGUI extends Thread {
 	 * The thread's runner method.
 	 */
 	public void run() {
-		BufferedImage buffer = new BufferedImage(900, 900, BufferedImage.TYPE_BYTE_INDEXED);
-		buffer.setAccelerationPriority(1);
-		Graphics2D bufferG = buffer.createGraphics();
-		map = clientCore.getMap();		
+//		BufferedImage buffer = new BufferedImage(900, 900, BufferedImage.TYPE_BYTE_INDEXED);
+//		BufferedImage onScreen = new BufferedImage(900, 900, BufferedImage.TYPE_BYTE_INDEXED);
+//		buffer.setAccelerationPriority(1);
+//		Graphics2D bufferG = buffer.createGraphics();
+//		Graphics2D onScreenG = onScreen.createGraphics();
+//		Boolean drawBuffer = true;
+		map = clientCore.getMap();
+		center.add(map, JLayeredPane.DEFAULT_LAYER);
 		while (true) {
-			center.removeAll();
+//			center.removeAll();
 			map = clientCore.getMap();
-			center.add(map, JLayeredPane.DEFAULT_LAYER);
+			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
 			objects.putAll(map.getMissiles());
 //			Set<String> keys = objects.keySet();			
@@ -142,12 +148,20 @@ public class ClientGUI extends Thread {
 //				System.out.println(objects.get(k));
 				
 			}
-			buffer.flush();
-//			center.validate();
-			center.paintAll(bufferG);
-			JLabel picLabel = new JLabel(new ImageIcon(buffer));
-			window.add(picLabel);
-//			center.validate();
+//			buffer.flush();
+//			JLabel picLabel = new JLabel(new ImageIcon(buffer));
+////			center.validate();
+//			if (drawBuffer) {
+//				center.paintAll(bufferG);
+//				picLabel = new JLabel(new ImageIcon(onScreen));
+//			} else {
+//				center.paintAll(onScreenG);
+//				picLabel = new JLabel(new ImageIcon(buffer));
+//			}
+//			drawBuffer = !drawBuffer;			
+//			window.add(picLabel);
+//			window.repaint();
+			center.validate();
 //			center.repaint();
 			try {
 				synchronized (this) {

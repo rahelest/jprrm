@@ -93,8 +93,8 @@ public class ClientSession extends Thread {
 	 * The thread's run method.
 	 */
 	public void run() {
-		tank = ObjectFactory.spawnTank(map, key);
-		map.addObject(tank);
+		map = ObjectFactory.spawnTank(map, key);
+		tank = map.getObject("T" + Integer.toString(clientID));
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
 		while (true) {
@@ -102,6 +102,7 @@ public class ClientSession extends Thread {
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
+				System.out.println();
 				MissileMover.newMissile(this);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
@@ -132,6 +133,7 @@ public class ClientSession extends Thread {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());
+				((Tank)tank).setDirection(tempTank.getDirection());
 			}
 			map.addMissiles(MissileMover.getMissiles());
 			map.doYourStuff(tank);
@@ -241,7 +243,7 @@ public class ClientSession extends Thread {
 	public void reStart(GameMap newMap) {
 		// TODO Auto-generated method stub
 		map = newMap;
-		tank = ObjectFactory.spawnTank(map, key);
+		map = ObjectFactory.spawnTank(map, key);
 		exp = 0;
 		tankSpeed = 1;
 		missileSpeed = 1;

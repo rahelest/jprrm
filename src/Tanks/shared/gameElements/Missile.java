@@ -74,7 +74,7 @@ public class Missile extends UnbreakableObject implements Serializable {
 		
 		GameObject collidee = checkCollision(map);
 		if (collidee != null) {
-			collidee.getDamaged();
+			collidee.getDamaged(map);
 			return false;
 		} else {
 			return true;

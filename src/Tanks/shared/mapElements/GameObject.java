@@ -181,8 +181,10 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	/**
 	 * Applies received damage.
 	 */
-	public void getDamaged() {
-		//TODO 
+	public void getDamaged(GameMap map) {
+		if (breakable) {
+			map.removeObject(ID);
+		}
 		System.out.printf(this + ": \nsain pihta!\n\n");
 		
 	}

@@ -47,7 +47,7 @@ public class MissileMover extends Thread {
 	}
 	
 	/**
-	 * The thread's run method.
+	 * The thread's run method. 
 	 */
 	public void run() {
 		while (true) {

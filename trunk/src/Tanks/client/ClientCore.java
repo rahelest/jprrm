@@ -89,9 +89,9 @@ public class ClientCore extends Thread {
 					if (!gui.isAlive()) {
 						gui.start();
 					}
-				} /*else if (message.extraString.equals("RESET")) {
-					gui.drawUnchangeable();
-				}*/
+				} else if (message.extraString.equals("SC")) {
+					gui.scores.setListData(message.scores.values().toArray());
+				}
 			}
 			synchronized (gui) {
 				gui.notify();

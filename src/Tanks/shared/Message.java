@@ -1,6 +1,9 @@
 package Tanks.shared;
 
 import java.io.Serializable;
+import java.util.concurrent.ConcurrentHashMap;
+
+import Tanks.server.ClientSession;
 
 /**
  * The serializable message class.
@@ -22,6 +25,13 @@ public class Message implements Serializable {
 	 * The map field.
 	 */
 	public GameMap object;
+	
+	public ConcurrentHashMap<ClientSession, Integer> scores;
+	
+	public Message(ConcurrentHashMap<ClientSession, Integer> scoresToBeSent) {
+		extraString = "SC";
+		scores = scoresToBeSent;
+	}
 	
 	/**
 	 * Creates a message with the map. 

@@ -36,6 +36,7 @@ public class MissileMover extends Thread {
 	 * The constructor.
 	 */
 	public MissileMover(Broadcaster nMessenger) {
+		setName("MissileMover");
 		this.outBuf = nMessenger.getMainOutbound();
 		start();
 	}
@@ -51,7 +52,6 @@ public class MissileMover extends Thread {
 				}
 			}
 			if (!missiles.isEmpty()) {
-				System.out.println("Liigutan: " + missiles);
 				outBuf.sendMissiles(getMissiles());
 			}
 			
@@ -74,9 +74,9 @@ public class MissileMover extends Thread {
 		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY(), test.getHeight());
 		Missile m = new Missile(client.getId() + "M" + ++id,
 				x, y, tank.getDirection(), client.getMissileSpeed());
-		System.out.println("Missile! " + tank.getDirection());
+//		System.out.println("Missile! " + tank.getDirection());
 		missiles.put(m, client);
-		System.out.println(missiles);
+//		System.out.println(missiles);
 	}
 	
 	/**

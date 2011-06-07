@@ -51,7 +51,7 @@ public final class ObjectFactory {
 	 * @param name The name of the tank.
 	 * @return A tank.
 	 */
-	public static Tank spawnTank(GameMap map, String name) {
+	public static GameMap spawnTank(GameMap map, String name) {
 		Random rand = new Random();
 		Tank test = new Tank("Test", 0, 0);
 		mapWidth = map.getWidth();
@@ -61,7 +61,7 @@ public final class ObjectFactory {
 		GameObject tank = new Tank(name, rand.nextInt(mapWidth - tankWidth),
 				rand.nextInt(mapHeight - tankHeight));
 		map = addingToMap(map, tank);
-		return (Tank) map.getObject(name);
+		return map;
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public final class ObjectFactory {
 	 * @return The map.
 	 */
 	private static GameMap addingToMap(GameMap map, GameObject object) {
-		System.out.println("Siin");
+//		System.out.println("Siin");
 		Random rand = new Random();
 		while (true) {
 //			System.out.println("Kordus????");

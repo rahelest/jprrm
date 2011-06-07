@@ -148,7 +148,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		int x = getX(); int y = getY();
 		int mapX = map.getWidth() - getWidth();
 		int mapY = map.getHeight() - getHeight();
-		if(x < 0 || x > mapX || y < 0 || y > mapY) {
+		if (x < 0 || x > mapX || y < 0 || y > mapY) {
 //			System.out.printf("%d %d, %d, %d\n", x, mapX, y, mapY);
 			return this;
 		}		

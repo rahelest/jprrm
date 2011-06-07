@@ -71,8 +71,13 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 */
 	private int exp = 0;
 	
+	/**
+	 * This boolean is used to stop the main while-cycle.
+	 */
 	private Boolean run = true;
-
+	/**
+	 * This is a helper string to hold the player's ID.
+	 */
 	private String key;
 	
 	/**

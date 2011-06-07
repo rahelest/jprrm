@@ -67,15 +67,16 @@ public class Broadcaster extends Thread {
 			}
 			if (System.currentTimeMillis() - lastScoreUpdate > scoreUpdateInterval) {
 				active = activeClients.iterator();
-				ConcurrentHashMap<ClientSession, Integer> scores
-				= new ConcurrentHashMap<ClientSession, Integer>();
+				ConcurrentHashMap<String, Integer> scores
+				= new ConcurrentHashMap<String, Integer>();
 				while (active.hasNext()) {
 					ClientSession cli = active.next();
 					if (cli.isAlive()) {
-						scores.put(cli, cli.getExp());
+						scores.put("Player " + Integer.toString(cli.getClientID()), cli.getExp());
 					}
 				}
 				out.addMessage(new Message(scores));
+				lastScoreUpdate = System.currentTimeMillis();
 			}
 		}
 	}

@@ -169,6 +169,13 @@ public class ClientSession extends Thread {
 	}
 
 	/**
+	 * @return the clientID
+	 */
+	public int getClientID() {
+		return clientID;
+	}
+
+	/**
 	 * Sends a new message.
 	 * @param msg The message.
 	 */

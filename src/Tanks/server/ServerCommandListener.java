@@ -30,6 +30,7 @@ public class ServerCommandListener extends Thread {
 	 */
 	public ServerCommandListener(ActiveClients nClientList, Broadcaster nMessenger) {
 		setName("ServerCommandListener");
+		setDaemon(true);
 		this.clientList = nClientList;
 		this.messenger = nMessenger;		
 		start();

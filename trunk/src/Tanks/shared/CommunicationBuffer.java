@@ -55,8 +55,11 @@ public class CommunicationBuffer {
 		}
 	}
 
-	public void sendMissiles(ConcurrentHashMap<String, GameObject> missiles) {
-		latestMap.addMissiles(missiles);
-		messages.add(new Message(latestMap));
+	public synchronized void sendMissiles(ConcurrentHashMap<String, GameObject> missiles) {
+		synchronized (bufferLock) {
+			latestMap.addMissiles(missiles);
+			messages.add(new Message(latestMap));
+		}	
+		this.notifyAll();
 	}
 }

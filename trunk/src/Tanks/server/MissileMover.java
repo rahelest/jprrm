@@ -4,6 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.shared.Broadcaster;
 import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.GameMap;
 import Tanks.shared.Message;
 import Tanks.shared.gameElements.Missile;
 import Tanks.shared.gameElements.Tank;
@@ -31,13 +32,17 @@ public class MissileMover extends Thread {
 	 */
 	private static int id = 0;
 	private CommunicationBuffer outBuf;
+	private GameMap map;
 	
 	/**
 	 * The constructor.
+	 * @param killingField 
 	 */
-	public MissileMover(Broadcaster nMessenger) {
+	public MissileMover(Broadcaster nMessenger, GameMap killingField) {
 		setName("MissileMover");
+		this.map = killingField;
 		this.outBuf = nMessenger.getMainOutbound();
+		System.out.println(outBuf);
 		start();
 	}
 	
@@ -52,7 +57,11 @@ public class MissileMover extends Thread {
 				}
 			}
 			if (!missiles.isEmpty()) {
-				outBuf.sendMissiles(getMissiles());
+//				System.out.println(getMissiles());
+//				System.out.println(map.getObjects());
+				map.addMissiles(getMissiles());
+				outBuf.addMessage(new Message(map));
+//				outBuf.sendMissiles(getMissiles());
 			}
 			
 			

@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.ConnectionManage;
 import Tanks.shared.GameMap;
 import Tanks.shared.Message;
 import Tanks.shared.Receiver;
@@ -17,7 +18,7 @@ import Tanks.shared.mapElements.GameObject;
  * @author JPRRM
  *
  */
-public class ClientSession extends Thread {
+public class ClientSession extends Thread implements ConnectionManage {
 	
 	/**
 	 * The client's ID.
@@ -133,7 +134,7 @@ public class ClientSession extends Thread {
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());
-				((Tank)tank).setDirection(tempTank.getDirection());
+				((Tank) tank).setDirection(tempTank.getDirection());
 			}
 			map.addMissiles(MissileMover.getMissiles());
 			map.doYourStuff(tank);
@@ -154,7 +155,7 @@ public class ClientSession extends Thread {
 	 * Creates the important streams.
 	 * @throws IOException An exception.
 	 */
-	private void createComms() throws IOException {
+	public void createComms() throws IOException {
 		netOut = new ObjectOutputStream(sock.getOutputStream());       
 		inBuff = new CommunicationBuffer();
 		receiver =  new Receiver(this, sock, inBuff);
@@ -194,8 +195,9 @@ public class ClientSession extends Thread {
 
 	/**
 	 * What to do when connection is lost.
+	 * @param receiver2 The reciver that gives the error.
 	 */
-	public void notifyConnectionLoss() {
+	public void notifyConnectionLoss(Receiver receiver2) {
 		try {
 			System.out.println("clientsessioni wait algus");
 			synchronized (this) {

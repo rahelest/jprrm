@@ -37,6 +37,7 @@ public class Receiver extends Thread {
 	 * The clientCore pointer.
 	 */
 	private ClientCore clientCore;
+	private ConnectionManage connectionManage;
 
 	/**
 	 * The main constructor.
@@ -85,6 +86,11 @@ public class Receiver extends Thread {
 		this.clientCore = nClientCore;
 	}
 	
+	public Receiver(ConnectionManage conn, Socket socket, CommunicationBuffer inbound) throws IOException {
+		this(socket, inbound);
+		this.connectionManage = conn;
+	}
+	
 	/**
 	 * The thread's run method.
 	 */
@@ -98,34 +104,50 @@ public class Receiver extends Thread {
 				e.printStackTrace();
 			} catch (SocketException e) {
 				e.printStackTrace();
+				
 				if (session != null) {
-					try {
-						System.out.println("Klient katkes");
-						System.out.println("receiveri wait algus");
-						synchronized (this) {
-							session.notifyConnectionLoss();
-							this.wait();
-						}
-						System.out.println("receiveri notify lopp");
-						System.out.println("Receiveri wait lõpp");
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					} catch (IllegalMonitorStateException e2) {
-						e2.printStackTrace();
+				try {
+					System.out.println("Ühendus katkes");
+					System.out.println("receiveri wait algus");
+					synchronized (this) {
+						connectionManage.notifyConnectionLoss(this);
+						this.wait();
 					}
-					
-				} else {
-					try {
-						synchronized (this) {
-							clientCore.notifyConnectionLoss(this);
-							this.wait();
-						}
-					} catch (InterruptedException e1) {
-//						e1.printStackTrace();
-						System.out.println("Receiveri wait lõpp");
-					}
-					
+					System.out.println("receiveri notify lopp");
+					System.out.println("Receiveri wait lõpp");
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
 				}
+				
+			}
+//				if (session != null) {
+//					try {
+//						System.out.println("Klient katkes");
+//						System.out.println("receiveri wait algus");
+//						synchronized (this) {
+//							session.notifyConnectionLoss();
+//							this.wait();
+//						}
+//						System.out.println("receiveri notify lopp");
+//						System.out.println("Receiveri wait lõpp");
+//					} catch (InterruptedException e1) {
+//						e1.printStackTrace();
+//					} catch (IllegalMonitorStateException e2) {
+//						e2.printStackTrace();
+//					}
+//					
+//				} else {
+//					try {
+//						synchronized (this) {
+//							clientCore.notifyConnectionLoss(this);
+//							this.wait();
+//						}
+//					} catch (InterruptedException e1) {
+////						e1.printStackTrace();
+//						System.out.println("Receiveri wait lõpp");
+//					}
+//					
+//				}
 			} catch (IOException e) {
 				System.out.println("General IO error, there's noone to complain to!");
 				e.printStackTrace();

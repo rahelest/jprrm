@@ -15,7 +15,7 @@ import Tanks.shared.*;
  * @author JPRRM
  *
  */
-public class ClientCore extends Thread {
+public class ClientCore extends Thread implements ConnectionManage {
 
 	/**
 	 * The gui pointer where to send drawing
@@ -99,7 +99,7 @@ public class ClientCore extends Thread {
 		}
 	}
 	
-	private void createComms() throws SocketException, IOException {
+	public void createComms() throws SocketException, IOException {
 
 		inBuf = new CommunicationBuffer();
 		netOut = new ObjectOutputStream(sock.getOutputStream());
@@ -192,7 +192,7 @@ public class ClientCore extends Thread {
 	 * Sends the message to the server.
 	 * @param message The message.
 	 */
-	private void sendMessage(Message message) {
+	public void sendMessage(Message message) {
 		try {
 			netOut.writeObject(message);
 			netOut.flush();
@@ -285,5 +285,4 @@ public class ClientCore extends Thread {
 	public String getMyID() {
 		return Integer.toString(myID);
 	}
-		
 }

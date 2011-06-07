@@ -94,6 +94,7 @@ public class Receiver extends Thread {
 				if (session != null) {
 				try {
 					System.out.println("The connection was lost");
+					this.stop();
 //					System.out.println("receiveri wait algus");
 					synchronized (this) {
 						System.out.println(connectionManage);

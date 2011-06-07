@@ -131,7 +131,7 @@ public class ClientGUI extends Thread {
 		map = clientCore.getMap();
 		center.add(map, JLayeredPane.DEFAULT_LAYER);
 		while (true) {
-//			center.removeAll();
+			center.removeAll();
 			map = clientCore.getMap();
 			
 			ConcurrentHashMap<String, GameObject> objects = map.getObjects();

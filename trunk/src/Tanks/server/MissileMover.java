@@ -26,7 +26,6 @@ public class MissileMover extends Thread {
 	 * Time to wait before updating locations.
 	 */
 	private static final int waitTime = 10;
-	private static long lastScoreUpdate = 0;
 	/**
 	 * ID for missiles.
 	 */

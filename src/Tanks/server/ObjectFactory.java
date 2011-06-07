@@ -132,7 +132,7 @@ public final class ObjectFactory {
 			object2 = createIronWall(rand.nextInt(mapWidth - ironWidth),
 					rand.nextInt(mapHeight - ironHeight));
 			map.addObject(object2);
-			System.out.println(" 1");
+//			System.out.println(" 1");
 			for (int i = 1; i < iron; i++) {
 				GameObject object = createIronWall(object2.getX()
 						+ object2.getWidth() + 1, object2.getY());

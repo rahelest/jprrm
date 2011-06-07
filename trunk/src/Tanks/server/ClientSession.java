@@ -1,5 +1,6 @@
 package Tanks.server;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
@@ -81,6 +82,15 @@ public class ClientSession extends Thread implements ConnectionManage {
 	private String key;
 	
 	/**
+	 * This is the dimension of vertically aligned tank.
+	 */
+	private Dimension tankV = new Dimension(30, 60);
+	/**
+	 * This is the dimension of horizontally aligned tank.
+	 */
+	private Dimension tankH = new Dimension(60, 30);
+	
+	/**
 	 * The constructor.
 	 * @param nSock The socket.
 	 * @param killingField The map.
@@ -120,22 +130,22 @@ public class ClientSession extends Thread implements ConnectionManage {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
 				tempTank.setDirection("N");
-				tempTank.setSize(30, 60);
+				tempTank.setSize(tankV);
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tempTank.setLocation(tank.getX(), tank.getY() + tankSpeed);
 				tempTank.setDirection("S");
-				tempTank.setSize(30, 60);
+				tempTank.setSize(tankV);
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
 				tempTank.setLocation(tank.getX() - tankSpeed, tank.getY());
 				tempTank.setDirection("W");
-				tempTank.setSize(60, 30);
+				tempTank.setSize(tankH);
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
 				tempTank.setLocation(tank.getX() + tankSpeed, tank.getY());
 				tempTank.setDirection("E");
-				tempTank.setSize(60, 30);
+				tempTank.setSize(tankH);
 			}
 			if (tempTank.checkCollision(map) == null) {
 //				System.out.println("Checkcollision!! Image: " + ((Tank) tank).getImage());

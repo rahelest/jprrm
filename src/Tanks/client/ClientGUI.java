@@ -86,7 +86,7 @@ public class ClientGUI extends Thread {
 		clientCore = nClientCore;
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(900, 1000);
+		window.setSize(1000, 900);
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);

@@ -202,21 +202,21 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 */
 	public void notifyConnectionLoss(Receiver receiver2) {
 		try {
-			System.out.println("clientsessioni wait algus");
+//			System.out.println("clientsessioni wait algus");
 			synchronized (this) {
 				this.wait();
-				System.out.println("proov clisess wait järel");
+//				System.out.println("proov clisess wait järel");
 			}
-			System.out.println("clientsessioni wait lopp");
-			System.out.println("receiveri notify algus");
+//			System.out.println("clientsessioni wait lopp");
+//			System.out.println("receiveri notify algus");
 			synchronized (receiver) {
 				receiver.notify();
-				System.out.println("prooviprint receiverlock");
+//				System.out.println("prooviprint receiverlock");
 			}
-			System.out.println("saadan äratusteate kliendile");
+//			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new Message(clientID));
 			sendMessage(new Message(map));
-			System.out.println("receiveri notify lopp");
+//			System.out.println("receiveri notify lopp");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (IllegalMonitorStateException e) {

@@ -17,7 +17,7 @@ public class Tank extends BreakableObject {
 	/**
 	 * The tank's direction.
 	 */
-	protected String direction = "N";
+	protected String direction = "E";
 	
 	/**
 	 * The constructor.
@@ -41,7 +41,9 @@ public class Tank extends BreakableObject {
 	 * Sets the new direction.
 	 * @param nDirection The new direction.
 	 */
-	public void setDirection(String nDirection) {
+	public synchronized void setDirection(String nDirection) {
 		this.direction = nDirection;
+		System.out.println(nDirection);
+		this.image = "tank" + nDirection + ".png";
 	}
 }

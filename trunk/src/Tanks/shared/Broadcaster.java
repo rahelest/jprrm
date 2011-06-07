@@ -59,10 +59,10 @@ public class Broadcaster extends Thread {
 				if (cli.isAlive()) {
 					synchronized (sendLock) {
 //					System.out.println(cli);
-						cli.sendMessage(msg); //
+						cli.sendMessage(msg);
 					}
 				} else { 
-					active.remove(); // 
+					activeClients.removeClient(cli);
 				}
 			}
 			if (System.currentTimeMillis() - lastScoreUpdate > scoreUpdateInterval) {

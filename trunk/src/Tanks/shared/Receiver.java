@@ -61,34 +61,10 @@ public class Receiver extends Thread {
 		} catch (EOFException e) {
 			 
 		}
-		System.out.println("netIn-i loomine valmis");
+//		System.out.println("netIn-i loomine valmis");
 		start();
 	}
 	
-	/**
-	 * The constructor for the ClientSession.
-	 * @param nSession The pointer.
-	 * @param socket The socket.
-	 * @param inbound The buffer.
-	 * @throws IOException An exception.
-	 */
-	public Receiver(ClientSession nSession, Socket socket, CommunicationBuffer inbound) throws IOException {
-		this(socket, inbound);
-		this.session = nSession;
-	}
-	
-	/**
-	 * The constructor for the ClientCore.
-	 * @param nClientCore The pointer.
-	 * @param socket The socket.
-	 * @param inbound The buffer.
-	 * @throws IOException An exception.
-	 */
-	public Receiver(ClientCore nClientCore, Socket socket, 
-			CommunicationBuffer inbound) throws IOException {
-		this(socket, inbound);
-		this.clientCore = nClientCore;
-	}
 	/**
 	 * An alternative overloaded constructor for creating the receiver.
 	 * @param conn the creator
@@ -120,7 +96,8 @@ public class Receiver extends Thread {
 					System.out.println("The connection was lost");
 //					System.out.println("receiveri wait algus");
 					synchronized (this) {
-//						connectionManage.notifyConnectionLoss(this);
+						System.out.println(connectionManage);
+						connectionManage.notifyConnectionLoss(this);
 						this.wait();
 					}
 //					System.out.println("receiveri notify lopp");

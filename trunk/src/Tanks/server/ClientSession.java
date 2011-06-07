@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.ConnectionManage;
@@ -69,6 +70,8 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 * The experience gained.
 	 */
 	private int exp = 0;
+	
+	private Boolean run = true;
 
 	private String key;
 	
@@ -98,7 +101,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 		tank = map.getObject("T" + Integer.toString(clientID));
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
-		while (true) {
+		while (run) {
 //			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
@@ -191,6 +194,11 @@ public class ClientSession extends Thread implements ConnectionManage {
 //				System.out.println("Teade teel " + msg);
 				netOut.reset();
 			}
+		} catch (SocketException e) {
+			System.out.println("A client was unreachable,"
+					+ " removing it from the list!");
+			map.removeObject("T" + clientID);
+			this.stop();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -211,6 +219,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 //			System.out.println("receiveri notify algus");
 			synchronized (receiver) {
 				receiver.notify();
+				run = false;
 //				System.out.println("prooviprint receiverlock");
 			}
 //			System.out.println("saadan äratusteate kliendile");

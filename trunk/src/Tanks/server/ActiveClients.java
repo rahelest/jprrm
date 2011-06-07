@@ -65,5 +65,8 @@ public class ActiveClients {
 		return temp;
 	}
 	
+	public void removeClient(ClientSession toBeRemoved) {
+		clientList.remove(toBeRemoved);
+	}
 	
 }

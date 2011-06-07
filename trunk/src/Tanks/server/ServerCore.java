@@ -42,7 +42,7 @@ public final class ServerCore {
 	        while (true) {
                 Socket clientSock = serv.accept();
                 try {
-                    if (clientList.exists(clientSock.getInetAddress())) {
+                    /*if (clientList.exists(clientSock.getInetAddress())) {
                         System.out.println("clientsessioni notify algus");
                         ClientSession exSessPointer = clientList.getExisting(clientSock.getInetAddress());
                         exSessPointer.updateOnReconnect(clientSock);
@@ -52,12 +52,12 @@ public final class ServerCore {
                                 System.out.println(exSessPointer);
                         }
                         System.out.println("clientsessioni notify lopp");
-                    } else {
+                    } else {*/
                             clientList.addClient(new ClientSession(clientSock,
                             		killingField, clientID));
                             System.out.println("Klient ühines edukalt, ID = " + clientID);
                             clientID++;     
-                    }
+//                    }
                                         
                 } catch (IOException e) {
                         clientSock.close();

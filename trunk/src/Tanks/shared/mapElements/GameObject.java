@@ -155,13 +155,14 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		Set<String> keys = map.getObjects().keySet();
 		keys.remove(ID);
 		Boolean tempBool;
-		if (this instanceof Missile) {
-			tempBool = isBulletPassable();
-		} else {
-			tempBool = isPassable();
-		}
+
 		for (String s : keys) {
 			GameObject tempPointer = map.getObject(s);
+			if (this instanceof Missile) {
+				tempBool = tempPointer.isBulletPassable();
+			} else {
+				tempBool = tempPointer.isPassable();
+			}
 			if (!tempBool && getBounds().intersects(tempPointer.getBounds())) {
 				return tempPointer;
 			}

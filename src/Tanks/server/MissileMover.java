@@ -2,6 +2,9 @@ package Tanks.server;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import Tanks.shared.Broadcaster;
+import Tanks.shared.CommunicationBuffer;
+import Tanks.shared.Message;
 import Tanks.shared.gameElements.Missile;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
@@ -27,11 +30,13 @@ public class MissileMover extends Thread {
 	 * ID for missiles.
 	 */
 	private static int id = 0;
+	private CommunicationBuffer outBuf;
 	
 	/**
 	 * The constructor.
 	 */
-	public MissileMover() {
+	public MissileMover(Broadcaster nMessenger) {
+		this.outBuf = nMessenger.getMainOutbound();
 		start();
 	}
 	
@@ -48,6 +53,7 @@ public class MissileMover extends Thread {
 			if (!missiles.isEmpty()) {
 				System.out.println("Liigutan: " + missiles);
 			}
+			outBuf.sendMissiles(getMissiles());
 			
 			try {
 				sleep(waitTime);

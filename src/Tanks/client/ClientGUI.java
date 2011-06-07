@@ -1,14 +1,19 @@
 package Tanks.client;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -63,7 +68,9 @@ public class ClientGUI extends Thread {
 	 * The map variable with the game elements.
 	 */
 	private GameMap map;
-	
+	/**
+	 * This is the list that displays current scores.
+	 */
 	protected JList scores = new JList();
 	/**
 	 * The label with the tank name.
@@ -79,11 +86,10 @@ public class ClientGUI extends Thread {
 		clientCore = nClientCore;
 		window.setFocusable(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(800, 500);
+		window.setSize(900, 1000);
 		window.getContentPane().setLayout(new BorderLayout());
 		window.getContentPane().add(top, BorderLayout.NORTH);
 		window.getContentPane().add(center, BorderLayout.CENTER);
-//		scores.set
 		window.getContentPane().add(scores, BorderLayout.EAST);
 		center.setFocusable(true);
 		center.setRequestFocusEnabled(true);
@@ -114,8 +120,10 @@ public class ClientGUI extends Thread {
 	 * The thread's runner method.
 	 */
 	public void run() {
-		map = clientCore.getMap();
-		
+		BufferedImage buffer = new BufferedImage(900, 900, BufferedImage.TYPE_BYTE_INDEXED);
+		buffer.setAccelerationPriority(1);
+		Graphics2D bufferG = buffer.createGraphics();
+		map = clientCore.getMap();		
 		while (true) {
 			center.removeAll();
 			map = clientCore.getMap();
@@ -129,13 +137,18 @@ public class ClientGUI extends Thread {
 				if (obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
 					center.add(obj, JLayeredPane.MODAL_LAYER);
 				} else if (obj instanceof MapDecorObject) {
-					center.add(obj, JLayeredPane.DRAG_LAYER);
+					center.add(obj, JLayeredPane.POPUP_LAYER);
 				}
 //				System.out.println(objects.get(k));
 				
 			}
-			center.validate();
-			center.repaint();
+			buffer.flush();
+//			center.validate();
+			center.paintAll(bufferG);
+			JLabel picLabel = new JLabel(new ImageIcon(buffer));
+			window.add(picLabel);
+//			center.validate();
+//			center.repaint();
 			try {
 				synchronized (this) {
 					wait();

@@ -29,9 +29,10 @@ public final class ServerCore {
 	    
 	    try {
 //     		ObjectFactory factory = new ObjectFactory();
-	        MissileMoverScorePusher missileMover = new MissileMoverScorePusher();
+	        
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
+	        MissileMover missileMover = new MissileMover();
 	        Broadcaster messenger = new Broadcaster(clientList);
 //	        GameMap killingField =  ObjectFactory.loadFromFile(2, messenger);
 	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 1, 2, 2);

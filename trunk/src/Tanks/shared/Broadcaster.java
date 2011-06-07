@@ -14,7 +14,13 @@ import Tanks.server.ClientSession;
  */
 public class Broadcaster extends Thread {
 	
+	/**
+	 * The timestamp of last score update.
+	 */
 	private long lastScoreUpdate;
+	/**
+	 * The time interval after which the scores should be updated.
+	 */
 	private final long scoreUpdateInterval = 1000;
 	/**
 	 * The outbound buffer where the messages are taken from.
@@ -72,7 +78,8 @@ public class Broadcaster extends Thread {
 				while (active.hasNext()) {
 					ClientSession cli = active.next();
 					if (cli.isAlive()) {
-						scores.add("Player " + Integer.toString(cli.getClientID()) + ": " + cli.getExp());
+						scores.add("Player " + Integer.toString(cli.getClientID()) 
+								+ ": " + cli.getExp());
 					}
 				}
 				out.addMessage(new Message(scores));

@@ -112,7 +112,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 * The thread's run method.
 	 */
 	public void run() {
-		map = ObjectFactory.spawnTank(map, key);
+		map = ObjectFactory.spawnTank(map, key, this);
 		tank = map.getObject("T" + Integer.toString(clientID));
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
@@ -120,7 +120,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 //			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
-			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
+			Tank tempTank = new Tank(this, tank.getID(), tank.getX(), tank.getY());
 			tempTank.setDirection(((Tank) tank).getDirection());
 			if (temp.extraString.equals("F")) {
 //				System.out.println("Fire! Image: " + ((Tank) tank).getImage());
@@ -279,7 +279,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 	public void reStart(GameMap newMap) {
 		// TODO Auto-generated method stub
 		map = newMap;
-		map = ObjectFactory.spawnTank(map, key);
+		map = ObjectFactory.spawnTank(map, key, this);
 		exp = 0;
 		tankSpeed = 1;
 		missileSpeed = 1;
@@ -316,7 +316,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 
 	public void gotHit() {
 		map.removeObject("T" + clientID);
-		map = ObjectFactory.spawnTank(map, "T" + clientID);
+		map = ObjectFactory.spawnTank(map, "T" + clientID, this);
 		tank = map.getObject("T" + clientID);
 	}
 }

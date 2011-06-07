@@ -49,14 +49,14 @@ public final class ObjectFactory {
 	 * @param name The name of the tank.
 	 * @return A tank.
 	 */
-	public static GameMap spawnTank(GameMap map, String name) {
+	public static GameMap spawnTank(GameMap map, String name, ClientSession owner) {
 		Random rand = new Random();
-		Tank test = new Tank("Test", 0, 0);
+		Tank test = new Tank(owner, "Test", 0, 0);
 		mapWidth = map.getWidth();
 		mapHeight = map.getHeight();
 		int tankWidth = test.getWidth();
 		int tankHeight = test.getHeight();
-		GameObject tank = new Tank(name, rand.nextInt(mapWidth - tankWidth),
+		GameObject tank = new Tank(owner, name, rand.nextInt(mapWidth - tankWidth),
 				rand.nextInt(mapHeight - tankHeight));
 		map = addingToMap(map, tank);
 		return map;

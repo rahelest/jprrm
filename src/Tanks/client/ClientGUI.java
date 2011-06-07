@@ -105,7 +105,7 @@ public class ClientGUI extends Thread {
 		top.setLayout(new BorderLayout());		
 		top.add(ok, BorderLayout.EAST);
 		top.add(text, BorderLayout.CENTER);
-		start();
+//		start();
 		window.setVisible(true);
 		window.toFront();
 	}

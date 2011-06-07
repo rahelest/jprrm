@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Set;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;

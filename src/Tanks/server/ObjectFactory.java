@@ -12,9 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
 import Tanks.shared.Broadcaster;
 import Tanks.shared.GameMap;
 import Tanks.shared.gameElements.Tank;

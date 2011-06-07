@@ -94,7 +94,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 						gui.start();
 					}
 				} else if (message.extraString.equals("SC")) {
-					gui.scores.setListData(message.scores.values().toArray());
+					gui.scores.setListData(message.scores.toArray());
 				}
 			}
 			synchronized (gui) {

@@ -1,5 +1,6 @@
 package Tanks.shared;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -67,12 +68,11 @@ public class Broadcaster extends Thread {
 			}
 			if (System.currentTimeMillis() - lastScoreUpdate > scoreUpdateInterval) {
 				active = activeClients.iterator();
-				ConcurrentHashMap<String, Integer> scores
-				= new ConcurrentHashMap<String, Integer>();
+				ArrayList<String> scores = new ArrayList<String>();
 				while (active.hasNext()) {
 					ClientSession cli = active.next();
 					if (cli.isAlive()) {
-						scores.put("Player " + Integer.toString(cli.getClientID()), cli.getExp());
+						scores.add("Player " + Integer.toString(cli.getClientID()) + ": " + cli.getExp());
 					}
 				}
 				out.addMessage(new Message(scores));

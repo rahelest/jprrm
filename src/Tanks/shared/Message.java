@@ -1,6 +1,7 @@
 package Tanks.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import Tanks.server.ClientSession;
@@ -26,9 +27,9 @@ public class Message implements Serializable {
 	 */
 	public GameMap object;
 	
-	public ConcurrentHashMap<String, Integer> scores;
+	public ArrayList scores;
 	
-	public Message(ConcurrentHashMap<String, Integer> scores) {
+	public Message(ArrayList scores) {
 		extraString = "SC";
 		this.scores = scores;
 	}

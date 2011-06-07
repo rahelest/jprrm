@@ -42,7 +42,7 @@ public class MissileMover extends Thread {
 		setName("MissileMover");
 		this.map = killingField;
 		this.outBuf = nMessenger.getMainOutbound();
-		System.out.println(outBuf);
+//		System.out.println(outBuf);
 		start();
 	}
 	

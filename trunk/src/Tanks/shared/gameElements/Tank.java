@@ -33,7 +33,7 @@ public class Tank extends BreakableObject {
 	 * Asks for the direction.
 	 * @return The direction.
 	 */
-	public String getDirection() {
+	public synchronized String getDirection() {
 		return direction;
 	}
 

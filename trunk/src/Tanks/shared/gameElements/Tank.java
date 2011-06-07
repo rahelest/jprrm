@@ -22,7 +22,7 @@ public class Tank extends BreakableObject {
 	/**
 	 * This is the owner of the tank.
 	 */
-	private ClientSession owner;
+	private transient ClientSession owner;
 	/**
 	 * The constructor.
 	 * @param ID The name.
@@ -31,6 +31,7 @@ public class Tank extends BreakableObject {
 	 */
 	public Tank(ClientSession owner, String ID, int x, int y) {
 		super(ID, x, y, 60, 30, "tankE.png");
+		this.owner = owner;
 	}
 
 	/**

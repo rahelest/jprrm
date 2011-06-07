@@ -29,7 +29,7 @@ public final class ServerCore {
 	    
 	    try {
 //     		ObjectFactory factory = new ObjectFactory();
-	        MissileMover missileMover = new MissileMover();
+	        MissileMoverScorePusher missileMover = new MissileMoverScorePusher();
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
 	        Broadcaster messenger = new Broadcaster(clientList);

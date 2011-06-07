@@ -103,7 +103,7 @@ public class ClientSession extends Thread {
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
 			if (temp.extraString.equals("F")) {
 				System.out.println();
-				MissileMover.newMissile(this);
+				MissileMoverScorePusher.newMissile(this);
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
@@ -135,7 +135,7 @@ public class ClientSession extends Thread {
 				tank.setImage(tempTank.getImage());
 				((Tank)tank).setDirection(tempTank.getDirection());
 			}
-			map.addMissiles(MissileMover.getMissiles());
+			map.addMissiles(MissileMoverScorePusher.getMissiles());
 			map.doYourStuff(tank);
 		}			
 	}

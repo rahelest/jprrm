@@ -103,7 +103,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
-			tempTank.setDirection(((Tank) tank).getImage());
+			tempTank.setDirection(((Tank) tank).getDirection());
 			if (temp.extraString.equals("F")) {
 //				System.out.println("Fire! Image: " + ((Tank) tank).getImage());
 				MissileMover.newMissile(this);
@@ -133,7 +133,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 //				System.out.println("Checkcollision!! Image: " + ((Tank) tank).getImage());
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
-				tank.setImage(tempTank.getImage());
+//				tank.setImage(tempTank.getImage());
 				((Tank) tank).setDirection(tempTank.getDirection());
 //				System.out.println("Pärast setdirectioni! Image: " + ((Tank) tank).getImage());
 			}

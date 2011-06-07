@@ -11,7 +11,7 @@ import Tanks.shared.mapElements.GameObject;
  * @author JPRRM
  *
  */
-public class MissileMover extends Thread {
+public class MissileMoverScorePusher extends Thread {
 	
 	/**
 	 * List with the missiles.
@@ -21,7 +21,8 @@ public class MissileMover extends Thread {
 	/**
 	 * Time to wait before updating locations.
 	 */
-	private static final int waitTime = 50;
+	private static final int waitTime = 10;
+	private static long lastScoreUpdate = 0;
 	/**
 	 * ID for missiles.
 	 */
@@ -30,7 +31,7 @@ public class MissileMover extends Thread {
 	/**
 	 * The constructor.
 	 */
-	public MissileMover() {
+	public MissileMoverScorePusher() {
 		start();
 	}
 	
@@ -44,7 +45,7 @@ public class MissileMover extends Thread {
 					missiles.remove(m);
 				}
 			}
-			if(!missiles.isEmpty()) {
+			if (!missiles.isEmpty()) {
 				System.out.println("Liigutan: " + missiles);
 			}
 			

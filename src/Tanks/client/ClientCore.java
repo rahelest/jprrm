@@ -259,11 +259,11 @@ public class ClientCore extends Thread implements ConnectionManage {
 		sendMessage(new Message("F"));
 	}
 
-	/*
+	
 	/**
 	 * Method to notify the client when the connection is lost.
 	 * @param receiver2 The receiver that gets the exception.
-	 *//*
+	 */
 	public void notifyConnectionLoss(Receiver receiver2) {
 		try {
 			sock.close();
@@ -281,7 +281,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 		}
 		
 	}
-	*/
+
 	
 	/**
 	 * Gets the map received from the server.
@@ -300,8 +300,4 @@ public class ClientCore extends Thread implements ConnectionManage {
 		return Integer.toString(myID);
 	}
 
-	@Override
-	public void notifyConnectionLoss(Receiver receiver2) {
-		// TODO Auto-generated method stub		
-	}
 }

@@ -118,7 +118,7 @@ public class ClientGUI extends Thread {
 			for (GameObject obj : objects.values()) {
 //				drawObject(objects.get(k));				
 //				GameObject obj = objects.get(k);
-				if (obj instanceof Tank || obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
+				if (obj instanceof UnbreakableObject || obj instanceof BreakableObject) {
 					center.add(obj, new Integer(1));
 				} else if (obj instanceof MapDecorObject) {
 					center.add(obj, new Integer(2));

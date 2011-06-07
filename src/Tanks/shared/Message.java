@@ -26,11 +26,11 @@ public class Message implements Serializable {
 	 */
 	public GameMap object;
 	
-	public ConcurrentHashMap<ClientSession, Integer> scores;
+	public ConcurrentHashMap<String, Integer> scores;
 	
-	public Message(ConcurrentHashMap<ClientSession, Integer> scoresToBeSent) {
+	public Message(ConcurrentHashMap<String, Integer> scores) {
 		extraString = "SC";
-		scores = scoresToBeSent;
+		this.scores = scores;
 	}
 	
 	/**

@@ -80,10 +80,8 @@ public class Missile extends UnbreakableObject implements Serializable {
 		if (collidee != null) {
 			if (collidee instanceof Tank) {
 				owner.increaseExp();
-				System.out.println(collidee);
-				System.out.println(MissileMover.getOwner(collidee));
 				
-				MissileMover.getOwner(collidee).gotHit();
+				(collidee.getOwner()).gotHit();
 			}
 			collidee.getDamaged(map);
 			return false;

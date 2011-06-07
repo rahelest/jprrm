@@ -1,5 +1,6 @@
 package Tanks.shared.gameElements;
 
+import Tanks.server.ClientSession;
 import Tanks.shared.mapElements.BreakableObject;
 
 /**
@@ -18,14 +19,17 @@ public class Tank extends BreakableObject {
 	 * The tank's direction.
 	 */
 	protected String direction = "E";
-	
+	/**
+	 * This is the owner of the tank.
+	 */
+	private ClientSession owner;
 	/**
 	 * The constructor.
 	 * @param ID The name.
 	 * @param x The x location.
 	 * @param y The y location.
 	 */
-	public Tank(String ID, int x, int y) {
+	public Tank(ClientSession owner, String ID, int x, int y) {
 		super(ID, x, y, 60, 30, "tankE.png");
 	}
 
@@ -45,5 +49,9 @@ public class Tank extends BreakableObject {
 		this.direction = nDirection;
 //		System.out.println(direction);
 		this.image = "tank" + direction + ".png";
+	}
+	
+	public ClientSession getOwner() {
+		return owner;
 	}
 }

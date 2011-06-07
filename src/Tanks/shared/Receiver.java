@@ -101,16 +101,15 @@ public class Receiver extends Thread {
 				fromClient = (Message) netIn.readObject();
 			} catch (ClassNotFoundException e) {
 				System.out.println("Class not found, contact Your reseller and complain!");
-				e.printStackTrace();
+//				e.printStackTrace();
 			} catch (SocketException e) {
-				e.printStackTrace();
-				
+//				e.printStackTrace();				
 				if (session != null) {
 				try {
 					System.out.println("Ühendus katkes");
 					System.out.println("receiveri wait algus");
 					synchronized (this) {
-						connectionManage.notifyConnectionLoss(this);
+//						connectionManage.notifyConnectionLoss(this);
 						this.wait();
 					}
 					System.out.println("receiveri notify lopp");

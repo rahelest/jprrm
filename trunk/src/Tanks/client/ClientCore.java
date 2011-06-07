@@ -48,6 +48,10 @@ public class ClientCore extends Thread implements ConnectionManage {
 	 * sending messages.
 	 */
 	private ObjectOutputStream netOut;
+	/**
+	 * The receiver thread that retrieves
+	 *  incoming messages for processing.
+	 */
 	private Receiver receiver;
 	/**
 	 * The new GameMap object, initialized
@@ -99,6 +103,13 @@ public class ClientCore extends Thread implements ConnectionManage {
 		}
 	}
 	
+	/**
+	 * This method creates all the channels,
+	 * bufers and workers for communication.
+	 * @throws SocketException The exception is
+	 * thrown when connection is not possible
+	 * @throws IOException a general error
+	 */
 	public void createComms() throws SocketException, IOException {
 
 		inBuf = new CommunicationBuffer();
@@ -150,7 +161,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 			return tryConnecting();
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
-			System.out.println("There is something wrong with the address");
+			System.out.println("The requested host is unknown.");
 			return false;
 		} catch (IOException e) {
 //			e.printStackTrace();
@@ -160,6 +171,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 		start();
 		return true;
 	}
+	
 	
 	/**
 	 * Manages the several tries of connecting to the server.
@@ -181,7 +193,8 @@ public class ClientCore extends Thread implements ConnectionManage {
 			try {
 				sock.close();
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				System.out.println("General error communicating!");
+//				e1.printStackTrace();
 			}
 			return false;
 			}
@@ -197,7 +210,6 @@ public class ClientCore extends Thread implements ConnectionManage {
 			netOut.writeObject(message);
 			netOut.flush();
 			netOut.reset();
-//			System.out.println("Teade teel....");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -247,10 +259,11 @@ public class ClientCore extends Thread implements ConnectionManage {
 		sendMessage(new Message("F"));
 	}
 
+	/*
 	/**
 	 * Method to notify the client when the connection is lost.
 	 * @param receiver2 The receiver that gets the exception.
-	 */
+	 *//*
 	public void notifyConnectionLoss(Receiver receiver2) {
 		try {
 			sock.close();
@@ -268,7 +281,8 @@ public class ClientCore extends Thread implements ConnectionManage {
 		}
 		
 	}
-
+	*/
+	
 	/**
 	 * Gets the map received from the server.
 	 * @return The map that contains information
@@ -284,5 +298,10 @@ public class ClientCore extends Thread implements ConnectionManage {
 	 */
 	public String getMyID() {
 		return Integer.toString(myID);
+	}
+
+	@Override
+	public void notifyConnectionLoss(Receiver receiver2) {
+		// TODO Auto-generated method stub		
 	}
 }

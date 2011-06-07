@@ -41,7 +41,7 @@ public class MissileMover extends Thread {
 	public void run() {
 		while (true) {
 			for (Missile m : missiles.keySet()) {
-				if (m.move(missiles.get(m).getMap())) {
+				if (!m.move(missiles.get(m).getMap())) {
 					missiles.remove(m);
 				}
 			}

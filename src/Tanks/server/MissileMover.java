@@ -52,7 +52,7 @@ public class MissileMover extends Thread {
 	public void run() {
 		while (true) {
 			for (Missile m : missiles.keySet()) {
-				if (!m.move(missiles.get(m).getMap())) {
+				if (!m.move(missiles.get(m).getMap(), missiles.get(m))) {
 					missiles.remove(m);
 				}
 			}
@@ -140,5 +140,10 @@ public class MissileMover extends Thread {
 			temp.put(m.getID(), m);
 		}
 		return temp;
+	}
+
+	public static ClientSession getOwner(GameObject collidee) {
+		return missiles.get(collidee);
+		
 	}
 }

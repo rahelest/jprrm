@@ -286,7 +286,13 @@ public class ClientSession extends Thread implements ConnectionManage {
 	/**
 	 * @param exp the exp to set
 	 */
-	public void setExp(int exp) {
-		this.exp = exp;
+	public void increaseExp() {
+		this.exp++;
+	}
+
+	public void gotHit() {
+		map.removeObject("T" + clientID);
+		map = ObjectFactory.spawnTank(map, "T" + clientID);
+		tank = map.getObject("T" + clientID);
 	}
 }

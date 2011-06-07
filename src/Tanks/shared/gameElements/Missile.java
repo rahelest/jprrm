@@ -1,6 +1,9 @@
 package Tanks.shared.gameElements;
 
 import java.io.Serializable;
+
+import Tanks.server.ClientSession;
+import Tanks.server.MissileMover;
 import Tanks.shared.GameMap;
 import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.mapElements.UnbreakableObject;
@@ -59,9 +62,10 @@ public class Missile extends UnbreakableObject implements Serializable {
 	/**
 	 * Moves the missile.
 	 * @param map The map where it is moved.
+	 * @param owner 
 	 * @return Whether it collided with something.
 	 */
-	public boolean move(GameMap map) {
+	public boolean move(GameMap map, ClientSession owner) {
 		if (direction.equals("N")) {
 			setLocation(getX(), getY() - speed);
 		} else if (direction.equals("S")) {
@@ -74,6 +78,10 @@ public class Missile extends UnbreakableObject implements Serializable {
 		
 		GameObject collidee = checkCollision(map);
 		if (collidee != null) {
+			if (collidee instanceof Tank) {
+				owner.increaseExp();
+				MissileMover.getOwner(collidee).gotHit();
+			}
 			collidee.getDamaged(map);
 			return false;
 		} else {

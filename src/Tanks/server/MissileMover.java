@@ -30,12 +30,19 @@ public class MissileMover extends Thread {
 	 * ID for missiles.
 	 */
 	private static int id = 0;
+	/**
+	 * This is the pointer to the main outbound buffer.
+	 */
 	private CommunicationBuffer outBuf;
+	/**
+	 * This is the pointer to the main game map.
+	 */
 	private GameMap map;
 	
 	/**
 	 * The constructor.
-	 * @param killingField 
+	 * @param killingField this is the main map
+	 * @param nMessenger this is the broadcaster
 	 */
 	public MissileMover(Broadcaster nMessenger, GameMap killingField) {
 		setName("MissileMover");
@@ -113,7 +120,7 @@ public class MissileMover extends Thread {
 	 * @param tank The owner tank.
 	 * @param height The tank's height.
 	 * @param location The tank's y coordinate.
-	 * @param i 
+	 * @param mHeight
 	 * @return The y.
 	 */
 	private static int determineCoordinateY(Tank tank, int height, int location, int mHeight) {

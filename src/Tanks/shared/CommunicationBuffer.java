@@ -1,6 +1,12 @@
 package Tanks.shared;
 
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
+
+import Tanks.server.ClientSession;
+import Tanks.server.MissileMover;
+import Tanks.shared.gameElements.Missile;
+import Tanks.shared.mapElements.GameObject;
 
 /**
  * The buffer for receiving and sending messages.
@@ -16,6 +22,7 @@ public class CommunicationBuffer {
 	 * The lock for the messages.
 	 */
 	private Object bufferLock = new Object();
+	private GameMap latestMap;
 	
 	/**
 	 * Adds a new message to the list.
@@ -23,6 +30,7 @@ public class CommunicationBuffer {
 	 */
 	public synchronized void addMessage(Message message) {
 		synchronized (bufferLock) {
+			latestMap = message.object;
 			messages.add(message);
 		}	
 		this.notifyAll();
@@ -45,5 +53,10 @@ public class CommunicationBuffer {
 			messages.removeFirst();
 			return temp;
 		}
+	}
+
+	public void sendMissiles(ConcurrentHashMap<String, GameObject> missiles) {
+		latestMap.addMissiles(missiles);
+		messages.add(new Message(latestMap));
 	}
 }

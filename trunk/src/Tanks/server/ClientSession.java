@@ -99,44 +99,47 @@ public class ClientSession extends Thread implements ConnectionManage {
 		sendMessage(new Message(clientID));
 		sendMessage(new Message(map));
 		while (true) {
+			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
 			Message temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(tank.getID(), tank.getX(), tank.getY());
+			tempTank.setDirection(((Tank) tank).getImage());
 			if (temp.extraString.equals("F")) {
-				System.out.println();
+				System.out.println("Fire! Image: " + ((Tank) tank).getImage());
 				MissileMover.newMissile(this);
+				System.out.println("Afterfire! Image: " + ((Tank) tank).getImage());
 			} else if (temp.extraString.equals("N")) {
 				//liigu põhja
 				tempTank.setLocation(tank.getX(), tank.getY() - tankSpeed);
 				tempTank.setDirection("N");
 				tempTank.setSize(30, 60);
-				tempTank.setImage("tankN.png");
 			} else if (temp.extraString.equals("S")) {
 				//liigu lõunasse
 				tempTank.setLocation(tank.getX(), tank.getY() + tankSpeed);
 				tempTank.setDirection("S");
 				tempTank.setSize(30, 60);
-				tempTank.setImage("tankS.png");
 			} else if (temp.extraString.equals("W")) {
 				//liigu läände
 				tempTank.setLocation(tank.getX() - tankSpeed, tank.getY());
 				tempTank.setDirection("W");
 				tempTank.setSize(60, 30);
-				tempTank.setImage("tankW.png");
 			} else if (temp.extraString.equals("E")) {
 				//liigu itta
 				tempTank.setLocation(tank.getX() + tankSpeed, tank.getY());
 				tempTank.setDirection("E");
 				tempTank.setSize(60, 30);
-				tempTank.setImage("tankE.png");
 			}
 			if (tempTank.checkCollision(map) == null) {
+				System.out.println("Checkcollision!! Image: " + ((Tank) tank).getImage());
 				tank.setLocation(tempTank.getX(), tempTank.getY());
 				tank.setSize(tempTank.getWidth(), tempTank.getHeight());
 				tank.setImage(tempTank.getImage());
 				((Tank) tank).setDirection(tempTank.getDirection());
+				System.out.println("Pärast setdirectioni! Image: " + ((Tank) tank).getImage());
 			}
+			System.out.println("Enne addmisilesi! Image: " + ((Tank) tank).getImage());
 			map.addMissiles(MissileMover.getMissiles());
+			System.out.println("Ennedoyourstuffi! Image: " + ((Tank) tank).getImage());
 			map.doYourStuff(tank);
 		}			
 	}

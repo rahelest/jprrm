@@ -166,10 +166,6 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 			if (!tempBool && getBounds().intersects(tempPointer.getBounds())) {
 				return tempPointer;
 			}
-//			if(!getBounds().intersects(map.betBounds())) {
-//				return true;
-//			}
-			//TODO: KIRJUTA KAARDIÄÄREKONTROLIJA
 		}
 		return null;
 	}

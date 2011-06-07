@@ -32,8 +32,8 @@ public final class ServerCore {
 	        
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
-	        MissileMover missileMover = new MissileMover();
 	        Broadcaster messenger = new Broadcaster(clientList);
+	        MissileMover missileMover = new MissileMover(messenger);
 //	        GameMap killingField =  ObjectFactory.loadFromFile(2, messenger);
 	        GameMap killingField = ObjectFactory.createMap(messenger, 2, 1, 2, 2);
 //	        ObjectFactory.saveToFile(killingField);

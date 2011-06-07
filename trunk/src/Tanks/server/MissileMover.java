@@ -65,6 +65,7 @@ public class MissileMover extends Thread {
 		int y = determineCoordinateY(tank, tank.getHeight(), tank.getY());
 		Missile m = new Missile(client.getId() + "M" + ++id,
 				x, y, tank.getDirection(), client.getMissileSpeed());
+		System.out.println("Uus mürsk! " + tank.getDirection());
 		missiles.put(m, client);
 	}
 	

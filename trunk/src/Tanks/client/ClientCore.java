@@ -157,15 +157,15 @@ public class ClientCore extends Thread implements ConnectionManage {
 			createComms();
 		} catch (ConnectException e) {
 //			e.printStackTrace();
-			System.out.println("Please check the address!");
+			gui.consoler("Please check the address!");
 			return tryConnecting();
 		} catch (UnknownHostException e) {
 			gui.enableConnecting();
-			System.out.println("The requested host is unknown.");
+			gui.consoler("The requested host is unknown.");
 			return false;
 		} catch (IOException e) {
 //			e.printStackTrace();
-			System.out.println("IOException!");
+			gui.consoler("IOException! Something went terribly wrong.");
 			return false;
 		}
 		start();
@@ -189,11 +189,11 @@ public class ClientCore extends Thread implements ConnectionManage {
 			}
 		} else {
 			connectionTries = 0;
-			System.out.println("Connecting failed");
+			gui.consoler("Connecting failed");
 			try {
 				sock.close();
 			} catch (IOException e1) {
-				System.out.println("General error communicating!");
+				gui.consoler("General error communicating!");
 //				e1.printStackTrace();
 			}
 			return false;

@@ -106,7 +106,7 @@ public class ClientGUI extends Thread {
 					center.addKeyListener(new KeyListen());
 					window.repaint();
 				} else {
-					System.out.println("Something went wrong, please check the address.");
+					consoler("Something went wrong, please check the address.");
 					enableConnecting();
 				}
 			}

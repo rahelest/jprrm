@@ -56,8 +56,10 @@ public class ServerCommandListener extends Thread {
 						}
 					}
 					
+				} else if (tempString.equalsIgnoreCase("QUIT")) {
+					System.out.println("Quitting server.");
 				} else {
-					System.out.println("Wrong command!");
+					System.out.println("Wrong command! reset and quit available.");
 				}
 			} catch (IOException e) {
 				System.out.println("Error reading the input, please retry!");

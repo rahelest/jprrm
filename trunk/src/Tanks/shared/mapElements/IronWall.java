@@ -20,7 +20,6 @@ public class IronWall extends UnbreakableObject {
 	 */
 	public IronWall(String string, int x, int y) {
 		super(string, x, y, 50, 20, false, "iwall.png");
-		// TODO Auto-generated constructor stub
 	}
 
 }

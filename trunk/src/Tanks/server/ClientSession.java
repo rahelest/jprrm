@@ -277,7 +277,6 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 * Reset the client's parametres.
 	 */
 	public void reStart(GameMap newMap) {
-		// TODO Auto-generated method stub
 		map = newMap;
 		map = ObjectFactory.spawnTank(map, key, this);
 		exp = 0;

@@ -2,25 +2,18 @@ package Tanks.client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import Tanks.shared.GameMap;
-import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.BreakableObject;
 import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.mapElements.MapDecorObject;

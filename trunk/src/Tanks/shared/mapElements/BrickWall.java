@@ -20,7 +20,6 @@ public class BrickWall extends BreakableObject {
 	 */
 	public BrickWall(String ID, int x, int y) {
 		super(ID, x, y, 50, 20, "bwall.png");
-		// TODO Auto-generated constructor stub
 	}
 
 }

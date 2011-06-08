@@ -213,4 +213,9 @@ public class ClientGUI extends Thread {
 		public void keyTyped(KeyEvent key) {
 		}
 	}
+	
+	public void consoler(String message) {
+		text.setText(message);
+		text.setVisible(true);
+	}
 }

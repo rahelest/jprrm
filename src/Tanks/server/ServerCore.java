@@ -55,7 +55,7 @@ public final class ServerCore {
                     } else {*/
                             clientList.addClient(new ClientSession(clientSock,
                             		killingField, clientID));
-                            System.out.println("Klient ühines edukalt, ID = " + clientID);
+                            System.out.println("A client connected successfully! ID = " + clientID);
                             clientID++;     
 //                    }
                                         
@@ -67,8 +67,8 @@ public final class ServerCore {
         	System.out.println("Only one server can be running at any time!");
         	System.exit(0);
         } catch (IOException e) {
-            System.out.println("IO viga: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("IO Exception, unknown problem: " + e.getMessage());
+//            e.printStackTrace();
 	    }
     }
 }

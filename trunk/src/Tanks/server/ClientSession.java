@@ -281,7 +281,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 		map = newMap;
 		map = ObjectFactory.spawnTank(map, key, this);
 		exp = 0;
-		tankSpeed = 1;
+		tankSpeed = 5;
 		missileSpeed = 1;
 //		sendMessage(new Message("RESET"));
 	}

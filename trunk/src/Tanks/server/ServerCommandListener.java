@@ -48,7 +48,7 @@ public class ServerCommandListener extends Thread {
 				Iterator<ClientSession> active = clientList.iterator();
 				if (tempString.equalsIgnoreCase("RESET")) {
 					System.out.println("Sending RESET command, stand by!");
-					GameMap newMap = ObjectFactory.createMap(messenger, 2, 5, 8, 8);
+					GameMap newMap = ObjectFactory.generateRandomMap(messenger);
 					while (active.hasNext()) {
 						ClientSession client = active.next();
 						if (client.isAlive()) {

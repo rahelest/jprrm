@@ -286,11 +286,21 @@ public final class ObjectFactory {
 			return map;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found, new map generated!");
-			Random rand = new Random();
-			return createMap(messenger, rand.nextInt(3), rand.nextInt(4), rand.nextInt(5), rand.nextInt(5));
+			
+			return generateRandomMap(messenger);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * This is a helper method for generating random maps.
+	 * @param messenger
+	 * @return a random map
+	 */
+	public static GameMap generateRandomMap(Broadcaster messenger) {
+		Random rand = new Random();
+		return createMap(messenger, rand.nextInt(3), rand.nextInt(5), rand.nextInt(5), rand.nextInt(5));
 	}
 }

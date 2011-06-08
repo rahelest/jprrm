@@ -1,6 +1,7 @@
 package Tanks.server;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import Tanks.shared.Broadcaster;
@@ -29,7 +30,6 @@ public final class ServerCore {
 	    
 	    try {
 //     		ObjectFactory factory = new ObjectFactory();
-	        
 	        ServerSocket serv = new ServerSocket(port);
 	        ActiveClients clientList = new ActiveClients();
 	        Broadcaster messenger = new Broadcaster(clientList);
@@ -63,7 +63,10 @@ public final class ServerCore {
                         clientSock.close();
                 }       
 	        }
-	    } catch (IOException e) {
+	    } catch (BindException e) {
+        	System.out.println("Only one server can be running at any time!");
+        	System.exit(0);
+        } catch (IOException e) {
             System.out.println("IO viga: " + e.getMessage());
             e.printStackTrace();
 	    }

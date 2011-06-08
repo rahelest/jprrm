@@ -185,7 +185,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 		if (breakable) {
 			map.removeObject(ID);
 		}
-		System.out.printf(this + ": \nsain pihta!\n\n");
+//		System.out.printf(this + ": \nsain pihta!\n\n");
 		
 	}
 

@@ -130,7 +130,7 @@ public class ClientGUI extends Thread {
 //		Graphics2D onScreenG = onScreen.createGraphics();
 //		Boolean drawBuffer = true;
 		map = clientCore.getMap();
-		center.add(map, JLayeredPane.DEFAULT_LAYER);
+//		center.add(map, JLayeredPane.DEFAULT_LAYER);
 		while (true) {
 			center.removeAll();
 			map = clientCore.getMap();
@@ -163,7 +163,7 @@ public class ClientGUI extends Thread {
 //			window.add(picLabel);
 //			window.repaint();
 			center.validate();
-//			center.repaint();
+			center.repaint();
 			try {
 				synchronized (this) {
 					wait();

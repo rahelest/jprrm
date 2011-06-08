@@ -137,7 +137,7 @@ public class Receiver extends Thread {
 //					
 //				}
 			} catch (IOException e) {
-				System.out.println("A general IO error ocurred , there's noone to complain to!");
+				System.out.println("A general IO error ocurred, there's noone to complain to!");
 //				e.printStackTrace();
 			}
 			

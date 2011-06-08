@@ -2,10 +2,6 @@ package Tanks.shared;
 
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
-
-import Tanks.server.ClientSession;
-import Tanks.server.MissileMover;
-import Tanks.shared.gameElements.Missile;
 import Tanks.shared.mapElements.GameObject;
 
 /**

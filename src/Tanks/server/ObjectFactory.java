@@ -69,7 +69,7 @@ public final class ObjectFactory {
 	 * @return The new object.
 	 */
 	private static Water createWater(int x, int y) {
-		return new Water("a" + ++id, x, y);
+		return new Water("W" + ++id, x, y);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public final class ObjectFactory {
 	 * @return The new object.
 	 */
 	private static Tree createTree(int x, int y) {
-		return new Tree("a" + ++id, x, y);
+		return new Tree("T" + ++id, x, y);
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public final class ObjectFactory {
 	 * @return The new object.
 	 */
 	private static BrickWall createBrickWall(int x, int y) {
-		return new BrickWall("a" + ++id, x, y);
+		return new BrickWall("B" + ++id, x, y);
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public final class ObjectFactory {
 	 * @return The new object.
 	 */
 	private static IronWall createIronWall(int x, int y) {
-		return new IronWall("a" + ++id, x, y);
+		return new IronWall("I" + ++id, x, y);
 	}
 	
 
@@ -215,7 +215,7 @@ public final class ObjectFactory {
 		do {
 			nr++;
 		} while (new File("Map" + nr + ".txt").exists());
-		System.out.println("Sain numbri: " + nr);
+		System.out.println("Got the number: " + nr);
 		try {
 			PrintWriter writer = new PrintWriter(new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream("Map" + nr + ".txt"))));
@@ -226,21 +226,21 @@ public final class ObjectFactory {
 			for (GameObject g : values) {
 				if (g instanceof IronWall) {
 					writer.println("IronWall " + g.getID() + " " + g.getX() + " " + g.getY());
-					System.out.println("Kirjutan raua");
+//					System.out.println("Kirjutan raua");
 				} else if (g instanceof BrickWall) {
 					writer.println("BrickWall " + g.getID() + " " + g.getX() + " " + g.getY());
-					System.out.println("Kirjutan tellise");
+//					System.out.println("Kirjutan tellise");
 				} else if (g instanceof Tree) {
 					writer.println("Tree " + g.getID() + " " + g.getX() + " " + g.getY());
-					System.out.println("Kirjutan puu");
+//					System.out.println("Kirjutan puu");
 				} else if (g instanceof Water) {
 					writer.println("Water " + g.getID() + " " + g.getX() + " " + g.getY());
-					System.out.println("Kirjutan vee");
+//					System.out.println("Kirjutan vee");
 				}
 			}	
 			writer.flush();
 			writer.close();
-			System.out.println("Salvestamine valmis!");
+			System.out.println("Saving done!");
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found!");
 		}	

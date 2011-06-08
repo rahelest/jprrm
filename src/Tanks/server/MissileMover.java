@@ -149,6 +149,7 @@ public class MissileMover extends Thread {
 	}
 
 	public static ClientSession getOwner(GameObject collidee) {
+//		System.out.println(missiles.get(collidee));
 		return missiles.get(collidee);
 		
 	}

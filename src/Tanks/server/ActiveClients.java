@@ -61,7 +61,7 @@ public class ActiveClients {
 				break;
 			}		
 		}
-		System.out.println("Leidsin kliendi üles");
+		System.out.println("Found the client");
 		return temp;
 	}
 	

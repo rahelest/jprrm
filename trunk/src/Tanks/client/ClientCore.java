@@ -50,11 +50,6 @@ public class ClientCore extends Thread implements ConnectionManage {
 	 */
 	private ObjectOutputStream netOut;
 	/**
-	 * The receiver thread that retrieves
-	 *  incoming messages for processing.
-	 */
-	private Receiver receiver;
-	/**
 	 * The new GameMap object, initialized
 	 * for start of the game before the
 	 * first map is receiver from the server.
@@ -131,7 +126,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 		inBuf = new CommunicationBuffer();
 		netOut = new ObjectOutputStream(sock.getOutputStream());
 		netOut.writeObject(new CommandMessage("Hi!"));
-		receiver = new Receiver(this, sock, inBuf);
+		new Receiver(this, sock, inBuf);
 	}
 
 		/**

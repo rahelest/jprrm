@@ -7,30 +7,34 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import Tanks.shared.mapElements.BreakableObject;
 import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.messageTypes.Message;
+import Tanks.shared.messageTypes.*;
 
 /**
  * The class that keeps all the game objects.
  * @author JPRRM
  *
  */
-public class GameMap extends JPanel implements Serializable {
+public class GameMap extends JPanel {
 
 	/**
 	 * An unique serial number.
 	 */
 	private static final long serialVersionUID = -6541854117698278749L;
 	/**
+	 * List with the map decoration objects.
+	 */
+	private ConcurrentHashMap<String, GameObject> decors = new ConcurrentHashMap<String, GameObject>();
+	/**
 	 * List with the game objects.
 	 */
-	private ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
+	private ConcurrentHashMap<String, GameObject> breakables = new ConcurrentHashMap<String, GameObject>();
 	/**
 	 * List with missiles.
 	 */
@@ -64,7 +68,7 @@ public class GameMap extends JPanel implements Serializable {
 //		System.out.println("pärast outboundi");
 		setSize(900, 900);
 		setBackground(new Color(0, 0, 0, 0));
-		loadBackGround();				
+//		loadBackGround();				
 	}
 	
 	/**
@@ -84,7 +88,11 @@ public class GameMap extends JPanel implements Serializable {
 	 * @param objectToBeAdded The new object.
 	 */
 	public void addObject(GameObject objectToBeAdded) {
-			objects.put(objectToBeAdded.getID(), objectToBeAdded);
+		if (objectToBeAdded instanceof BreakableObject) {
+			breakables.put(objectToBeAdded.getID(), objectToBeAdded); 
+		} else if (objectToBeAdded instanceof BreakableObject) {
+			decors.put(objectToBeAdded.getID(), objectToBeAdded); 
+		}
 	}
 
 	/**
@@ -92,8 +100,8 @@ public class GameMap extends JPanel implements Serializable {
 	 * @param ID The ID of the returnable object.
 	 * @return The object.
 	 */
-	public GameObject getObject(String ID) {
-			return objects.get(ID);
+	public GameObject getbreakables(String ID) {
+			return breakables.get(ID);
 	}
 	
 //	/**
@@ -112,8 +120,8 @@ public class GameMap extends JPanel implements Serializable {
 	 * Removes the object from the list.
 	 * @param objectID The object's id.
 	 */
-	public void removeObject(String objectID) {
-			objects.remove(objectID);
+	public void removebreakable(String objectID) {
+			breakables.remove(objectID);
 
 	}
 		
@@ -122,9 +130,8 @@ public class GameMap extends JPanel implements Serializable {
 	 * @param object The new object.
 	 */
 	public void doYourStuff(GameObject object) {
-			objects.remove(object.getID());
-			objects.put(object.getID(), object);
-			outBuff.addMessage(new Message(this));
+		breakables.replace(object.getID(), object);
+		outBuff.addMessage(new MovablesMessage(breakables));
 	}
 
 	/**
@@ -144,14 +151,6 @@ public class GameMap extends JPanel implements Serializable {
 			e.printStackTrace();			
 		}
 	}
-
-	/**
-	 * Returns the objects list.
-	 * @return The list.
-	 */
-	public ConcurrentHashMap<String, GameObject> getObjects() {
-			return objects;
-	}
 	
 	/**
 	 * Returns the missiles list.
@@ -168,5 +167,10 @@ public class GameMap extends JPanel implements Serializable {
 	public void addMissiles(ConcurrentHashMap<String, GameObject> nMissiles) {
 		this.missiles.clear();
 		this.missiles.putAll(nMissiles);
+	}
+
+	public ConcurrentHashMap<String, GameObject> getBreakables() {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

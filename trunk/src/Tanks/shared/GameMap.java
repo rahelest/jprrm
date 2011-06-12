@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.messageTypes.Message;
 
 /**
  * The class that keeps all the game objects.

@@ -9,6 +9,7 @@ import java.net.SocketException;
 
 import Tanks.client.ClientCore;
 import Tanks.server.ClientSession;
+import Tanks.shared.messageTypes.Message;
 
 /**
  * The receiver the receives messages.

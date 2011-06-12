@@ -13,8 +13,7 @@ import Tanks.shared.GameMap;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.messageTypes.CommandMessage;
-import Tanks.shared.messageTypes.Message;
+import Tanks.shared.messageTypes.*;
 
 /**
  * The client maganging thread.
@@ -116,10 +115,10 @@ public class ClientSession extends Thread implements ConnectionManage {
 		map = ObjectFactory.spawnTank(map, key, this);
 		tank = map.getObject("T" + Integer.toString(clientID));
 		sendMessage(new CommandMessage(clientID));
-		sendMessage(new Message(map));
+		sendMessage(new MovablesMessage(map.getMovables()));
 		while (run) {
 //			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
-			CommandMessage temp = inBuff.getMessage();
+			CommandMessage temp = (CommandMessage) inBuff.getMessage();
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(this, tank.getID(), tank.getX(), tank.getY());
 			tempTank.setDirection(((Tank) tank).getDirection());
@@ -240,7 +239,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 			}
 //			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new CommandMessage(clientID));
-			sendMessage(new Message(map));
+			sendMessage(new MovablesMessage(map.getMovables()));
 //			System.out.println("receiveri notify lopp");
 		} catch (InterruptedException e) {
 			e.printStackTrace();

@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
 import Tanks.shared.mapElements.BreakableObject;
 import Tanks.shared.mapElements.GameObject;
 import Tanks.shared.messageTypes.*;
@@ -170,7 +169,6 @@ public class GameMap extends JPanel {
 	}
 
 	public ConcurrentHashMap<String, GameObject> getBreakables() {
-		// TODO Auto-generated method stub
-		return null;
+		return breakables;
 	}	
 }

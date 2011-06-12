@@ -10,10 +10,11 @@ import java.net.SocketException;
 import Tanks.shared.CommunicationBuffer;
 import Tanks.shared.ConnectionManage;
 import Tanks.shared.GameMap;
-import Tanks.shared.Message;
 import Tanks.shared.Receiver;
 import Tanks.shared.gameElements.Tank;
 import Tanks.shared.mapElements.GameObject;
+import Tanks.shared.messageTypes.CommandMessage;
+import Tanks.shared.messageTypes.Message;
 
 /**
  * The client maganging thread.
@@ -114,11 +115,11 @@ public class ClientSession extends Thread implements ConnectionManage {
 	public void run() {
 		map = ObjectFactory.spawnTank(map, key, this);
 		tank = map.getObject("T" + Integer.toString(clientID));
-		sendMessage(new Message(clientID));
+		sendMessage(new CommandMessage(clientID));
 		sendMessage(new Message(map));
 		while (run) {
 //			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
-			Message temp = inBuff.getMessage();
+			CommandMessage temp = inBuff.getMessage();
 //			System.out.println("TEADE!");
 			Tank tempTank = new Tank(this, tank.getID(), tank.getX(), tank.getY());
 			tempTank.setDirection(((Tank) tank).getDirection());
@@ -238,7 +239,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 //				System.out.println("prooviprint receiverlock");
 			}
 //			System.out.println("saadan äratusteate kliendile");
-			sendMessage(new Message(clientID));
+			sendMessage(new CommandMessage(clientID));
 			sendMessage(new Message(map));
 //			System.out.println("receiveri notify lopp");
 		} catch (InterruptedException e) {

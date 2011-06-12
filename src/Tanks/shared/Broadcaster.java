@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import Tanks.server.ActiveClients;
 import Tanks.server.ClientSession;
+import Tanks.shared.messageTypes.Message;
+import Tanks.shared.messageTypes.ScoreMessage;
 
 /**
  * The class that sends messages to everyone.
@@ -80,7 +82,7 @@ public class Broadcaster extends Thread {
 								+ ": " + cli.getExp());
 					}
 				}
-				out.addMessage(new Message(scores));
+				out.addMessage(new ScoreMessage(scores));
 				lastScoreUpdate = System.currentTimeMillis();
 			}
 		}

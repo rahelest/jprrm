@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import Tanks.shared.*;
+import Tanks.shared.messageTypes.*;
 
 /**
  * The core application for the client. Manages 
@@ -80,23 +81,38 @@ public class ClientCore extends Thread implements ConnectionManage {
 //			System.out.println("Ootan uut teadet");
 			Message message = inBuf.getMessage();
 //			System.out.println("Sain uue teate!");
-			try {
-				int number = Integer.parseInt(message.extraString);
-				if (myID == -1) {
-					myID = number;
-					System.out.println("My ID: " + myID);
-				}
+			
+			if (message instanceof MissilesMessage) {
 				
-			} catch (NumberFormatException e) {
-				if (message.extraString == null) {
-					map = message.object;
-					if (!gui.isAlive()) {
-						gui.start();
-					}
-				} else if (message.extraString.equals("SC")) {
-					gui.scores.setListData(message.scores.toArray());
-				}
-			}
+			} else if (message instanceof MovablesMessage) {
+				
+			} else if (message instanceof ScoreMessage) {
+				
+			} else if (message instanceof CommandMessage) {
+				
+			} else if (message instanceof DecorObjectsMessage) {
+				
+			} else {
+				
+			}			
+			
+//			try {
+//				int number = Integer.parseInt(message.extraString);
+//				if (myID == -1) {
+//					myID = number;
+//					System.out.println("My ID: " + myID);
+//				}
+//				
+//			} catch (NumberFormatException e) {
+//				if (message.extraString == null) {
+//					map = message.object;
+//					if (!gui.isAlive()) {
+//						gui.start();
+//					}
+//				} else if (message.extraString.equals("SC")) {
+//					gui.scores.setListData(message.scores.toArray());
+//				}
+//			}
 			synchronized (gui) {
 				gui.notify();
 			}
@@ -114,7 +130,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 
 		inBuf = new CommunicationBuffer();
 		netOut = new ObjectOutputStream(sock.getOutputStream());
-		netOut.writeObject(new Message("Hi!"));
+		netOut.writeObject(new CommandMessage("Hi!"));
 		receiver = new Receiver(this, sock, inBuf);
 	}
 
@@ -228,35 +244,35 @@ public class ClientCore extends Thread implements ConnectionManage {
 	 * Sends the serves the command to move north.
 	 */
 	public void moveNorth() {
-		sendMessage(new Message("N"));
+		sendMessage(new CommandMessage("N"));
 	}
 
 	/**
 	 * Sends the serves the command to move south.
 	 */
 	public void moveSouth() {
-		sendMessage(new Message("S"));
+		sendMessage(new CommandMessage("S"));
 	}
 
 	/**
 	 * Sends the serves the command to move east.
 	 */
 	public void moveEast() {
-		sendMessage(new Message("E"));
+		sendMessage(new CommandMessage("E"));
 	}
 
 	/**
 	 * Sends the serves the command to move west.
 	 */
 	public void moveWest() {
-		sendMessage(new Message("W"));
+		sendMessage(new CommandMessage("W"));
 	}
 
 	/**
 	 * Sends the serves the command to fire a missile.
 	 */
 	public void fire() {
-		sendMessage(new Message("F"));
+		sendMessage(new CommandMessage("F"));
 	}
 
 	
@@ -270,7 +286,7 @@ public class ClientCore extends Thread implements ConnectionManage {
 			
 			if (connectToServer(serverName, port)) {
 				receiver2.notify();
-				sendMessage(new  Message(myID));
+				sendMessage(new CommandMessage(myID));
 			} else {
 				gui.enableConnecting();
 				//nulli receiver kuidagi

@@ -220,7 +220,9 @@ public final class ObjectFactory {
 			PrintWriter writer = new PrintWriter(new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream("Map" + nr + ".txt"))));
 			
-			ConcurrentHashMap<String, GameObject> objects = map.getObjects();
+			ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
+			objects.putAll(map.getBreakables());
+			objects.putAll(map.getDecors());
 			Collection<GameObject> values = objects.values();
 			
 			for (GameObject g : values) {

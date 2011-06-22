@@ -175,5 +175,22 @@ public class GameMap extends JPanel {
 
 	public Map<? extends String, ? extends GameObject> getDecors() {
 		return decors;
+	}
+
+	public ConcurrentHashMap<String, GameObject> getAllObjects() {
+		ConcurrentHashMap<String, GameObject> objects = new ConcurrentHashMap<String, GameObject>();
+		objects.putAll(breakables);
+		objects.putAll(decors);
+		return objects;
+	}
+
+	public GameObject getObject(String s) {
+		ConcurrentHashMap<String, GameObject> objects = getAllObjects();
+		for (String str : objects.keySet()) {
+			if (str.equals(s)) {
+				return objects.get(str);
+			}
+		}
+		return null;
 	}	
 }

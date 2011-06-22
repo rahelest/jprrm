@@ -152,7 +152,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 //			System.out.printf("%d %d, %d, %d\n", x, mapX, y, mapY);
 			return this;
 		}		
-		Set<String> keys = map.getObjects().keySet();
+		Set<String> keys = map.getAllObjects().keySet();
 		keys.remove(ID);
 		Boolean tempBool;
 
@@ -183,7 +183,7 @@ public abstract class GameObject extends JPanel implements ObjectBase, Serializa
 	 */
 	public void getDamaged(GameMap map) {
 		if (breakable) {
-			map.removeObject(ID);
+			map.removeBreakable(ID);
 		}
 //		System.out.printf(this + ": \nsain pihta!\n\n");
 		

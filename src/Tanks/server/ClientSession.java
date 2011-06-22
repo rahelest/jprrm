@@ -113,9 +113,10 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 */
 	public void run() {
 		map = ObjectFactory.spawnTank(map, key, this);
-		tank = map.getObject("T" + Integer.toString(clientID));
+		tank = map.getBreakable("T" + Integer.toString(clientID));
 		sendMessage(new CommandMessage(clientID));
-		sendMessage(new MovablesMessage(map.getMovables()));
+		sendMessage(new DecorObjectsMessage(map));
+		sendMessage(new MovablesMessage(map.getBreakables()));
 		while (run) {
 //			System.out.println("While algus! Image: " + ((Tank) tank).getImage());
 			CommandMessage temp = (CommandMessage) inBuff.getMessage();
@@ -201,6 +202,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 	 * Sends a new message.
 	 * @param msg The message.
 	 */
+	@SuppressWarnings("deprecation")
 	public void sendMessage(Message msg) {
 		try {
 			synchronized (senderLock) {
@@ -212,7 +214,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 		} catch (SocketException e) {
 			System.out.println("A client was unreachable,"
 					+ " removing it from the list!");
-			map.removeObject("T" + clientID);
+			map.removeBreakable("T" + clientID);
 			this.stop();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -239,7 +241,7 @@ public class ClientSession extends Thread implements ConnectionManage {
 			}
 //			System.out.println("saadan äratusteate kliendile");
 			sendMessage(new CommandMessage(clientID));
-			sendMessage(new MovablesMessage(map.getMovables()));
+			sendMessage(new MovablesMessage(map.getBreakables()));
 //			System.out.println("receiveri notify lopp");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -314,8 +316,8 @@ public class ClientSession extends Thread implements ConnectionManage {
 	}
 
 	public void gotHit() {
-		map.removeObject("T" + clientID);
+		map.removeBreakable("T" + clientID);
 		map = ObjectFactory.spawnTank(map, "T" + clientID, this);
-		tank = map.getObject("T" + clientID);
+		tank = map.getBreakable("T" + clientID);
 	}
 }

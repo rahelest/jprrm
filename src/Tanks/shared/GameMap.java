@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
@@ -99,7 +100,7 @@ public class GameMap extends JPanel {
 	 * @param ID The ID of the returnable object.
 	 * @return The object.
 	 */
-	public GameObject getbreakables(String ID) {
+	public GameObject getBreakable(String ID) {
 			return breakables.get(ID);
 	}
 	
@@ -119,7 +120,7 @@ public class GameMap extends JPanel {
 	 * Removes the object from the list.
 	 * @param objectID The object's id.
 	 */
-	public void removebreakable(String objectID) {
+	public void removeBreakable(String objectID) {
 			breakables.remove(objectID);
 
 	}
@@ -170,5 +171,9 @@ public class GameMap extends JPanel {
 
 	public ConcurrentHashMap<String, GameObject> getBreakables() {
 		return breakables;
+	}
+
+	public Map<? extends String, ? extends GameObject> getDecors() {
+		return decors;
 	}	
 }

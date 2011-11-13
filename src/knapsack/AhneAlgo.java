@@ -9,7 +9,7 @@ public class AhneAlgo {
 
 	private static int mahutavus;
 	private static int kaal = 0;
-	private static float koguv��rtus = 0;
+	private static float koguvaartus = 0;
 	private static ArrayList<FloatNode> kotisisu;
 //	private FloatPriorityQueue kamber;
 //	private float oletus;
@@ -42,15 +42,15 @@ public class AhneAlgo {
 			if(kaal + temp.getWeight() <= mahutavus) {
 				kotisisu.add(temp);
 				kaal += temp.getWeight();
-				koguv��rtus += temp.getValue();
+				koguvaartus += temp.getValue();
 			} else {
 				int weightRemaining = mahutavus - kaal;
-				float murdv��rtus = (temp.getValue()*(weightRemaining/temp.getWeight()));
-				koguv��rtus += murdv��rtus;
+				float murdvaartus = (temp.getValue()*(weightRemaining/temp.getWeight()));
+				koguvaartus += murdvaartus;
 				break;
 			}
 		}
 		System.out.println("\n" + kotisisu + "\n");
-		return koguv��rtus;
+		return koguvaartus;
 	}
 }

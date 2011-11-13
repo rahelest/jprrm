@@ -2,8 +2,8 @@ package knapsack;
 
 import java.util.ArrayList;
 
-import ylesanne_3.tyybid.FloatNode;
-import ylesanne_3.tyybid.FloatPriorityQueue;
+import knapsack.tyybid.FloatNode;
+import knapsack.tyybid.FloatPriorityQueue;
 
 public class AhneAlgo {
 

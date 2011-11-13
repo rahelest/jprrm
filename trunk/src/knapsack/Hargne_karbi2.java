@@ -10,9 +10,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import ylesanne_2.PriorityQueue;
-import ylesanne_3.tyybid.FloatNode;
-import ylesanne_3.tyybid.FloatPriorityQueue;
+import knapsack.tyybid.FloatNode;
+import knapsack.tyybid.FloatPriorityQueue;
 
 public class Hargne_karbi2 {
 	

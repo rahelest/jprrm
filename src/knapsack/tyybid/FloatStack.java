@@ -18,9 +18,9 @@ public class FloatStack {
 		first = new FloatNode(x, first);
 	}
 	
-	public int pop() throws Exception {
+	public float pop() throws Exception {
 		if ( first != null) {
-			int temp = first.get();
+			float temp = first.get();
 			first = first.getNext();
 			return temp;
 		} else {

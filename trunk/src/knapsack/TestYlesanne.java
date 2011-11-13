@@ -16,15 +16,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
-import ylesanne_3.tyybid.FloatPriorityQueue;
-
 public class TestYlesanne {
 	
 	/**
 	 */
 	public static void main(String[] args) throws Exception {
 		String sisendFail = "C:\\" + "15.in";
-		FloatPriorityQueue p = new FloatPriorityQueue();
+		knapsack.tyybid.FloatPriorityQueue p = new knapsack.tyybid.FloatPriorityQueue();
 		
 		try {
 			BufferedReader br = new BufferedReader(

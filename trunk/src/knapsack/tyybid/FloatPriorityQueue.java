@@ -28,6 +28,7 @@ public class FloatPriorityQueue {
 	}
 		
 	public int enqueue(TreeNode node) {
+
 		int location =  getD().add(node);
 		if (getD().lastElement() > 1) { // kui massiivi pikkus on suurem �hest, hakkab programm lapsi otsima
 			for (int i = location; i > 1; i /= 2) { //alustades lastest t�idab ts�kkel massiivi tagant ette

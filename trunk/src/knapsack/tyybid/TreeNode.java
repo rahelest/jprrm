@@ -59,7 +59,7 @@ public class TreeNode {
 	
 	public String toString() {
 		String ele = "";
-		if (elements != null) ele =  Hargne_karbi2.arrayElements(elements);
+//		if (elements != null) ele =  Hargne_karbi2.arrayElements(elements);
 		return ratio  + " " + ele;
 	}
 	

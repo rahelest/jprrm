@@ -1,6 +1,5 @@
 package knapsack;
 
-import java.util.ArrayList;
 import knapsack.tyybid.TreeNode;
 
 public class AhneAlgo {
@@ -9,9 +8,9 @@ public class AhneAlgo {
 	private static int kaal = 0;
 	private static float koguvaartus = 0;
 //	private static ArrayList<TreeNode> kotisisu;
-	private static ArrayList<TreeNode> kamber;
+	private static TreeNode[] kamber;
 	
-	public static void setKamber(ArrayList<TreeNode> pointer) {
+	public static void setKamber(TreeNode[] pointer) {
 		kamber = pointer;
 	}
 	
@@ -22,9 +21,9 @@ public class AhneAlgo {
 	
 	public static float calculateProbablyBest(boolean[] elements) {
 //		System.out.println(Hargne_karbi2.arrayElements(elements));
-		for (int i = 0; i < kamber.size(); i++) {
+		for (int i = 0; i < kamber.length; i++) {
 			if (elements[i]) {
-				TreeNode temp = kamber.get(i);
+				TreeNode temp = kamber[i];
 				if(kaal + temp.getWeight() <= mahutavus) {
 //					kotisisu.add(temp);
 					kaal += temp.getWeight();

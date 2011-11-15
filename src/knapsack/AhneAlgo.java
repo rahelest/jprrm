@@ -1,56 +1,43 @@
 package knapsack;
 
 import java.util.ArrayList;
-
-import knapsack.tyybid.FloatNode;
-import knapsack.tyybid.FloatPriorityQueue;
+import knapsack.tyybid.TreeNode;
 
 public class AhneAlgo {
 
 	private static int mahutavus;
 	private static int kaal = 0;
 	private static float koguvaartus = 0;
-	private static ArrayList<FloatNode> kotisisu;
-//	private FloatPriorityQueue kamber;
-//	private float oletus;
+//	private static ArrayList<TreeNode> kotisisu;
+	private static ArrayList<TreeNode> kamber;
 	
-//	public AhneAlgo(FloatPriorityQueue pointer, int vaartus) {
-//		kamber = pointer;
-//		mahutavus = vaartus;
-//	}
-//	
-//	public AhneAlgo(FloatPriorityQueue pointer, int vaartus, boolean t) {
-//		kamber = pointer;
-//		mahutavus = vaartus;
-//		oletus =  calculateProbablyBest();
-//	}	
-//	
-//	public static float getOletus() {
-//		return oletus;
-//	}
+	public static void setKamber(ArrayList<TreeNode> pointer) {
+		kamber = pointer;
+	}
 	
 	public static void setMahutavus (int m) {
 		mahutavus = m;
 	}
 	
 	
-	public static float calculateProbablyBest(FloatPriorityQueue pointer) {
-		FloatPriorityQueue kamber = pointer;
-		kotisisu = new ArrayList<FloatNode>();
-		while (!kamber.isEmpty()) {
-			FloatNode temp = kamber.dequeue();
-			if(kaal + temp.getWeight() <= mahutavus) {
-				kotisisu.add(temp);
-				kaal += temp.getWeight();
-				koguvaartus += temp.getValue();
-			} else {
-				int weightRemaining = mahutavus - kaal;
-				float murdvaartus = (temp.getValue()*(weightRemaining/temp.getWeight()));
-				koguvaartus += murdvaartus;
-				break;
+	public static float calculateProbablyBest(boolean[] elements) {
+//		System.out.println(Hargne_karbi2.arrayElements(elements));
+		for (int i = 0; i < kamber.size(); i++) {
+			if (elements[i]) {
+				TreeNode temp = kamber.get(i);
+				if(kaal + temp.getWeight() <= mahutavus) {
+//					kotisisu.add(temp);
+					kaal += temp.getWeight();
+					koguvaartus += temp.getValue();
+				} else {
+					int weightRemaining = mahutavus - kaal;
+					float murdvaartus = (temp.getValue()*(weightRemaining/temp.getWeight()));
+					koguvaartus += murdvaartus;
+					break;
+				}
 			}
 		}
-		System.out.println("\n" + kotisisu + "\n");
+//		System.out.println("\n" + kotisisu + "\n");
 		return koguvaartus;
 	}
 }

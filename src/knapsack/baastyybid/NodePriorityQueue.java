@@ -6,14 +6,15 @@ public class NodePriorityQueue extends PriorityQueue {
 	
 	public NodePriorityQueue() {
 		super();
+		d = new NodeDynamicArray(1);
 	}
 	
 	public void enqueue(Node nodeToBeAdded) {
 		int location =  d.add(nodeToBeAdded);
 		if (d.len() > 1) {
 			for (int i = location; i > 0; i /= 2) {
-				if (d.get(i) < d.get((i) / 2)) {
-					int temp = d.get(i);
+				if (d.get(i).getRatio() < d.get((i) / 2).getRatio()) {
+					Node temp = d.get(i);
 					d.put(d.get((i) / 2), i);
 					d.put(temp, (i) / 2);
 				} else {
@@ -23,21 +24,36 @@ public class NodePriorityQueue extends PriorityQueue {
 		}
 	}
 	
-	public Node dequeue() {
+	public Node dequeueNode() {
 		Node temp = d.get(1);
 		d.put(d.rem(),1);
 		int i = 1;		
-		while (i * 2 <= d.lastElement()) {
-			if (i * 2 + 1 > d.lastElement() || d.get(i * 2) < d.get((i * 2) + 1)) { 
-				if (d.get(i) < d.get(i * 2)) break;
+		while (i * 2 <= d.getLastElementIndex()) {
+			if (i * 2 + 1 > d.getLastElementIndex() || d.get(i * 2).getRatio() < d.get((i * 2) + 1).getRatio()) { 
+				if (d.get(i).getRatio() < d.get(i * 2).getRatio()) break;
 				changeParentAndChild(i, i * 2);
 				i *= 2;
-			} else if (d.get(i) > d.get(i * 2 + 1)) {
+			} else if (d.get(i).getRatio() > d.get(i * 2 + 1).getRatio()) {
 				changeParentAndChild(i, i * 2 + 1);
 				i = i * 2 + 1;
 			} else break;
-		}		
-		toMyString();
+		}
 		return temp;
+	}
+	
+	public boolean isEmpty() {
+		int temp = d.getLastElementIndex();
+		if (temp > 0) return false;
+		else return true;
+	}
+	
+	protected void changeParentAndChild(int i, int i2) {
+		Node temp = d.get(i);
+		d.put(d.get(i2), i);
+		d.put(temp, i2); 
+	}
+	
+	public String toString() {
+		return "NPQ dynarray:" + d.toString() + "\nNPQ dynarray lopp";
 	}
 }

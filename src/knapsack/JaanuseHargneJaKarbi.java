@@ -6,49 +6,54 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import knapsack.baastyybid.DynamicArray;
 import knapsack.baastyybid.Node;
 import knapsack.baastyybid.NodePriorityQueue;
 
 public class JaanuseHargneJaKarbi {
 	
 	private static NodePriorityQueue PQ;
-	private static float maxProfit;
-	private static Node u;
-	private static Node v;
-	private static int[] values;
-	private static int[] weights;
+	private static float maxProfit;	
+	private static Node vanem;
+	private static Node jargmisega;
+	private static Node jargmiseta;
+	private static DynamicArray values = new DynamicArray(1);
+	private static DynamicArray weights = new DynamicArray(1);
 	private static int sackCapacity;
 	private static int itemCount;
 	
 	
 	public static void main(String[] args) {
-		readInputFileAndInitializeArrays();
-		initialize();
+		readInputFileAndFillArrays();
+		initialize();		
+		System.out.println(PQ);
 		while (!PQ.isEmpty()) {
-			v = PQ.dequeue();
-			if (v.getBound() > maxProfit) {
-				u.setDepth(v.getDepth() + 1);
-				u.setWeight(v.getWeight() + weights[u.getDepth()]);
-				u.setValue(v.getValue() + values[u.getDepth()]);
-				if (u.getWeight() <= sackCapacity && u.getValue() > maxProfit) {
-					maxProfit = u.getValue();
+			vanem = PQ.dequeueNode();
+			System.out.println(vanem);
+//			System.out.println(vanem.getBound() + " lol " + maxProfit);
+			if (vanem.getBound() > maxProfit) {
+				jargmisega.setDepth(vanem.getDepth() + 1);
+				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
+				jargmisega.setValue(vanem.getValue() + values.get(jargmisega.getDepth()));
+				System.out.println("jargmisega kaal: " + jargmisega.getWeight() + " mahutavus: " + sackCapacity + " jargmisega vaartus: " + jargmisega.getValue() + " maxprofit: " + maxProfit);
+				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
+					maxProfit = jargmisega.getValue();
 				}
-				u.setBound(bound(u));
-				if(bound(u) > maxProfit) {
-					PQ.enqueue(u);
+				jargmisega.setBound(bound(jargmisega));
+				if(bound(jargmisega) > maxProfit) {
+					PQ.enqueue(jargmisega);
 				}
-				u.setWeight(v.getWeight());
-				u.setValue(v.getValue());
-				u.setBound(bound(u));
-				if (u.getBound() > maxProfit) {
-					PQ.enqueue(u);
+				jargmiseta = new Node(vanem.getDepth(),vanem.getValue(),vanem.getWeight());
+				jargmiseta.setBound(bound(jargmiseta));
+				if (jargmiseta.getBound() > maxProfit) {
+					PQ.enqueue(jargmiseta);
 				}
 			}
 		}
-		
+		System.out.println(maxProfit);
 	}
 	
-	private static void readInputFileAndInitializeArrays() {
+	private static void readInputFileAndFillArrays() {
 		String sisendFail = "C:\\" + "15.in";
 		int i = 0;
 		try {
@@ -57,12 +62,12 @@ public class JaanuseHargneJaKarbi {
 								sisendFail)));
 			
 			String rida = br.readLine();
-			int mahutavus = Integer.parseInt(rida);
+			sackCapacity = Integer.parseInt(rida);
 			rida = br.readLine();
 			while(rida != null) {				
 				String[] temp = rida.split(" ");
-				values[i] = Integer.parseInt(temp[0]);
-				weights[i] = Integer.parseInt(temp[1]);				
+				values.add(Integer.parseInt(temp[0]));
+				weights.add(Integer.parseInt(temp[1]));				
 				rida = br.readLine();
 				i++;
 			}
@@ -81,13 +86,11 @@ public class JaanuseHargneJaKarbi {
 	private static void initialize() {
 		PQ = new NodePriorityQueue();
 		maxProfit = 0;
-		u = new Node();
-		v = new Node();
-		v.setDepth(0);
-		v.setValue(0);
-		v.setWeight(0);
-		v.setBound(bound(v));
-		PQ.enqueue(v);
+		jargmisega = new Node();
+		vanem = new Node();
+		vanem.setBound(bound(vanem));
+		PQ.enqueue(vanem);
+		PQ.enqueue(vanem);
 	}
 	
 	private static float bound(Node input) {
@@ -95,24 +98,24 @@ public class JaanuseHargneJaKarbi {
 		int i = 0;
 		int j = 0;
 		int selectionWeight = 0;
-		
 		if (input.getWeight() >= sackCapacity) {
+			System.out.println("boundresult: " + result);
 			return 0;
 		} else {
 			result = input.getValue();
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
-			while( i <= itemCount && selectionWeight + weights[i] <= sackCapacity) {
-				selectionWeight = selectionWeight + weights[i];
-				result = result + values[i];
+			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
+				selectionWeight = selectionWeight + weights.get(i);
+				result = result + values.get(i);
 				i++;
 			}
 			j=i;
 			if (j <= itemCount) {
-				result = result + (sackCapacity - selectionWeight) * (values[j] / weights[j]);
+				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
 			}
 		}
-		
+		System.out.println("boundresult: " + result);
 		return result;		
 	}
 	

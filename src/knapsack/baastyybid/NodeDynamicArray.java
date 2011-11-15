@@ -68,4 +68,12 @@ public class NodeDynamicArray {
 	public int getLastElementIndex() {
 		return lastElementsIndex;
 	}
+	
+	public String toString() {
+		String result = "";
+		for (int i = 0;  i <= getLastElementIndex(); i++) {
+			result += dynamicArray[i].toString();
+		}
+		return result;
+	}
 }

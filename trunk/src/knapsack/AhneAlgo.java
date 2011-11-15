@@ -10,7 +10,7 @@ public class AhneAlgo {
 //	private static ArrayList<TreeNode> kotisisu;
 	private static TreeNode[] kamber;
 	
-	public static void setKamber(TreeNode[] pointer) {
+	public static void setKambriSisu(TreeNode[] pointer) {
 		kamber = pointer;
 	}
 	

@@ -48,9 +48,13 @@ public class TreeNode {
 		return depth;
 	}
 
-	public boolean[] getElements() {
+	public boolean[] getElementBooleans() {
 //		System.out.println(Hargne_karbi2.arrayElements(elements));
 		return elements;
+	}
+	
+	public void setElements(boolean[] e) {
+		elements = e;
 	}
 
 	public FloatNode getNext() {
@@ -59,7 +63,7 @@ public class TreeNode {
 	
 	public String toString() {
 		String ele = "";
-//		if (elements != null) ele =  Hargne_karbi2.arrayElements(elements);
+		if (elements != null) ele =  Hargne_karbi2.arrayElements(elements);
 		return ratio  + " " + ele;
 	}
 	

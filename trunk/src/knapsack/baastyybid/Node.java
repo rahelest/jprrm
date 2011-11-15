@@ -11,7 +11,6 @@ public class Node {
 	private int depth;
 	private int value;
 	private int weight;
-	private float profit;
 	private float bound;
 	
 	
@@ -68,20 +67,6 @@ public class Node {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
-	}
-
-	/**
-	 * @return the profit
-	 */
-	public float getProfit() {
-		return profit;
-	}
-
-	/**
-	 * @param profit the profit to set
-	 */
-	public void setProfit(float profit) {
-		this.profit = profit;
 	}
 
 	/**

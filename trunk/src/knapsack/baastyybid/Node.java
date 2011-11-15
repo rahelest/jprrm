@@ -12,13 +12,14 @@ public class Node {
 	private int value;
 	private int weight;
 	private float bound;
-	
+	private float ratio;	
 	
 	public Node() {
 		depth = 0;
 		value = 0;
 		weight = 0;
 		bound = 0;
+		ratio = 0;
 	}
 	
 	public Node (int newDepth, int newValue, int newWeight) {
@@ -26,8 +27,20 @@ public class Node {
 		value = newValue;
 		weight = newWeight;
 		bound = 0;
+		if (weight == 0) {
+			ratio = 0;
+		} else {
+			ratio = value/weight;
+		}
 	}
 	
+	/**
+	 * @return the ratio
+	 */
+	public float getRatio() {
+		return ratio;
+	}
+
 	public Node(int val, Node n) {
 		value = val;
 	}
@@ -90,6 +103,10 @@ public class Node {
 	 */
 	public void setBound(float bound) {
 		this.bound = bound;
+	}
+	
+	public String toString() {
+		return "\nNode - Väärtus: " + value + " Kaal: " + weight;
 	}
 
 }

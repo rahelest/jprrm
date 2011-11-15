@@ -7,8 +7,8 @@ package knapsack.baastyybid;
 
 public class DynamicArray {
 
-	private int[] dynArray;
-	private int lastElementsIndex = -1;
+	protected int[] dynArray;
+	protected int lastElementsIndex = -1;
 	
 	public DynamicArray(int n) {
 		dynArray = new int[n];

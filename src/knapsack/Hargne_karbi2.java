@@ -23,7 +23,7 @@ public class Hargne_karbi2 {
 	int size = 0;
 	int mahutavus;
 	
-	boolean[] ele;
+	boolean[] currentlySelectedBooleans;
 	
 	FloatPriorityQueue PQ = new FloatPriorityQueue();
 	
@@ -40,27 +40,28 @@ public class Hargne_karbi2 {
 			nodiNimekiriStaatiline[i++] = nodiNimekiri.dequeue();
 		}
 		
-		AhneAlgo.setKamber(nodiNimekiriStaatiline);
+		AhneAlgo.setKambriSisu(nodiNimekiriStaatiline);
 		size = nodiNimekiriStaatiline.length;
-		ele = fillElementArray();
+		currentlySelectedBooleans = fillElementArray();
 		bestValue = 0;
 
-		PQ.enqueue(new TreeNode(0, 0, 1, ele));
+		PQ.enqueue(new TreeNode(0, 0, 1, currentlySelectedBooleans));
 		
 		while (!PQ.isEmpty()) {
 			System.out.println("^^^^^^^^^^^ PQ algus: " + PQ + " ^^^^^^^^^^^");
 
 			vanem = PQ.dequeue();
 			
-			ele = vanem.getElements();
+			currentlySelectedBooleans = vanem.getElementBooleans();
 			System.out.println("___________ Selle tsükli vanem: " + vanem);
 			
 			int depth = vanem.getDepth() + 1;
-			if (AhneAlgo.calculateProbablyBest(ele) < bestValue) {
+			
+			if (AhneAlgo.calculateProbablyBest(currentlySelectedBooleans) < bestValue) {
 				break;
 			}
 			
-			if (depth >= ele.length) {
+			if (depth >= currentlySelectedBooleans.length) {
 				continue;
 			}
 
@@ -68,32 +69,55 @@ public class Hargne_karbi2 {
 			accumulatedWeight = vanem.getWeight();
 			
 			if(accumulatedWeight > mahutavus) {
+				makeFalses(vanem);
 				continue;
 			}
 						
-			ele[depth] = false;
+			
 			i = 0;
 			while (i < 2) {
-				if (accumulatedValue > bestValue) {
+				TreeNode node = nodiNimekiriStaatiline[depth + 1];
+				if(i == 0) {
+					currentlySelectedBooleans[depth + 1] = false;
+				} else {
+					currentlySelectedBooleans[depth + 1] = true;
+					accumulatedValue += node.getValue();
+					accumulatedWeight += node.getWeight();
+				}
+				
+				/*if (accumulatedValue > bestValue) {
 					bestValue = accumulatedValue;
+				}*/			
+				
+				if (AhneAlgo.calculateProbablyBest(currentlySelectedBooleans) > bestValue) {
+					TreeNode n = new TreeNode(accumulatedValue, 1, depth, currentlySelectedBooleans);
+					System.out.println("Lisan: " + n);
+					PQ.enqueue(n);
+					System.out.println("ZZZZZZZZZZZ PQ nüüd selline: " + PQ);					
 				}				
 				
-				TreeNode node = nodiNimekiriStaatiline[depth + 1];
-				System.out.println("ELEMENDID: " + arrayElements(nodiNimekiriStaatiline));
+				if(accumulatedValue > bestValue) {
+					bestValue = accumulatedValue;
+				}
 				
-//				if (AhneAlgo.calculateProbablyBest(ele) > bestValue) {
+				i++;
+				/*
+				TreeNode node = nodiNimekiriStaatiline[depth + 1];
+				System.out.println("\nELEMENDID: " + arrayElements(nodiNimekiriStaatiline));
+				
+				if (AhneAlgo.calculateProbablyBest(currentlySelectedBooleans) > bestValue) {
 //					System.out.println("\n___________ Lisasin uue elemendi: " + (accumulatedValue));
-					TreeNode n = new TreeNode(accumulatedValue, 1, depth, ele);
+					TreeNode n = new TreeNode(accumulatedValue, 1, depth, currentlySelectedBooleans);
 					System.out.println("Lisan: " + n);
 					PQ.enqueue(n);
 					System.out.println("ZZZZZZZZZZZ PQ nüüd selline: " + PQ);
-//				}				
+				}				
 				
 				if (i > 0) break;
 				
 				i++;
 				
-				ele[depth] = true;
+				
 				System.out.println("NODE: " + node);
 				try {
 					accumulatedValue += node.getValue();
@@ -103,14 +127,25 @@ public class Hargne_karbi2 {
 					System.out.println("Depth: " + depth);
 					System.out.println("ELEMENDID: " + arrayElements(nodiNimekiriStaatiline));
 					System.exit(-1);
-				}
+				}*/
 			}
 			
 			System.out.println("PQ lopp: " + PQ);
 
 		}
 		
-		System.out.println("Vastus: " + vanem);
+		System.out.println("Vastus: " + vanem + vanem);
+	}
+
+	private void makeFalses(TreeNode vanem) {
+		boolean[] uus = currentlySelectedBooleans;
+		System.out.println(vanem.getDepth() + " ja " + currentlySelectedBooleans.length);
+		for (int i = vanem.getDepth(); i < currentlySelectedBooleans.length; i++) {
+			uus[i] = false;
+			System.out.println("\nuus-i falsified");
+		}
+		vanem.setElements(uus);
+		
 	}
 
 	private String arrayElements(TreeNode[] nodiNimekiriStaatiline) {

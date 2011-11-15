@@ -8,8 +8,11 @@ package knapsack.baastyybid;
 
 public class Node {
 	
-	private Node next;
 	private int value;
+	private int weight;
+	private int profit;
+	private float bound;
+	
 	
 	
 	public Node () {

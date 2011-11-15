@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-
 import knapsack.tyybid.FloatPriorityQueue;
 import knapsack.tyybid.TreeNode;
 
@@ -22,6 +21,7 @@ public class Hargne_karbi2 {
 	int accumulatedValue = 0;
 	int accumulatedWeight = 0;
 	int size = 0;
+	int mahutavus;
 	
 	boolean[] ele;
 	
@@ -31,14 +31,21 @@ public class Hargne_karbi2 {
 	
 	public void tegutse () {
 		
-		FloatPriorityQueue p = looAsjad(sisendFail);
-
-		AhneAlgo.setKamber(p.toArrayList());
-		size = p.getD().len();
+		FloatPriorityQueue nodiNimekiri = looAsjad(sisendFail);
+//		FloatPriorityQueue nodiNimekiri2 = nodiNimekiri.clone();
+		TreeNode[] nodiNimekiriStaatiline = new TreeNode[nodiNimekiri.getD().len()];
+		
+		int i = 0;
+		while (!nodiNimekiri.isEmpty()) {
+			nodiNimekiriStaatiline[i++] = nodiNimekiri.dequeue();
+		}
+		
+		AhneAlgo.setKamber(nodiNimekiriStaatiline);
+		size = nodiNimekiriStaatiline.length;
 		ele = fillElementArray();
 		bestValue = 0;
 
-		PQ.enqueue(new TreeNode(0, 0, 0, ele));
+		PQ.enqueue(new TreeNode(0, 0, 1, ele));
 		
 		while (!PQ.isEmpty()) {
 			System.out.println("^^^^^^^^^^^ PQ algus: " + PQ + " ^^^^^^^^^^^");
@@ -60,31 +67,43 @@ public class Hargne_karbi2 {
 			accumulatedValue = vanem.getValue();
 			accumulatedWeight = vanem.getWeight();
 			
-			int i = 0;
-			
+			if(accumulatedWeight > mahutavus) {
+				continue;
+			}
+						
 			ele[depth] = false;
-			
-			while ( i < 2) {
+			i = 0;
+			while (i < 2) {
 				if (accumulatedValue > bestValue) {
 					bestValue = accumulatedValue;
-				}	
-			
-				if (AhneAlgo.calculateProbablyBest(ele) > bestValue) {
-					System.out.print("___________ Lisasin uue elemendi: ");
-					PQ.enqueue(new TreeNode(accumulatedValue, accumulatedWeight, depth, ele));
-					System.out.println("ZZZZZZZZZZZ PQ nüüd selline: " + PQ);
 				}				
+				
+				TreeNode node = nodiNimekiriStaatiline[depth + 1];
+				System.out.println("ELEMENDID: " + arrayElements(nodiNimekiriStaatiline));
+				
+//				if (AhneAlgo.calculateProbablyBest(ele) > bestValue) {
+//					System.out.println("\n___________ Lisasin uue elemendi: " + (accumulatedValue));
+					TreeNode n = new TreeNode(accumulatedValue, 1, depth, ele);
+					System.out.println("Lisan: " + n);
+					PQ.enqueue(n);
+					System.out.println("ZZZZZZZZZZZ PQ nüüd selline: " + PQ);
+//				}				
 				
 				if (i > 0) break;
 				
 				i++;
-				TreeNode node;
-				if (!p.isEmpty()) {
-					node = p.dequeue();
-				} else break;
-				ele[node.getDepth()] = true;
-				accumulatedValue += node.getValue();
-				accumulatedWeight += node.getWeight();
+				
+				ele[depth] = true;
+				System.out.println("NODE: " + node);
+				try {
+					accumulatedValue += node.getValue();
+					accumulatedWeight += node.getWeight();
+				} catch (NullPointerException e) {
+					System.out.println("PQ : " + PQ);
+					System.out.println("Depth: " + depth);
+					System.out.println("ELEMENDID: " + arrayElements(nodiNimekiriStaatiline));
+					System.exit(-1);
+				}
 			}
 			
 			System.out.println("PQ lopp: " + PQ);
@@ -92,6 +111,15 @@ public class Hargne_karbi2 {
 		}
 		
 		System.out.println("Vastus: " + vanem);
+	}
+
+	private String arrayElements(TreeNode[] nodiNimekiriStaatiline) {
+
+		String result = nodiNimekiriStaatiline[0] + "";
+		for (int i = 1; i < nodiNimekiriStaatiline.length; i++) {
+			result += ", " + nodiNimekiriStaatiline[i];
+		}
+		return "[" + result + "]";
 	}
 
 	private boolean[] fillElementArray() {
@@ -137,7 +165,7 @@ public class Hargne_karbi2 {
 								sisendFail)));
 			
 			String rida = br.readLine();
-			int mahutavus = Integer.parseInt(rida);
+			mahutavus = Integer.parseInt(rida);
 			rida = br.readLine();
 			AhneAlgo.setMahutavus(mahutavus);
 			

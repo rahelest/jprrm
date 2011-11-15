@@ -14,8 +14,14 @@ public class Node {
 	private float bound;
 	
 	
+	public Node() {
+		depth = 0;
+		value = 0;
+		weight = 0;
+		bound = 0;
+	}
 	
-	public Node () {
+	public Node (int newDepth, int newValue, int newWeight) {
 		
 	}
 	

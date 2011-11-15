@@ -6,7 +6,7 @@ import knapsack.baastyybid.NodePriorityQueue;
 public class JaanuseHargneJaKarbi {
 	
 	private static NodePriorityQueue PQ;
-	private static float maxprofit;
+	private static float maxProfit;
 	private static Node u;
 	private static Node v;
 	private static int[] values;
@@ -20,11 +20,24 @@ public class JaanuseHargneJaKarbi {
 		initialize();
 		while (!PQ.isEmpty()) {
 			v = PQ.dequeue();
-			if (v.getBound() > maxprofit) {
+			if (v.getBound() > maxProfit) {
 				u.setDepth(v.getDepth() + 1);
 				u.setWeight(v.getWeight() + weights[u.getDepth()]);
 				u.setValue(v.getValue() + values[u.getDepth()]);
-				
+				if (u.getWeight() <= sackCapacity && u.getValue() > maxProfit) {
+					maxProfit = u.getValue();
+				}
+				Node temp = new Node(u.getDepth(),u.getValue(),u.getWeight());
+				temp.setBound(bound(u));
+				if(bound(temp) > maxProfit) {
+					PQ.enqueue(u);
+				}
+				u.setWeight(v.getWeight());
+				u.setValue(v.getValue());
+				u.setBound(bound(u));
+				if (u.getBound() > maxProfit) {
+					PQ.enqueue(u);
+				}
 			}
 		}
 		
@@ -37,7 +50,7 @@ public class JaanuseHargneJaKarbi {
 
 	private static void initialize() {
 		PQ = new NodePriorityQueue();
-		maxprofit = 0;
+		maxProfit = 0;
 		u = new Node();
 		v = new Node();
 		v.setDepth(0);

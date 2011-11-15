@@ -28,4 +28,74 @@ public class Node {
 		return value;
 	}
 
+	/**
+	 * @return the depth
+	 */
+	public int getDepth() {
+		return depth;
+	}
+
+	/**
+	 * @param depth the depth to set
+	 */
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
+	/**
+	 * @return the value
+	 */
+	public int getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	/**
+	 * @return the weight
+	 */
+	public int getWeight() {
+		return weight;
+	}
+
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	/**
+	 * @return the profit
+	 */
+	public float getProfit() {
+		return profit;
+	}
+
+	/**
+	 * @param profit the profit to set
+	 */
+	public void setProfit(float profit) {
+		this.profit = profit;
+	}
+
+	/**
+	 * @return the bound
+	 */
+	public float getBound() {
+		return bound;
+	}
+
+	/**
+	 * @param bound the bound to set
+	 */
+	public void setBound(float bound) {
+		this.bound = bound;
+	}
+
 }

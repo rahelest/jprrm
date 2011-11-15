@@ -70,7 +70,7 @@ public class PriorityQueue {
 	 * @param i vanema indeks
 	 * @param i2 lapse indeks
 	 */
-	private void changeParentAndChild(int i, int i2) {
+	protected void changeParentAndChild(int i, int i2) {
 		int temp = d.get(i);
 		d.put(d.get(i2), i);
 		d.put(temp, i2); 

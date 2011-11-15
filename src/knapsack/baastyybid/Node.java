@@ -22,7 +22,10 @@ public class Node {
 	}
 	
 	public Node (int newDepth, int newValue, int newWeight) {
-		
+		depth = newDepth;
+		value = newValue;
+		weight = newWeight;
+		bound = 0;
 	}
 	
 	public Node(int val, Node n) {

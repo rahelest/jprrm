@@ -20,4 +20,12 @@ public class Testikas {
 		assertEquals(PQ.dequeueNode(),temp2);
 		assertEquals(PQ.dequeueNode(),temp1);
 	}
+	
+	@Test
+	public void dynamicArray() {
+		DynamicArray array = new DynamicArray(1);
+		array.add(2);
+		array.add(3);
+		System.out.println(array.get(1));
+	}
 }

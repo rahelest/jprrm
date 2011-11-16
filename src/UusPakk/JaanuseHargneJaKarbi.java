@@ -15,9 +15,13 @@ public class JaanuseHargneJaKarbi {
 	private static Node jargmiseta;
 	private static DynamicArray values = new DynamicArray(1);
 	private static DynamicArray weights = new DynamicArray(1);
+	private static DynamicArray valikud;
+	private static DynamicArray valikudJargmisega;
+	private static DynamicArray valikudJargmiseta;
 	private static NodePriorityQueue items = new NodePriorityQueue();
 	private static int sackCapacity;
 	private static int itemCount;
+	private static Node bestNode;
 	
 	public static void arvuta(boolean karpega) {
 		readInputFileAndFillArrays();
@@ -26,18 +30,25 @@ public class JaanuseHargneJaKarbi {
 			vanem = PQ.dequeueNode();
 //System.out.println("------uus-----round----- " + vanem);
 			if (vanem.getBound() > maxProfit || !karpega) {		
-//				List valikud = vanem.getValikud();
+				valikud = vanem.getValikud();
+//				System.out.println("Valikute maht: " + valikud.lastElement());
 				int jargmiseDepth = vanem.getDepth() + 1;
 				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
-//				jargmisega.setValikud
+				valikudJargmisega = valikud.clone();
+//				System.out.println(valikudJargmisega.add(1));
+				jargmisega.setValikud(valikudJargmisega);
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
+					bestNode = jargmisega;
 				}
 				if(jargmisega.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmisega);
 				}
 				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
+				valikudJargmiseta = valikud.clone();
+				valikudJargmiseta.add(0);
+				jargmiseta.setValikud(valikudJargmiseta);
 				jargmiseta.setBound(bound(jargmiseta));
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmiseta);
@@ -45,6 +56,15 @@ public class JaanuseHargneJaKarbi {
 			}
 		}
 System.out.println(maxProfit);
+System.out.println(bestNode);
+	DynamicArray valikud = bestNode.getValikud();
+	System.out.println(valikud.lastElement());
+System.out.println(valikud);
+		for (int i = 1; i <= valikud.lastElementsIndex; i*=2) {
+			if (valikud.get(i) == 1) {
+				System.out.println(values.get((int)(Math.log(i)/ Math.log(2))) + " " + weights.get((int)(Math.log(i)/ Math.log(2))));
+			}
+		}
 	}
 	
 	private static void readInputFileAndFillArrays() {

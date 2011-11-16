@@ -35,7 +35,7 @@ public class DynamicArray {
 		}
 		dynArray[lastElementsIndex] = x;
 		
-//		System.out.println("Lisasin v��rtuse: " + x + " lastElementsNo: " + lastElementsNo);
+//		System.out.println("Lisasin väärtuse: " + x + " lastElementsNo: " + lastElementsIndex);
 		return lastElementsIndex;
 	}
 	
@@ -87,5 +87,13 @@ public class DynamicArray {
 			result += dynArray[i] + " ";
 		}
 		return result;
+	}
+	
+	public DynamicArray clone() {
+		DynamicArray uus = new DynamicArray(1);
+		for (int i : dynArray) {
+			uus.add(i);
+		}
+		return uus;
 	}
 }

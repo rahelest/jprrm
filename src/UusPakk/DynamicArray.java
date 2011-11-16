@@ -58,6 +58,7 @@ public class DynamicArray {
 	}
 	
 	public int get(int i) {
+		System.out.println(dynArray.length);
 		return dynArray[i];
 	}
 	

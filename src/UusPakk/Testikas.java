@@ -1,9 +1,6 @@
 package UusPakk;
 
 import static org.junit.Assert.*;
-import knapsack.baastyybid.Node;
-import knapsack.baastyybid.NodePriorityQueue;
-
 import org.junit.Test;
 
 public class Testikas {

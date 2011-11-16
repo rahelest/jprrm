@@ -107,7 +107,7 @@ public class Node {
 	
 	public String toString() {
 //		return "\nNode - Väärtus: " + value + " Kaal: " + weight;
-		return "( " + value + " , " + weight + " ) ";
+		return "( " + value + ", " + weight + ", " + ratio + " ) ";
 	}
 
 }

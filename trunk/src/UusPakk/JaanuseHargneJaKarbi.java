@@ -6,10 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import knapsack.baastyybid.DynamicArray;
-import knapsack.baastyybid.Node;
-import knapsack.baastyybid.NodePriorityQueue;
-
 public class JaanuseHargneJaKarbi {
 	
 	private static NodePriorityQueue PQ;

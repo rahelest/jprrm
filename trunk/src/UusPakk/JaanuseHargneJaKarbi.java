@@ -15,6 +15,7 @@ public class JaanuseHargneJaKarbi {
 	private static Node jargmiseta;
 	private static DynamicArray values = new DynamicArray(1);
 	private static DynamicArray weights = new DynamicArray(1);
+	private static NodePriorityQueue items = new NodePriorityQueue();
 	private static int sackCapacity;
 	private static int itemCount;
 	
@@ -69,14 +70,20 @@ System.out.println(maxProfit);
 			while(rida != null) {	
 System.out.println("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
-				values.add(Integer.parseInt(temp[0]));
-				weights.add(Integer.parseInt(temp[1]));				
+				Node n = new Node(0, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
+				n.setBound(n.getRatio());		
+				items.enqueue(n);
 				rida = br.readLine();
 				i++;
 			}
 			br.close();
 			itemCount = i;
 System.out.println("Itemcount: " + itemCount);
+			while (!items.isEmpty()) {
+				Node n = items.dequeueNode();
+				values.add(n.getValue());
+				weights.add(n.getWeight());
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Sisendfaili ei leitud!");
 			return;
@@ -107,7 +114,7 @@ System.out.println("Ja PQ: \t" + PQ);
 		int selectionWeight = 0;
 		if (input.getWeight() >= sackCapacity) {
 			return 0;
-		} else if (input.getDepth() < weights.lastElement()) {
+		} else if (input.getDepth() <= weights.lastElement()) {
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
 System.out.print("IIII: " + i);

@@ -18,10 +18,8 @@ public class JaanuseHargneJaKarbi {
 	private static NodePriorityQueue items = new NodePriorityQueue();
 	private static int sackCapacity;
 	private static int itemCount;
-//	private static boolean karpega = true;
 	
-	
-	public static void arvuta (boolean karpega) {
+	public static void arvuta(boolean karpega) {
 		readInputFileAndFillArrays();
 		initialize();
 		while (!PQ.isEmpty()) {
@@ -64,7 +62,7 @@ System.out.println(maxProfit);
 System.out.println("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
 				Node n = new Node(0, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
-				n.setBound(n.getRatio());	
+				n.setBound(n.getRatio());		
 				items.enqueue(n);
 				rida = br.readLine();
 				i++;
@@ -119,6 +117,7 @@ System.out.println("Ja PQ: \t" + PQ);
 			if (j <= itemCount) {
 				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
 			}
+		} else {
 		}
 		return result;		
 	}

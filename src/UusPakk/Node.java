@@ -12,8 +12,7 @@ public class Node {
 	private int value;
 	private int weight;
 	private float bound;
-	private float ratio;
-	private Node next;
+	private float ratio;	
 	
 	public Node() {
 		depth = 0;
@@ -28,7 +27,11 @@ public class Node {
 		value = newValue;
 		weight = newWeight;
 		bound = 0;
-		calculateRatio();
+		if (weight == 0) {
+			ratio = 0;
+		} else {
+			ratio = value/weight;
+		}
 	}
 	
 	/**
@@ -36,14 +39,6 @@ public class Node {
 	 */
 	public float getRatio() {
 		return ratio;
-	}
-	
-	private void calculateRatio () {
-		if (weight == 0) {
-			ratio = 0;
-		} else {
-			ratio = ((float) value) / ((float) weight);
-		}
 	}
 
 	public Node(int val, Node n) {
@@ -80,7 +75,6 @@ public class Node {
 	 */
 	public void setValue(int value) {
 		this.value = value;
-		calculateRatio();
 	}
 
 	/**
@@ -95,7 +89,6 @@ public class Node {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
-		calculateRatio();
 	}
 
 	/**
@@ -112,24 +105,6 @@ public class Node {
 		this.bound = bound;
 	}
 	
-	/**
-	 * @return the next
-	 */
-	public Node getNext() {
-		return next;
-	}
-
-	/**
-	 * @param next the next to set
-	 */
-	public void setNext(Node next) {
-		this.next = next;
-	}
-	
-	public Node getNode() {
-		return this;
-	}
-
 	public String toString() {
 //		return "\nNode - Väärtus: " + value + " Kaal: " + weight;
 		return "( " + value + ", " + weight + ", " + ratio + " ) ";

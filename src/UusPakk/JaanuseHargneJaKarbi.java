@@ -24,12 +24,12 @@ public class JaanuseHargneJaKarbi {
 		initialize();
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
-System.out.println("------uus-----round----- " + vanem);
-			if (vanem.getBound() > maxProfit || !karpega) {
-				jargmisega = new Node();
-				jargmisega.setDepth(vanem.getDepth() + 1);
-				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
-				jargmisega.setValue(vanem.getValue() + values.get(jargmisega.getDepth()));
+//System.out.println("------uus-----round----- " + vanem);
+			if (vanem.getBound() > maxProfit || !karpega) {		
+//				List valikud = vanem.getValikud();
+				int jargmiseDepth = vanem.getDepth() + 1;
+				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
+//				jargmisega.setValikud
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
@@ -59,19 +59,21 @@ System.out.println(maxProfit);
 			sackCapacity = Integer.parseInt(rida);
 			rida = br.readLine();
 			while(rida != null) {	
-System.out.println("Loetud rida: " + rida);
+//System.out.print("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
 				Node n = new Node(0, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
 				n.setBound(n.getRatio());		
+//System.out.println(" " + n.getBound());
 				items.enqueue(n);
 				rida = br.readLine();
 				i++;
 			}
 			br.close();
 			itemCount = i;
-System.out.println("Itemcount: " + itemCount);
+//System.out.println(items);
 			while (!items.isEmpty()) {
 				Node n = items.dequeueNode();
+//System.out.println(n);
 				values.add(n.getValue());
 				weights.add(n.getWeight());
 			}
@@ -94,11 +96,13 @@ System.out.println("Itemcount: " + itemCount);
 System.out.println("Päris esimene bound: " + vanem.getBound());
 		PQ.enqueue(vanem);
 		PQ.enqueue(vanem);
-System.out.println("Tühi sisendvanem: " + vanem);
-System.out.println("Ja PQ: \t" + PQ);
+//System.out.println("Tühi sisendvanem: " + vanem);
+//System.out.println("Ja PQ: \t" + PQ);
 	}
 	
 	private static float bound(Node input) {
+//		System.out.println(values);
+//		System.out.println(weights);
 		float result = input.getValue();
 		int i = 0;
 		int j = 0;
@@ -106,18 +110,22 @@ System.out.println("Ja PQ: \t" + PQ);
 		if (input.getWeight() >= sackCapacity) {
 			return 0;
 		} else if (input.getDepth() <= weights.lastElement()) {
-			i = input.getDepth() + 1;			
+			i = input.getDepth() + 1;
 			selectionWeight = input.getWeight();
-			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
+//			System.out.println(result + " " + selectionWeight + " " + i);
+			while( i <= itemCount && (selectionWeight + weights.get(i)) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
+//				System.out.println(result + "\t" + values.get(i) + "\t/" + selectionWeight + "\t" + weights.get(i) + "\t/" + i);
 				i++;
 			}
+//			System.out.println(i + " " + itemCount + " " + selectionWeight + " " + sackCapacity);
+//			System.out.print(result + " ");
 			j=i;
 			if (j <= itemCount) {
-				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
+				result = result + ((float)(sackCapacity - selectionWeight)) * (((float)values.get(j)) / ((float)weights.get(j)));
 			}
-		} else {
+//			System.out.println(result + "\n");
 		}
 		return result;		
 	}

@@ -80,4 +80,12 @@ public class DynamicArray {
 	public int lastElement() {
 		return lastElementsIndex;
 	}
+	
+	public String toString() {
+		String result = "";
+		for (int i = 0; i < lastElementsIndex; i++) {
+			result += dynArray[i] + " ";
+		}
+		return result;
+	}
 }

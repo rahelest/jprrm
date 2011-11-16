@@ -78,6 +78,7 @@ public class NodeDynamicArray {
 	public String toString() {
 		String result = "";
 		for (int i = 0;  i <= getLastElementIndex(); i++) {
+			if (dynamicArray[i] != null)
 			result += dynamicArray[i].toString();
 		}
 		return result;

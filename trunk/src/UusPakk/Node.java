@@ -14,6 +14,7 @@ public class Node {
 	private float bound;
 	private float ratio;
 	private Node next;
+	private DynamicArray valikud = new DynamicArray(1);
 	
 	public Node() {
 		depth = -1;
@@ -118,5 +119,15 @@ public class Node {
 //		return "\nNode - Väärtus: " + value + " Kaal: " + weight;
 		return "( " + value + ", " + weight + ", " + ratio + " ) ";
 	}
+
+	public DynamicArray getValikud() {
+		return valikud;
+	}
+
+	public void setValikud(DynamicArray valikud) {
+		this.valikud = valikud;
+	}
+	
+	
 
 }

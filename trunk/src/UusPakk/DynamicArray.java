@@ -50,15 +50,12 @@ public class DynamicArray {
 			dynArray = temp2;
 		} else if (lastElementsIndex < 0) {
 			return 0;
-		}
-//		System.out.println(temp + " " + lastElementsNo);
-		
+		}		
 		lastElementsIndex--;
 		return temp;
 	}
 	
 	public int get(int i) {
-		System.out.println(dynArray.length);
 		return dynArray[i];
 	}
 	
@@ -66,7 +63,8 @@ public class DynamicArray {
 		try {
 			dynArray[i] = x;
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Nii ei saa, v�hendada prooviti v�ljaspool massiivi!");
+			e.printStackTrace();
+			System.out.println("Nii ei saa, vähendada prooviti väljaspool massiivi!");
 		}
 	}
 	

@@ -35,7 +35,8 @@ public class JaanuseHargneJaKarbi {
 				int jargmiseDepth = vanem.getDepth() + 1;
 				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
 				valikudJargmisega = valikud.clone();
-//				System.out.println(valikudJargmisega.add(1));
+				valikudJargmisega.add(1);
+//				System.out.println();
 				jargmisega.setValikud(valikudJargmisega);
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
@@ -60,9 +61,11 @@ System.out.println(bestNode);
 	DynamicArray valikud = bestNode.getValikud();
 	System.out.println(valikud.lastElement());
 System.out.println(valikud);
-		for (int i = 1; i <= valikud.lastElementsIndex; i*=2) {
+		for (int i = 0; i <= valikud.lastElementsIndex; i++) {
 			if (valikud.get(i) == 1) {
-				System.out.println(values.get((int)(Math.log(i)/ Math.log(2))) + " " + weights.get((int)(Math.log(i)/ Math.log(2))));
+				System.out.println(values.get(i) + " " + weights.get(i));
+			} else if (valikud.get(0) == 0) {
+				System.out.println("heh");
 			}
 		}
 	}

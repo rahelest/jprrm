@@ -12,7 +12,8 @@ public class Node {
 	private int value;
 	private int weight;
 	private float bound;
-	private float ratio;	
+	private float ratio;
+	private Node next;
 	
 	public Node() {
 		depth = 0;
@@ -105,6 +106,24 @@ public class Node {
 		this.bound = bound;
 	}
 	
+	/**
+	 * @return the next
+	 */
+	public Node getNext() {
+		return next;
+	}
+
+	/**
+	 * @param next the next to set
+	 */
+	public void setNext(Node next) {
+		this.next = next;
+	}
+	
+	public Node getNode() {
+		return this;
+	}
+
 	public String toString() {
 //		return "\nNode - Väärtus: " + value + " Kaal: " + weight;
 		return "( " + value + ", " + weight + ", " + ratio + " ) ";

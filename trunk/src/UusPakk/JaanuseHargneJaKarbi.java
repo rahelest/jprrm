@@ -27,19 +27,12 @@ public class JaanuseHargneJaKarbi {
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
 System.out.println("------uus-----round----- " + vanem);
-			if (vanem.getDepth() + 1 >= weights.len())  {
-				System.out.println(PQ);
-				break;
-			}
 			if (vanem.getBound() > maxProfit || !karpega) {
 				jargmisega = new Node();
 				jargmisega.setDepth(vanem.getDepth() + 1);
 				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
 				jargmisega.setValue(vanem.getValue() + values.get(jargmisega.getDepth()));
-//				System.out.println("sygavus: " + jargmisega.getDepth());
-//System.out.print("Jargmisega bound: ");
 				jargmisega.setBound(bound(jargmisega));
-//				System.out.println("jargmisega kaal: " + jargmisega.getWeight() + " mahutavus: " + sackCapacity + " jargmisega vaartus: " + jargmisega.getValue() + " maxprofit: " + maxProfit);
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
 				}
@@ -47,7 +40,6 @@ System.out.println("------uus-----round----- " + vanem);
 					PQ.enqueue(jargmisega);
 				}
 				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
-//System.out.print("Jargmiseta bound: ");
 				jargmiseta.setBound(bound(jargmiseta));
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmiseta);
@@ -73,7 +65,6 @@ System.out.println("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
 				Node n = new Node(0, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
 				n.setBound(n.getRatio());	
-				System.out.println(n.getBound());
 				items.enqueue(n);
 				rida = br.readLine();
 				i++;
@@ -119,7 +110,6 @@ System.out.println("Ja PQ: \t" + PQ);
 		} else if (input.getDepth() <= weights.lastElement()) {
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
-//System.out.print("IIII: " + i);
 			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
@@ -129,11 +119,7 @@ System.out.println("Ja PQ: \t" + PQ);
 			if (j <= itemCount) {
 				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
 			}
-//System.out.print(" - " + i);
-		} else {
-//System.out.print("Elemendid otsas");
 		}
-//System.out.println(", boundresult: " + result);
 		return result;		
 	}
 	

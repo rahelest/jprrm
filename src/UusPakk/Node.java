@@ -12,10 +12,11 @@ public class Node {
 	private int value;
 	private int weight;
 	private float bound;
-	private float ratio;	
+	private float ratio;
+	private Node next;
 	
 	public Node() {
-		depth = 0;
+		depth = -1;
 		value = 0;
 		weight = 0;
 		bound = 0;
@@ -30,7 +31,7 @@ public class Node {
 		if (weight == 0) {
 			ratio = 0;
 		} else {
-			ratio = value/weight;
+			ratio = ((float) value) / ((float) weight);
 		}
 	}
 	
@@ -103,6 +104,14 @@ public class Node {
 	 */
 	public void setBound(float bound) {
 		this.bound = bound;
+	}
+	
+	public Node getNext() {
+		return next;
+	}
+	
+	public void setNext (Node n) {
+		next = n;
 	}
 	
 	public String toString() {

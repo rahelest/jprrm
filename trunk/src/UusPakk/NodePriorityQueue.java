@@ -1,8 +1,6 @@
 package UusPakk;
 
-import knapsack.baastyybid.PriorityQueue;
-
-public class NodePriorityQueue extends PriorityQueue {
+public class NodePriorityQueue {
 	
 	private NodeDynamicArray d;
 	

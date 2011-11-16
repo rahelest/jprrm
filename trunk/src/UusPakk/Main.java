@@ -6,7 +6,6 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
 		long algus1 = System.currentTimeMillis();
 		JaanuseHargneJaKarbi.arvuta(true);
 		long lopp1 = System.currentTimeMillis();
@@ -15,9 +14,8 @@ public class Main {
 //		JaanuseHargneJaKarbi.arvuta(false);
 		long lopp2 = System.currentTimeMillis();
 		
-		System.out.println("Koos kärpimisega: " + (lopp1 - algus1));
-		System.out.println("Ilma kärpimiseta: " + (lopp2 - algus2));
-
+		System.out.println(lopp1-algus1);
+		System.out.println(lopp2-algus2);
 	}
 
 }

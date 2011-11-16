@@ -91,8 +91,8 @@ public class DynamicArray {
 	
 	public DynamicArray clone() {
 		DynamicArray uus = new DynamicArray(1);
-		for (int i : dynArray) {
-			uus.add(i);
+		for (int i = 0; i <= lastElementsIndex; i++) {
+			uus.add(dynArray[i]);
 		}
 		return uus;
 	}

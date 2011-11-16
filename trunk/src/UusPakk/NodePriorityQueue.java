@@ -58,4 +58,8 @@ public class NodePriorityQueue {
 	public String toString() {
 		return "NPQ dynarray:" + d.toString() + "\nNPQ dynarray lopp";
 	}
+	
+	public int size() {
+		return d.getLastElementIndex() + 1;
+	}
 }

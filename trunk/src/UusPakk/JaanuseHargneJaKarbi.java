@@ -1,4 +1,4 @@
-package knapsack;
+package UusPakk;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -25,19 +25,19 @@ public class JaanuseHargneJaKarbi {
 	
 	public static void main(String[] args) {
 		readInputFileAndFillArrays();
-		initialize();		
+		initialize();
 		System.out.println(PQ);
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
-			System.out.println("uus round");
-			System.out.println(vanem);
+//			System.out.println("uus round");
+//			System.out.println(vanem);
 //			System.out.println(vanem.getBound() + " lol " + maxProfit);
 			if (vanem.getBound() > maxProfit) {
 				jargmisega = new Node();
 				jargmisega.setDepth(vanem.getDepth() + 1);
 				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
 				jargmisega.setValue(vanem.getValue() + values.get(jargmisega.getDepth()));
-				System.out.println("sygavus: " + jargmisega.getDepth());
+//				System.out.println("sygavus: " + jargmisega.getDepth());
 				jargmisega.setBound(bound(jargmisega));
 //				System.out.println("jargmisega kaal: " + jargmisega.getWeight() + " mahutavus: " + sackCapacity + " jargmisega vaartus: " + jargmisega.getValue() + " maxprofit: " + maxProfit);
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
@@ -45,13 +45,13 @@ public class JaanuseHargneJaKarbi {
 				}				
 				if(bound(jargmisega) > maxProfit) {
 					PQ.enqueue(jargmisega);
-					System.out.println("lisan ühe");
+//					System.out.println("lisan ühe");
 				}
-				jargmiseta = new Node(vanem.getDepth(),vanem.getValue(),vanem.getWeight());
+				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
 				jargmiseta.setBound(bound(jargmiseta));
 				if (jargmiseta.getBound() > maxProfit) {
 					PQ.enqueue(jargmiseta);
-					System.out.println("lisan järgmise");
+//					System.out.println("lisan järgmise");
 				}
 			}
 		}
@@ -110,6 +110,8 @@ public class JaanuseHargneJaKarbi {
 			result = input.getValue();
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
+			System.out.println(i);
+			//weights.get(i) võetakse liiga väike
 			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);

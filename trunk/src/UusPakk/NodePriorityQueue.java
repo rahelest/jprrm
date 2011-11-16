@@ -1,4 +1,6 @@
-package knapsack.baastyybid;
+package UusPakk;
+
+import knapsack.baastyybid.PriorityQueue;
 
 public class NodePriorityQueue extends PriorityQueue {
 	

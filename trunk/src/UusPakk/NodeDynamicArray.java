@@ -50,10 +50,15 @@ public class NodeDynamicArray {
 	
 	public void put(Node n, int i) {
 		try {
+			if (dynamicArray.length <= i ) {
+				add(n);
+				return;
+			}
 			dynamicArray[i] = n;
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			System.out.println("Vale indeks: " + i + " ning pikkus oli " + dynamicArray.length);
+			System.out.println(this.toString());
 		}
 	}
 	

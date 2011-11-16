@@ -18,6 +18,7 @@ public class JaanuseHargneJaKarbi {
 	private static NodePriorityQueue items = new NodePriorityQueue();
 	private static int sackCapacity;
 	private static int itemCount;
+	private static boolean karpega = true;
 	
 	
 	public static void main(String[] args) {
@@ -28,7 +29,7 @@ public class JaanuseHargneJaKarbi {
 System.out.println("------uus-----round----- " + vanem);
 //			System.out.println(vanem);
 //			System.out.println(vanem.getBound() + " lol " + maxProfit);
-			if (vanem.getBound() > maxProfit) {
+			if (vanem.getBound() > maxProfit || !karpega) {
 				jargmisega = new Node();
 				jargmisega.setDepth(vanem.getDepth() + 1);
 				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
@@ -39,17 +40,15 @@ System.out.print("Jargmisega bound: ");
 //				System.out.println("jargmisega kaal: " + jargmisega.getWeight() + " mahutavus: " + sackCapacity + " jargmisega vaartus: " + jargmisega.getValue() + " maxprofit: " + maxProfit);
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
-				}				
-				if(jargmisega.getBound() > maxProfit) {
+				}
+				if(jargmisega.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmisega);
-//					System.out.println("lisan ühe");
 				}
 				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
 System.out.print("Jargmiseta bound: ");
 				jargmiseta.setBound(bound(jargmiseta));
-				if (jargmiseta.getBound() > maxProfit) {
+				if(jargmiseta.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmiseta);
-//					System.out.println("lisan järgmise");
 				}
 			}
 		}

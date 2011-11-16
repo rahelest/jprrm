@@ -26,7 +26,8 @@ public class NodePriorityQueue {
 	
 	public Node dequeueNode() {
 		Node temp = d.get(1);
-		if (d.getLastElementIndex() < 1) return null;
+//		System.out.println(d.len());
+		if (d.len() < 2) return null;
 		d.put(d.rem(),1);
 		int i = 1;		
 		while (i * 2 <= d.getLastElementIndex()) {

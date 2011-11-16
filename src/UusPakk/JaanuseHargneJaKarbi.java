@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class JaanuseHargneJaKarbi {
 	
@@ -21,7 +22,7 @@ public class JaanuseHargneJaKarbi {
 	private static NodePriorityQueue items = new NodePriorityQueue();
 	private static int sackCapacity;
 	private static int itemCount;
-	private static Node bestNode;
+	private static NodeDynamicArray bestNodes = new NodeDynamicArray(1);
 	
 	public static void arvuta(boolean karpega) {
 		readInputFileAndFillArrays();
@@ -29,7 +30,7 @@ public class JaanuseHargneJaKarbi {
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
 //System.out.println("------uus-----round----- " + vanem);
-			if (vanem.getBound() > maxProfit || !karpega) {		
+			if (vanem.getBound() >= maxProfit || !karpega) {		
 				valikud = vanem.getValikud();
 //				System.out.println("Valikute maht: " + valikud.lastElement());
 				int jargmiseDepth = vanem.getDepth() + 1;
@@ -41,7 +42,7 @@ public class JaanuseHargneJaKarbi {
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
-					bestNode = jargmisega;
+					bestNodes.add(jargmisega);
 				}
 				if(jargmisega.getBound() > maxProfit || !karpega) {
 					PQ.enqueue(jargmisega);
@@ -57,16 +58,25 @@ public class JaanuseHargneJaKarbi {
 			}
 		}
 System.out.println(maxProfit);
-System.out.println(bestNode);
-	DynamicArray valikud = bestNode.getValikud();
-	System.out.println(valikud.lastElement());
+
+
+		int most = bestNodes.get(bestNodes.getLastElementIndex()).getValue();
+		
+		System.out.println(bestNodes);
+		for (int f = bestNodes.getLastElementIndex(); f >= 0; f--) {
+			if (bestNodes.get(f).getValue() < most) break;
+			int vaartused = 0;
+			int kaalud = 0;
+			DynamicArray valikud = bestNodes.get(f).getValikud();
 System.out.println(valikud);
-		for (int i = 0; i <= valikud.lastElementsIndex; i++) {
-			if (valikud.get(i) == 1) {
-				System.out.println(values.get(i) + " " + weights.get(i));
-			} else if (valikud.get(0) == 0) {
-				System.out.println("heh");
+			for (int i = 0; i <= valikud.lastElementsIndex; i++) {
+				if (valikud.get(i) == 1) {
+//System.out.println(values.get(i) + " " + weights.get(i));
+					vaartused += values.get(i);
+					kaalud += weights.get(i);
+				}
 			}
+			System.out.println(" kokku: " + vaartused + " ja " + kaalud + "\n");
 		}
 	}
 	
@@ -152,6 +162,4 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 		}
 		return result;		
 	}
-	
-
 }

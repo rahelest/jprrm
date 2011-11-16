@@ -28,11 +28,7 @@ public class Node {
 		value = newValue;
 		weight = newWeight;
 		bound = 0;
-		if (weight == 0) {
-			ratio = 0;
-		} else {
-			ratio = value/weight;
-		}
+		calculateRatio();
 	}
 	
 	/**
@@ -40,6 +36,14 @@ public class Node {
 	 */
 	public float getRatio() {
 		return ratio;
+	}
+	
+	private void calculateRatio () {
+		if (weight == 0) {
+			ratio = 0;
+		} else {
+			ratio = ((float) value) / ((float) weight);
+		}
 	}
 
 	public Node(int val, Node n) {
@@ -76,6 +80,7 @@ public class Node {
 	 */
 	public void setValue(int value) {
 		this.value = value;
+		calculateRatio();
 	}
 
 	/**
@@ -90,6 +95,7 @@ public class Node {
 	 */
 	public void setWeight(int weight) {
 		this.weight = weight;
+		calculateRatio();
 	}
 
 	/**

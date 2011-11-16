@@ -12,7 +12,7 @@ public class Main {
 		long lopp1 = System.currentTimeMillis();
 		
 		long algus2 = System.currentTimeMillis();
-		JaanuseHargneJaKarbi.arvuta(false);
+//		JaanuseHargneJaKarbi.arvuta(false);
 		long lopp2 = System.currentTimeMillis();
 		
 		System.out.println("Koos kärpimisega: " + (lopp1 - algus1));

@@ -22,10 +22,9 @@ public class JaanuseHargneJaKarbi {
 	public static void main(String[] args) {
 		readInputFileAndFillArrays();
 		initialize();
-		System.out.println(PQ);
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
-			System.out.println("uus round");
+System.out.println("------uus-----round----- " + vanem);
 //			System.out.println(vanem);
 //			System.out.println(vanem.getBound() + " lol " + maxProfit);
 			if (vanem.getBound() > maxProfit) {
@@ -34,16 +33,18 @@ public class JaanuseHargneJaKarbi {
 				jargmisega.setWeight(vanem.getWeight() + weights.get(jargmisega.getDepth()));
 				jargmisega.setValue(vanem.getValue() + values.get(jargmisega.getDepth()));
 //				System.out.println("sygavus: " + jargmisega.getDepth());
+System.out.print("Jargmisega bound: ");
 				jargmisega.setBound(bound(jargmisega));
 //				System.out.println("jargmisega kaal: " + jargmisega.getWeight() + " mahutavus: " + sackCapacity + " jargmisega vaartus: " + jargmisega.getValue() + " maxprofit: " + maxProfit);
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
 				}				
-				if(bound(jargmisega) > maxProfit) {
+				if(jargmisega.getBound() > maxProfit) {
 					PQ.enqueue(jargmisega);
 //					System.out.println("lisan ühe");
 				}
 				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
+System.out.print("Jargmiseta bound: ");
 				jargmiseta.setBound(bound(jargmiseta));
 				if (jargmiseta.getBound() > maxProfit) {
 					PQ.enqueue(jargmiseta);
@@ -51,7 +52,7 @@ public class JaanuseHargneJaKarbi {
 				}
 			}
 		}
-		System.out.println(maxProfit);
+System.out.println(maxProfit);
 	}
 	
 	private static void readInputFileAndFillArrays() {
@@ -65,7 +66,8 @@ public class JaanuseHargneJaKarbi {
 			String rida = br.readLine();
 			sackCapacity = Integer.parseInt(rida);
 			rida = br.readLine();
-			while(rida != null) {				
+			while(rida != null) {	
+System.out.println("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
 				values.add(Integer.parseInt(temp[0]));
 				weights.add(Integer.parseInt(temp[1]));				
@@ -74,6 +76,7 @@ public class JaanuseHargneJaKarbi {
 			}
 			br.close();
 			itemCount = i;
+System.out.println("Itemcount: " + itemCount);
 		} catch (FileNotFoundException e) {
 			System.out.println("Sisendfaili ei leitud!");
 			return;
@@ -90,8 +93,11 @@ public class JaanuseHargneJaKarbi {
 		jargmisega = new Node();
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
+System.out.println("Päris esimene bound: " + vanem.getBound());
 		PQ.enqueue(vanem);
 		PQ.enqueue(vanem);
+System.out.println("Tühi sisendvanem: " + vanem);
+System.out.println("Ja PQ: \t" + PQ);
 	}
 	
 	private static float bound(Node input) {
@@ -104,7 +110,7 @@ public class JaanuseHargneJaKarbi {
 		} else if (input.getDepth() < weights.lastElement()) {
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
-			System.out.println("i: " + i);
+System.out.print("IIII: " + i);
 			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
@@ -114,8 +120,11 @@ public class JaanuseHargneJaKarbi {
 			if (j <= itemCount) {
 				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
 			}
+System.out.print(" - " + i);
+		} else {
+System.out.print("Elemendid otsas");
 		}
-		System.out.println("boundresult: " + result);
+System.out.println(", boundresult: " + result);
 		return result;		
 	}
 	

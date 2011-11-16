@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import Tanks.shared.*;
+import Tanks.shared.Message;
 import Tanks.shared.messageTypes.*;
 
 /**

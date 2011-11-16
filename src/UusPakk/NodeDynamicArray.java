@@ -52,7 +52,8 @@ public class NodeDynamicArray {
 		try {
 			dynamicArray[i] = n;
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Nii ei saa, vähendada prooviti väljaspool massiivi!");
+			e.printStackTrace();
+			System.out.println("Vale indeks: " + i + " ning pikkus oli " + dynamicArray.length);
 		}
 	}
 	

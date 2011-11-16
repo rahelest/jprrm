@@ -29,7 +29,7 @@ public class JaanuseHargneJaKarbi {
 		System.out.println(PQ);
 		while (!PQ.isEmpty()) {
 			vanem = PQ.dequeueNode();
-//			System.out.println("uus round");
+			System.out.println("uus round");
 //			System.out.println(vanem);
 //			System.out.println(vanem.getBound() + " lol " + maxProfit);
 			if (vanem.getBound() > maxProfit) {
@@ -99,19 +99,16 @@ public class JaanuseHargneJaKarbi {
 	}
 	
 	private static float bound(Node input) {
-		float result = 0;
+		float result = input.getValue();
 		int i = 0;
 		int j = 0;
 		int selectionWeight = 0;
 		if (input.getWeight() >= sackCapacity) {
-//			System.out.println("boundresult: " + result);
 			return 0;
-		} else {
-			result = input.getValue();
+		} else if (input.getDepth() < weights.lastElement()) {
 			i = input.getDepth() + 1;			
 			selectionWeight = input.getWeight();
-			System.out.println(i);
-			//weights.get(i) võetakse liiga väike
+			System.out.println("i: " + i);
 			while( i <= itemCount && selectionWeight + weights.get(i) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
@@ -122,7 +119,7 @@ public class JaanuseHargneJaKarbi {
 				result = result + (sackCapacity - selectionWeight) * (values.get(j) / weights.get(j));
 			}
 		}
-//		System.out.println("boundresult: " + result);
+		System.out.println("boundresult: " + result);
 		return result;		
 	}
 	

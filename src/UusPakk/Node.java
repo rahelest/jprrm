@@ -1,5 +1,7 @@
 package UusPakk;
 
+import java.util.ArrayList;
+
 /**
  * @author t083851 Jaanus Piip
  * @author t093563 Rahel Rjadnev-Meristo
@@ -14,7 +16,7 @@ public class Node {
 	private float bound;
 	private float ratio;
 	private Node next;
-	private BooleanQueue valikud;
+	private ArrayList<Boolean> valikud;
 	
 	public Node() {
 		depth = -1;
@@ -120,11 +122,11 @@ public class Node {
 		return "( " + value + ", " + weight + ", " + ratio + " ) ";
 	}
 
-	public BooleanQueue getValikud() {
+	public ArrayList<Boolean> getValikud() {
 		return valikud;
 	}
 
-	public void setValikud(BooleanQueue valikud) {
+	public void setValikud(ArrayList<Boolean> valikud) {
 		this.valikud = valikud;
 	}
 	

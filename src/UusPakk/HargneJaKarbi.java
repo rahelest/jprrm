@@ -7,11 +7,19 @@ package UusPakk;
  */
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class HargneJaKarbi {
 	
@@ -29,8 +37,10 @@ public class HargneJaKarbi {
 	private NodePriorityQueue items;
 	private int sackCapacity;
 	private int itemCount;
-	private NodeDynamicArray bestNodes;
+	private Set<Node> bestNodes;
 	private boolean PQga;
+	
+	PrintWriter pw = null;
 	
 	public void knapsack(boolean karpega, boolean pqga) {
 		initializeDynArrays();
@@ -40,7 +50,7 @@ public class HargneJaKarbi {
 		while ((PQga && !PQ.isEmpty()) || (!PQga && !stack.isEmpty())) {
 			if (PQga) {
 				vanem = PQ.dequeueNode();
-				System.out.println(PQ.size());
+//				System.out.println(PQ.size());
 			} else {
 				vanem = stack.pop();
 			}
@@ -59,7 +69,7 @@ public class HargneJaKarbi {
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
-					bestNodes.add(jargmisega);
+					bestNodes.add(jargmisega.trimZeros());
 				}
 				if(jargmisega.getBound() > maxProfit || !karpega) {
 					if (PQga) {
@@ -86,31 +96,69 @@ public class HargneJaKarbi {
 			}
 		}
 System.out.println(maxProfit);
-
-
-		int most = bestNodes.get(bestNodes.getLastElementIndex()).getValue();
-		System.out.println(bestNodes);
-		for (int f = bestNodes.getLastElementIndex(); f >= 0; f--) {
-			if (bestNodes.get(f).getValue() < most) break;
-			int vaartused = 0;
-			int kaalud = 0;
-			valikud = bestNodes.get(f).getValikud();
-System.out.println(valikud);
-			for (int i = 0; i < valikud.size(); i++) {
-				if (valikud.get(i).booleanValue()) {
-//System.out.println(values.get(i) + " " + weights.get(i));
-					vaartused += values.get(i);
-					kaalud += weights.get(i);
-				}
-			}
-			System.out.println(" kokku: " + vaartused + " ja " + kaalud + "\n");
+		int most = 0;
+		Iterator bestNodesIterator = bestNodes.iterator();
+		while (bestNodesIterator.hasNext()) {
+			Node n = (Node) bestNodesIterator.next();
+			if (n.getValue() > most) most = n.getValue();
 		}
+		System.out.println("Most: " + most);
+		bestNodesIterator = bestNodes.iterator();
+		initializeWriting();
+		while (bestNodesIterator.hasNext()) {
+			Node n = (Node) bestNodesIterator.next();
+			if (n.getValue() >= most) {
+				int vaartused = 0;
+				int kaalud = 0;
+				valikud = n.getValikud();
+				System.out.println(valikud);
+				for (int i = 0; i < valikud.size(); i++) {
+					if (valikud.get(i).booleanValue()) {
+						vaartused += values.get(i);
+						kaalud += weights.get(i);
+					}
+				}
+				System.out.println(" kokku: " + vaartused + " ja " + kaalud + "\n");
+				pw.println(vaartused + " " + kaalud);
+				break;
+			}
+		}
+		
+		writeToFile(valikud);
 	}
 	
+	private void writeToFile(ArrayList<Boolean> valikud2) {
+		for (int i = 0; i < valikud.size(); i++) {
+			if (valikud.get(i).booleanValue()) {
+				pw.println(values.get(i) + " " + weights.get(i));
+			}
+		}
+		pw.flush();		// puhver t�hjaks
+		pw.close();		// fail kinni
+			
+	}
+//			}
+//		}
+//
+//		for (int f = bestNodes.bestNodes.size() - 1); f >= 0; f--) {
+//			if (bestNodes.get(f).getValue() < most) break;
+//			int vaartused = 0;
+//			int kaalud = 0;
+//			valikud = bestNodes.get(f).getValikud();
+//System.out.println(valikud);
+//			for (int i = 0; i < valikud.size(); i++) {
+//				if (valikud.get(i).booleanValue()) {
+////System.out.println(values.get(i) + " " + weights.get(i));
+//					vaartused += values.get(i);
+//					kaalud += weights.get(i);
+//				}
+//			}
+		
+	
 	private void initializeDynArrays() {
-		bestNodes = new NodeDynamicArray(1);
-		values = new DynamicArray(1);
-		weights = new DynamicArray(1);
+		bestNodes = new HashSet<Node>();
+		values = new DynamicArray(4);
+		weights = new DynamicArray(4);
 		
 	}
 
@@ -127,21 +175,18 @@ System.out.println(valikud);
 			sackCapacity = Integer.parseInt(rida);
 			rida = br.readLine();
 			while(rida != null) {	
-//System.out.print("Loetud rida: " + rida);
 				String[] temp = rida.split(" ");
 				Node n = new Node(0, Integer.parseInt(temp[0]), Integer.parseInt(temp[1]));
 				n.setBound(n.getRatio());		
-//System.out.println(" " + n.getBound());
 				items.enqueue(n);
 				rida = br.readLine();
 				i++;
 			}
 			br.close();
 			itemCount = i;
-//System.out.println(items);
 			while (!items.isEmpty()) {
 				Node n = items.dequeueNode();
-//System.out.println(n);
+
 				values.add(n.getValue());
 				weights.add(n.getWeight());
 			}
@@ -173,14 +218,9 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 		} else {
 			stack.push(vanem);
 		}
-		
-//System.out.println("Tühi sisendvanem: " + vanem);
-//System.out.println("Ja PQ: \t" + PQ);
 	}
 	
 	private float bound(Node input) {
-//		System.out.println(values);
-//		System.out.println(weights);
 		float result = input.getValue();
 		int i = 0;
 		int j = 0;
@@ -194,17 +234,28 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 			while( i < itemCount && (selectionWeight + weights.get(i)) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
-//				System.out.println(result + "\t" + values.get(i) + "\t/" + selectionWeight + "\t" + weights.get(i) + "\t/" + i);
 				i++;
 			}
-//			System.out.println(i + " " + itemCount + " " + selectionWeight + " " + sackCapacity);
-//			System.out.print(result + " ");
 			j=i;
 			if (j < itemCount) {
 				result = result + ((float)(sackCapacity - selectionWeight)) * (((float)values.get(j)) / ((float)weights.get(j)));
 			}
-//			System.out.println(result + "\n");
 		}
 		return result;		
+	}
+	
+	private void initializeWriting() {
+		
+		String sisendfail  = "D:\\100.out";
+		try {
+			pw = new PrintWriter(
+						new BufferedWriter(
+								new OutputStreamWriter(
+										new FileOutputStream(
+											sisendfail, false))));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		}		
 	}
 }

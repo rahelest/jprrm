@@ -83,4 +83,61 @@ public class NodeDynamicArray {
 		}
 		return result;
 	}
+	
+	
+
+	public NodeDynamicArray best() {
+		int best = 0;
+		NodeDynamicArray bestValikud = new NodeDynamicArray(1);
+			
+		for (int i = lastElementsIndex;  i > 0; i--) {
+//			if (dynamicArray[i] == null) continue;
+			int value = dynamicArray[i].getValue();
+			if (value > best) {
+				best = value;
+			}
+			if (dynamicArray[i].getValue() >= best) {
+				bestValikud.add(dynamicArray[i]);
+			}
+		}
+		
+		return bestValikud;
+	}
+		
+	public void set() {
+		
+		for (int i = 0;  i <= getLastElementIndex(); i++) {
+			DynamicArray valikud = dynamicArray[i].getValikud();
+			valikud = trim(valikud);
+		}
+		for (int i = 0;  i < lastElementsIndex; i++) {
+			DynamicArray valikud = dynamicArray[i].getValikud();
+			for (int j = i + 1; j <= lastElementsIndex; j++) {
+				if (dynamicArray[j] == null) System.out.println(toString());
+				DynamicArray valikud2 = dynamicArray[j].getValikud();
+				if (valikud.vordle(valikud2)) {
+					put(rem(), j);
+				}
+			}
+		}
+		
+	}
+
+	private DynamicArray trim(DynamicArray valikud) {
+		System.out.println(valikud);
+		for (int i = valikud.lastElementsIndex; i >= 0; i++) {
+			if (valikud.get(i) == 1) {
+				System.out.print("1");
+				break;
+			}
+			else {
+				System.out.print("0");
+				valikud.rem();
+			}
+		}
+		System.out.println();
+		return valikud;
+	}
 }
+
+

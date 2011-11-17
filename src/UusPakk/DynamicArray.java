@@ -39,6 +39,11 @@ public class DynamicArray {
 		return lastElementsIndex;
 	}
 	
+	/**
+	 * Remove last element of the array.
+	 * @return The removed element.
+	 */
+	
 	public int rem() {		
 		int temp = dynArray[lastElementsIndex];
 		dynArray[lastElementsIndex] = 0;
@@ -95,5 +100,12 @@ public class DynamicArray {
 			uus.add(dynArray[i]);
 		}
 		return uus;
+	}
+
+	public boolean vordle(DynamicArray valikud2) {
+		for (int i = 0; i <= lastElementsIndex; i++) {
+			if (dynArray[i] != valikud2.get(i)) return false;
+		}
+		return true;
 	}
 }

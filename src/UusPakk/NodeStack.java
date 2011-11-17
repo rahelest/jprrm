@@ -19,4 +19,9 @@ public class NodeStack {
 	  }
 	  
 	 }
+
+	public boolean isEmpty() {
+		if (first == null) return true;
+		else return false;
+	}
 }

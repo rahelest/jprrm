@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class HargneJaKarbi {
 	
@@ -22,9 +23,9 @@ public class HargneJaKarbi {
 	private Node jargmiseta;
 	private DynamicArray values;
 	private DynamicArray weights;
-	private BooleanQueue valikud;
-	private BooleanQueue valikudJargmisega;
-	private BooleanQueue valikudJargmiseta;
+	private ArrayList<Boolean> valikud;
+	private ArrayList<Boolean> valikudJargmisega;
+	private ArrayList<Boolean> valikudJargmiseta;
 	private NodePriorityQueue items;
 	private int sackCapacity;
 	private int itemCount;
@@ -51,7 +52,7 @@ public class HargneJaKarbi {
 //				System.out.println("Valikute maht: " + valikud.lastElement());
 				int jargmiseDepth = vanem.getDepth() + 1;
 				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
-				valikudJargmisega = valikud.clone();
+				valikudJargmisega = (ArrayList<Boolean>) valikud.clone();
 				valikudJargmisega.add(true);
 //				System.out.println();
 				jargmisega.setValikud(valikudJargmisega);
@@ -70,7 +71,7 @@ public class HargneJaKarbi {
 					
 				}
 				jargmiseta = new Node(jargmiseDepth,vanem.getValue(),vanem.getWeight());
-				valikudJargmiseta = valikud.clone();
+				valikudJargmiseta = (ArrayList<Boolean>) valikud.clone();
 				valikudJargmiseta.add(false);
 				jargmiseta.setValikud(valikudJargmiseta);
 				jargmiseta.setBound(bound(jargmiseta));
@@ -95,8 +96,8 @@ System.out.println(maxProfit);
 			int kaalud = 0;
 			valikud = bestNodes.get(f).getValikud();
 System.out.println(valikud);
-			for (int i = 0; i < valikud.getSize(); i++) {
-				if (valikud.get(i).getValue()) {
+			for (int i = 0; i < valikud.size(); i++) {
+				if (valikud.get(i).booleanValue()) {
 //System.out.println(values.get(i) + " " + weights.get(i));
 					vaartused += values.get(i);
 					kaalud += weights.get(i);
@@ -164,7 +165,7 @@ System.out.println(valikud);
 		jargmisega = new Node();
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
-		vanem.setValikud(new BooleanQueue());
+		vanem.setValikud(new ArrayList<Boolean>());
 System.out.println("Päris esimene bound: " + vanem.getBound());
 		if (PQga) {
 			PQ.enqueue(vanem);

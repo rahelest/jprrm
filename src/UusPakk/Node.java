@@ -14,7 +14,7 @@ public class Node {
 	private float bound;
 	private float ratio;
 	private Node next;
-	private DynamicArray valikud;
+	private BooleanQueue valikud;
 	
 	public Node() {
 		depth = -1;
@@ -120,12 +120,11 @@ public class Node {
 		return "( " + value + ", " + weight + ", " + ratio + " ) ";
 	}
 
-	public DynamicArray getValikud() {
+	public BooleanQueue getValikud() {
 		return valikud;
 	}
 
-	public void setValikud(DynamicArray valikud) {
-		valikud = new DynamicArray(valikud.lastElementsIndex + 1);
+	public void setValikud(BooleanQueue valikud) {
 		this.valikud = valikud;
 	}
 	

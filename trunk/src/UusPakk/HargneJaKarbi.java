@@ -1,5 +1,11 @@
 package UusPakk;
 
+/**
+ * @author t083851 Jaanus Piip
+ * @author t093563 Rahel Rjadnev-Meristo
+ *
+ */
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -109,7 +115,7 @@ System.out.println(valikud);
 
 	private void readInputFileAndFillArrays() {
 		items = new NodePriorityQueue();
-		String sisendFail = "C:\\" + "15.in";
+		String sisendFail = "C:\\" + "100.in";
 		int i = 0;
 		try {
 			BufferedReader br = new BufferedReader(

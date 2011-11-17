@@ -12,7 +12,7 @@ public class NodePriorityQueue {
 	
 	public NodePriorityQueue() {
 		super();
-		d = new NodeDynamicArray(1);
+		d = new NodeDynamicArray(4);
 		d.add(null);
 	}
 	

@@ -36,7 +36,7 @@ public class NodeDynamicArray {
 		Node tempNode = dynamicArray[lastElementsIndex];
 		dynamicArray[lastElementsIndex] = null;
 		
-		if (lastElementsIndex <= dynamicArray.length / 4) {
+		if (lastElementsIndex < dynamicArray.length / 4) {
 			Node[] temp = new Node[dynamicArray.length  / 4];
 			for (int i = 0; i < temp.length; i++) {
 				temp[i] = dynamicArray[i];
@@ -94,7 +94,7 @@ public class NodeDynamicArray {
 
 	public NodeDynamicArray best() {
 		int best = 0;
-		NodeDynamicArray bestValikud = new NodeDynamicArray(1);
+		NodeDynamicArray bestValikud = new NodeDynamicArray(4);
 			
 		for (int i = lastElementsIndex;  i > 0; i--) {
 //			if (dynamicArray[i] == null) continue;
@@ -116,11 +116,12 @@ public class NodeDynamicArray {
 			DynamicArray valikud = dynamicArray[i].getValikud();
 			valikud = trim(valikud);
 		}
+		DynamicArray valikud; DynamicArray valikud2;
 		for (int i = 0;  i < lastElementsIndex; i++) {
-			DynamicArray valikud = dynamicArray[i].getValikud();
+			valikud = dynamicArray[i].getValikud();
 			for (int j = i + 1; j <= lastElementsIndex; j++) {
 				if (dynamicArray[j] == null) System.out.println(toString());
-				DynamicArray valikud2 = dynamicArray[j].getValikud();
+				valikud2 = dynamicArray[j].getValikud();
 				if (valikud.vordle(valikud2)) {
 					put(rem(), j);
 				}

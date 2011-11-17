@@ -164,6 +164,7 @@ System.out.println(valikud);
 		jargmisega = new Node();
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
+		vanem.setValikud(new DynamicArray(1));
 System.out.println("Päris esimene bound: " + vanem.getBound());
 		if (PQga) {
 			PQ.enqueue(vanem);

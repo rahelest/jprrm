@@ -27,12 +27,7 @@ public class DynamicArray {
 			for (int i = 0; i < dynArray.length; i++) {
 				temp[i] = dynArray[i];
 			}
-//			for (int i = 0; i < temp.length; i++) {
-////				System.out.println(temp[i]);
-//			}
 			dynArray = temp;
-			
-//			System.out.println(x + " 2");
 		}
 		dynArray[lastElementsIndex] = x;
 		
@@ -96,7 +91,7 @@ public class DynamicArray {
 	}
 	
 	public DynamicArray clone() {
-		DynamicArray uus = new DynamicArray(1);
+		DynamicArray uus = new DynamicArray(dynArray.length+1);
 		for (int i = 0; i <= lastElementsIndex; i++) {
 			uus.add(dynArray[i]);
 		}

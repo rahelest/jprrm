@@ -14,7 +14,7 @@ public class Node {
 	private float bound;
 	private float ratio;
 	private Node next;
-	private DynamicArray valikud = new DynamicArray(1);
+	private DynamicArray valikud;
 	
 	public Node() {
 		depth = -1;
@@ -125,6 +125,7 @@ public class Node {
 	}
 
 	public void setValikud(DynamicArray valikud) {
+		valikud = new DynamicArray(valikud.lastElementsIndex + 1);
 		this.valikud = valikud;
 	}
 	

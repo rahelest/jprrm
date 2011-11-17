@@ -22,9 +22,9 @@ public class HargneJaKarbi {
 	private Node jargmiseta;
 	private DynamicArray values;
 	private DynamicArray weights;
-	private DynamicArray valikud;
-	private DynamicArray valikudJargmisega;
-	private DynamicArray valikudJargmiseta;
+	private BooleanQueue valikud;
+	private BooleanQueue valikudJargmisega;
+	private BooleanQueue valikudJargmiseta;
 	private NodePriorityQueue items;
 	private int sackCapacity;
 	private int itemCount;
@@ -52,7 +52,7 @@ public class HargneJaKarbi {
 				int jargmiseDepth = vanem.getDepth() + 1;
 				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
 				valikudJargmisega = valikud.clone();
-				valikudJargmisega.add(1);
+				valikudJargmisega.add(true);
 //				System.out.println();
 				jargmisega.setValikud(valikudJargmisega);
 				jargmisega.setBound(bound(jargmisega));
@@ -71,7 +71,7 @@ public class HargneJaKarbi {
 				}
 				jargmiseta = new Node(jargmiseDepth,vanem.getValue(),vanem.getWeight());
 				valikudJargmiseta = valikud.clone();
-				valikudJargmiseta.add(0);
+				valikudJargmiseta.add(false);
 				jargmiseta.setValikud(valikudJargmiseta);
 				jargmiseta.setBound(bound(jargmiseta));
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
@@ -93,10 +93,10 @@ System.out.println(maxProfit);
 			if (bestNodes.get(f).getValue() < most) break;
 			int vaartused = 0;
 			int kaalud = 0;
-			DynamicArray valikud = bestNodes.get(f).getValikud();
+			valikud = bestNodes.get(f).getValikud();
 System.out.println(valikud);
-			for (int i = 0; i <= valikud.lastElementsIndex; i++) {
-				if (valikud.get(i) == 1) {
+			for (int i = 0; i < valikud.getSize(); i++) {
+				if (valikud.get(i).getValue()) {
 //System.out.println(values.get(i) + " " + weights.get(i));
 					vaartused += values.get(i);
 					kaalud += weights.get(i);
@@ -164,7 +164,7 @@ System.out.println(valikud);
 		jargmisega = new Node();
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
-		vanem.setValikud(new DynamicArray(1));
+		vanem.setValikud(new BooleanQueue());
 System.out.println("Päris esimene bound: " + vanem.getBound());
 		if (PQga) {
 			PQ.enqueue(vanem);

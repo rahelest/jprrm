@@ -18,19 +18,20 @@ public class Main {
 		arvuta.knapsack(true, true);
 		long lopp1 = System.currentTimeMillis();
 		
-//		long algus3 = System.currentTimeMillis();
-//		arvuta = new HargneJaKarbi();
-//		arvuta.knapsack(true, false);
-//		long lopp3 = System.currentTimeMillis();
+		long algus3 = System.currentTimeMillis();
+		arvuta = new HargneJaKarbi();
+		arvuta.knapsack(true, false);
+		long lopp3 = System.currentTimeMillis();
 		
 //		long algus2 = System.currentTimeMillis();
 //		arvuta = new HargneJaKarbi();
 //		arvuta.knapsack(false, true);
 //		long lopp2 = System.currentTimeMillis();
 		
-		System.out.println(lopp1-algus1);
-//		System.out.println(lopp3-algus3);
-//		System.out.println(lopp2-algus2);
+		
+		System.out.println("Kärpimisega: " + (lopp1-algus1));
+		System.out.println("Sügavutiotsing: " + (lopp3-algus3));
+//		System.out.println("Kärpimiseta: " + (lopp2-algus2));
 		
 	}
 

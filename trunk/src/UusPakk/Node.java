@@ -129,6 +129,20 @@ public class Node {
 	public void setValikud(ArrayList<Boolean> valikud) {
 		this.valikud = valikud;
 	}
+
+	public Node trimZeros() {
+		for (int i = valikud.size() - 1; i >= 0; i++) {
+			if (valikud.get(i)) {
+//				System.out.print("1");
+				break;
+			}
+			else {
+//				System.out.print("0");
+				valikud.remove(valikud.size() - 1);
+			}
+		}
+		return this;
+	}
 	
 	
 

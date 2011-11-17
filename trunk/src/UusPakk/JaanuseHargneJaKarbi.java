@@ -30,7 +30,7 @@ public class JaanuseHargneJaKarbi {
 		PQga = pqga;
 		readInputFileAndFillArrays();
 		initialize();
-		while (!PQ.isEmpty()) {
+		while ((PQga && !PQ.isEmpty()) || (!PQga && !stack.isEmpty())) {
 			if (PQga) {
 				vanem = PQ.dequeueNode();
 				

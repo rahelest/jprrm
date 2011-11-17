@@ -11,7 +11,7 @@ public class Main {
 		long lopp1 = System.currentTimeMillis();
 		
 		long algus2 = System.currentTimeMillis();
-		JaanuseHargneJaKarbi.arvuta(false, true);
+//		JaanuseHargneJaKarbi.arvuta(false, true);
 		long lopp2 = System.currentTimeMillis();
 		
 		long algus3 = System.currentTimeMillis();

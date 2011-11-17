@@ -7,15 +7,18 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		long algus1 = System.currentTimeMillis();
-//		JaanuseHargneJaKarbi.arvuta(true, true);
+		HargneJaKarbi arvuta = new HargneJaKarbi();
+		arvuta.knapsack(true, true);
 		long lopp1 = System.currentTimeMillis();
 		
 		long algus2 = System.currentTimeMillis();
-//		JaanuseHargneJaKarbi.arvuta(false, true);
+		arvuta = new HargneJaKarbi();
+		arvuta.knapsack(false, true);
 		long lopp2 = System.currentTimeMillis();
 		
 		long algus3 = System.currentTimeMillis();
-		JaanuseHargneJaKarbi.arvuta(true, false);
+		arvuta = new HargneJaKarbi();
+		arvuta.knapsack(true, false);
 		long lopp3 = System.currentTimeMillis();
 		
 		System.out.println(lopp1-algus1);

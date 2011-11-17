@@ -5,28 +5,28 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
-public class JaanuseHargneJaKarbi {
+public class HargneJaKarbi {
 	
-	private static NodePriorityQueue PQ;
-	private static NodeStack stack;
-	private static float maxProfit;	
-	private static Node vanem;
-	private static Node jargmisega;
-	private static Node jargmiseta;
-	private static DynamicArray values = new DynamicArray(1);
-	private static DynamicArray weights = new DynamicArray(1);
-	private static DynamicArray valikud;
-	private static DynamicArray valikudJargmisega;
-	private static DynamicArray valikudJargmiseta;
-	private static NodePriorityQueue items = new NodePriorityQueue();
-	private static int sackCapacity;
-	private static int itemCount;
-	private static NodeDynamicArray bestNodes = new NodeDynamicArray(1);
-	private static boolean PQga;
+	private NodePriorityQueue PQ;
+	private NodeStack stack;
+	private float maxProfit;	
+	private Node vanem;
+	private Node jargmisega;
+	private Node jargmiseta;
+	private DynamicArray values;
+	private DynamicArray weights;
+	private DynamicArray valikud;
+	private DynamicArray valikudJargmisega;
+	private DynamicArray valikudJargmiseta;
+	private NodePriorityQueue items;
+	private int sackCapacity;
+	private int itemCount;
+	private NodeDynamicArray bestNodes;
+	private boolean PQga;
 	
-	public static void arvuta(boolean karpega, boolean pqga) {
+	public void knapsack(boolean karpega, boolean pqga) {
+		initializeDynArrays();
 		PQga = pqga;
 		readInputFileAndFillArrays();
 		initialize();
@@ -82,9 +82,6 @@ System.out.println(maxProfit);
 
 
 		int most = bestNodes.get(bestNodes.getLastElementIndex()).getValue();
-//		bestNodes = bestNodes.best();
-//		bestNodes.set();
-		
 		System.out.println(bestNodes);
 		for (int f = bestNodes.getLastElementIndex(); f >= 0; f--) {
 			if (bestNodes.get(f).getValue() < most) break;
@@ -103,7 +100,15 @@ System.out.println(valikud);
 		}
 	}
 	
-	private static void readInputFileAndFillArrays() {
+	private void initializeDynArrays() {
+		bestNodes = new NodeDynamicArray(1);
+		values = new DynamicArray(1);
+		weights = new DynamicArray(1);
+		
+	}
+
+	private void readInputFileAndFillArrays() {
+		items = new NodePriorityQueue();
 		String sisendFail = "C:\\" + "15.in";
 		int i = 0;
 		try {
@@ -143,13 +148,12 @@ System.out.println(valikud);
 		
 	}
 
-	private static void initialize() {
+	private void initialize() {
 		if (PQga) {
 			PQ = new NodePriorityQueue();
 		} else {
 			stack = new NodeStack();
 		}
-		
 		maxProfit = 0;
 		jargmisega = new Node();
 		vanem = new Node();
@@ -166,7 +170,7 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 //System.out.println("Ja PQ: \t" + PQ);
 	}
 	
-	private static float bound(Node input) {
+	private float bound(Node input) {
 //		System.out.println(values);
 //		System.out.println(weights);
 		float result = input.getValue();

@@ -40,7 +40,7 @@ public class HargneJaKarbi {
 		while ((PQga && !PQ.isEmpty()) || (!PQga && !stack.isEmpty())) {
 			if (PQga) {
 				vanem = PQ.dequeueNode();
-				
+				System.out.println(PQ.size());
 			} else {
 				vanem = stack.pop();
 			}

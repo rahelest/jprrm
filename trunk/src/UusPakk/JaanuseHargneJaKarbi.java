@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class JaanuseHargneJaKarbi {
 	
 	private static NodePriorityQueue PQ;
+	private static NodeStack stack;
 	private static float maxProfit;	
 	private static Node vanem;
 	private static Node jargmisega;
@@ -23,14 +24,23 @@ public class JaanuseHargneJaKarbi {
 	private static int sackCapacity;
 	private static int itemCount;
 	private static NodeDynamicArray bestNodes = new NodeDynamicArray(1);
+	private static boolean PQga;
 	
-	public static void arvuta(boolean karpega) {
+	public static void arvuta(boolean karpega, boolean pqga) {
+		PQga = pqga;
 		readInputFileAndFillArrays();
 		initialize();
 		while (!PQ.isEmpty()) {
-			vanem = PQ.dequeueNode();
+			if (PQga) {
+				vanem = PQ.dequeueNode();
+				
+			} else {
+				vanem = stack.pop();
+			}
+			
 //System.out.println("------uus-----round----- " + vanem);
-			if (vanem.getBound() >= maxProfit || !karpega) {		
+			if ((vanem.getBound() >= maxProfit || !karpega) && (vanem.getDepth() < values.lastElementsIndex)) {		
+//				System.out.println(PQ.size() + " " + vanem.getDepth() + " " + values.lastElementsIndex);
 				valikud = vanem.getValikud();
 //				System.out.println("Valikute maht: " + valikud.lastElement());
 				int jargmiseDepth = vanem.getDepth() + 1;
@@ -45,15 +55,26 @@ public class JaanuseHargneJaKarbi {
 					bestNodes.add(jargmisega);
 				}
 				if(jargmisega.getBound() > maxProfit || !karpega) {
-					PQ.enqueue(jargmisega);
+					if (PQga) {
+						PQ.enqueue(jargmisega);
+//						System.out.println("GA");
+					} else {
+						stack.push(jargmisega);
+					}
+					
 				}
-				jargmiseta = new Node(vanem.getDepth() + 1,vanem.getValue(),vanem.getWeight());
+				jargmiseta = new Node(jargmiseDepth,vanem.getValue(),vanem.getWeight());
 				valikudJargmiseta = valikud.clone();
 				valikudJargmiseta.add(0);
 				jargmiseta.setValikud(valikudJargmiseta);
 				jargmiseta.setBound(bound(jargmiseta));
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
-					PQ.enqueue(jargmiseta);
+					if (PQga) {
+						PQ.enqueue(jargmiseta);
+//						System.out.println("TA");
+					} else {
+						stack.push(jargmiseta);
+					}
 				}
 			}
 		}
@@ -61,6 +82,8 @@ System.out.println(maxProfit);
 
 
 		int most = bestNodes.get(bestNodes.getLastElementIndex()).getValue();
+//		bestNodes = bestNodes.best();
+//		bestNodes.set();
 		
 		System.out.println(bestNodes);
 		for (int f = bestNodes.getLastElementIndex(); f >= 0; f--) {
@@ -121,14 +144,24 @@ System.out.println(valikud);
 	}
 
 	private static void initialize() {
-		PQ = new NodePriorityQueue();
+		if (PQga) {
+			PQ = new NodePriorityQueue();
+		} else {
+			stack = new NodeStack();
+		}
+		
 		maxProfit = 0;
 		jargmisega = new Node();
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
 System.out.println("Päris esimene bound: " + vanem.getBound());
-		PQ.enqueue(vanem);
-		PQ.enqueue(vanem);
+		if (PQga) {
+			PQ.enqueue(vanem);
+			PQ.enqueue(vanem);
+		} else {
+			stack.push(vanem);
+		}
+		
 //System.out.println("Tühi sisendvanem: " + vanem);
 //System.out.println("Ja PQ: \t" + PQ);
 	}
@@ -142,11 +175,11 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 		int selectionWeight = 0;
 		if (input.getWeight() >= sackCapacity) {
 			return 0;
-		} else if (input.getDepth() <= weights.lastElement()) {
+		} else if (input.getDepth() < weights.lastElement()) {
 			i = input.getDepth() + 1;
 			selectionWeight = input.getWeight();
-//			System.out.println(result + " " + selectionWeight + " " + i);
-			while( i <= itemCount && (selectionWeight + weights.get(i)) <= sackCapacity) {
+//			System.out.println(itemCount + " " + i + " " + i);
+			while( i < itemCount && (selectionWeight + weights.get(i)) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
 //				System.out.println(result + "\t" + values.get(i) + "\t/" + selectionWeight + "\t" + weights.get(i) + "\t/" + i);
@@ -155,7 +188,7 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 //			System.out.println(i + " " + itemCount + " " + selectionWeight + " " + sackCapacity);
 //			System.out.print(result + " ");
 			j=i;
-			if (j <= itemCount) {
+			if (j < itemCount) {
 				result = result + ((float)(sackCapacity - selectionWeight)) * (((float)values.get(j)) / ((float)weights.get(j)));
 			}
 //			System.out.println(result + "\n");

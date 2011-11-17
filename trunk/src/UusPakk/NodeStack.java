@@ -9,13 +9,13 @@ public class NodeStack {
 	  first = n;
 	 }
 	 
-	 public Node pop() throws Exception {
+	 public Node pop() {
 	  if ( first != null) {
 	   Node temp = first;
 	   first = first.getNext();
 	   return temp;
 	  } else {
-	   throw new Exception();
+	  return null;
 	  }
 	  
 	 }

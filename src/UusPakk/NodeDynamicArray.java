@@ -110,41 +110,41 @@ public class NodeDynamicArray {
 		return bestValikud;
 	}
 		
-	public void set() {
-		
-		for (int i = 0;  i <= getLastElementIndex(); i++) {
-			DynamicArray valikud = dynamicArray[i].getValikud();
-			valikud = trim(valikud);
-		}
-		DynamicArray valikud; DynamicArray valikud2;
-		for (int i = 0;  i < lastElementsIndex; i++) {
-			valikud = dynamicArray[i].getValikud();
-			for (int j = i + 1; j <= lastElementsIndex; j++) {
-				if (dynamicArray[j] == null) System.out.println(toString());
-				valikud2 = dynamicArray[j].getValikud();
-				if (valikud.vordle(valikud2)) {
-					put(rem(), j);
-				}
-			}
-		}
-		
-	}
-
-	private DynamicArray trim(DynamicArray valikud) {
-		System.out.println(valikud);
-		for (int i = valikud.lastElementsIndex; i >= 0; i++) {
-			if (valikud.get(i) == 1) {
-				System.out.print("1");
-				break;
-			}
-			else {
-				System.out.print("0");
-				valikud.rem();
-			}
-		}
-		System.out.println();
-		return valikud;
-	}
+//	public void set() {
+//		
+//		for (int i = 0;  i <= getLastElementIndex(); i++) {
+//			DynamicArray valikud = dynamicArray[i].getValikud();
+//			valikud = trim(valikud);
+//		}
+//		DynamicArray valikud; DynamicArray valikud2;
+//		for (int i = 0;  i < lastElementsIndex; i++) {
+//			valikud = dynamicArray[i].getValikud();
+//			for (int j = i + 1; j <= lastElementsIndex; j++) {
+//				if (dynamicArray[j] == null) System.out.println(toString());
+//				valikud2 = dynamicArray[j].getValikud();
+//				if (valikud.vordle(valikud2)) {
+//					put(rem(), j);
+//				}
+//			}
+//		}
+//		
+//	}
+//
+//	private DynamicArray trim(DynamicArray valikud) {
+//		System.out.println(valikud);
+//		for (int i = valikud.lastElementsIndex; i >= 0; i++) {
+//			if (valikud.get(i) == 1) {
+//				System.out.print("1");
+//				break;
+//			}
+//			else {
+//				System.out.print("0");
+//				valikud.rem();
+//			}
+//		}
+//		System.out.println();
+//		return valikud;
+//	}
 }
 
 

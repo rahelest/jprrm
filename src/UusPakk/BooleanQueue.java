@@ -6,6 +6,8 @@ public class BooleanQueue {
 	
 	private int size;
 	
+	public BooleanQueue() {}
+	
 	public BooleanQueue (BooleanNode f) {
 		first = f;
 		last = f;
@@ -19,6 +21,10 @@ public class BooleanQueue {
 	}
 	
 	public int add (boolean b) {
+		if (first == null)  {
+			first = last = new BooleanNode(b);
+			size = 1;
+		}
 		last.setNext(new BooleanNode(b));
 		last = last.getNext();
 		size++;
@@ -37,6 +43,10 @@ public class BooleanQueue {
 			i++;
 		}
 		return node;
+	}
+	
+	public int getSize() {
+		return size;
 	}
 	
 	

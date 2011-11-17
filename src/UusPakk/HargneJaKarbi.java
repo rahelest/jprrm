@@ -42,29 +42,26 @@ public class HargneJaKarbi {
 	
 	PrintWriter pw = null;
 	
-	public void knapsack(boolean karpega, boolean pqga) {
-		initializeDynArrays();
+	public void knapsack(boolean karpega, boolean pqga, String inputFileName) {
 		PQga = pqga;
-		readInputFileAndFillArrays();
+		initializeDynArrays();		
+		readInputFileAndFillArrays(inputFileName);
+		String outputFileName = parseOutputFile(inputFileName);
 		initialize();
 		while ((PQga && !PQ.isEmpty()) || (!PQga && !stack.isEmpty())) {
 			if (PQga) {
 				vanem = PQ.dequeueNode();
-//				System.out.println(PQ.size());
 			} else {
 				vanem = stack.pop();
 			}
 			
-//System.out.println("------uus-----round----- " + vanem);
+
 			if ((vanem.getBound() >= maxProfit || !karpega) && (vanem.getDepth() < values.lastElementsIndex)) {		
-//				System.out.println(PQ.size() + " " + vanem.getDepth() + " " + values.lastElementsIndex);
 				valikud = vanem.getValikud();
-//				System.out.println("Valikute maht: " + valikud.lastElement());
 				int jargmiseDepth = vanem.getDepth() + 1;
 				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
 				valikudJargmisega = (ArrayList<Boolean>) valikud.clone();
 				valikudJargmisega.add(true);
-//				System.out.println();
 				jargmisega.setValikud(valikudJargmisega);
 				jargmisega.setBound(bound(jargmisega));
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
@@ -74,7 +71,6 @@ public class HargneJaKarbi {
 				if(jargmisega.getBound() > maxProfit || !karpega) {
 					if (PQga) {
 						PQ.enqueue(jargmisega);
-//						System.out.println("GA");
 					} else {
 						stack.push(jargmisega);
 					}
@@ -88,46 +84,42 @@ public class HargneJaKarbi {
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
 					if (PQga) {
 						PQ.enqueue(jargmiseta);
-//						System.out.println("TA");
 					} else {
 						stack.push(jargmiseta);
 					}
 				}
 			}
 		}
-System.out.println(maxProfit);
+		System.out.println(maxProfit);
 		int most = 0;
 		Iterator bestNodesIterator = bestNodes.iterator();
 		while (bestNodesIterator.hasNext()) {
 			Node n = (Node) bestNodesIterator.next();
 			if (n.getValue() > most) most = n.getValue();
 		}
-		System.out.println("Most: " + most);
 		bestNodesIterator = bestNodes.iterator();
-		initializeWriting();
+		initializeWriting(outputFileName);
 		while (bestNodesIterator.hasNext()) {
 			Node n = (Node) bestNodesIterator.next();
 			if (n.getValue() >= most) {
 				int vaartused = 0;
 				int kaalud = 0;
 				valikud = n.getValikud();
-				System.out.println(valikud);
 				for (int i = 0; i < valikud.size(); i++) {
 					if (valikud.get(i).booleanValue()) {
 						vaartused += values.get(i);
 						kaalud += weights.get(i);
 					}
 				}
-				System.out.println(" kokku: " + vaartused + " ja " + kaalud + "\n");
 				pw.println(vaartused + " " + kaalud);
 				break;
 			}
 		}
 		
-		writeToFile(valikud);
+		writeToFile();
 	}
 	
-	private void writeToFile(ArrayList<Boolean> valikud2) {
+	private void writeToFile() {
 		for (int i = 0; i < valikud.size(); i++) {
 			if (valikud.get(i).booleanValue()) {
 				pw.println(values.get(i) + " " + weights.get(i));
@@ -137,23 +129,6 @@ System.out.println(maxProfit);
 		pw.close();		// fail kinni
 			
 	}
-//			}
-//		}
-//
-//		for (int f = bestNodes.bestNodes.size() - 1); f >= 0; f--) {
-//			if (bestNodes.get(f).getValue() < most) break;
-//			int vaartused = 0;
-//			int kaalud = 0;
-//			valikud = bestNodes.get(f).getValikud();
-//System.out.println(valikud);
-//			for (int i = 0; i < valikud.size(); i++) {
-//				if (valikud.get(i).booleanValue()) {
-////System.out.println(values.get(i) + " " + weights.get(i));
-//					vaartused += values.get(i);
-//					kaalud += weights.get(i);
-//				}
-//			}
-		
 	
 	private void initializeDynArrays() {
 		bestNodes = new HashSet<Node>();
@@ -162,9 +137,9 @@ System.out.println(maxProfit);
 		
 	}
 
-	private void readInputFileAndFillArrays() {
+	private void readInputFileAndFillArrays(String inputFileName) {
 		items = new NodePriorityQueue();
-		String sisendFail = "C:\\" + "100.in";
+		String sisendFail = inputFileName;
 		int i = 0;
 		try {
 			BufferedReader br = new BufferedReader(
@@ -230,7 +205,6 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 		} else if (input.getDepth() < weights.lastElement()) {
 			i = input.getDepth() + 1;
 			selectionWeight = input.getWeight();
-//			System.out.println(itemCount + " " + i + " " + i);
 			while( i < itemCount && (selectionWeight + weights.get(i)) <= sackCapacity) {
 				selectionWeight = selectionWeight + weights.get(i);
 				result = result + values.get(i);
@@ -244,9 +218,9 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 		return result;		
 	}
 	
-	private void initializeWriting() {
+	private void initializeWriting(String outputFileName) {
 		
-		String sisendfail  = "D:\\100.out";
+		String sisendfail  = outputFileName;
 		try {
 			pw = new PrintWriter(
 						new BufferedWriter(
@@ -257,5 +231,17 @@ System.out.println("Päris esimene bound: " + vanem.getBound());
 			e.printStackTrace();
 			return;
 		}		
+	}
+	
+	private String parseOutputFile(String inputFileName) {
+		String outputPath = "";		
+		String[] temp = inputFileName.split("/");
+		String filename = temp[temp.length - 1];
+		for (int i = 0; i < temp.length - 1; i++) {
+			outputPath += temp[i] + "/";
+		}
+		temp = filename.split(".in");
+		String outputNumber = temp[0];
+		return outputPath + outputNumber + ".out";		
 	}
 }

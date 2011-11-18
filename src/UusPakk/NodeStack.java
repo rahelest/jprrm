@@ -6,6 +6,9 @@ package UusPakk;
  *
  */
 
+/**
+ * Teise programmeerimistöö modifitseeritud variant, hoiab Node
+ */
 public class NodeStack {
 
 	 private Node first; 

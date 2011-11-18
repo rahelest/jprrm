@@ -9,7 +9,8 @@ package UusPakk;
 public class Main {
 
 	/**
-	 * @param args
+	 * Staatiline main.
+	 * @param args Puuduvad sisendparameetrid.
 	 */
 	public static void main(String[] args) {
 		HargneJaKarbi arvuta;

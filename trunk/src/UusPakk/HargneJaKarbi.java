@@ -90,6 +90,7 @@ public class HargneJaKarbi {
 	
 	/**
 	 * Klassikaline 0-1 Knapsacki lahendaja võimalusega teha parim-enne, sügavuti ja kärpimiseta otsingut.
+	 * Antud hetkel teeb algoritmi töö väga mälumahukaks kehvapoolne valikupuu meeles hoidmise viis.
 	 * @param karpega kas kasutada kärpimist?
 	 * @param pqga kas kasutada priorityqueued või stacki?
 	 * @param inputFileName path sisendinfot hoidva failini

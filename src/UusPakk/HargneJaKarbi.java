@@ -42,6 +42,12 @@ public class HargneJaKarbi {
 	
 	PrintWriter pw = null;
 	
+	/**
+	 * 
+	 * @param karpega kas kasutada kärpimist?
+	 * @param pqga
+	 * @param inputFileName
+	 */
 	public void knapsack(boolean karpega, boolean pqga, String inputFileName) {
 		PQga = pqga;
 		initializeDynArrays();		
@@ -90,7 +96,7 @@ public class HargneJaKarbi {
 				}
 			}
 		}
-		System.out.println(maxProfit);
+		System.out.println("Maxprofit: " + maxProfit);
 		int most = 0;
 		Iterator bestNodesIterator = bestNodes.iterator();
 		while (bestNodesIterator.hasNext()) {
@@ -186,7 +192,6 @@ public class HargneJaKarbi {
 		vanem = new Node();
 		vanem.setBound(bound(vanem));
 		vanem.setValikud(new ArrayList<Boolean>());
-System.out.println("Päris esimene bound: " + vanem.getBound());
 		if (PQga) {
 			PQ.enqueue(vanem);
 			PQ.enqueue(vanem);

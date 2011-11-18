@@ -4,13 +4,23 @@ package UusPakk;
  * @author t083851 Jaanus Piip
  * @author t093563 Rahel Rjadnev-Meristo
  *
+ * Muutuva suurusega array. Suurus muutub ise vastavalt täidetusele.
  */
 
 public class DynamicArray {
-
+	/**
+	 * Massiiv, kus asju hoitakse.
+	 */
 	protected int[] dynArray;
+	/**
+	 * Indeks, kus kirjas viimase elemendi indeks, mis määratud.
+	 */
 	protected int lastElementsIndex = -1;
 	
+	/**
+	 * Konstruktor.
+	 * @param Massiivi esialgne suurus.
+	 */
 	public DynamicArray(int n) {
 		dynArray = new int[n];
 	}
@@ -19,7 +29,11 @@ public class DynamicArray {
 //		dynArray = new int[n];
 //		return this;
 //	}
-	
+	/**
+	 * Elemendi lisamine massiivile, vajadusel kasvatatakse massiivi 2x.
+	 * @param Lisatav element.
+	 * @return Lisatud elementi indeks.
+	 */
 	public int add(int x) {
 		lastElementsIndex++;
 		if (lastElementsIndex >= dynArray.length) {
@@ -56,10 +70,20 @@ public class DynamicArray {
 		return temp;
 	}
 	
+	/**
+	 * Massiivist indeksi järgi elemendi küsimine.
+	 * @param Otsitava elemendi indeks.
+	 * @return Leitud element.
+	 */
 	public int get(int i) {
 		return dynArray[i];
 	}
 	
+	/**
+	 * Elemendi teisega vahetamine.
+	 * @param Asendav element.
+	 * @param Indeks, kuhu element pannakse.
+	 */
 	public void put(int x, int i) {
 		try {
 			dynArray[i] = x;
@@ -69,19 +93,34 @@ public class DynamicArray {
 		}
 	}
 	
+	/**
+	 * Jada pikkus, arvestades ka vaba ruumi.
+	 * @return Pikkus.
+	 */
 	public int len() {
 		return dynArray.length;
 	}
 	
+	/**
+	 * Kas jada on tühi.
+	 * @return Vastav tõeväärtus.
+	 */
 	public boolean isEmpty() {
 		if (lastElementsIndex < 0) return true;
 		else return false;
 	}
 
+	/**
+	 * Massiivi reaalsete elementide hulk - 1.
+	 * @return Massiivi viimase elemendi indeks.
+	 */
 	public int lastElement() {
 		return lastElementsIndex;
 	}
-	
+	/**
+	 * Stringesitus paremaks loetavuseks.
+	 * @return Kirjeldus.
+	 */
 	public String toString() {
 		String result = "";
 		for (int i = 0; i < lastElementsIndex; i++) {
@@ -90,18 +129,15 @@ public class DynamicArray {
 		return result;
 	}
 	
+	/**
+	 * Massiivi shallow-copy tegija.
+	 * @return Uus massiiv.
+	 */
 	public DynamicArray clone() {
 		DynamicArray uus = new DynamicArray(dynArray.length+1);
 		for (int i = 0; i <= lastElementsIndex; i++) {
 			uus.add(dynArray[i]);
 		}
 		return uus;
-	}
-
-	public boolean vordle(DynamicArray valikud2) {
-		for (int i = 0; i <= lastElementsIndex; i++) {
-			if (dynArray[i] != valikud2.get(i)) return false;
-		}
-		return true;
 	}
 }

@@ -16,37 +16,83 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 public class HargneJaKarbi {
 	
+	/**
+	 * Priority queue, kuhu lähevad töödeldavad Node-d.
+	 */
 	private NodePriorityQueue PQ;
+	/**
+	 * Sügavuti otsingu puhul kasutatav stack
+	 */
 	private NodeStack stack;
-	private float maxProfit;	
+	/**
+	 * Hetkel kehtiv leitud parim lahend
+	 */
+	private float maxProfit;
+	/**
+	 * Hetkel vaadeldav Node, mille lapsväärtusi hakkame analüüsima
+	 */
 	private Node vanem;
+	/**
+	 * Node, mis tekib järgmist elementi võtmata
+	 */
 	private Node jargmisega;
+	/**
+	 * Node, mis tekib kui võtta järgmine element
+	 */
 	private Node jargmiseta;
+	/**
+	 * Sisse loetud väärtuste dünaamiline array
+	 */
 	private DynamicArray values;
+	/**
+	 * Sisse loetud kaalude dünaamiline array
+	 */
 	private DynamicArray weights;
+	/**
+	 * Hetkel kehtiv nimekiri valitud elementidest
+	 */
 	private ArrayList<Boolean> valikud;
+	/**
+	 * Nimekiri, mis tekib järgmist elementi võtmata
+	 */
 	private ArrayList<Boolean> valikudJargmisega;
+	/**
+	 * Nimekiri, mis tekib võttes järgmise elemendi
+	 */
 	private ArrayList<Boolean> valikudJargmiseta;
+	/**
+	 * Priority queue, kus hoitakse Node all esemeid, väljal bound hoitakse väärtuse/kaalu suhet 
+	 */
 	private NodePriorityQueue items;
+	/**
+	 * Lubatud maksimaalne kaal
+	 */
 	private int sackCapacity;
+	/**
+	 * Toas eksisteerivate esemete arv
+	 */
 	private int itemCount;
+	/**
+	 * Set, mis hoiab võimalikke häid lahendeid
+	 */
 	private Set<Node> bestNodes;
-	private boolean PQga;
-	
+	/**
+	 * Boolean, mis määrab kas kasutatakse parim-enne või sügavutiotsingut
+	 */
+	private boolean PQga;	
 	PrintWriter pw = null;
 	
 	/**
-	 * 
+	 * Klassikaline 0-1 Knapsacki lahendaja võimalusega teha parim-enne, sügavuti ja kärpimiseta otsingut.
 	 * @param karpega kas kasutada kärpimist?
-	 * @param pqga
-	 * @param inputFileName
+	 * @param pqga kas kasutada priorityqueued või stacki?
+	 * @param inputFileName path sisendinfot hoidva failini
 	 */
 	public void knapsack(boolean karpega, boolean pqga, String inputFileName) {
 		PQga = pqga;
@@ -54,26 +100,45 @@ public class HargneJaKarbi {
 		readInputFileAndFillArrays(inputFileName);
 		String outputFileName = parseOutputFile(inputFileName);
 		initialize();
+		
+		/**
+		 * Siinkohal algab reaalne algoritm, muutujad PQ ja karpega määravad algoritmi olemuse.
+		 */
 		while ((PQga && !PQ.isEmpty()) || (!PQga && !stack.isEmpty())) {
+			/**
+			 * Sügavuti otsingu puhul pop, muul ajal dequeue
+			 */
 			if (PQga) {
 				vanem = PQ.dequeueNode();
 			} else {
 				vanem = stack.pop();
 			}
 			
-
+			/**
+			 * Kui hetkel vaadeldav olukord lubab head tulemust ja jätkub veel kaalutavaid elemente, vaatleme vanema lapsi
+			 */
 			if ((vanem.getBound() >= maxProfit || !karpega) && (vanem.getDepth() < values.lastElementsIndex)) {		
 				valikud = vanem.getValikud();
+				/**
+				 * Mis juhtub kui järgmise pistame kotti?
+				 */
 				int jargmiseDepth = vanem.getDepth() + 1;
-				jargmisega = new Node(jargmiseDepth,vanem.getValue() + values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
+				jargmisega = new Node(jargmiseDepth,vanem.getValue()
+						+ values.get(jargmiseDepth),vanem.getWeight() + weights.get(jargmiseDepth));
 				valikudJargmisega = (ArrayList<Boolean>) valikud.clone();
 				valikudJargmisega.add(true);
 				jargmisega.setValikud(valikudJargmisega);
 				jargmisega.setBound(bound(jargmisega));
+				/**
+				 * Kui järgmine element võttes tekib soodne olukord, muudame vastavalt oma parimat leitud väärtust ja esemete kogumikku
+				 */
 				if (jargmisega.getWeight() <= sackCapacity && jargmisega.getValue() >= maxProfit) {
 					maxProfit = jargmisega.getValue();
 					bestNodes.add(jargmisega.trimZeros());
 				}
+				/**
+				 * Kui järgmine element lubab head väärtust, lisame ta priorityqueuesse
+				 */
 				if(jargmisega.getBound() > maxProfit || !karpega) {
 					if (PQga) {
 						PQ.enqueue(jargmisega);
@@ -82,11 +147,17 @@ public class HargneJaKarbi {
 					}
 					
 				}
+				/**
+				 * Mis juhtub kui järgmist eset ei pistaks kotti?
+				 */
 				jargmiseta = new Node(jargmiseDepth,vanem.getValue(),vanem.getWeight());
 				valikudJargmiseta = (ArrayList<Boolean>) valikud.clone();
 				valikudJargmiseta.add(false);
 				jargmiseta.setValikud(valikudJargmiseta);
 				jargmiseta.setBound(bound(jargmiseta));
+				/**
+				 * Kui järgmise mitte võtmine lubab soodsamat olukorda, pistame ta priorityqueuesse
+				 */
 				if(jargmiseta.getBound() > maxProfit || !karpega) {
 					if (PQga) {
 						PQ.enqueue(jargmiseta);
@@ -97,6 +168,9 @@ public class HargneJaKarbi {
 			}
 		}
 		System.out.println("Maxprofit: " + maxProfit);
+		/**
+		 * Käime läbi parima valikupuu ning kirjutame vastavad kaalud-väärtused stringidesse
+		 */		
 		int most = 0;
 		Iterator bestNodesIterator = bestNodes.iterator();
 		while (bestNodesIterator.hasNext()) {
@@ -125,6 +199,9 @@ public class HargneJaKarbi {
 		writeToFile();
 	}
 	
+	/**
+	 * Kirjutab algoritmi töö tulemuse faili.
+	 */
 	private void writeToFile() {
 		for (int i = 0; i < valikud.size(); i++) {
 			if (valikud.get(i).booleanValue()) {
@@ -136,6 +213,9 @@ public class HargneJaKarbi {
 			
 	}
 	
+	/**
+	 * Initsialiseerib sisendinfo hoidmiseks vajalikud dünaamilised massiivid.
+	 */
 	private void initializeDynArrays() {
 		bestNodes = new HashSet<Node>();
 		values = new DynamicArray(4);
@@ -143,6 +223,11 @@ public class HargneJaKarbi {
 		
 	}
 
+	/**
+	 * Loeb sisendfailist koti mahutavuse ja kõik elemendid,
+	 * seejärel lisab ta elemendid ühte PQ-sse väärtuse/kaalu suhte järgi (hoiame seda väljal bound).
+	 * @param inputFileName fail, millest sisendinfo loetakse
+	 */
 	private void readInputFileAndFillArrays(String inputFileName) {
 		items = new NodePriorityQueue();
 		String sisendFail = inputFileName;
@@ -165,6 +250,9 @@ public class HargneJaKarbi {
 			}
 			br.close();
 			itemCount = i;
+			/**
+			 * Organiseerime toas leiduvad esemed väärtuse/kaalu suhte järjekorda
+			 */
 			while (!items.isEmpty()) {
 				Node n = items.dequeueNode();
 
@@ -181,6 +269,9 @@ public class HargneJaKarbi {
 		
 	}
 
+	/**
+	 * Initsialiseerib algoritmi tööks vajalikud muutujad.
+	 */
 	private void initialize() {
 		if (PQga) {
 			PQ = new NodePriorityQueue();
@@ -200,6 +291,11 @@ public class HargneJaKarbi {
 		}
 	}
 	
+	/**
+	 * Arvutab antud sisendpuuga parima võimaliku murdosalise lahenduse.
+	 * @param input Node, mis hoiab hinnatavat valikupuud
+	 * @return float väärtus, mis hoiab murdosalist parimat võimalikku tulemust
+	 */
 	private float bound(Node input) {
 		float result = input.getValue();
 		int i = 0;
@@ -223,6 +319,10 @@ public class HargneJaKarbi {
 		return result;		
 	}
 	
+	/**
+	 * Loob väljundi kirjutamiseks vajaliku printwriteri.
+	 * @param outputFileName path väljundfailini
+	 */
 	private void initializeWriting(String outputFileName) {
 		
 		String sisendfail  = outputFileName;
@@ -238,6 +338,11 @@ public class HargneJaKarbi {
 		}		
 	}
 	
+	/**
+	 * Loeb sisendfaili nime ja tõlgib selle väljundfaili nimeks.
+	 * @param inputFileName sisendfaili nimi
+	 * @return path väljundfailini ja selle nimi
+	 */
 	private String parseOutputFile(String inputFileName) {
 		String outputPath = "";		
 		String[] temp = inputFileName.split("/");

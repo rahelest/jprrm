@@ -55,7 +55,7 @@ public class Main {
 		
 		long algus7 = System.currentTimeMillis();
 		arvuta = new HargneJaKarbi();
-		arvuta.knapsack(false, true, testFail3);
+		arvuta.knapsack(false, true, testFail2);
 		long lopp7 = System.currentTimeMillis();
 		
 		
@@ -66,8 +66,8 @@ public class Main {
 		System.out.println("Kärpimisega 3: " + testFail3 + " >>> " + (lopp5-algus5));
 		System.out.println("Sügavutiotsing 3: " + testFail3 + " >>> " + (lopp6-algus6));
 		
-		System.out.println("Kärpimisega: " + testFail3 + " >>> " + (lopp5-algus5));
-		System.out.println("Kärpimiseta: " + testFail3 + " >>> " + (lopp7-algus7));
+		System.out.println("Kärpimisega: " + testFail2 + " >>> " + (lopp3-algus3));
+		System.out.println("Kärpimiseta: " + testFail2 + " >>> " + (lopp7-algus7));
 		
 	}
 

@@ -172,7 +172,7 @@ public class HargneJaKarbi {
 		 * Käime läbi parima valikupuu ning kirjutame vastavad kaalud-väärtused stringidesse
 		 */		
 		int most = 0;
-		Iterator bestNodesIterator = bestNodes.iterator();
+		Iterator<Node> bestNodesIterator = bestNodes.iterator();
 		while (bestNodesIterator.hasNext()) {
 			Node n = (Node) bestNodesIterator.next();
 			if (n.getValue() > most) most = n.getValue();

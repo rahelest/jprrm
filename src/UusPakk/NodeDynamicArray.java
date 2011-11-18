@@ -4,17 +4,32 @@ package UusPakk;
  * @author t083851 Jaanus Piip
  * @author t093563 Rahel Rjadnev-Meristo
  *
+ * Muutuva suurusega array, hoiab Node-e meeles.
  */
 
 public class NodeDynamicArray {
 	
+	/**
+	 * Massiiv, mis hoiab elemente meeles.
+	 */
 	private Node[] dynamicArray;
+	/**
+	 * Massiivi viimase reaalse elemendi indeks.
+	 */
 	private int lastElementsIndex = -1;
 
+	/**
+	 * Konstruktor.
+	 * @param Massiivi suurus.
+	 */
 	public NodeDynamicArray(int n) {
 		dynamicArray = new Node[n];
 	}
-	
+	/**
+	 * Elemendi massiivi lisamine.
+	 * @param Lisatav element.
+	 * @return Lisatud elemendi indeks.
+	 */
 	public int add(Node n) {
 		lastElementsIndex++;
 		
@@ -31,6 +46,10 @@ public class NodeDynamicArray {
 		return lastElementsIndex;
 	}
 	
+	/**
+	 * Viimase elemendi massiivist eemaldamine.
+	 * @return Eemaldatud element.
+	 */
 	public Node rem() {
 		
 		Node tempNode = dynamicArray[lastElementsIndex];
@@ -49,11 +68,20 @@ public class NodeDynamicArray {
 		lastElementsIndex--;
 		return tempNode;
 	}
-	
+	/**
+	 * Indeksi järgi massiivist elemendi küsimine.
+	 * @param Indeks.
+	 * @return Leitud element.
+	 */
 	public Node get(int i) {
 		return dynamicArray[i];
 	}
 	
+	/**
+	 * Massiivi elemendi indeksi järgi välja vahetamine.
+	 * @param Asendav element.
+	 * @param Indeksikoht, mida vahetatakse.
+	 */
 	public void put(Node n, int i) {
 		try {
 			if (dynamicArray.length <= i ) {
@@ -68,19 +96,35 @@ public class NodeDynamicArray {
 		}
 	}
 	
+	/**
+	 * Jada pikkus, arvestades ka vaba ruumi.
+	 * @return Pikkus.
+	 */
 	public int len() {
 		return dynamicArray.length;
 	}
 	
+	/**
+	 * Kas jada on tühi.
+	 * @return Vastav tõeväärtus.
+	 */
 	public boolean isEmpty() {
 		if (lastElementsIndex < 0) return true;
 		else return false;
 	}
 
+	/**
+	 * Massiivi reaalsete elementide hulk - 1.
+	 * @return Massiivi viimase elemendi indeks.
+	 */
 	public int getLastElementIndex() {
 		return lastElementsIndex;
 	}
 	
+	/**
+	 * Stringesitus paremaks loetavuseks.
+	 * @return Kirjeldus.
+	 */
 	public String toString() {
 		String result = "";
 		for (int i = 0;  i <= getLastElementIndex(); i++) {
@@ -89,62 +133,6 @@ public class NodeDynamicArray {
 		}
 		return result;
 	}
-	
-	
-
-	public NodeDynamicArray best() {
-		int best = 0;
-		NodeDynamicArray bestValikud = new NodeDynamicArray(4);
-			
-		for (int i = lastElementsIndex;  i > 0; i--) {
-//			if (dynamicArray[i] == null) continue;
-			int value = dynamicArray[i].getValue();
-			if (value > best) {
-				best = value;
-			}
-			if (dynamicArray[i].getValue() >= best) {
-				bestValikud.add(dynamicArray[i]);
-			}
-		}
-		
-		return bestValikud;
-	}
-		
-//	public void set() {
-//		
-//		for (int i = 0;  i <= getLastElementIndex(); i++) {
-//			DynamicArray valikud = dynamicArray[i].getValikud();
-//			valikud = trim(valikud);
-//		}
-//		DynamicArray valikud; DynamicArray valikud2;
-//		for (int i = 0;  i < lastElementsIndex; i++) {
-//			valikud = dynamicArray[i].getValikud();
-//			for (int j = i + 1; j <= lastElementsIndex; j++) {
-//				if (dynamicArray[j] == null) System.out.println(toString());
-//				valikud2 = dynamicArray[j].getValikud();
-//				if (valikud.vordle(valikud2)) {
-//					put(rem(), j);
-//				}
-//			}
-//		}
-//		
-//	}
-//
-//	private DynamicArray trim(DynamicArray valikud) {
-//		System.out.println(valikud);
-//		for (int i = valikud.lastElementsIndex; i >= 0; i++) {
-//			if (valikud.get(i) == 1) {
-//				System.out.print("1");
-//				break;
-//			}
-//			else {
-//				System.out.print("0");
-//				valikud.rem();
-//			}
-//		}
-//		System.out.println();
-//		return valikud;
-//	}
 }
 
 

@@ -4,10 +4,10 @@ public class Maze {
 	
 	int[] entrance;
 	int[] exit;
-	final int[] N = {1, 0};
-	final int[] E = {0, 1};
-	final int[] S = {-1, 0};
-	final int[] W = {0, -1};
+	static final int[] NORTH = {1, 0};
+	static final int[] EAST = {0, 1};
+	static final int[] SOUTH = {-1, 0};
+	static final int[] WEST = {0, -1};
 
 	public Maze(int[] entrance, int[] exit) {
 		this.entrance = entrance;
@@ -29,26 +29,26 @@ public class Maze {
 		return answer;
 	}
 
-	private int[] getClosestNext(char[][] answer, int[] current) {
-		int[] lahim = {answer.length, answer.length};
-		int[] closest = {0,0};
+	private int[] getClosestNext(char[][] tempMaze, int[] currentRoom) {
+		int[] closestToExit = {tempMaze.length, tempMaze.length};
+		int[] closestRoomToExit = {0,0};
 
-		if (" ".equals(charFromMatrix(answer, current, N)) && equalOrBest(distanceFromExit(current, N), lahim)) {
-			closest = moveOneStep(current, N);
+		if (" ".equals(charFromMatrix(tempMaze, currentRoom, NORTH)) && equalOrBest(distanceFromExit(currentRoom, NORTH), closestToExit)) {
+			closestRoomToExit = moveOneStep(currentRoom, NORTH);
 		}
-		if (" ".equals(charFromMatrix(answer, current, E)) && equalOrBest(distanceFromExit(current, E), lahim)) {
-			closest = moveOneStep(current, E);
+		if (" ".equals(charFromMatrix(tempMaze, currentRoom, EAST)) && equalOrBest(distanceFromExit(currentRoom, EAST), closestToExit)) {
+			closestRoomToExit = moveOneStep(currentRoom, EAST);
 		}
-		if (" ".equals(charFromMatrix(answer, current, S)) && equalOrBest(distanceFromExit(current, S), lahim)) {
-			closest = moveOneStep(current, S);
+		if (" ".equals(charFromMatrix(tempMaze, currentRoom, SOUTH)) && equalOrBest(distanceFromExit(currentRoom, SOUTH), closestToExit)) {
+			closestRoomToExit = moveOneStep(currentRoom, SOUTH);
 		}
-		if (" ".equals(charFromMatrix(answer, current, W)) && equalOrBest(distanceFromExit(current, W), lahim)) {
-			closest = moveOneStep(current, W);
+		if (" ".equals(charFromMatrix(tempMaze, currentRoom, WEST)) && equalOrBest(distanceFromExit(currentRoom, WEST), closestToExit)) {
+			closestRoomToExit = moveOneStep(currentRoom, WEST);
 		}
-		if (closest[0] == 0 && closest[1] == 1) {
+		if (closestRoomToExit[0] == 0 && closestRoomToExit[1] == 1) {
 			//ei leidnud midagi, mine tagasi
 		}
-		return closest;
+		return closestRoomToExit;
 	}
 
 	private char charFromMatrix(char[][] maze, int[] current, int[] dir) {

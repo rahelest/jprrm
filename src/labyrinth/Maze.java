@@ -2,10 +2,10 @@ package labyrinth;
 
 public class Maze {
 	
-	char[] entrance;
-	char[] exit;
+	int[] entrance;
+	int[] exit;
 
-	public Maze(char[] entrance, char[] exit) {
+	public Maze(int[] entrance, int[] exit) {
 		this.entrance = entrance;
 		this.exit = exit;
 	}
@@ -13,29 +13,54 @@ public class Maze {
 	public char[][] solve (char[][] maze) {
 		
 		char[][] answer = maze.clone();
-		char[] current = entrance.clone();
+		int[] current = entrance.clone();
 		
 		//vaatab järjest suundi, eelistab neid, mis lõpule lähemal
 		
 		while (!exit.equals(current)) {
-			char[] next = getClosestNext(answer, current);
+			int[] next = getClosestNext(answer, current);
 		}
 		
 		return answer;
 	}
 
-	private char[] getClosestNext(char[][] answer, char[] current) {
+	private int[] getClosestNext(char[][] answer, int[] current) {
 		int[] lahim = {answer.length, answer.length};
-		if (!"X".equals(answer[current[0]][current[1] + 1]) && kaugus(current, 0) < lahim) {
-			
+		int[] closest = {0,0};
+		if (!"X".equals(answer[current[0]][current[1] + 1]) && parem(kaugus(current, 0),lahim)) {
+			closest[0] = current[0];
+			closest[1] = current[1] + 1;
 		}
-		return null;
+		return closest;
 	}
 
-	private int[] kaugus(char[] current, int i) {
-		switch {
-		case 0:
-
+	private boolean parem(int[] kaugus, int[] lahim) {
+		if (kaugus[0] + kaugus[1] <= lahim[0] + lahim[1]) {
+			return true;
 		}
+		return false;
+	}
+
+	private int[] kaugus(int[] current, int dir) {
+		int[] kaugus = {0,0};
+		switch (dir) {
+		//N
+			case 0: kaugus[0] = Math.abs(exit[0] - current[0] - 1);
+					kaugus[1] = Math.abs(exit[1] - current[1]); 
+					break;
+		//E
+			case 1:	kaugus[0] = Math.abs(exit[0] - current[0]);
+					kaugus[1] = Math.abs(exit[1] - current[1] - 1); 
+					break;
+		//S
+			case 2: kaugus[0] = Math.abs(exit[0] - current[0] + 1);
+					kaugus[1] = Math.abs(exit[1] - current[1]); 
+					break;
+		//W
+			case 3: kaugus[0] = Math.abs(exit[0] - current[0]);
+					kaugus[1] = Math.abs(exit[1] - current[1] + 1); 
+					break;
+		}
+		return kaugus;
 	}
 }

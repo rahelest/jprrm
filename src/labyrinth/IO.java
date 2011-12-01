@@ -22,7 +22,7 @@ public class IO {
 		filename = args[0];
 		char[][] maze = readInput(filename);
 		Maze m = new Maze(entrance, exit);
-//		maze = m.solve(maze);
+		maze = m.solve(maze);
 		writeOutput(maze);		
 	}
 	

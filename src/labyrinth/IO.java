@@ -12,13 +12,15 @@ public class IO {
 	
 	int[] entrance = {0,0};
 	int[] exit = {0,0};
+	String filename;
 	
 	public static void main(String[] args) {
 		new IO(args);
 	}
 	
 	public IO (String[] args) {
-		char[][] maze = readInput(args[0]);
+		filename = args[0];
+		char[][] maze = readInput(filename);
 		Maze m = new Maze(entrance, exit);
 //		maze = m.solve(maze);
 		writeOutput(maze);		
@@ -68,7 +70,8 @@ public class IO {
 		FileWriter outputStream;
 		BufferedWriter out;
 		try {
-			outputStream = new FileWriter("outTest.txt");
+			outputStream = new FileWriter("out\\" +
+					filename + ".out");
 			out = new BufferedWriter(outputStream);
 			for (char[] row : maze) {
 				out.write(row);

@@ -8,15 +8,23 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class IO {
+	
+	char[] entrance = null;
+	char[] exit = null;
+	
 	public static void main(String[] args) {
+		new IO(args);
+	}
+	
+	public IO (String[] args) {
 		char[][] maze = readInput(args[0]);
-		Maze m = new Maze();
+		Maze m = new Maze(entrance, exit);
 		maze = m.solve(maze);
 		writeOutput(maze);
 		
 	}
 	
-	private static char[][] readInput(String string) {
+	private char[][] readInput(String string) {
 		BufferedReader br;
 		char [][] maze = null;
 		int n = 0;
@@ -33,6 +41,11 @@ public class IO {
 			while (line != null) {
 				for (int i = 0; i < maze.length; i++) {
 					maze[f][i] = line.charAt(i);
+					if (line.charAt(i) == "B") {
+						entrance = {f, i};
+					} else if (line.charAt(i) == "F") {
+						exit = {f, i};
+					}
 				}
 			}
 			
@@ -49,7 +62,7 @@ public class IO {
 		return maze;
 	}
 
-	private static void writeOutput(char[][] maze) {
+	private void writeOutput(char[][] maze) {
 		// TODO Auto-generated method stub
 		
 	}

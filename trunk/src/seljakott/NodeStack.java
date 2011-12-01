@@ -1,4 +1,4 @@
-package UusPakk;
+package seljakott;
 
 /**
  * @author t083851 Jaanus Piip

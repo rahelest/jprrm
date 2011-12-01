@@ -1,4 +1,4 @@
-package UusPakk;
+package seljakott;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

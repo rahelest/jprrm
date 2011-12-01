@@ -1,4 +1,4 @@
-package UusPakk;
+package seljakott;
 
 import java.util.ArrayList;
 

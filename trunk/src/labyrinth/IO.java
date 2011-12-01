@@ -1,8 +1,10 @@
 package labyrinth;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -18,9 +20,8 @@ public class IO {
 	public IO (String[] args) {
 		char[][] maze = readInput(args[0]);
 		Maze m = new Maze(entrance, exit);
-		maze = m.solve(maze);
-		writeOutput(maze);
-		
+//		maze = m.solve(maze);
+		writeOutput(maze);		
 	}
 	
 	private char[][] readInput(String string) {
@@ -36,7 +37,6 @@ public class IO {
 			maze = new char[2 * n + 1][2 * n + 1];
 			//rida, veerg
 			String line = br.readLine();
-			line = br.readLine();
 			int f = 0;
 			while (line != null) {
 				for (int i = 0; i < maze.length; i++) {
@@ -65,7 +65,20 @@ public class IO {
 	}
 
 	private void writeOutput(char[][] maze) {
-		// TODO Auto-generated method stub
+		FileWriter outputStream;
+		BufferedWriter out;
+		try {
+			outputStream = new FileWriter("outTest.txt");
+			out = new BufferedWriter(outputStream);
+			for (char[] row : maze) {
+				out.write(row);
+				out.write("\n");
+			}			
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Programm läks katki, kahju küll.");
+			e.printStackTrace();
+		}		  
 		
 	}
 

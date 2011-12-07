@@ -16,23 +16,28 @@ public class Maze {
 
 	public char[][] solve (char[][] maze) {
 		
-		char[][] answer = maze.clone();
-		int[] current = entrance.clone();
+		char[][] resultingMaze = maze.clone();
+		int[] currentRoom = entrance.clone();
 		
 		//vaatab järjest suundi, eelistab neid, mis lõpule lähemal
 		
-		while (!exit.equals(current)) {
-			current = getClosestNext(answer, current);
-			answer[current[0]][current[1]] = '*';
-		}
+		char[][] deDeadEndedMaze = deDeadEndMaze(maze);
 		
-		return answer;
+		while (!exit.equals(currentRoom)) {
+			currentRoom = getClosestNext(resultingMaze, currentRoom);
+			resultingMaze[currentRoom[0]][currentRoom[1]] = '*';
+		}
+
+		return resultingMaze;
 	}
+
+
 
 	private int[] getClosestNext(char[][] tempMaze, int[] currentRoom) {
 		int[] closestToExit = {tempMaze.length, tempMaze.length};
 		int[] closestRoomToExit = {0,0};
-
+		
+		//F!
 		if (" ".equals(charFromMatrix(tempMaze, currentRoom, NORTH)) && equalOrBest(distanceFromExit(currentRoom, NORTH), closestToExit)) {
 			closestRoomToExit = moveOneStep(currentRoom, NORTH);
 		}
@@ -71,5 +76,19 @@ public class Maze {
 		current = moveOneStep(current, dir);
 		int[] kaugus = {Math.abs(-exit[0] + current[0]), Math.abs(-exit[1] + current[1])};
 		return kaugus;
+	}
+	
+	private char[][] deDeadEndMaze(char[][] maze) {
+		maze = makeNeighbourNumbers(maze);
+		return null;
+	}
+
+	private char[][] makeNeighbourNumbers(char[][] maze) {
+		for (int row = 1; row < maze.length - 1; row++) {
+			for (int col = 1; col < maze.length - 1; col++) {
+				
+			}
+		}
+		return null;
 	}
 }

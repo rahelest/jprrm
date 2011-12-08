@@ -1,12 +1,15 @@
 package labyrinth;
 
+import java.util.ArrayList;
+
 public class RahelMaze {
 	
 	int[] entrance;
 	int[] exit;
-	static final int[] NORTH = {1, 0};
+	//RIDA; VEERG
+	static final int[] NORTH = {-1, 0};
 	static final int[] EAST = {0, 1};
-	static final int[] SOUTH = {-1, 0};
+	static final int[] SOUTH = {1, 0};
 	static final int[] WEST = {0, -1};
 
 	public RahelMaze(int[] entrance, int[] exit) {
@@ -15,71 +18,38 @@ public class RahelMaze {
 	}
 
 	public char[][] solve (char[][] maze) {
-		
-		char[][] resultingMaze = maze.clone();
-		int[] currentRoom = entrance.clone();
-		
-		//vaatab järjest suundi, eelistab neid, mis lõpule lähemal
-		
-		char[][] deDeadEndedMaze = deDeadEndMaze(maze);
-		
-//		while (!exit.equals(currentRoom)) {
-//			currentRoom = getClosestNext(resultingMaze, currentRoom);
-//			resultingMaze[currentRoom[0]][currentRoom[1]] = '*';
-//		}
-
-		return deDeadEndedMaze;
+		return deDeadEndMaze(maze);
 	}
-//
-//
-//
-//	private int[] getClosestNext(char[][] tempMaze, int[] currentRoom) {
-//		int[] closestToExit = {tempMaze.length, tempMaze.length};
-//		int[] closestRoomToExit = {0,0};
-//		
-//		//F!
-//		if (" ".equals(charFromMatrix(tempMaze, currentRoom, NORTH)) && equalOrBest(distanceFromExit(currentRoom, NORTH), closestToExit)) {
-//			closestRoomToExit = moveOneStep(currentRoom, NORTH);
-//		}
-//		if (" ".equals(charFromMatrix(tempMaze, currentRoom, EAST)) && equalOrBest(distanceFromExit(currentRoom, EAST), closestToExit)) {
-//			closestRoomToExit = moveOneStep(currentRoom, EAST);
-//		}
-//		if (" ".equals(charFromMatrix(tempMaze, currentRoom, SOUTH)) && equalOrBest(distanceFromExit(currentRoom, SOUTH), closestToExit)) {
-//			closestRoomToExit = moveOneStep(currentRoom, SOUTH);
-//		}
-//		if (" ".equals(charFromMatrix(tempMaze, currentRoom, WEST)) && equalOrBest(distanceFromExit(currentRoom, WEST), closestToExit)) {
-//			closestRoomToExit = moveOneStep(currentRoom, WEST);
-//		}
-//		if (closestRoomToExit[0] == 0 && closestRoomToExit[1] == 1) {
-//			//ei leidnud midagi, mine tagasi
-//		}
-//		return closestRoomToExit;
-//	}
 
 	private char charFromMatrix(char[][] maze, int[] current, int[] dir) {
+		if ((current[0] > (maze.length - 2)) || (current[1] > (maze.length - 2))) System.out.println("VÄLJAS! " + current[0] + dir[0] + " " + current[1] + dir[1]);
+		if ((current[0] + dir[0]) < 0 || (current[1] + dir[1]) < 0) {
+			System.out.println("VÄLJAS! " + current[0] + " " + dir[0] + ", " + current[1] + " " + dir[1]);
+			prindiLaby(maze);
+		}
 		return maze[current[0] + dir[0]][current[1] + dir[1]];
 	}
 
-//	private boolean equalOrBest(int[] kaugus, int[] lahim) {
-//		if (kaugus[0] + kaugus[1] <= lahim[0] + lahim[1]) {
-//			return true;
-//		}
-//		return false;
-//	}
-	
-	private int[] moveOneStep(int[] current, int[] dir) {
-		int[] kaugus = {current[0] + dir[0], current[1] + dir[1]};
-		return kaugus;
+	public void prindiLaby(char[][] maze) {
+		System.out.print(" ");
+		for (int col = 0; col < maze.length; col++) {
+			System.out.print(" " + col%10);
+		}
+		System.out.println();
+		for (int row = 0; row < maze.length; row++) {
+			System.out.print(row%10 + " ");
+			for (int col = 0; col < maze.length; col++) {
+				System.out.print(maze[row][col] + " ");
+			}
+			System.out.println();
+		} 
+		System.out.println();
 	}
-//
-//	private int[] distanceFromExit(int[] current, int[] dir) {
-//		current = moveOneStep(current, dir);
-//		int[] kaugus = {Math.abs(-exit[0] + current[0]), Math.abs(-exit[1] + current[1])};
-//		return kaugus;
-//	}
-	
+
 	private char[][] deDeadEndMaze(char[][] maze) {
-		return findDeadEnd(maze);
+		maze = findDeadEnd(maze);
+		maze = findCulDeSacs(maze);
+		return maze;
 	}
 
 	private char[][] findDeadEnd(char[][] maze) {
@@ -103,24 +73,36 @@ public class RahelMaze {
 		}
 		return maze;
 	}
+	
+	private int[] moveOneStep(int[] current, int[] dir) {
+		int[] kaugus = {current[0] + dir[0], current[1] + dir[1]};
+		return kaugus;
+	}
 
 	private int[] isItDeadEnd(int[] coordinate, char[][] maze) {
 		int walls = 0;
 		int[] freeDirection = null;
+		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate[0]][coordinate[1]] == 'X')) {
+			return null;
+		}
 		if (charFromMatrix(maze, coordinate, NORTH) == 'X') {
 			walls++;
+		} else {
 			freeDirection = NORTH;
 		}
 		if (charFromMatrix(maze, coordinate, EAST) == 'X') {
 			walls++;
+		} else {
 			freeDirection = EAST;
 		}
 		if (charFromMatrix(maze, coordinate, SOUTH) == 'X') {
 			walls++;
+		} else {
 			freeDirection = SOUTH;
 		}
 		if (charFromMatrix(maze, coordinate, WEST) == 'X') {
 			walls++;
+		} else {
 			freeDirection = WEST;
 		}
 		if (walls == 3) {
@@ -129,5 +111,67 @@ public class RahelMaze {
 			return null;
 		}
 		
+	}
+
+	private boolean is(int[] coordinate, int[] otherCoordinate) {
+		if (coordinate[0] == otherCoordinate[0] && coordinate[1] == otherCoordinate[1]) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	/*
+	 * cul de sac on siis, kui algo jõuab samasse ristmikusse varem teisi läbimata
+	 */
+	
+	private char[][] findCulDeSacs(char[][] maze) {
+		ArrayList<int[]> junctions = new ArrayList<int[]>();
+		int[] place = entrance;
+		
+		int[] response = detectDirectionOrJunction();
+		
+//		/*
+//		 * MILLAL LÕPETADA? 
+//		 * kui ristmikul suunad otsas, eemaldada?
+//		 * lõpp, kui kõik otsas?
+//		 */
+//			int[] response = detectDirectionOrJunction();
+//			if (response[2] == 0) {
+//				int[] junction = {response[0], response[1]};
+//				int junctionIndex = hasJunction(junctions, junction); 
+//				if (junctionIndex != -1) {
+//					//cul de sac!
+//				} else {
+//					junctions.add(junction);
+//				}
+//			} else {
+//				int[] newWay = {response[0], response[1]};
+//			}
+//		
+		return maze;
+	}
+
+	private int[] detectDirectionOrJunction() {
+		/* INDEKSID
+		 * 0,1 koordinaadid
+		 * 2 ristmiku aste
+		 * 3,4 ainus / mingi suund... kuidas hiljem läbi käia neid, mis puudu?
+		 * vb siis astme asemel võimalikud suunad - kus tuli, meelde jätta!
+		 * => veel vabad suunad, nt 134, 2-st tuli, 3 suunda veel...  
+		 */
+		return entrance;
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private int hasJunction(ArrayList<int[]> junctions, int[] junction) {
+		for (int i = 0; i < junctions.size(); i++) {
+			if (is(junctions.get(i), junction)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }

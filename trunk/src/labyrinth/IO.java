@@ -21,8 +21,10 @@ public class IO {
 	public IO (String[] args) {
 		filename = args[0];
 		char[][] maze = readInput(filename);
-		Maze m = new Maze(entrance, exit);
+		RahelMaze m = new RahelMaze(entrance, exit);
+		m.prindiLaby(maze);
 		maze = m.solve(maze);
+		m.prindiLaby(maze);
 		writeOutput(maze);		
 	}
 	
@@ -43,6 +45,7 @@ public class IO {
 			while (line != null) {
 				for (int i = 0; i < maze.length; i++) {
 					maze[f][i] = line.charAt(i);
+//					System.out.print(maze[f][i] + " ");
 					if (line.charAt(i) == 'B') {
 						entrance[0] = f;
 						entrance[1] = i;
@@ -51,6 +54,7 @@ public class IO {
 						exit[1] = i;
 					}
 				}
+//				System.out.println();
 				f++;
 				line = br.readLine();
 			}

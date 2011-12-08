@@ -22,9 +22,9 @@ public class IO {
 		filename = args[0];
 		char[][] maze = readInput(filename);
 		RahelMaze m = new RahelMaze(entrance, exit);
-		m.prindiLaby(maze);
+//		m.printOut(maze);
 		maze = m.solve(maze);
-		m.prindiLaby(maze);
+		m.printOut(maze);
 		writeOutput(maze);		
 	}
 	

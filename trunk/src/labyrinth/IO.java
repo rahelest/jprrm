@@ -1,5 +1,6 @@
 package labyrinth;
 
+import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -13,12 +14,12 @@ public class IO {
 	/**
 	 * Muutuja labürindi sissepääsu meelde jätmiseks.
 	 */
-	int[] entrance = {0,0};
+	Dimension entrance = new Dimension(0,0);
 	
 	/**
 	 * Muutuja labürindi väljapääsu meelde jätmiseks.
 	 */
-	int[] exit = {0,0};
+	Dimension exit = new Dimension(0,0);
 	
 	/**
 	 * Faili nimi, millest hakatakse labürinti lugema
@@ -82,11 +83,9 @@ public class IO {
 					 * vastavalt entrance või exit muutujasse.
 					 */
 					if (line.charAt(i) == 'B') {
-						entrance[0] = f;
-						entrance[1] = i;
+						entrance = new Dimension(f, i);
 					} else if (line.charAt(i) == 'F') {
-						exit[0] = f;
-						exit[1] = i;
+						exit = new Dimension(f, i);
 					}
 				}
 

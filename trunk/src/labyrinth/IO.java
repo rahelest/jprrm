@@ -21,7 +21,7 @@ public class IO {
 	public IO (String[] args) {
 		filename = args[0];
 		char[][] maze = readInput(filename);
-		RahelMaze m = new RahelMaze(entrance, exit);
+		Maze m = new Maze(entrance, exit);
 //		m.printOut(maze);
 		maze = m.solve(maze);
 		m.printOut(maze);

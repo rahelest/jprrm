@@ -331,12 +331,13 @@ public class Maze {
 	 *
 	 */
 	class Node {
-		private Dimension location;		
-		private ArrayList<Edge> edges;
+		Dimension location;		
+		ArrayList<Edge> edges;
 		
-		public Node(int[] coordinates) {
+		public Node(int[] coordinates, Edge cameFrom) {
 			location = new Dimension(coordinates[0],coordinates[1]);
 			edges = new ArrayList<Edge>();
+			edges.add(cameFrom);
 		}
 		
 		public Dimension getLocation() {
@@ -344,7 +345,7 @@ public class Maze {
 		}
 		
 		public void addEdge(Edge edge) {
-			
+			edges.add(edge);
 		}
 	}
 	
@@ -357,6 +358,14 @@ public class Maze {
 		Node start;
 		Node end;
 		ArrayList<Dimension> path;
+		
+		public Edge(Node start) {
+			this.start = start;
+		}
+		
+		public void addLink(Dimension link) {
+			path.add(link);
+		}
 		
 	}
 }

@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /**
  * Labürindi klass, töötleb ja leiab tee.
@@ -60,6 +63,8 @@ public class Maze {
 	 */
 	static final Dimension WEST = new Dimension(-1, 0);
 	
+	static List<Dimension> suunad = new ArrayList<Dimension>();
+	
 	/**
 	 * Labürindi muutuja, seda muudetaksegi lahenduse leidmiseks.
 	 */
@@ -80,7 +85,12 @@ public class Maze {
 	 */
 	ArrayList<Location> labiUuritud = new ArrayList<Location>();
 	
-	public Maze() {}
+	public Maze() {
+		suunad.add(NORTH);
+		suunad.add(EAST);
+		suunad.add(SOUTH);
+		suunad.add(WEST);
+	}
 
 	/**
 	 * Konstruktor, jätab meelde sisse- ja väljapääsu.
@@ -147,19 +157,13 @@ public class Maze {
 		public Set<Location> findPossibleDirections() {
 			Set<Location> voimalikudSuunad = new HashSet<Location>();
 			
-			if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
-					&& !isThisDirectionWall(this.coordinates, NORTH)) {
-				voimalikudSuunad.add(new Location(moveOneStep(coordinates, NORTH), this));
-			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
-					&& !isThisDirectionWall(this.coordinates, EAST)) {
-				voimalikudSuunad.add(new Location(moveOneStep(coordinates, EAST), this));
-			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
-					&& !isThisDirectionWall(this.coordinates, SOUTH)) {
-				voimalikudSuunad.add(new Location(moveOneStep(coordinates, SOUTH), this));
-			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
-					&& !isThisDirectionWall(this.coordinates, WEST)) {
-				voimalikudSuunad.add(new Location(moveOneStep(coordinates, WEST), this));
+			for (Dimension d : suunad) {
+				if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
+						&& !isThisDirectionWall(this.coordinates, d)) {
+					voimalikudSuunad.add(new Location(moveOneStep(coordinates, d), this));
+				}
 			}
+			
 						
 			return voimalikudSuunad;
 		}
@@ -254,32 +258,20 @@ public class Maze {
 		if (coordinate.equals(entrance) || coordinate.equals(exit) || (maze[coordinate.width][coordinate.height] == 'X')) {
 			return null;
 		}
-		if (isThisDirectionWall(coordinate, NORTH)) {
-			walls++;
-		} else {
-			freeDirection = NORTH;
+		
+		for (Dimension d : suunad) {
+			if (isThisDirectionWall(coordinate, d)) {
+				walls++;
+			} else {
+				freeDirection = d;
+			}
 		}
-		if (isThisDirectionWall(coordinate, EAST)) {
-			walls++;
-		} else {
-			freeDirection = EAST;
-		}
-		if (isThisDirectionWall(coordinate, SOUTH)) {
-			walls++;
-		} else {
-			freeDirection = SOUTH;
-		}
-		if (isThisDirectionWall(coordinate, WEST)) {
-			walls++;
-		} else {
-			freeDirection = WEST;
-		}
+		
 		if (walls == 3) {
 			return freeDirection;
 		} else {
 			return null;
-		}
-		
+		}		
 	}
 
 	/**
@@ -355,17 +347,11 @@ public class Maze {
 	 */
 	private int countOutboundRoads(Dimension coordinate) {
 		int walls = 0;
-		if (isThisDirectionWall(coordinate, NORTH)) {
-			walls++;
-		}
-		if (isThisDirectionWall(coordinate, EAST)) {
-			walls++;
-		}
-		if (isThisDirectionWall(coordinate, SOUTH)) {
-			walls++;
-		}
-		if (isThisDirectionWall(coordinate, WEST)) {
-			walls++;
+		
+		for (Dimension d : suunad) {
+			if (isThisDirectionWall(coordinate, d)) {
+				walls++;
+			}
 		}
 		return 4 - walls;
 	}
@@ -377,16 +363,13 @@ public class Maze {
 	 * @param currentLocation Uuritav koordinaat.
 	 */
 	private void checkAllDirectionsAndBlock(Dimension currentLocation) {
-		if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
-			editMaze(currentLocation, 'X');
-		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, EAST), EAST))) {
-			editMaze(currentLocation, 'X');
-		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, SOUTH), SOUTH))) {
-			editMaze(currentLocation, 'X');
-		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, WEST), WEST))) {
-			editMaze(currentLocation, 'X');
-		} 
 		
+		for (Dimension d : suunad) {
+			if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, d), d))) {
+				editMaze(currentLocation, 'X');
+				break;
+			}
+		}
 	}
 
 	/**

@@ -10,14 +10,34 @@ import java.io.InputStreamReader;
 
 public class IO {
 	
+	/**
+	 * Muutuja labürindi sissepääsu meelde jätmiseks.
+	 */
 	int[] entrance = {0,0};
+	
+	/**
+	 * Muutuja labürindi väljapääsu meelde jätmiseks.
+	 */
 	int[] exit = {0,0};
+	
+	/**
+	 * Faili nimi, millest hakatakse labürinti lugema
+	 * ja kuhu tulemus kirjutatakse.
+	 */
 	String filename;
 	
+	/**
+	 * Main meetod.
+	 * @param args Faili nimi.
+	 */
 	public static void main(String[] args) {
 		new IO(args);
 	}
 	
+	/**
+	 * Põhimeetod.
+	 * @param args 
+	 */
 	public IO (String[] args) {
 		filename = args[0];
 		char[][] maze = readInput(filename);
@@ -28,6 +48,11 @@ public class IO {
 		writeOutput(maze);		
 	}
 	
+	/**
+	 * Faili info sisselugeja.
+	 * @param string Faili nimi, kust loetakse.
+	 * @return Labürint, mida töötlema hakatakse.
+	 */
 	private char[][] readInput(String string) {
 		BufferedReader br;
 		char [][] maze = null;
@@ -37,15 +62,25 @@ public class IO {
 						new InputStreamReader(new FileInputStream("in\\" + 
 									string + ".in")));
 			
+			/**
+			 * Esimene rida näitab ära labürindi suuruse,
+			 * see loetakse sisse eraldi. Vastavalt sellele
+			 * luuakse ka 2n+1 dimensioonidega char maatriks.
+			 */
 			n = Integer.parseInt(br.readLine());
 			maze = new char[2 * n + 1][2 * n + 1];
-			//rida, veerg
+
 			String line = br.readLine();
 			int f = 0;
 			while (line != null) {
 				for (int i = 0; i < maze.length; i++) {
 					maze[f][i] = line.charAt(i);
-//					System.out.print(maze[f][i] + " ");
+
+					/**
+					 * Kontrollib, kas loetud täht on B või F,
+					 * sel juhul kirjutatakse koordinaadid 
+					 * vastavalt entrance või exit muutujasse.
+					 */
 					if (line.charAt(i) == 'B') {
 						entrance[0] = f;
 						entrance[1] = i;
@@ -54,15 +89,19 @@ public class IO {
 						exit[1] = i;
 					}
 				}
-//				System.out.println();
+
 				f++;
 				line = br.readLine();
 			}
 			
 		} catch (FileNotFoundException e) {
+			System.out.println("Faili ei leitud! Kontrolli sisendparameetrit.");
 			e.printStackTrace();
+			System.exit(-1);
 		} catch (NumberFormatException e) {
+			System.out.println("Esimene rida failis ei ole number!");
 			e.printStackTrace();
+			System.exit(-1);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -70,6 +109,10 @@ public class IO {
 		return maze;
 	}
 
+	/**
+	 * Kirjutab labürindi muutuja faili.
+	 * @param maze Uus labürint.
+	 */
 	private void writeOutput(char[][] maze) {
 		FileWriter outputStream;
 		BufferedWriter out;

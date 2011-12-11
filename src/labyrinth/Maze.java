@@ -1,28 +1,173 @@
 package labyrinth;
 
+/**
+ * Labürindi klass, töötleb ja leiab tee.
+ * @author t093563
+ * @author t083851
+ *
+ */
 public class Maze {
 	
+	/**
+	 * Labürindi sissepääsu koordinaadid.
+	 */
 	int[] entrance;
+	
+	/**
+	 * Labürindi väljapääsu koordinaadid.
+	 */
 	int[] exit;
+	
+	/**
+	 * Parajasti Cul-De-Saci-otsingus uuritav koordinaat.
+	 */
 	int[] threeWay;
-	//RIDA; VEERG
+	
+	/**
+	 * Konstant põhjasuuna koordinaadimuutuse lihtsustamiseks.
+	 */
 	static final int[] NORTH = {-1, 0};
+	
+	/**
+	 * Konstant idasuuna koordinaadimuutuse lihtsustamiseks.
+	 */
 	static final int[] EAST = {0, 1};
+	
+	/**
+	 * Konstant lõunasuuna koordinaadimuutuse lihtsustamiseks.
+	 */
 	static final int[] SOUTH = {1, 0};
+	
+	/**
+	 * Konstant läänesuuna koordinaadimuutuse lihtsustamiseks.
+	 */
 	static final int[] WEST = {0, -1};
 	
+	/**
+	 * Labürindi muutuja, seda muudetaksegi lahenduse leidmiseks.
+	 */
 	char[][] maze;
 
+	/**
+	 * Konstruktor, jätab meelde sisse- ja väljapääsu.
+	 * @param entrance Sissepääsu koordinaadid.
+	 * @param exit Väljapääsu koordinaadid.
+	 */
 	public Maze(int[] entrance, int[] exit) {
 		this.entrance = entrance;
 		this.exit = exit;
 	}
 
+	/**
+	 * Käsk labürindi lahendamiseks.
+	 * @param maze Lahendatav labürint.
+	 * @return Lahendus.
+	 */
 	public char[][] solve (char[][] maze) {
 		this.maze = maze;
 		return deDeadEndMaze();
 	}
+	
+	/**
+	 * Tupikute leidja.
+	 * @return Vastusega labürint.
+	 */
+	private char[][] deDeadEndMaze() {
+		/**
+		 * Eemalda tupikud.
+		 */
+		findDeadEnds();
+		long algus = System.currentTimeMillis();
+		/**
+		 * Eemalda Cul-De-Sacid (väike tsükkel tupiku lõpus,
+		 * seda tavaline tupiku otsimine ei leia).
+		 */
+		findCulDeSacs();
+		System.out.println(System.currentTimeMillis() - algus);
+		/**
+		 * Eemalda tupikud, mille Cul-De-Sac üles leiab.
+		 */
+		findDeadEnds();
+		return maze;
+	}
+	
+	/**
+	 * Tupikute otsija. Kontrollib kogu labürindi kõik koordinaadid.
+	 */
+	private void findDeadEnds() {
+		/**
+		 * Alustab 1-st ja lõpetab 2n-ga, sest kõige ääres on 
+		 * alati sein ning nii ei pea muretsema massiivi 
+		 * piiridest väljumise pärast.
+		 */
+		for (int row = 1; row < maze.length - 1; row++) {
+			for (int col = 1; col < maze.length - 1; col++) {
+				int[] place = {row,col};
+				int[] way = isItDeadEnd(place);
+				if (way != null) {
+					maze = fillDeadEnds(place, maze, way);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Iga koordinaadi kohta kontrollib kõiki kõrvalseinu, 
+	 * kui on kolm neist seinad, tagastab ainsa vaba suuna.
+	 * @param coordinate Uuritav koordinaat.
+	 * @return Vastavalt tulemusele null või ainus vaba suund.
+	 */
+	private int[] isItDeadEnd(int[] coordinate) {
+		int walls = 0;
+		int[] freeDirection = null;
+		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate[0]][coordinate[1]] == 'X')) {
+			return null;
+		}
+		if (northIsWall(coordinate)) {
+			walls++;
+		} else {
+			freeDirection = NORTH;
+		}
+		if (eastIsWall(coordinate)) {
+			walls++;
+		} else {
+			freeDirection = EAST;
+		}
+		if (southIsWall(coordinate)) {
+			walls++;
+		} else {
+			freeDirection = SOUTH;
+		}
+		if (westIsWall(coordinate)) {
+			walls++;
+		} else {
+			freeDirection = WEST;
+		}
+		if (walls == 3) {
+			return freeDirection;
+		} else {
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * Kontrollib int[] võrduvust. Kui mõlema massiivi vastava indeksi
+	 * kohad võrduvad, siis võrduvad ka need massiivid.
+	 * @param coordinate Üks massiiv.
+	 * @param otherCoordinate Teine massiiv.
+	 * @return Võrdlemise tulemus.
+	 */
+	private boolean is(int[] coordinate, int[] otherCoordinate) {
+		for (int i = 0; i < coordinate.length; i++) {
+			if (coordinate[i] != otherCoordinate[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
 
+	
 	private char charFromMatrix(int[] current, int[] dir) {
 		return maze[current[0] + dir[0]][current[1] + dir[1]];
 	}
@@ -54,28 +199,9 @@ public class Maze {
 		
 	}
 
-	private char[][] deDeadEndMaze() {
-		findDeadEnds();
-//		printOut(maze);
-		long algus = System.currentTimeMillis();
-		findCulDeSacs();
-		System.out.println(System.currentTimeMillis() - algus);
-//		printOut(maze);
-		findDeadEnds();
-		return maze;
-	}
+	
 
-	private void findDeadEnds() {
-		for (int row = 1; row < maze.length - 1; row++) {
-			for (int col = 1; col < maze.length - 1; col++) {
-				int[] place = {row,col};
-				int[] way = isItDeadEnd(place);
-				if (way != null) {
-					maze = fillDeadEnds(place, maze, way);
-				}
-			}
-		}
-	}
+
 
 	private char[][] fillDeadEnds(int[] place, char[][] maze, int[] direction) {
 		while (direction != null) {
@@ -176,45 +302,6 @@ public class Maze {
 		return kaugus;
 	}
 
-	/**
-	 * Väldime tüübiteisendusi, võrdleme char-e.
-	 * @param coordinate
-	 * @param maze
-	 * @return
-	 */
-	private int[] isItDeadEnd(int[] coordinate) {
-		int walls = 0;
-		int[] freeDirection = null;
-		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate[0]][coordinate[1]] == 'X')) {
-			return null;
-		}
-		if (northIsWall(coordinate)) {
-			walls++;
-		} else {
-			freeDirection = NORTH;
-		}
-		if (eastIsWall(coordinate)) {
-			walls++;
-		} else {
-			freeDirection = EAST;
-		}
-		if (southIsWall(coordinate)) {
-			walls++;
-		} else {
-			freeDirection = SOUTH;
-		}
-		if (westIsWall(coordinate)) {
-			walls++;
-		} else {
-			freeDirection = WEST;
-		}
-		if (walls == 3) {
-			return freeDirection;
-		} else {
-			return null;
-		}
-		
-	}
 	
 	private int countOutboundRoads(int[] coordinate) {
 		int walls = 0;
@@ -233,13 +320,7 @@ public class Maze {
 		return 4 - walls;
 	}
 
-	private boolean is(int[] coordinate, int[] otherCoordinate) {
-		if (coordinate[0] == otherCoordinate[0] && coordinate[1] == otherCoordinate[1]) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 	/**
 	 * @param coordinate
 	 * @param maze

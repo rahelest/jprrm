@@ -167,6 +167,34 @@ public class Maze {
 						
 			return voimalikudSuunad;
 		}
+
+		public int getPassThrough() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			} else {
+				return getLocalCost() + getParentCost();
+			}
+		}
+
+		private int getParentCost() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			}
+			if (parentCost == 0) {
+				parentCost = cameFrom.parentCost + 1;
+			}
+				return parentCost;
+		}
+
+
+		private int getLocalCost() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			} else {
+				localCost = Math.abs(exit.width - coordinates.width) + Math.abs(exit.height - coordinates.height);
+				return localCost;
+			}
+		}
 	}
 	
 	/**
@@ -221,6 +249,24 @@ public class Maze {
 				break;
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
+				for (Location naaber : naabrid) {
+					if (veelUurida.contains(naaber)) {
+						Location temp = new Location (naaber.coordinates, uuritav);
+						if (temp.getPassThrough() >= naaber.getPassThrough()) {
+							continue;
+						}
+					}
+					
+					if (labiUuritud.contains(naaber)) {
+						Location temp = new Location (naaber.coordinates, uuritav);
+						if (temp.passThroughCost >= naaber.passThroughCost) {
+							continue;
+						}
+					}
+					veelUurida.remove(naaber);
+					labiUuritud.remove(naaber);
+					veelUurida.add(naaber);
+				}
 			}
 		}
 		

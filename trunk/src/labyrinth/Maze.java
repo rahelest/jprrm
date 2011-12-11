@@ -2,6 +2,10 @@ package labyrinth;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  * Labürindi klass, töötleb ja leiab tee.
@@ -12,14 +16,24 @@ import java.util.ArrayList;
 public class Maze {
 	
 	/**
-	 * Labürindi sissepääsu koordinaadid.
+	 * Labürindi sissepääsu koordinaadid. -legacy (failist lugemine)
 	 */
 	Dimension entrance;
 	
 	/**
-	 * Labürindi väljapääsu koordinaadid.
+	 * Asukoht, mis on põhimõtteliselt ruuduke labürindis, sissepääs
+	 */
+	Location entranceLoc;
+	
+	/**
+	 * Labürindi väljapääsu koordinaadid. -legacy (failist lugemine)
 	 */
 	Dimension exit;
+	
+	/**
+	 * Asukoht, mis on põhimõtteliselt ruuduke labürindis, väljapääs
+	 */
+	Location exitLoc;
 	
 	/**
 	 * Parajasti Cul-De-Saci-otsingus uuritav koordinaat.
@@ -50,6 +64,23 @@ public class Maze {
 	 * Labürindi muutuja, seda muudetaksegi lahenduse leidmiseks.
 	 */
 	char[][] maze;
+	
+	/**
+	 * Muutmata labürint hilisemaks rajamärkimiseks ja tagastamiseks;
+	 */
+	char[][] virginMaze;
+	
+	/**
+	 * Asupaikade nimekiri, mida on vaja veel uurida.
+	 */
+	PriorityQueue<Location> veelUurida = new PriorityQueue<Location>(11, new PQComparator());
+	
+	/**
+	 * Asupaikade nimekiri, mille on algoritm juba läbi käinud.
+	 */
+	ArrayList<Location> labiUuritud = new ArrayList<Location>();
+	
+	public Maze() {}
 
 	/**
 	 * Konstruktor, jätab meelde sisse- ja väljapääsu.
@@ -68,37 +99,133 @@ public class Maze {
 	 */
 	public char[][] solve (char[][] maze) {
 		this.maze = maze;
-		return deDeadEndMaze();
+		virginMaze = maze.clone();
+		findBeginningAndEnd();		
+		deDeadEndMaze();
+		findShortestPath();
+		return virginMaze;
+	}
+
+	/**
+	 * See on abiklass, mis aitab läbida labürinti
+	 */
+	class Location {
+		/**
+		 * Asukoht x-y-teljestikus
+		 */
+		Dimension coordinates;
+		/**
+		 * Selle asukoha absoluutne kaugus väljapääsust
+		 */
+		int localCost;
+		/**
+		 * Samme stardist 
+		 */
+		int parentCost;
+		/**
+		 * Kogumaksumus (local + parent)
+		 */
+		int passThroughCost;
+		/**
+		 * 
+		 */
+		Location cameFrom;
+		
+		private Location(Dimension d, Location parent) {
+			coordinates = new Dimension(d);
+			cameFrom = parent;
+		}
+
+		public void markTheSpot() {
+			virginMaze[coordinates.height][coordinates.width] = '*';
+			if (cameFrom != null) {
+				cameFrom.markTheSpot();
+			}
+			
+		}
+
+		public Set<Location> findPossibleDirections() {
+			Set<Location> voimalikudSuunad = new HashSet<Location>();
+			
+			if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
+					&& !isThisDirectionWall(this.coordinates, NORTH)) {
+				voimalikudSuunad.add(new Location(moveOneStep(coordinates, NORTH), this));
+			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
+					&& !isThisDirectionWall(this.coordinates, EAST)) {
+				voimalikudSuunad.add(new Location(moveOneStep(coordinates, EAST), this));
+			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
+					&& !isThisDirectionWall(this.coordinates, SOUTH)) {
+				voimalikudSuunad.add(new Location(moveOneStep(coordinates, SOUTH), this));
+			} else if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
+					&& !isThisDirectionWall(this.coordinates, WEST)) {
+				voimalikudSuunad.add(new Location(moveOneStep(coordinates, WEST), this));
+			}
+						
+			return voimalikudSuunad;
+		}
 	}
 	
+	/**
+	 * Käime läbi kogu sisendi ning otsime üles sissepääsu ja väljapääsu koordinaadid
+	 * @param maze
+	 */
+	private void findBeginningAndEnd () {
+		for (int row = 0; row < maze.length; row++) {
+			for (int column = 0; column < maze.length; column++) {
+				if (maze[row][column] == 'B') {
+					entrance = new Dimension(column,row);
+					entranceLoc = new Location(entrance, null);
+				} else if (maze[row][column] == 'F') {
+					exit = new Dimension(column,row);
+				}
+			}
+		}		
+	}		
+		
 	/**
 	 * Tupikute leidja.
 	 * @return Vastusega labürint.
 	 */
-	public char[][] deDeadEndMaze() {
+	private void deDeadEndMaze() {
 		/**
 		 * Eemalda tupikud.
 		 */
 		findDeadEnds();
-		long algus = System.currentTimeMillis();
 		/**
 		 * Eemalda Cul-De-Sacid (väike tsükkel tupiku lõpus,
 		 * seda tavaline tupiku otsimine ei leia).
 		 */
 		findCulDeSacs();
-		System.out.println(System.currentTimeMillis() - algus);
 		/**
 		 * Eemalda tupikud, mille Cul-De-Sac üles leiab.
 		 */
 		findDeadEnds();
-//		LabiKaija l = new LabiKaija(this); 
-		return maze;
+	}
+	
+	
+	/**
+	 * A-Staril põhinev lähima läbimiseks sobiliku raja leidja
+	 */
+	private void findShortestPath() {
+		// TODO Auto-generated method stub
+		veelUurida.add(entranceLoc);
+		while (!veelUurida.isEmpty()) {
+			Location uuritav = veelUurida.poll();
+			labiUuritud.add(uuritav);
+			if (uuritav.coordinates.equals(exit)) {
+				uuritav.markTheSpot();
+				break;
+			} else {
+				Set<Location> naabrid = uuritav.findPossibleDirections();
+			}
+		}
+		
 	}
 	
 	/**
 	 * Tupikute otsija. Kontrollib kogu labürindi kõik koordinaadid.
 	 */
-	public void findDeadEnds() {
+	private void findDeadEnds() {
 		/**
 		 * Alustab 1-st ja lõpetab 2n-ga, sest kõige ääres on 
 		 * alati sein ning nii ei pea muretsema massiivi 
@@ -121,7 +248,7 @@ public class Maze {
 	 * @param coordinate Uuritav koordinaat.
 	 * @return Vastavalt tulemusele null või ainus vaba suund.
 	 */
-	public Dimension isItDeadEnd(Dimension coordinate) {
+	private Dimension isItDeadEnd(Dimension coordinate) {
 		int walls = 0;
 		Dimension freeDirection = null;
 		if (coordinate.equals(entrance) || coordinate.equals(exit) || (maze[coordinate.width][coordinate.height] == 'X')) {
@@ -154,23 +281,6 @@ public class Maze {
 		}
 		
 	}
-	
-//	/**
-//	 * Kontrollib Dimension võrduvust. Kui mõlema massiivi vastava indeksi
-//	 * kohad võrduvad, siis võrduvad ka need massiivid.
-//	 * @param coordinate Üks massiiv.
-//	 * @param otherCoordinate Teine massiiv.
-//	 * @return Võrdlemise tulemus.
-//	 */
-//	public boolean is(Dimension coordinate, Dimension otherCoordinate) {
-//			if (coordinate.height != otherCoordinate.height) {
-//				return false;
-//			} 
-//			if (coordinate.width != otherCoordinate.width) {
-//				return false;
-//			}
-//		return true;
-//	}
 
 	/**
 	 * Kirjutab tupikus ruumi kohale X-i, et see võimalikust lahendusest eemaldada.
@@ -179,7 +289,7 @@ public class Maze {
 	 * @param currentLocation Muudetav ruum.
 	 * @param direction Ainus suund muudetavast ruumist välja.
 	 */
-	public void fillDeadEnds(Dimension currentLocation, Dimension direction) {
+	private void fillDeadEnds(Dimension currentLocation, Dimension direction) {
 		while (direction != null) {
 			editMaze(currentLocation, 'X');
 			currentLocation = moveOneStep(currentLocation, direction);
@@ -192,7 +302,7 @@ public class Maze {
 	 * @param where Koordinaat, mida muudetakse.
 	 * @param whatTo Mis on muudetava koha uueks väärtuseks.
 	 */
-	public void editMaze(Dimension where, char whatTo) {
+	private void editMaze(Dimension where, char whatTo) {
 		maze[where.width][where.height] = whatTo;	
 	}
 	
@@ -202,30 +312,18 @@ public class Maze {
 	 * @param direction Mis suunas liikuda.
 	 * @return Uue koha koordinaadid.
 	 */
-	public Dimension moveOneStep(Dimension currentPlace, Dimension direction) {
+	Dimension moveOneStep(Dimension currentPlace, Dimension direction) {
 		Dimension uusKoordinaat = new Dimension (currentPlace.width + direction.width,
 				currentPlace.height+ direction.height);
 		return uusKoordinaat;
 	}
 	
-	public char charFromMatrix(Dimension current, Dimension dir) {
+	private char charFromMatrix(Dimension current, Dimension dir) {
 		return maze[current.width + dir.width][current.height + dir.height];
 	}
 
-	public void printOut(char[][] maze2) {
-		System.out.print(" ");
-		for (int col = 0; col < maze2.length; col++) {
-			System.out.print(" " + col%10);
-		}
-		System.out.println();
-		/*
-		 * Ma tean, et järgnev kood oleks ilusam, aga sellega ei saa teha ilusama maze mõttes tühikuid iga char-i vahele horisontaalsuunas.
-		 */
-//		for (char[] row : maze) {							
-//			System.out.println(String.valueOf(row) + " ");
-//		}														
+	void printOut(char[][] maze2) {														
 		for (int row = 0; row < maze2.length; row++) {
-			System.out.print(row%10 + " ");
 			for (int col = 0; col < maze2.length; col++) {
 				System.out.print(maze2[row][col] + " ");
 			}
@@ -238,13 +336,13 @@ public class Maze {
 	/**
 	 * Otsib ristmikuid, kui leiab kolmese, kutsub Cul-De-Sac kontrolli välja.
 	 */
-	public void findCulDeSacs() {
+	private void findCulDeSacs() {
 		for (int row = 1; row < maze.length - 1; row++) {
 			for (int col = 1; col < maze.length - 1; col++) {
 				Dimension currentLocation = new Dimension(row,col);
 				if (countOutboundRoads(currentLocation) == 3) {
 					threeWay = currentLocation;
-					checkAllDirections(currentLocation);				
+					checkAllDirectionsAndBlock(currentLocation);				
 				}
 			}
 		}
@@ -255,7 +353,7 @@ public class Maze {
 	 * @param coordinate Uuritav koordinaad.
 	 * @return Kõrvalteede arv.
 	 */
-	public int countOutboundRoads(Dimension coordinate) {
+	private int countOutboundRoads(Dimension coordinate) {
 		int walls = 0;
 		if (isThisDirectionWall(coordinate, NORTH)) {
 			walls++;
@@ -278,7 +376,7 @@ public class Maze {
 	 * kontrollib, ega see koht labürindis pole Cul-De-Sac (jõuab sama ristmikuni välja).
 	 * @param currentLocation Uuritav koordinaat.
 	 */
-	public void checkAllDirections(Dimension currentLocation) {
+	private void checkAllDirectionsAndBlock(Dimension currentLocation) {
 		if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
 			editMaze(currentLocation, 'X');
 		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, EAST), EAST))) {
@@ -297,7 +395,7 @@ public class Maze {
 	 * @param direction
 	 * @return
 	 */
-	public Dimension goToNextJunction(Dimension currentLocation, Dimension direction) {
+	private Dimension goToNextJunction(Dimension currentLocation, Dimension direction) {
 		while (countOutboundRoads(currentLocation) != 3) {
 			if (!direction.equals(SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
 				currentLocation = moveOneStep(currentLocation, NORTH);
@@ -323,50 +421,22 @@ public class Maze {
 	 * @param direction Soovitud suund.
 	 * @return Kas on sein?
 	 */
-	public boolean isThisDirectionWall(Dimension coordinate, Dimension direction) {
+	boolean isThisDirectionWall(Dimension coordinate, Dimension direction) {
 		return charFromMatrix(coordinate, direction) == 'X';
 	}
 	
-	/**
-	 * Dijkstra algoritmi jaoks vajalik Node objekt, ristmik labürindis
-	 * @author t083851
-	 *
-	 */
-	class Node {
-		Dimension location;		
-		ArrayList<Edge> edges;
-		
-		public Node(Dimension coordinates, Edge cameFrom) {
-			location = new Dimension(coordinates.width,coordinates.height);
-			edges = new ArrayList<Edge>();
-			edges.add(cameFrom);
-		}
-		
-		public Dimension getLocation() {
-			return location;			
-		}
-		
-		public void addEdge(Edge edge) {
-			edges.add(edge);
-		}
-	}
 	
-	/**
-	 * Dijkstra algoritmi jaoks vajalik Edge objekt, tee kahe ristmiku vahel
-	 * @author t083851
-	 *
-	 */
-	class Edge {
-		Node start;
-		Node end;
-		ArrayList<Dimension> path;
-		
-		public Edge(Node start) {
-			this.start = start;
-		}
-		
-		public void addLink(Dimension link) {
-			path.add(link);
+	class PQComparator implements Comparator<Location> {
+
+		@Override
+		public int compare(Location l1, Location l2) {
+			if (l1.passThroughCost < l2.passThroughCost) {
+				return -1;
+			} else if (l1.passThroughCost == l2.passThroughCost) {
+				return 0;
+			} else {
+				return 1;
+			}
 		}
 		
 	}

@@ -1,5 +1,8 @@
 package labyrinth;
 
+import java.awt.Dimension;
+import java.util.ArrayList;
+
 /**
  * Labürindi klass, töötleb ja leiab tee.
  * @author t093563
@@ -319,5 +322,24 @@ public class Maze {
 	 */
 	private boolean isThisDirectionWall(int[] coordinate, int[] direction) {
 		return charFromMatrix(coordinate, direction) == 'X';
+	}
+	
+	class Node {
+		int[] location;		
+		ArrayList edges;
+		
+		public Node() {
+			
+		}
+	}
+	
+	class Edge {
+		Node start;
+		Node end;
+		ArrayList<Dimension> path;
+		static Dimension temp = new Dimension();
+		public static void main(String[] args) {
+			temp.
+		}
 	}
 }

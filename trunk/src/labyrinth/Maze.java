@@ -29,22 +29,22 @@ public class Maze {
 	/**
 	 * Konstant põhjasuuna koordinaadimuutuse lihtsustamiseks.
 	 */
-	static final Dimension NORTH = new Dimension(-1, 0);
+	static final Dimension NORTH = new Dimension(0, -1);
 	
 	/**
 	 * Konstant idasuuna koordinaadimuutuse lihtsustamiseks.
 	 */
-	static final Dimension EAST = new Dimension(0, 1);
+	static final Dimension EAST = new Dimension(1, 0);
 	
 	/**
 	 * Konstant lõunasuuna koordinaadimuutuse lihtsustamiseks.
 	 */
-	static final Dimension SOUTH = new Dimension(1, 0);
+	static final Dimension SOUTH = new Dimension(0, 1);
 	
 	/**
 	 * Konstant läänesuuna koordinaadimuutuse lihtsustamiseks.
 	 */
-	static final Dimension WEST = new Dimension(0, -1);
+	static final Dimension WEST = new Dimension(-1, 0);
 	
 	/**
 	 * Labürindi muutuja, seda muudetaksegi lahenduse leidmiseks.
@@ -91,7 +91,7 @@ public class Maze {
 		 * Eemalda tupikud, mille Cul-De-Sac üles leiab.
 		 */
 		findDeadEnds();
-		LabiKaija l = new LabiKaija(this); 
+//		LabiKaija l = new LabiKaija(this); 
 		return maze;
 	}
 	
@@ -124,7 +124,7 @@ public class Maze {
 	public Dimension isItDeadEnd(Dimension coordinate) {
 		int walls = 0;
 		Dimension freeDirection = null;
-		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate.height][coordinate.width] == 'X')) {
+		if (coordinate.equals(entrance) || coordinate.equals(exit) || (maze[coordinate.width][coordinate.height] == 'X')) {
 			return null;
 		}
 		if (isThisDirectionWall(coordinate, NORTH)) {
@@ -155,22 +155,22 @@ public class Maze {
 		
 	}
 	
-	/**
-	 * Kontrollib Dimension võrduvust. Kui mõlema massiivi vastava indeksi
-	 * kohad võrduvad, siis võrduvad ka need massiivid.
-	 * @param coordinate Üks massiiv.
-	 * @param otherCoordinate Teine massiiv.
-	 * @return Võrdlemise tulemus.
-	 */
-	public boolean is(Dimension coordinate, Dimension otherCoordinate) {
-			if (coordinate.height != otherCoordinate.height) {
-				return false;
-			} 
-			if (coordinate.width != otherCoordinate.width) {
-				return false;
-			}
-		return true;
-	}
+//	/**
+//	 * Kontrollib Dimension võrduvust. Kui mõlema massiivi vastava indeksi
+//	 * kohad võrduvad, siis võrduvad ka need massiivid.
+//	 * @param coordinate Üks massiiv.
+//	 * @param otherCoordinate Teine massiiv.
+//	 * @return Võrdlemise tulemus.
+//	 */
+//	public boolean is(Dimension coordinate, Dimension otherCoordinate) {
+//			if (coordinate.height != otherCoordinate.height) {
+//				return false;
+//			} 
+//			if (coordinate.width != otherCoordinate.width) {
+//				return false;
+//			}
+//		return true;
+//	}
 
 	/**
 	 * Kirjutab tupikus ruumi kohale X-i, et see võimalikust lahendusest eemaldada.
@@ -193,7 +193,7 @@ public class Maze {
 	 * @param whatTo Mis on muudetava koha uueks väärtuseks.
 	 */
 	public void editMaze(Dimension where, char whatTo) {
-		maze[where.height][where.width] = whatTo;	
+		maze[where.width][where.height] = whatTo;	
 	}
 	
 	/**
@@ -203,13 +203,13 @@ public class Maze {
 	 * @return Uue koha koordinaadid.
 	 */
 	public Dimension moveOneStep(Dimension currentPlace, Dimension direction) {
-		Dimension uusKoordinaat = new Dimension (currentPlace.height + direction.height,
-				currentPlace.width+ direction.width);
+		Dimension uusKoordinaat = new Dimension (currentPlace.width + direction.width,
+				currentPlace.height+ direction.height);
 		return uusKoordinaat;
 	}
 	
 	public char charFromMatrix(Dimension current, Dimension dir) {
-		return maze[current.height + dir.height][current.width + dir.width];
+		return maze[current.width + dir.width][current.height + dir.height];
 	}
 
 	public void printOut(char[][] maze2) {
@@ -279,13 +279,13 @@ public class Maze {
 	 * @param currentLocation Uuritav koordinaat.
 	 */
 	public void checkAllDirections(Dimension currentLocation) {
-		if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
+		if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
 			editMaze(currentLocation, 'X');
-		} else if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, EAST), EAST))) {
+		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, EAST), EAST))) {
 			editMaze(currentLocation, 'X');
-		} else if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, SOUTH), SOUTH))) {
+		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, SOUTH), SOUTH))) {
 			editMaze(currentLocation, 'X');
-		} else if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, WEST), WEST))) {
+		} else if (currentLocation.equals(goToNextJunction(moveOneStep(currentLocation, WEST), WEST))) {
 			editMaze(currentLocation, 'X');
 		} 
 		
@@ -299,16 +299,16 @@ public class Maze {
 	 */
 	public Dimension goToNextJunction(Dimension currentLocation, Dimension direction) {
 		while (countOutboundRoads(currentLocation) != 3) {
-			if (!is(direction, SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
+			if (!direction.equals(SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
 				currentLocation = moveOneStep(currentLocation, NORTH);
 				direction = NORTH;
-			} else if (!is(direction, WEST) && !isThisDirectionWall(currentLocation, EAST)) {
+			} else if (!direction.equals(WEST) && !isThisDirectionWall(currentLocation, EAST)) {
 				currentLocation = moveOneStep(currentLocation, EAST);
 				direction = EAST;
-			} else if (!is(direction, NORTH) && !isThisDirectionWall(currentLocation, SOUTH)) {
+			} else if (!direction.equals(NORTH) && !isThisDirectionWall(currentLocation, SOUTH)) {
 				currentLocation = moveOneStep(currentLocation, SOUTH);
 				direction = SOUTH;
-			} else if (!is(direction, EAST) && !isThisDirectionWall(currentLocation, WEST)) {
+			} else if (!direction.equals(EAST) && !isThisDirectionWall(currentLocation, WEST)) {
 				currentLocation = moveOneStep(currentLocation, WEST);
 				direction = WEST;
 			} else break;
@@ -337,7 +337,7 @@ public class Maze {
 		ArrayList<Edge> edges;
 		
 		public Node(Dimension coordinates, Edge cameFrom) {
-			location = new Dimension(coordinates.height,coordinates.width);
+			location = new Dimension(coordinates.width,coordinates.height);
 			edges = new ArrayList<Edge>();
 			edges.add(cameFrom);
 		}
@@ -353,7 +353,7 @@ public class Maze {
 	
 	/**
 	 * Dijkstra algoritmi jaoks vajalik Edge objekt, tee kahe ristmiku vahel
-	 * @author Administraator
+	 * @author t083851
 	 *
 	 */
 	class Edge {

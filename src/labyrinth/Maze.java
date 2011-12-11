@@ -91,6 +91,7 @@ public class Maze {
 		 * Eemalda tupikud, mille Cul-De-Sac üles leiab.
 		 */
 		findDeadEnds();
+		LabiKaija l = new LabiKaija(maze); 
 		return maze;
 	}
 	
@@ -324,22 +325,38 @@ public class Maze {
 		return charFromMatrix(coordinate, direction) == 'X';
 	}
 	
+	/**
+	 * Dijkstra algoritmi jaoks vajalik Node objekt, ristmik labürindis
+	 * @author t083851
+	 *
+	 */
 	class Node {
-		int[] location;		
-		ArrayList edges;
+		private Dimension location;		
+		private ArrayList<Edge> edges;
 		
-		public Node() {
+		public Node(int[] coordinates) {
+			location = new Dimension(coordinates[0],coordinates[1]);
+			edges = new ArrayList<Edge>();
+		}
+		
+		public Dimension getLocation() {
+			return location;			
+		}
+		
+		public void addEdge(Edge edge) {
 			
 		}
 	}
 	
+	/**
+	 * Dijkstra algoritmi jaoks vajalik Edge objekt, tee kahe ristmiku vahel
+	 * @author Administraator
+	 *
+	 */
 	class Edge {
 		Node start;
 		Node end;
 		ArrayList<Dimension> path;
-		static Dimension temp = new Dimension();
-		public static void main(String[] args) {
-			temp.
-		}
+		
 	}
 }

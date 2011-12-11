@@ -27,29 +27,29 @@ public class MuutuvDynamicArray<T> {
 		return lastElementsIndex;
 	}
 	
-	public <T> T rem() {			
-		int temp = list[lastElementsIndex];
-		list[lastElementsIndex] = 0;
-		if (lastElementsIndex <= list.length / 4) {
-			int[] temp2 = new int[list.length  / 4];
-			for (int i = 0; i < temp2.length; i++) {
-				temp2[i] = list[i];
-			}
-			list = temp2;
-		} else if (lastElementsIndex < 0) {
-			return 0;
-		}		
-		lastElementsIndex--;
-		return temp;
-	}
-	
-	public int get(int i) {
-		return list[i];
-	}
+//	public <T> T rem() {			
+//		int temp = list[lastElementsIndex];
+//		list[lastElementsIndex] = 0;
+//		if (lastElementsIndex <= list.length / 4) {
+//			int[] temp2 = new int[list.length  / 4];
+//			for (int i = 0; i < temp2.length; i++) {
+//				temp2[i] = list[i];
+//			}
+//			list = temp2;
+//		} else if (lastElementsIndex < 0) {
+//			return 0;
+//		}		
+//		lastElementsIndex--;
+//		return temp;
+//	}
+//	
+//	public int get(int i) {
+//		return list[i];
+//	}
 	
 	public void put(int x, int i) {
 		try {
-			list[i] = x;
+//			list[i] = x;
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			System.out.println("Nii ei saa, vähendada prooviti väljaspool massiivi!");
@@ -80,7 +80,7 @@ public class MuutuvDynamicArray<T> {
 	public DynamicArray clone() {
 		DynamicArray uus = new DynamicArray(1);
 		for (int i = 0; i <= lastElementsIndex; i++) {
-			uus.add(list[i]);
+//			uus.add(list[i]);
 		}
 		return uus;
 	}

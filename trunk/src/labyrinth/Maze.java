@@ -75,7 +75,7 @@ public class Maze {
 	 * Tupikute leidja.
 	 * @return Vastusega labürint.
 	 */
-	private char[][] deDeadEndMaze() {
+	public char[][] deDeadEndMaze() {
 		/**
 		 * Eemalda tupikud.
 		 */
@@ -98,7 +98,7 @@ public class Maze {
 	/**
 	 * Tupikute otsija. Kontrollib kogu labürindi kõik koordinaadid.
 	 */
-	private void findDeadEnds() {
+	public void findDeadEnds() {
 		/**
 		 * Alustab 1-st ja lõpetab 2n-ga, sest kõige ääres on 
 		 * alati sein ning nii ei pea muretsema massiivi 
@@ -121,7 +121,7 @@ public class Maze {
 	 * @param coordinate Uuritav koordinaat.
 	 * @return Vastavalt tulemusele null või ainus vaba suund.
 	 */
-	private int[] isItDeadEnd(int[] coordinate) {
+	public int[] isItDeadEnd(int[] coordinate) {
 		int walls = 0;
 		int[] freeDirection = null;
 		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate[0]][coordinate[1]] == 'X')) {
@@ -162,7 +162,7 @@ public class Maze {
 	 * @param otherCoordinate Teine massiiv.
 	 * @return Võrdlemise tulemus.
 	 */
-	private boolean is(int[] coordinate, int[] otherCoordinate) {
+	public boolean is(int[] coordinate, int[] otherCoordinate) {
 		for (int i = 0; i < coordinate.length; i++) {
 			if (coordinate[i] != otherCoordinate[i]) {
 				return false;
@@ -178,7 +178,7 @@ public class Maze {
 	 * @param currentLocation Muudetav ruum.
 	 * @param direction Ainus suund muudetavast ruumist välja.
 	 */
-	private void fillDeadEnds(int[] currentLocation, int[] direction) {
+	public void fillDeadEnds(int[] currentLocation, int[] direction) {
 		while (direction != null) {
 			editMaze(currentLocation, 'X');
 			currentLocation = moveOneStep(currentLocation, direction);
@@ -191,7 +191,7 @@ public class Maze {
 	 * @param where Koordinaat, mida muudetakse.
 	 * @param whatTo Mis on muudetava koha uueks väärtuseks.
 	 */
-	private void editMaze(int[] where, char whatTo) {
+	public void editMaze(int[] where, char whatTo) {
 		maze[where[0]][where[1]] = whatTo;	
 	}
 	
@@ -201,12 +201,12 @@ public class Maze {
 	 * @param direction Mis suunas liikuda.
 	 * @return Uue koha koordinaadid.
 	 */
-	private int[] moveOneStep(int[] currentPlace, int[] direction) {
+	public int[] moveOneStep(int[] currentPlace, int[] direction) {
 		int[] uusKoordinaat = {currentPlace[0] + direction[0], currentPlace[1] + direction[1]};
 		return uusKoordinaat;
 	}
 	
-	private char charFromMatrix(int[] current, int[] dir) {
+	public char charFromMatrix(int[] current, int[] dir) {
 		return maze[current[0] + dir[0]][current[1] + dir[1]];
 	}
 
@@ -236,7 +236,7 @@ public class Maze {
 	/**
 	 * Otsib ristmikuid, kui leiab kolmese, kutsub Cul-De-Sac kontrolli välja.
 	 */
-	private void findCulDeSacs() {
+	public void findCulDeSacs() {
 		for (int row = 1; row < maze.length - 1; row++) {
 			for (int col = 1; col < maze.length - 1; col++) {
 				int[] currentLocation = {row,col};
@@ -253,7 +253,7 @@ public class Maze {
 	 * @param coordinate Uuritav koordinaad.
 	 * @return Kõrvalteede arv.
 	 */
-	private int countOutboundRoads(int[] coordinate) {
+	public int countOutboundRoads(int[] coordinate) {
 		int walls = 0;
 		if (isThisDirectionWall(coordinate, NORTH)) {
 			walls++;
@@ -276,7 +276,7 @@ public class Maze {
 	 * kontrollib, ega see koht labürindis pole Cul-De-Sac (jõuab sama ristmikuni välja).
 	 * @param currentLocation Uuritav koordinaat.
 	 */
-	private void checkAllDirections(int[] currentLocation) {
+	public void checkAllDirections(int[] currentLocation) {
 		if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
 			editMaze(currentLocation, 'X');
 		} else if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, EAST), EAST))) {
@@ -295,7 +295,7 @@ public class Maze {
 	 * @param direction
 	 * @return
 	 */
-	private int[] goToNextJunction(int[] currentLocation, int[] direction) {
+	public int[] goToNextJunction(int[] currentLocation, int[] direction) {
 		while (countOutboundRoads(currentLocation) != 3) {
 			if (!is(direction, SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
 				currentLocation = moveOneStep(currentLocation, NORTH);
@@ -321,7 +321,7 @@ public class Maze {
 	 * @param direction Soovitud suund.
 	 * @return Kas on sein?
 	 */
-	private boolean isThisDirectionWall(int[] coordinate, int[] direction) {
+	public boolean isThisDirectionWall(int[] coordinate, int[] direction) {
 		return charFromMatrix(coordinate, direction) == 'X';
 	}
 	

@@ -105,7 +105,7 @@ public class Maze {
 				int[] place = {row,col};
 				int[] way = isItDeadEnd(place);
 				if (way != null) {
-					maze = fillDeadEnds(place, maze, way);
+					fillDeadEnds(place, way);
 				}
 			}
 		}
@@ -123,22 +123,22 @@ public class Maze {
 		if (is(coordinate, entrance) || is(coordinate, exit) || (maze[coordinate[0]][coordinate[1]] == 'X')) {
 			return null;
 		}
-		if (northIsWall(coordinate)) {
+		if (isThisDirectionWall(coordinate, NORTH)) {
 			walls++;
 		} else {
 			freeDirection = NORTH;
 		}
-		if (eastIsWall(coordinate)) {
+		if (isThisDirectionWall(coordinate, EAST)) {
 			walls++;
 		} else {
 			freeDirection = EAST;
 		}
-		if (southIsWall(coordinate)) {
+		if (isThisDirectionWall(coordinate, SOUTH)) {
 			walls++;
 		} else {
 			freeDirection = SOUTH;
 		}
-		if (westIsWall(coordinate)) {
+		if (isThisDirectionWall(coordinate, WEST)) {
 			walls++;
 		} else {
 			freeDirection = WEST;
@@ -167,6 +167,40 @@ public class Maze {
 		return true;
 	}
 
+	/**
+	 * Kirjutab tupikus ruumi kohale X-i, et see võimalikust lahendusest eemaldada.
+	 * Seejärel kontrollib sellele ruumile järgmist ruumi, ega see tupik pole.
+	 * Tsükkel töötab, kuni jõuab ristmikuni.
+	 * @param currentLocation Muudetav ruum.
+	 * @param direction Ainus suund muudetavast ruumist välja.
+	 */
+	private void fillDeadEnds(int[] currentLocation, int[] direction) {
+		while (direction != null) {
+			editMaze(currentLocation, 'X');
+			currentLocation = moveOneStep(currentLocation, direction);
+			direction = isItDeadEnd(currentLocation);
+		}
+	}
+	
+	/**
+	 * Labürindi muutmise meetod.
+	 * @param where Koordinaat, mida muudetakse.
+	 * @param whatTo Mis on muudetava koha uueks väärtuseks.
+	 */
+	private void editMaze(int[] where, char whatTo) {
+		maze[where[0]][where[1]] = whatTo;	
+	}
+	
+	/**
+	 * Labürindis ühe sammi võrra edasi liikumine.
+	 * @param currentPlace Kus kohast liigutakse.
+	 * @param direction Mis suunas liikuda.
+	 * @return Uue koha koordinaadid.
+	 */
+	private int[] moveOneStep(int[] currentPlace, int[] direction) {
+		int[] uusKoordinaat = {currentPlace[0] + direction[0], currentPlace[1] + direction[1]};
+		return uusKoordinaat;
+	}
 	
 	private char charFromMatrix(int[] current, int[] dir) {
 		return maze[current[0] + dir[0]][current[1] + dir[1]];
@@ -194,28 +228,7 @@ public class Maze {
 		System.out.println();
 	}
 	
-	private void editMaze(int[] where, char whatTo) {
-		maze[where[0]][where[1]] = whatTo;
-		
-	}
 
-	
-
-
-
-	private char[][] fillDeadEnds(int[] place, char[][] maze, int[] direction) {
-		while (direction != null) {
-			editMaze(place, 'X');
-			place = moveOneStep(place, direction);
-			direction = isItDeadEnd(place);
-		}
-		return maze;
-	}
-	
-	/*
-	 * cul de sac on siis, kui algo jõuab samasse ristmikusse varem teisi läbimata
-	 */
-	
 	/**
 	 * Otsib ristmikuid, kui leiab kolmese, kutsub Cul-De-Sac kontrolli välja.
 	 */
@@ -225,17 +238,39 @@ public class Maze {
 				int[] currentLocation = {row,col};
 				if (countOutboundRoads(currentLocation) == 3) {
 					threeWay = currentLocation;
-					checkAllDirections(currentLocation);
-//					findNextJunctionsAndFill(currentLocation,maze);					
+					checkAllDirections(currentLocation);				
 				}
 			}
 		}
 	}
 	
 	/**
+	 * Loeb kokku, mitu kõrvalteed on antud koordinaadil.
+	 * @param coordinate Uuritav koordinaad.
+	 * @return Kõrvalteede arv.
+	 */
+	private int countOutboundRoads(int[] coordinate) {
+		int walls = 0;
+		if (isThisDirectionWall(coordinate, NORTH)) {
+			walls++;
+		}
+		if (isThisDirectionWall(coordinate, EAST)) {
+			walls++;
+		}
+		if (isThisDirectionWall(coordinate, SOUTH)) {
+			walls++;
+		}
+		if (isThisDirectionWall(coordinate, WEST)) {
+			walls++;
+		}
+		return 4 - walls;
+	}
+	
+	
+	/**
 	 * Kontrollib ristmikul iga suuna kohta, kas sinna saab minna ning sel juhul 
-	 * kontrollib, ega see koht labürindis pole Cul-De-Sac.
-	 * @param currentLocation
+	 * kontrollib, ega see koht labürindis pole Cul-De-Sac (jõuab sama ristmikuni välja).
+	 * @param currentLocation Uuritav koordinaat.
 	 */
 	private void checkAllDirections(int[] currentLocation) {
 		if (is(currentLocation, goToNextJunction(moveOneStep(currentLocation, NORTH), NORTH))) {
@@ -258,102 +293,31 @@ public class Maze {
 	 */
 	private int[] goToNextJunction(int[] currentLocation, int[] direction) {
 		while (countOutboundRoads(currentLocation) != 3) {
-			if (!is(direction, SOUTH) && !northIsWall(currentLocation)) {
+			if (!is(direction, SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
 				currentLocation = moveOneStep(currentLocation, NORTH);
 				direction = NORTH;
-			} else if (!is(direction, WEST) && !eastIsWall(currentLocation)) {
+			} else if (!is(direction, WEST) && !isThisDirectionWall(currentLocation, EAST)) {
 				currentLocation = moveOneStep(currentLocation, EAST);
 				direction = EAST;
-			} else if (!is(direction, NORTH) && !southIsWall(currentLocation)) {
+			} else if (!is(direction, NORTH) && !isThisDirectionWall(currentLocation, SOUTH)) {
 				currentLocation = moveOneStep(currentLocation, SOUTH);
 				direction = SOUTH;
-			} else if (!is(direction, EAST) && !westIsWall(currentLocation)) {
+			} else if (!is(direction, EAST) && !isThisDirectionWall(currentLocation, WEST)) {
 				currentLocation = moveOneStep(currentLocation, WEST);
 				direction = WEST;
 			} else break;
 		}
 		return currentLocation;
 	}
-
-	private boolean findNextJunctionsAndFill(int[] currentLocation) {
-		if (is(currentLocation,threeWay)) {
-			maze[currentLocation[0]][currentLocation[1]] = 'X';
-			return true;
-		} else if (countOutboundRoads(currentLocation) > 2 ) {
-			
-		}
-		if (!northIsWall(currentLocation)) {
-			findNextJunctionsAndFill(moveOneStep(currentLocation, NORTH));
-		}
-		if (!eastIsWall(currentLocation)) {
-			findNextJunctionsAndFill(moveOneStep(currentLocation, EAST));
-		}
-		if (!southIsWall(currentLocation)) {
-			findNextJunctionsAndFill(moveOneStep(currentLocation, SOUTH));
-		}
-		if (!westIsWall(currentLocation)) {
-			findNextJunctionsAndFill(moveOneStep(currentLocation, WEST));
-		}
-		return true;
-	}
-
-	private int[] moveOneStep(int[] current, int[] dir) {
-		int[] kaugus = {current[0] + dir[0], current[1] + dir[1]};
-		return kaugus;
-	}
-
 	
-	private int countOutboundRoads(int[] coordinate) {
-		int walls = 0;
-		if (northIsWall(coordinate)) {
-			walls++;
-		}
-		if (eastIsWall(coordinate)) {
-			walls++;
-		}
-		if (southIsWall(coordinate)) {
-			walls++;
-		}
-		if (westIsWall(coordinate)) {
-			walls++;
-		}
-		return 4 - walls;
-	}
-
-
 	/**
-	 * @param coordinate
-	 * @param maze
-	 * @return
+	 * Kontrollib, kas antud ruumi kindlas suunas asuv naaberruum on sein
+	 * või mitte.
+	 * @param coordinate Uuritav suund.
+	 * @param direction Soovitud suund.
+	 * @return Kas on sein?
 	 */
-	private boolean westIsWall(int[] coordinate) {
-		return charFromMatrix(coordinate, WEST) == 'X';
-	}
-
-	/**
-	 * @param coordinate
-	 * @param maze
-	 * @return
-	 */
-	private boolean southIsWall(int[] coordinate) {
-		return charFromMatrix(coordinate, SOUTH) == 'X';
-	}
-
-	/**
-	 * @param coordinate
-	 * @param maze
-	 * @return
-	 */
-	private boolean eastIsWall(int[] coordinate) {
-		return charFromMatrix(coordinate, EAST) == 'X';
-	}
-
-	/**
-	 * @param coordinate
-	 * @param maze
-	 * @return
-	 */
-	private boolean northIsWall(int[] coordinate) {
-		return charFromMatrix(coordinate, NORTH) == 'X';
+	private boolean isThisDirectionWall(int[] coordinate, int[] direction) {
+		return charFromMatrix(coordinate, direction) == 'X';
 	}
 }

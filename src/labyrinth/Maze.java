@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 /**
  * Labürindi klass, töötleb ja leiab tee.
  * @author t093563
@@ -85,12 +83,7 @@ public class Maze {
 	 */
 	ArrayList<Location> labiUuritud = new ArrayList<Location>();
 	
-	public Maze() {
-		suunad.add(NORTH);
-		suunad.add(EAST);
-		suunad.add(SOUTH);
-		suunad.add(WEST);
-	}
+	public Maze() {}
 
 	/**
 	 * Konstruktor, jätab meelde sisse- ja väljapääsu.
@@ -108,12 +101,16 @@ public class Maze {
 	 * @return Lahendus.
 	 */
 	public char[][] solve (char[][] maze) {
+		suunad.add(NORTH);
+		suunad.add(EAST);
+		suunad.add(SOUTH);
+		suunad.add(WEST);
 		this.maze = maze;
 		virginMaze = maze.clone();
 		findBeginningAndEnd();		
 		deDeadEndMaze();
-		findShortestPath();
-		return virginMaze;
+//		findShortestPath();
+		return maze;
 	}
 
 	/**
@@ -127,27 +124,27 @@ public class Maze {
 		/**
 		 * Selle asukoha absoluutne kaugus väljapääsust
 		 */
-		int localCost;
+		int localCost = 0;
 		/**
 		 * Samme stardist 
 		 */
-		int parentCost;
+		double parentCost = 0.0;
 		/**
 		 * Kogumaksumus (local + parent)
 		 */
-		int passThroughCost;
+		double passThroughCost = 0.0;
 		/**
 		 * 
 		 */
 		Location cameFrom;
 		
-		private Location(Dimension d, Location parent) {
+		public Location(Dimension d) {
 			coordinates = new Dimension(d);
-			cameFrom = parent;
 		}
 
 		public void markTheSpot() {
 			virginMaze[coordinates.height][coordinates.width] = '*';
+			System.out.println("Teen tärni");
 			if (cameFrom != null) {
 				cameFrom.markTheSpot();
 			}
@@ -156,11 +153,10 @@ public class Maze {
 
 		public Set<Location> findPossibleDirections() {
 			Set<Location> voimalikudSuunad = new HashSet<Location>();
-			
 			for (Dimension d : suunad) {
 				if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
 						&& !isThisDirectionWall(this.coordinates, d)) {
-					voimalikudSuunad.add(new Location(moveOneStep(coordinates, d), this));
+					voimalikudSuunad.add(new Location(moveOneStep(coordinates, d)));
 				}
 			}
 			
@@ -168,33 +164,37 @@ public class Maze {
 			return voimalikudSuunad;
 		}
 
-		public int getPassThrough() {
+		private double getPassThrough() {
 			if (this.coordinates.equals(entrance)) {
 				return 0;
 			} else {
-				return getLocalCost() + getParentCost();
+				return (double) getLocalCost() + getParentCost();
 			}
 		}
 
-		private int getParentCost() {
+		private double getParentCost() {
 			if (this.coordinates.equals(entrance)) {
 				return 0;
 			}
 			if (parentCost == 0) {
-				parentCost = cameFrom.parentCost + 1;
+				parentCost = 1.0 + 0.5 * (cameFrom.parentCost - 1.0);
 			}
 				return parentCost;
 		}
-
 
 		private int getLocalCost() {
 			if (this.coordinates.equals(entrance)) {
 				return 0;
 			} else {
-				localCost = Math.abs(exit.width - coordinates.width) + Math.abs(exit.height - coordinates.height);
+				localCost = Math.abs(exit.height - coordinates.height) + Math.abs(exit.width - coordinates.width);
 				return localCost;
 			}
 		}
+		
+		private void setParent(Location parent) {
+			this.cameFrom = parent;
+		}
+		
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public class Maze {
 			for (int column = 0; column < maze.length; column++) {
 				if (maze[row][column] == 'B') {
 					entrance = new Dimension(column,row);
-					entranceLoc = new Location(entrance, null);
+					entranceLoc = new Location(entrance);
 				} else if (maze[row][column] == 'F') {
 					exit = new Dimension(column,row);
 				}
@@ -240,32 +240,39 @@ public class Maze {
 	 */
 	private void findShortestPath() {
 		// TODO Auto-generated method stub
+		
 		veelUurida.add(entranceLoc);
+		Location uuritav = veelUurida.poll();
 		while (!veelUurida.isEmpty()) {
-			Location uuritav = veelUurida.poll();
+//			Location uuritav = veelUurida.poll();
+//			System.out.println(uuritav.coordinates);
 			labiUuritud.add(uuritav);
 			if (uuritav.coordinates.equals(exit)) {
+				System.out.println("IF ON TÕENE");
 				uuritav.markTheSpot();
 				break;
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
 				for (Location naaber : naabrid) {
 					if (veelUurida.contains(naaber)) {
-						Location temp = new Location (naaber.coordinates, uuritav);
+						Location temp = new Location (naaber.coordinates);
+						temp.setParent(uuritav);
 						if (temp.getPassThrough() >= naaber.getPassThrough()) {
 							continue;
 						}
 					}
 					
 					if (labiUuritud.contains(naaber)) {
-						Location temp = new Location (naaber.coordinates, uuritav);
+						Location temp = new Location (naaber.coordinates);
 						if (temp.passThroughCost >= naaber.passThroughCost) {
 							continue;
 						}
 					}
+					naaber.setParent(uuritav);
 					veelUurida.remove(naaber);
 					labiUuritud.remove(naaber);
 					veelUurida.add(naaber);
+					uuritav = naaber;
 				}
 			}
 		}

@@ -128,109 +128,7 @@ public class Maze {
 		return temp;
 	}
 
-	/**
-	 * See on abiklass, mis aitab läbida labürinti
-	 */
-	class Location {
-		/**
-		 * Asukoht x-y-teljestikus
-		 */
-		Dimension coordinates;
-		/**
-		 * Selle asukoha absoluutne kaugus väljapääsust
-		 */
-		int localCost = 0;
-		/**
-		 * Samme stardist 
-		 */
-		double parentCost = 0.0;
-		/**
-		 * Kogumaksumus (local + parent)
-		 */
-		double passThroughCost = 0.0;
-		/**
-		 * 
-		 */
-		Location cameFrom;
-		
-		public Location(Dimension d) {
-//			System.out.println(this);
-			coordinates = new Dimension(d);
-//			System.out.println(coordinates);
-		}
-
-		/**
-		 * Tähistab võimaliku käigukoha tärniga
-		 */
-		public void markTheSpot() {
-			System.out.println("TÄRNITAN");
-			if (virginMaze[coordinates.width][coordinates.height] == ' ')
-			virginMaze[coordinates.width][coordinates.height] = '*';
-			if (cameFrom != null) {
-				cameFrom.markTheSpot();
-			}
-			
-		}
-
-		/**
-		 * Leiab võimalikud suunad, kuhu liikuda, välistab tuldud tee
-		 * @return võimalikud edasi liikumise suunad
-		 */
-		public Set<Location> findPossibleDirections() {			
-			boolean algus = false;
-			Set<Location> voimalikudSuunad = new HashSet<Location>();
-			if (cameFrom == null) {
-				algus = true;
-			}
-			for (Dimension d : suunad) {
-				if (!isThisDirectionWall(this.coordinates, d) && (algus || !cameFrom.coordinates.equals(moveOneStep(this.coordinates, d)))) {
-					voimalikudSuunad.add(new Location(moveOneStep(this.coordinates, d)));
-				}
-				
-			}
-			return voimalikudSuunad;
-		}
-		
-		public String toString() {
-//			if (cameFrom != null) {
-				return coordinates + "";
-//			} else {
-//				return null;
-//			}
-		}
-
-		private double getPassThrough() {
-			if (this.coordinates.equals(entrance)) {
-				return 0;
-			} else {
-				return (double) getLocalCost() + getParentCost();
-			}
-		}
-
-		private double getParentCost() {
-			if (this.coordinates.equals(entrance)) {
-				return 0;
-			}
-			if (parentCost == 0) {
-				parentCost = 1.0 + 0.5 * (cameFrom.parentCost - 1.0);
-			}
-				return parentCost;
-		}
-
-		private int getLocalCost() {
-			if (this.coordinates.equals(entrance)) {
-				return 0;
-			} else {
-				localCost = Math.abs(exit.height - coordinates.height) + Math.abs(exit.width - coordinates.width);
-				return localCost;
-			}
-		}
-		
-		private void setParent(Location parent) {
-			this.cameFrom = parent;
-		}
-		
-	}
+	
 	
 	/**
 	 * Käime läbi kogu sisendi ning otsime üles sissepääsu ja väljapääsu koordinaadid
@@ -241,9 +139,7 @@ public class Maze {
 			for (int column = 0; column < maze.length; column++) {
 				if (maze[row][column] == 'B') {
 					entrance = new Dimension(row,column);
-					System.out.println("Entrance: " + entrance);
 					entranceLoc = new Location(entrance);
-					System.out.println("Entrance2: " + entranceLoc);
 				} else if (maze[row][column] == 'F') {
 					exit = new Dimension(row,column);
 				}
@@ -277,16 +173,20 @@ public class Maze {
 	 */
 	private void findShortestPath() {
 		// TODO Auto-generated method stub
+		System.out.println(exit);
 		List<Location> prioriteetsed = new ArrayList<Location>();
-		veelUurida.add(entranceLoc);
-		Location uuritav = null;
-		while (!veelUurida.isEmpty()) {
-			if (prioriteetsed.isEmpty()) {
-				uuritav = veelUurida.remove();
-				System.out.println("1 " + uuritav);
-			} else {
-				uuritav = prioriteetsed.remove(0);
-				System.out.println("2");
+		prioriteetsed.add(entranceLoc);
+		while (!prioriteetsed.isEmpty()) {
+			/**
+			 * ebaoptimaalne häkk, kuna ei jõua PQ-d implementeerida
+			 */
+			double minPT = 9999999999.0;
+			Location uuritav = null;
+			for (Location loc : prioriteetsed) {
+				if (loc.getPassThrough() < minPT) {
+					minPT = loc.getPassThrough();
+					uuritav = loc;
+				}
 			}
 			
 			labiUuritud.add(uuritav);
@@ -298,7 +198,7 @@ public class Maze {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
 				System.out.println(naabrid.size());
 				for (Location naaber : naabrid) {
-					if (veelUurida.contains(naaber)) {
+					if (prioriteetsed.contains(naaber)) {
 						System.out.println(naaber);
 						Location temp = new Location (naaber.coordinates);
 						temp.setParent(uuritav);
@@ -316,9 +216,7 @@ public class Maze {
 					naaber.setParent(uuritav);
 					veelUurida.remove(naaber);
 					labiUuritud.remove(naaber);
-					prioriteetsed.add(0, uuritav);
-//					veelUurida.add(naaber);
-//					uuritav = naaber;
+					prioriteetsed.add(0,naaber);
 				}
 			}
 		}
@@ -507,6 +405,109 @@ public class Maze {
 		return charFromMatrix(coordinate, direction) == 'X';
 	}
 	
+	/**
+	 * See on abiklass, mis aitab läbida labürinti
+	 */
+	class Location {
+		/**
+		 * Asukoht x-y-teljestikus
+		 */
+		Dimension coordinates;
+		/**
+		 * Selle asukoha absoluutne kaugus väljapääsust
+		 */
+		int localCost = 0;
+		/**
+		 * Samme stardist 
+		 */
+		double parentCost = 0.0;
+		/**
+		 * Kogumaksumus (local + parent)
+		 */
+		double passThroughCost = 0.0;
+		/**
+		 * 
+		 */
+		Location cameFrom;
+		
+		public Location(Dimension d) {
+//			System.out.println(this);
+			coordinates = new Dimension(d);
+//			System.out.println(coordinates);
+		}
+
+		/**
+		 * Tähistab võimaliku käigukoha tärniga
+		 */
+		public void markTheSpot() {
+			System.out.println("TÄRNITAN");
+			if (virginMaze[coordinates.width][coordinates.height] == ' ')
+			virginMaze[coordinates.width][coordinates.height] = '*';
+			if (cameFrom != null) {
+				cameFrom.markTheSpot();
+			}
+			
+		}
+
+		/**
+		 * Leiab võimalikud suunad, kuhu liikuda, välistab tuldud tee
+		 * @return võimalikud edasi liikumise suunad
+		 */
+		public Set<Location> findPossibleDirections() {			
+			boolean algus = false;
+			Set<Location> voimalikudSuunad = new HashSet<Location>();
+			if (cameFrom == null) {
+				algus = true;
+			}
+			for (Dimension d : suunad) {
+				if (!isThisDirectionWall(this.coordinates, d) && (algus || !cameFrom.coordinates.equals(moveOneStep(this.coordinates, d)))) {
+					voimalikudSuunad.add(new Location(moveOneStep(this.coordinates, d)));
+				}
+				
+			}
+			return voimalikudSuunad;
+		}
+		
+		public String toString() {
+//			if (cameFrom != null) {
+				return coordinates + " ";
+//			} else {
+//				return null;
+//			}
+		}
+
+		private double getPassThrough() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			} else {
+				return (double) getLocalCost() + getParentCost();
+			}
+		}
+
+		private double getParentCost() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			}
+			if (parentCost == 0) {
+				parentCost = 1.0 + 0.5 * (cameFrom.parentCost - 1.0);
+			}
+				return parentCost;
+		}
+
+		private int getLocalCost() {
+			if (this.coordinates.equals(entrance)) {
+				return 0;
+			} else {
+				localCost = Math.abs(exit.height - coordinates.height) + Math.abs(exit.width - coordinates.width);
+				return localCost;
+			}
+		}
+		
+		private void setParent(Location parent) {
+			this.cameFrom = parent;
+		}
+		
+	}
 	
 	class PQComparator implements Comparator<Location> {
 

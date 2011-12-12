@@ -154,19 +154,28 @@ public class Maze {
 		Location cameFrom;
 		
 		public Location(Dimension d) {
+//			System.out.println(this);
 			coordinates = new Dimension(d);
+//			System.out.println(coordinates);
 		}
 
+		/**
+		 * Tähistab võimaliku käigukoha tärniga
+		 */
 		public void markTheSpot() {
+			System.out.println("TÄRNITAN");
 			if (virginMaze[coordinates.width][coordinates.height] == ' ')
 			virginMaze[coordinates.width][coordinates.height] = '*';
-			System.out.println("Teen tärni");
 			if (cameFrom != null) {
 				cameFrom.markTheSpot();
 			}
 			
 		}
 
+		/**
+		 * Leiab võimalikud suunad, kuhu liikuda, välistab tuldud tee
+		 * @return võimalikud edasi liikumise suunad
+		 */
 		public Set<Location> findPossibleDirections() {			
 			boolean algus = false;
 			Set<Location> voimalikudSuunad = new HashSet<Location>();
@@ -174,25 +183,20 @@ public class Maze {
 				algus = true;
 			}
 			for (Dimension d : suunad) {
-				if (algus || (!isThisDirectionWall(this.coordinates, d) && !cameFrom.coordinates.equals(moveOneStep(this.coordinates, d)))) {
-	//				System.out.println(d);
-					System.out.println("this: " + this.coordinates + "\ncame: " + cameFrom);
+				if (!isThisDirectionWall(this.coordinates, d) && (algus || !cameFrom.coordinates.equals(moveOneStep(this.coordinates, d)))) {
 					voimalikudSuunad.add(new Location(moveOneStep(this.coordinates, d)));
 				}
 				
 			}
-			System.out.println();
-			
-						
 			return voimalikudSuunad;
 		}
 		
 		public String toString() {
-			if (cameFrom != null) {
-				return cameFrom.coordinates + "";
-			} else {
-				return null;
-			}
+//			if (cameFrom != null) {
+				return coordinates + "";
+//			} else {
+//				return null;
+//			}
 		}
 
 		private double getPassThrough() {
@@ -237,7 +241,9 @@ public class Maze {
 			for (int column = 0; column < maze.length; column++) {
 				if (maze[row][column] == 'B') {
 					entrance = new Dimension(row,column);
+					System.out.println("Entrance: " + entrance);
 					entranceLoc = new Location(entrance);
+					System.out.println("Entrance2: " + entranceLoc);
 				} else if (maze[row][column] == 'F') {
 					exit = new Dimension(row,column);
 				}
@@ -271,22 +277,29 @@ public class Maze {
 	 */
 	private void findShortestPath() {
 		// TODO Auto-generated method stub
-		
+		List<Location> prioriteetsed = new ArrayList<Location>();
 		veelUurida.add(entranceLoc);
-//		Location uuritav = veelUurida.poll();
+		Location uuritav = null;
 		while (!veelUurida.isEmpty()) {
-			Location uuritav = veelUurida.poll();
-//			System.out.println(uuritav.coordinates);
+			if (prioriteetsed.isEmpty()) {
+				uuritav = veelUurida.remove();
+				System.out.println("1 " + uuritav);
+			} else {
+				uuritav = prioriteetsed.remove(0);
+				System.out.println("2");
+			}
+			
 			labiUuritud.add(uuritav);
+//			System.out.println(uuritav);
 			if (uuritav.coordinates.equals(exit)) {
-				System.out.println("IF ON TÕENE");
 				uuritav.markTheSpot();
 				break;
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
+				System.out.println(naabrid.size());
 				for (Location naaber : naabrid) {
-//					System.out.println(labiUuritud.size());
 					if (veelUurida.contains(naaber)) {
+						System.out.println(naaber);
 						Location temp = new Location (naaber.coordinates);
 						temp.setParent(uuritav);
 						if (temp.getPassThrough() >= naaber.getPassThrough()) {
@@ -303,7 +316,8 @@ public class Maze {
 					naaber.setParent(uuritav);
 					veelUurida.remove(naaber);
 					labiUuritud.remove(naaber);
-					veelUurida.add(naaber);
+					prioriteetsed.add(0, uuritav);
+//					veelUurida.add(naaber);
 //					uuritav = naaber;
 				}
 			}

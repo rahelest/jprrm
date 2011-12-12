@@ -234,7 +234,7 @@ public class Maze {
 	 */
 	private void findShortestPath() {
 		// TODO Auto-generated method stub
-		System.out.println(exit);
+//		System.out.println(exit);
 		List<Location> prioriteetsed = new ArrayList<Location>();
 		prioriteetsed.add(entranceLoc);
 		while (!prioriteetsed.isEmpty()) {
@@ -249,7 +249,7 @@ public class Maze {
 					uuritav = loc;
 				}
 			}
-			
+			prioriteetsed.remove(uuritav);
 			labiUuritud.add(uuritav);
 //			System.out.println(uuritav);
 			if (uuritav.coordinates.equals(exit)) {
@@ -257,7 +257,7 @@ public class Maze {
 				break;
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
-				System.out.println(naabrid);
+//				System.out.println(prioriteetsed.size());
 				for (Location naaber : naabrid) {
 					if (prioriteetsed.contains(naaber)) {
 						
@@ -506,7 +506,7 @@ public class Maze {
 		 * Tähistab võimaliku käigukoha tärniga
 		 */
 		public void markTheSpot() {
-			System.out.println("TÄRNITAN");
+//			System.out.println("TÄRNITAN");
 			if (maze[coordinates.width][coordinates.height] == ' ')
 			maze[coordinates.width][coordinates.height] = '*';
 			if (cameFrom != null) {

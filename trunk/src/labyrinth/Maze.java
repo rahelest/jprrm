@@ -111,7 +111,7 @@ public class Maze {
 		findBeginningAndEnd();	
 		deDeadEndMaze();
 		findShortestPath();
-		return virginMaze;
+		return maze;
 	}
 	
 	public void hoiaParemale() {
@@ -234,11 +234,11 @@ public class Maze {
 			/**
 			 * ebaoptimaalne häkk, kuna ei jõua PQ-d implementeerida
 			 */
-			double minPT = 9999999999.0;
+			double minPT = 0.0;
 			Location uuritav = null;
 			for (Location loc : prioriteetsed) {
-				if (loc.getPassThrough() < minPT) {
 					minPT = loc.getPassThrough();
+					if (loc.getPassThrough() >= minPT) {
 					uuritav = loc;
 				}
 			}
@@ -250,9 +250,10 @@ public class Maze {
 				break;
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
-				System.out.println(naabrid.size());
+				System.out.println(naabrid);
 				for (Location naaber : naabrid) {
 					if (prioriteetsed.contains(naaber)) {
+						
 						System.out.println(naaber);
 						Location temp = new Location (naaber.coordinates);
 						temp.setParent(uuritav);
@@ -263,13 +264,14 @@ public class Maze {
 					
 					if (labiUuritud.contains(naaber)) {
 						Location temp = new Location (naaber.coordinates);
-						if (temp.passThroughCost >= naaber.passThroughCost) {
+						if (temp.getPassThrough() >= naaber.getPassThrough()) {
 							continue;
 						}
 					}
 					naaber.setParent(uuritav);
 					veelUurida.remove(naaber);
 					labiUuritud.remove(naaber);
+					prioriteetsed.remove(uuritav);
 					prioriteetsed.add(0,naaber);
 				}
 			}
@@ -430,6 +432,9 @@ public class Maze {
 	 * @return
 	 */
 	private Dimension goToNextJunction(Dimension currentLocation, Dimension direction) {
+		if (maze[currentLocation.height][currentLocation.width] == 'X') {
+			return currentLocation;
+		}
 		while (countOutboundRoads(currentLocation) != 3) {
 			if (!direction.equals(SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
 				currentLocation = moveOneStep(currentLocation, NORTH);
@@ -495,8 +500,8 @@ public class Maze {
 		 */
 		public void markTheSpot() {
 			System.out.println("TÄRNITAN");
-			if (virginMaze[coordinates.width][coordinates.height] == ' ')
-			virginMaze[coordinates.width][coordinates.height] = '*';
+			if (maze[coordinates.width][coordinates.height] == ' ')
+			maze[coordinates.width][coordinates.height] = '*';
 			if (cameFrom != null) {
 				cameFrom.markTheSpot();
 			}

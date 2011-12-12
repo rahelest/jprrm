@@ -20,6 +20,7 @@ import java.util.Set;
  * Töötlemine on küll pikemapoolne, aga peaks toimima 
  * ka näidissisenditest küllaltki palju suuremate sisendite puhul ja 
  * seejuures järjest kasulikum olema.
+ * (dead endid ja cul-de-sac-d oleks hiljem veelgi kulukamad)
  */
 public class Maze {
 	
@@ -118,20 +119,14 @@ public class Maze {
 		findBeginningAndEnd();	
 		deDeadEndMaze();
 		findShortestPath();
-		return maze;
+		return virginMaze;
 	}
 	
+	/**
+	 * haaaaaaaax!
+	 */
 	public void hoiaParemale() {
 		Dimension koht = goToNextJunction2(entrance, kuhuMinna(entrance));
-		
-		while (!koht.equals(exit)) {
-			for (Dimension d : suunad) {
-				if (!isThisDirectionWall(koht, d)) {
-					koht = goToNextJunction2(koht, d);
-					maze[koht.width][koht.height] = '*';
-				}
-			}
-		}
 		taidaVirgin();
 	}
 
@@ -507,8 +502,8 @@ public class Maze {
 		 */
 		public void markTheSpot() {
 //			System.out.println("TÄRNITAN");
-			if (maze[coordinates.width][coordinates.height] == ' ')
-			maze[coordinates.width][coordinates.height] = '*';
+			if (virginMaze[coordinates.width][coordinates.height] == ' ')
+			virginMaze[coordinates.width][coordinates.height] = '*';
 			if (cameFrom != null) {
 				cameFrom.markTheSpot();
 			}

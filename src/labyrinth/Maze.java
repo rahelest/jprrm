@@ -106,11 +106,26 @@ public class Maze {
 		suunad.add(SOUTH);
 		suunad.add(WEST);
 		this.maze = maze;
-		virginMaze = maze.clone();
-		findBeginningAndEnd();		
+		virginMaze = cloneMaze(maze);
+		findBeginningAndEnd();	
 		deDeadEndMaze();
-//		findShortestPath();
-		return maze;
+		findShortestPath();
+		return virginMaze;
+	}
+
+	/**
+	 * Kloonime ühe neitsi, mida on pärast hea tärnida
+	 * @param maze2 labürint, mille klooni loodame tulemuseks saada
+	 * @return kloonitud labürint
+	 */
+	private char[][] cloneMaze(char[][] maze2) {
+		char[][] temp = new char[maze2.length][maze2.length];
+		for (int row = 0; row < maze.length; row++) {
+			for (int column = 0; column < maze.length; column++) {
+				temp[row][column] = maze2[row][column];
+			}
+		}
+		return temp;
 	}
 
 	/**
@@ -143,7 +158,8 @@ public class Maze {
 		}
 
 		public void markTheSpot() {
-			virginMaze[coordinates.height][coordinates.width] = '*';
+			if (virginMaze[coordinates.width][coordinates.height] == ' ')
+			virginMaze[coordinates.width][coordinates.height] = '*';
 			System.out.println("Teen tärni");
 			if (cameFrom != null) {
 				cameFrom.markTheSpot();
@@ -151,17 +167,32 @@ public class Maze {
 			
 		}
 
-		public Set<Location> findPossibleDirections() {
+		public Set<Location> findPossibleDirections() {			
+			boolean algus = false;
 			Set<Location> voimalikudSuunad = new HashSet<Location>();
-			for (Dimension d : suunad) {
-				if ((cameFrom == null || !cameFrom.coordinates.equals(coordinates))
-						&& !isThisDirectionWall(this.coordinates, d)) {
-					voimalikudSuunad.add(new Location(moveOneStep(coordinates, d)));
-				}
+			if (cameFrom == null) {
+				algus = true;
 			}
+			for (Dimension d : suunad) {
+				if (algus || (!isThisDirectionWall(this.coordinates, d) && !cameFrom.coordinates.equals(moveOneStep(this.coordinates, d)))) {
+	//				System.out.println(d);
+					System.out.println("this: " + this.coordinates + "\ncame: " + cameFrom);
+					voimalikudSuunad.add(new Location(moveOneStep(this.coordinates, d)));
+				}
+				
+			}
+			System.out.println();
 			
 						
 			return voimalikudSuunad;
+		}
+		
+		public String toString() {
+			if (cameFrom != null) {
+				return cameFrom.coordinates + "";
+			} else {
+				return null;
+			}
 		}
 
 		private double getPassThrough() {
@@ -205,10 +236,10 @@ public class Maze {
 		for (int row = 0; row < maze.length; row++) {
 			for (int column = 0; column < maze.length; column++) {
 				if (maze[row][column] == 'B') {
-					entrance = new Dimension(column,row);
+					entrance = new Dimension(row,column);
 					entranceLoc = new Location(entrance);
 				} else if (maze[row][column] == 'F') {
-					exit = new Dimension(column,row);
+					exit = new Dimension(row,column);
 				}
 			}
 		}		
@@ -242,9 +273,9 @@ public class Maze {
 		// TODO Auto-generated method stub
 		
 		veelUurida.add(entranceLoc);
-		Location uuritav = veelUurida.poll();
+//		Location uuritav = veelUurida.poll();
 		while (!veelUurida.isEmpty()) {
-//			Location uuritav = veelUurida.poll();
+			Location uuritav = veelUurida.poll();
 //			System.out.println(uuritav.coordinates);
 			labiUuritud.add(uuritav);
 			if (uuritav.coordinates.equals(exit)) {
@@ -254,6 +285,7 @@ public class Maze {
 			} else {
 				Set<Location> naabrid = uuritav.findPossibleDirections();
 				for (Location naaber : naabrid) {
+//					System.out.println(labiUuritud.size());
 					if (veelUurida.contains(naaber)) {
 						Location temp = new Location (naaber.coordinates);
 						temp.setParent(uuritav);
@@ -272,7 +304,7 @@ public class Maze {
 					veelUurida.remove(naaber);
 					labiUuritud.remove(naaber);
 					veelUurida.add(naaber);
-					uuritav = naaber;
+//					uuritav = naaber;
 				}
 			}
 		}

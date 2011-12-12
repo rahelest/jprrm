@@ -77,6 +77,7 @@ public class Maze {
 	 * Asupaikade nimekiri, mida on vaja veel uurida.
 	 */
 	PriorityQueue<Location> veelUurida = new PriorityQueue<Location>(11, new PQComparator());
+	List <Dimension> tee = new ArrayList<Dimension>();
 	
 	/**
 	 * Asupaikade nimekiri, mille on algoritm juba läbi käinud.
@@ -111,6 +112,59 @@ public class Maze {
 		deDeadEndMaze();
 		findShortestPath();
 		return virginMaze;
+	}
+	
+	public void hoiaParemale() {
+		Dimension koht = goToNextJunction2(entrance, kuhuMinna(entrance));
+		
+		while (!koht.equals(exit)) {
+			for (Dimension d : suunad) {
+				if (!isThisDirectionWall(koht, d)) {
+					koht = goToNextJunction2(koht, d);
+					maze[koht.width][koht.height] = '*';
+				}
+			}
+		}
+		taidaVirgin();
+	}
+
+	private void taidaVirgin() {
+		for(int i = 0; i < tee.size(); i++) {
+			Dimension koht = tee.get(i);
+			if (virginMaze[koht.width][koht.height] == ' ') {
+				virginMaze[koht.width][koht.height] = '*';
+			}
+			
+		}
+	}
+
+	private Dimension kuhuMinna(Dimension koht) {
+		for (Dimension d : suunad) {
+			if (charFromMatrix(koht, d) == ' ') {
+				return d;
+			}
+		}
+		return null;
+	}
+	
+	private Dimension goToNextJunction2(Dimension currentLocation, Dimension direction) {
+		while (countOutboundRoads(currentLocation) != 3) {
+			tee.add(currentLocation);
+			if (!direction.equals(SOUTH) && !isThisDirectionWall(currentLocation, NORTH)) {
+				currentLocation = moveOneStep(currentLocation, NORTH);
+				direction = NORTH;
+			} else if (!direction.equals(WEST) && !isThisDirectionWall(currentLocation, EAST)) {
+				currentLocation = moveOneStep(currentLocation, EAST);
+				direction = EAST;
+			} else if (!direction.equals(NORTH) && !isThisDirectionWall(currentLocation, SOUTH)) {
+				currentLocation = moveOneStep(currentLocation, SOUTH);
+				direction = SOUTH;
+			} else if (!direction.equals(EAST) && !isThisDirectionWall(currentLocation, WEST)) {
+				currentLocation = moveOneStep(currentLocation, WEST);
+				direction = WEST;
+			} else break;
+		}
+		return currentLocation;
 	}
 
 	/**

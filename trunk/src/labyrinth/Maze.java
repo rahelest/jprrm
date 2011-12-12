@@ -17,9 +17,9 @@ import java.util.Set;
 
 /**
  * Labürindi klass, töötleb ja leiab tee.
- * @author t093563
- * @author t083851
- *
+ * Töötlemine on küll pikemapoolne, aga peaks toimima 
+ * ka näidissisenditest küllaltki palju suuremate sisendite puhul ja 
+ * seejuures järjest kasulikum olema.
  */
 public class Maze {
 	

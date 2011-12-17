@@ -110,6 +110,7 @@ public class Maze {
 	 * @return Lahendus.
 	 */
 	public char[][] solve (char[][] maze) {
+		long algus = System.currentTimeMillis();
 		suunad.add(NORTH);
 		suunad.add(EAST);
 		suunad.add(SOUTH);
@@ -119,6 +120,7 @@ public class Maze {
 		findBeginningAndEnd();	
 		deDeadEndMaze();
 		findShortestPath();
+		System.out.println("Kulunud aeg: " + (System.currentTimeMillis() - algus));
 		return virginMaze;
 	}
 	

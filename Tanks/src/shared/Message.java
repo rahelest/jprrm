@@ -1,4 +1,4 @@
-package Tanks.shared;
+package shared;
 
 import java.io.Serializable;
 import java.util.ArrayList;

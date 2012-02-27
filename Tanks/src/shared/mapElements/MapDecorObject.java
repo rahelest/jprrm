@@ -1,11 +1,11 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
 
 /**
  * The class for map decoration.
  * @author JPRRM
  *
  */
-public class MapDecorObject extends GameObject {
+public abstract class MapDecorObject extends GameObject {
 
 	/**
 	 * An unique serial number.

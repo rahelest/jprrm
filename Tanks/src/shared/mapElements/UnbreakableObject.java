@@ -1,4 +1,6 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
+
+import shared.GameMap;
 
 /**
  * The unbreakable object type.
@@ -25,6 +27,12 @@ public class UnbreakableObject extends GameObject {
 	public UnbreakableObject(String string, int x, int y,
 			int width, int height, Boolean bulletPassability, String image) {
 		super(string, x, y, width, height, false, bulletPassability, false, image);
+	}
+
+	@Override
+	public GameObject checkCollision(GameMap map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,4 +1,6 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
+
+import shared.GameMap;
 
 /**
  * The breakable object type.

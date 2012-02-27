@@ -1,7 +1,7 @@
-package Tanks.shared.gameElements;
+package shared.gameElements;
 
-import Tanks.server.ClientSession;
-import Tanks.shared.mapElements.BreakableObject;
+import server.ClientSession;
+import shared.mapElements.BreakableObject;
 
 /**
  * The Tank object class.

@@ -1,11 +1,11 @@
-package Tanks.server;
+package server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
-import Tanks.shared.Broadcaster;
-import Tanks.shared.GameMap;
+import shared.Broadcaster;
+import shared.GameMap;
 
 /**
  * 

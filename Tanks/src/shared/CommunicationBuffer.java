@@ -1,10 +1,10 @@
-package Tanks.shared;
+package shared;
 
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
-import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.messageTypes.Message;
-import Tanks.shared.messageTypes.MissilesMessage;
+import shared.mapElements.GameObject;
+import shared.messageTypes.Message;
+import shared.messageTypes.MissilesMessage;
 
 /**
  * The buffer for receiving and sending messages.

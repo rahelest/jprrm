@@ -1,8 +1,8 @@
-package Tanks.shared.messageTypes;
+package shared.messageTypes;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import Tanks.shared.mapElements.GameObject;
+import shared.mapElements.GameObject;
 
 
 public abstract class MapMessage implements Message {

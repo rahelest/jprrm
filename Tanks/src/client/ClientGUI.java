@@ -1,4 +1,4 @@
-package Tanks.client;
+package client;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

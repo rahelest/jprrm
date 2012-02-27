@@ -1,4 +1,4 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
 
 /**
  * The Tree object class.

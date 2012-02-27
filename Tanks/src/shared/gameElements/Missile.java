@@ -1,11 +1,11 @@
-package Tanks.shared.gameElements;
+package shared.gameElements;
 
 import java.io.Serializable;
 
-import Tanks.server.ClientSession;
-import Tanks.shared.GameMap;
-import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.mapElements.UnbreakableObject;
+import server.ClientSession;
+import shared.GameMap;
+import shared.mapElements.GameObject;
+import shared.mapElements.UnbreakableObject;
 
 /**
  * The missile class.

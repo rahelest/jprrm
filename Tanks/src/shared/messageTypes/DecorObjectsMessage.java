@@ -1,6 +1,6 @@
-package Tanks.shared.messageTypes;
+package shared.messageTypes;
 
-import Tanks.shared.GameMap;
+import shared.GameMap;
 
 
 public class DecorObjectsMessage implements Message {

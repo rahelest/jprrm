@@ -1,4 +1,4 @@
-package Tanks.server;
+package server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,10 +13,10 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
-import Tanks.shared.Broadcaster;
-import Tanks.shared.GameMap;
-import Tanks.shared.gameElements.Tank;
-import Tanks.shared.mapElements.*;
+import shared.Broadcaster;
+import shared.GameMap;
+import shared.gameElements.Tank;
+import shared.mapElements.*;
 
 /**
  * Creates new objects and maps.

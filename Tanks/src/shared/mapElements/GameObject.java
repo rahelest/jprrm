@@ -1,4 +1,4 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,8 +10,9 @@ import java.util.Set;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import Tanks.shared.GameMap;
-import Tanks.shared.gameElements.Missile;
+
+import shared.GameMap;
+import shared.gameElements.Missile;
 
 /**
  * The base class for all objects with the necessary methods.

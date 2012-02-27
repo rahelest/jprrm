@@ -1,11 +1,11 @@
-package Tanks.shared;
+package shared;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import Tanks.server.ActiveClients;
-import Tanks.server.ClientSession;
-import Tanks.shared.messageTypes.Message;
-import Tanks.shared.messageTypes.ScoreMessage;
+
+import server.ActiveClients;
+import server.ClientSession;
+import shared.messageTypes.ScoreMessage;
 
 /**
  * The class that sends messages to everyone.

@@ -1,12 +1,12 @@
-package Tanks.server;
+package server;
 
 import java.util.concurrent.ConcurrentHashMap;
-import Tanks.shared.Broadcaster;
-import Tanks.shared.CommunicationBuffer;
-import Tanks.shared.gameElements.Missile;
-import Tanks.shared.gameElements.Tank;
-import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.messageTypes.MissilesMessage;
+import shared.Broadcaster;
+import shared.CommunicationBuffer;
+import shared.gameElements.Missile;
+import shared.gameElements.Tank;
+import shared.mapElements.GameObject;
+import shared.messageTypes.MissilesMessage;
 
 /**
  * Moves and manages the missiles.

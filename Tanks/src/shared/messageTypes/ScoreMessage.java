@@ -1,4 +1,4 @@
-package Tanks.shared.messageTypes;
+package shared.messageTypes;
 
 import java.util.ArrayList;
 

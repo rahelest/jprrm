@@ -1,4 +1,4 @@
-package Tanks.server;
+package server;
 
 import java.awt.Dimension;
 import java.io.IOException;

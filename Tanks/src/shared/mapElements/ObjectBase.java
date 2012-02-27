@@ -1,6 +1,6 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
 
-import Tanks.shared.GameMap;
+import shared.GameMap;
 
 /**
  * An interface for compulsory methods.

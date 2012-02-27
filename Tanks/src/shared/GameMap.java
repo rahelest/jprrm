@@ -1,4 +1,4 @@
-package Tanks.shared;
+package shared;
 
 
 import java.awt.Color;
@@ -12,9 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import Tanks.shared.mapElements.BreakableObject;
-import Tanks.shared.mapElements.GameObject;
-import Tanks.shared.messageTypes.*;
+
+import shared.mapElements.GameObject;
 
 /**
  * The class that keeps all the game objects.

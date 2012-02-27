@@ -1,4 +1,4 @@
-package Tanks.shared.messageTypes;
+package shared.messageTypes;
 
 public class CommandMessage implements Message {
 	

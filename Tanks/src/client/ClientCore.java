@@ -1,4 +1,4 @@
-package Tanks.client;
+package client;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -7,9 +7,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import Tanks.shared.*;
-import Tanks.shared.Message;
-import Tanks.shared.messageTypes.*;
+
+import shared.ConnectionManage;
 
 /**
  * The core application for the client. Manages 

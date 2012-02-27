@@ -1,11 +1,11 @@
-package Tanks.server;
+package server;
 
 import java.io.IOException;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import Tanks.shared.Broadcaster;
-import Tanks.shared.GameMap;
+import shared.Broadcaster;
+import shared.GameMap;
 
 /**
  * The server's core class.

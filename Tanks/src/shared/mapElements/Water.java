@@ -1,4 +1,4 @@
-package Tanks.shared.mapElements;
+package shared.mapElements;
 
 /**
  * The game element Water class.

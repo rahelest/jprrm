@@ -1,8 +1,8 @@
-package Tanks.shared;
+package shared;
 
 import java.io.IOException;
 
-import Tanks.shared.messageTypes.Message;
+import shared.messageTypes.Message;
 
 public interface ConnectionManage {
 	

@@ -6,6 +6,16 @@ package contracts;
 import java.util.HashMap;
 import java.util.List;
 
+import backend.model.AuthInfo;
+import backend.model.Customer;
+import backend.model.CustomerSearchCriteria;
+import backend.model.PriceList;
+import backend.model.PriceListInfo;
+import backend.model.Product;
+import backend.model.ProductSearchCriteria;
+import backend.model.Subject;
+import backend.model.Transaction;
+
 /**
  * @author Rahel Fassaad tõmbab käima backendi erinevaid klasse.
  */

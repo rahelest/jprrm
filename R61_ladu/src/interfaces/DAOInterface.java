@@ -1,7 +1,7 @@
 /**
  * 
  */
-package contracts;
+package interfaces;
 
 /**
  * @author Rahel

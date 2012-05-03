@@ -1,7 +1,7 @@
 /**
  * 
  */
-package contracts;
+package interfaces;
 
 import java.util.HashMap;
 import java.util.List;

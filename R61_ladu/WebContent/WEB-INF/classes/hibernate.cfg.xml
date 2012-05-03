@@ -7,25 +7,25 @@
  
     <session-factory> 
  
-        <!-- Database connection settings --> 
+        <!-- Database connection settings -->
         <property name="connection.driver_class">org.postgresql.Driver</property> 
         <property name="connection.url">jdbc:postgresql:hibernate</property> 
         <property name="connection.username">postgres</property> 
         <property name="connection.password">suva</property> 
  
-        <!-- JDBC connection pool (use the built-in) --> 
-        <property name="connection.pool_size">2</property> 
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">2</property>
  
-        <!-- SQL dialect --> 
+        <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> 
  
-        <!-- Enable Hibernate's current session context --> 
+        <!-- Enable Hibernate's current session context -->
         <property name="current_session_context_class">thread</property> 
  
-        <!-- Disable the second-level cache  --> 
+        <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property> 
  
-        <!-- Echo all executed SQL to stdout --> 
+        <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property> 
  
         <mapping resource="Product.hbm.xml"/>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package interfaces;
+package middleware.interfaces;
 
 import java.util.HashMap;
 import java.util.List;

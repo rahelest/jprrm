@@ -1,7 +1,7 @@
 /**
  * 
  */
-package interfaces;
+package middleware.interfaces;
 
 /**
  * @author Rahel

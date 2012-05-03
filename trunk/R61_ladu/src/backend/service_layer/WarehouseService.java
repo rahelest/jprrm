@@ -3,6 +3,8 @@ package backend.service_layer;
 import java.util.HashMap;
 import java.util.List;
 
+import middleware.interfaces.FacadeInterface;
+
 import backend.model.AuthInfo;
 import backend.model.Customer;
 import backend.model.CustomerSearchCriteria;
@@ -13,7 +15,6 @@ import backend.model.ProductSearchCriteria;
 import backend.model.Subject;
 import backend.model.Transaction;
 
-import interfaces.FacadeInterface;
 
 public class WarehouseService implements FacadeInterface {
 

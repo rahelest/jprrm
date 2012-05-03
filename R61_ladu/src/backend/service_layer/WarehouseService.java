@@ -1,18 +1,19 @@
-package backend;
+package backend.service_layer;
 
 import java.util.HashMap;
 import java.util.List;
 
-import interfaces.AuthInfo;
-import interfaces.Customer;
-import interfaces.CustomerSearchCriteria;
+import backend.model.AuthInfo;
+import backend.model.Customer;
+import backend.model.CustomerSearchCriteria;
+import backend.model.PriceList;
+import backend.model.PriceListInfo;
+import backend.model.Product;
+import backend.model.ProductSearchCriteria;
+import backend.model.Subject;
+import backend.model.Transaction;
+
 import interfaces.FacadeInterface;
-import interfaces.PriceList;
-import interfaces.PriceListInfo;
-import interfaces.Product;
-import interfaces.ProductSearchCriteria;
-import interfaces.Subject;
-import interfaces.Transaction;
 
 public class WarehouseService implements FacadeInterface {
 

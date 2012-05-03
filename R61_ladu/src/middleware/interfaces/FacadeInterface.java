@@ -17,7 +17,7 @@ import backend.model.Subject;
 import backend.model.Transaction;
 
 /**
- * @author Rahel Fassaad tõmbab käima backendi erinevaid klasse.
+ * @author Jaanus Fassaad tõmbab käima backendi erinevaid klasse.
  */
 public interface FacadeInterface {
 	public int getActionResult(); 

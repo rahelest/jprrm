@@ -15,6 +15,20 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/log4j/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/avro-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/hibernate-core-4.1.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/jackson-core-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/jackson-mapper-asl-1.9.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/javassist-3.15.0-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/lucene-core-3.5.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/paranamer-2.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/snappy-java-1.0.1-rc3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jaanus/Eclipse/R61_ladu/WebContent/WEB-INF/lib/hibernate_core/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

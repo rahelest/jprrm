@@ -1,0 +1,27 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC  
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+ 
+<hibernate-mapping> 
+  <class name="auto.core.auto.Auto" table="auto"> 
+      <id name="auto" type="java.lang.Integer" column="auto"> 
+        <generator class="increment" /> 
+      </id> 
+  <property name="mark"> 
+     <column name="mark" /> 
+  </property> 
+  <property name="hind"> 
+    <column name="hind"/> 
+  </property> 
+  <property name="valjalase"> 
+    <column name="valjalase"/> 
+  </property> 
+  <property name="kirjeldus"> 
+    <column name="kirjeldus"/> 
+  </property> 
+  <property name="ylevaatus"> 
+    <column name="ylevaatus"/> 
+  </property> 
+ </class> 
+</hibernate-mapping>

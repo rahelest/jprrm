@@ -1,0 +1,48 @@
+<?xml version="1.0"?> 
+<!DOCTYPE hibernate-mapping PUBLIC  
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN" 
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
+ 
+<hibernate-mapping> 
+  <class name="Item.core.Item.Item" table="Item"> 
+      <id name="Item" type="java.lang.Integer" column="Item"> 
+        <generator class="increment" /> 
+      </id> 
+  <property name="Item"> 
+     <column name="Item" /> 
+  </property> 
+  <property name="item_type_fk"> 
+    <column name="item_type_fk"/> 
+  </property> 
+  <property name="name"> 
+    <column name="name"/> 
+  </property> 
+  <property name="store_price"> 
+    <column name="store_price"/> 
+  </property> 
+  <property name="sale_price"> 
+    <column name="sale_price"/> 
+  </property> 
+  <property name="producer"> 
+    <column name="producer"/> 
+  </property> 
+  <property name="description"> 
+    <column name="description"/> 
+  </property> 
+  <property name="serial_no"> 
+    <column name="serial_no"/> 
+  </property>
+  <property name="single_item"> 
+    <column name="single_item"/> 
+  </property>
+  <property name="producer_code"> 
+    <column name="producer_code"/> 
+  </property>
+  <property name="upper_item_fk"> 
+    <column name="upper_item_fk"/> 
+  </property>
+  <property name="created"> 
+    <column name="created"/> 
+  </property>
+ </class> 
+</hibernate-mapping>

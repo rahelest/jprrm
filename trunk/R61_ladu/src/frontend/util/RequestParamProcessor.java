@@ -3,7 +3,8 @@ package frontend.util;
 public class RequestParamProcessor {
 
 	/*
-	 * request.getParameter asemel, et saaks ka sisendit töödekda.
+	 * request.getParameter asemel, et saaks ka sisendit töödelda.
+	 * Põhiliselt ikka kohe vastava formi täitmiseks.
 	 */
 	public getRequestparameter();
 	

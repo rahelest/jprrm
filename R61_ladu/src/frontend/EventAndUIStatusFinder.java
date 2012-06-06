@@ -3,6 +3,8 @@ package frontend;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class EventAndUIStatusFinder {
 
 	public Map<String, String> find(HttpServletRequest request, HttpServletResponse response) {

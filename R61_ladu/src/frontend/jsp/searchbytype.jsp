@@ -1,6 +1,6 @@
 <head>
 	<link rel="stylesheet" href="css/nav.css">
-	<style type="text/css">
+	<style type="text/css">/*
 		nav { display:block; margin:0 auto 20px; border:1px solid #222; position:relative; background-color:#6a6a6a; font:16px Tahoma, Sans-serif; }
 		nav ul { padding:0; margin:0; }
 		nav li { position:relative; float:left; list-style-type:none; }
@@ -14,35 +14,19 @@
 		nav ul ul li { float:none; }
 		nav ul ul a { padding:5px 10px; border-left:none; border-right:none; font-size:14px; border-top: 1px solid white;}
 		nav ul ul a:hover { background-color:#555; }
-		nav ul li:hover ul {display:block;}
+		nav ul li:hover > ul {display:block;}
+		nav ul li ul li:hover ul {display:block;}
+		nav ul li ul li ul {position:absolute; left:20px;}*/
 	</style>
 </head>
 <body>
-<nav>
-	<ul>
-		<li><a class="topnav" href="#">Tooted</a>
-			<ul class="subnav1">
-				<li><a href="otsi_tuubiga.jsp">Otsi tüübi järgi</a></li>
-				<li><a href="otsi_tuubita.jsp">Otsi ilma tüübita</a></li>
-				<li><a href="lisa_toode.jsp">Lisa</a></li>
-			</ul>
-		</li>
-		<li><a class="topnav" href="#">Laod</a>
-			<ul class="subnav2">
-				<li><a href="#">Võta arvele</a></li>
-				<li><a href="#">Kanna maha</a></li>
-				<li><a href="#">Liiguta</a></li>
-			</ul>
-		</li>
-		<li><a class="topnav" href="#">Hinnakirjad</a>
-			<ul class="subnav3">
-				<li><a href="#">Loo, Muuda Kustuta</a></li>
-				<li><a href="#">Kliendid</a></li>
-				<li><a href="#">Tooted</a></li>
-			</ul>
-		</li>
-		<li>
-			<a class="topnav" href="#">Päringud</a>
-		</li>
-	</ul>
-</nav>
+<form>
+<table>
+<tr><th>Nimi</th><th>Väärtus</th></tr>
+<tr><td>Toode</td><td><input type="text" name="nimetus"></input></td></tr>
+<tr><td>Ladu</td><td><input type="text" name="nimetus">DROPDOWN</input></td></tr>
+<tr><td>Laohind</td><td><input type="text" name="nimetus"></input></td></tr>
+<tr><td>Kogus</td><td><input type="text" name="nimetus"></input></td></tr>
+<tr><td>Märkus</td><td><input type="text" name="nimetus">TEXTAREA</input></td></tr>
+</table>
+</form>

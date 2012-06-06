@@ -2,6 +2,6 @@ package frontend.forms;
 
 public class FormInterface {
 
-	public Model ConvertToModelData();
+	public Model convertToModelData();
 	public Form getDataFromModel();
 }

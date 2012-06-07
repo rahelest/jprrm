@@ -2,13 +2,13 @@ package web.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-import web.forms.AddProductForm;
+import web.forms.ProductForm;
 import web.forms.ChangeProductForm;
 
 public class ProductRequestParamProcessor {
 	
-	public AddProductForm getProductAddData(HttpServletRequest req) {
-		AddProductForm form = new AddProductForm();
+	public ProductForm getProductAddData(HttpServletRequest req) {
+		ProductForm form = new ProductForm();
 		
 		form.setName(req.getParameter("name"));
 		form.setDescription(req.getParameter("description"));
@@ -30,6 +30,5 @@ public class ProductRequestParamProcessor {
 		form.setAttributes(req.getParameter("attributes"));
 		
 		return form;
-		
 	}
 }

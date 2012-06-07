@@ -2,6 +2,10 @@ package web.control;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import web.forms.ProductForm;
+import web.forms.SearchForm;
 
 import backend.model.AuthInfo;
 import backend.model.Customer;
@@ -9,7 +13,6 @@ import backend.model.CustomerSearchCriteria;
 import backend.model.PriceList;
 import backend.model.PriceListInfo;
 import backend.model.Product;
-import backend.model.ProductSearchCriteria;
 import backend.model.Subject;
 import backend.model.Transaction;
 import middleware.interfaces.FacadeInterface;
@@ -46,22 +49,9 @@ public class ProductServiceEmulator implements FacadeInterface {
 	}
 
 	@Override
-	public List<Product> searchProducts(
-			ProductSearchCriteria productSearchCriteria) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Product> getProductsByCatalog(int catalog_id) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int createProduct(Product newProduct) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -133,6 +123,27 @@ public class ProductServiceEmulator implements FacadeInterface {
 
 	@Override
 	public int logOut(AuthInfo details) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Product> searchProducts(SearchForm form) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getAttributesOfType(int type_id) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("Powah", "");
+		map.put("Colour", "");
+		map.put("Weight", "");
+		return map;
+	}
+
+	@Override
+	public int createProduct(ProductForm form) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

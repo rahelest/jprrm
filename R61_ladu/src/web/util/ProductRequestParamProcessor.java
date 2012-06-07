@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import web.forms.AddProductForm;
 import web.forms.ChangeProductForm;
 
-public class ProductRequestProcessor {
+public class ProductRequestParamProcessor {
 	
 	public AddProductForm getProductAddData(HttpServletRequest req) {
 		AddProductForm form = new AddProductForm();

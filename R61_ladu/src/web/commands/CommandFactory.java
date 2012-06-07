@@ -12,7 +12,7 @@ public class CommandFactory {
 	 * staatuste/sündmuste teenindamiseks vajalikke'
 	 * käske.Tagastab selle controllerile.
 	 */
-	public Command[] findCommands(Map map) {
+	public Command[] findCommands(Map<String, String> map) {
 		return null;
 		
 	}

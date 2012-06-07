@@ -1,13 +1,16 @@
 package web.commands.product;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import web.commands.Command;
 
 public class addProductCommand implements Command {
 
 	@Override
-	public String execute() {
+	public int execute(HttpServletRequest req, HttpServletResponse res) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 }

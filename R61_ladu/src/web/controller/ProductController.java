@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,17 +15,23 @@ public class ProductController implements Controller {
 	public String control(HttpServletRequest req, HttpServletResponse res) {
 		
 		ProductCommandFactory pcf = new ProductCommandFactory();
-		Command command = pcf.getCommand(EventAndUIStatusFinder.find(req, res));
+		Map<String, String> event = EventAndUIStatusFinder.find(req, res);
+		Command[] commands = pcf.getCommand(event);
 		
-		String result = command.execute();
+		for (Command c : commands) {
+			int result = c.execute(req, res);
+			if (result == 1 && event.containsKey("id")) {
+				return "show_product";
+			}
+		}
+		
+		
 		/*
 		 * Mis juhtub nüüd, kui command on tehtud või mitte
 		 * või kui event on üldse mingi lamp. (Returnida)
 		 */
 		
-		if (result.equals("something")) {
-			return "go there";
-		}
+		
 		
 		return null;
 	}

@@ -1,6 +1,6 @@
 package web.forms;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import backend.model.Product;
 
@@ -9,7 +9,7 @@ public class ProductForm {
 	String name;
 	String description;
 	String sale_price;
-	HashMap<String, String> attributes;
+	Map<String, String> attributes;
 	String type;
 
 	public String getName() {
@@ -36,11 +36,11 @@ public class ProductForm {
 		this.sale_price = sale_price;
 	}
 
-	public HashMap<String, String> getAttributes() {
+	public Map<String, String> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(HashMap<String, String> attributes) {
+	public void setAttributes(Map<String, String> attributes) {
 		this.attributes = attributes;
 	}
 
@@ -55,7 +55,7 @@ public class ProductForm {
 	public void getDataFromModel(Product product) {
 		setName(product.getName());
 		setDescription(product.getDescription());
-		setSale_price(product.getSalePrice());
+		setSale_price(product.getSale_price() + "");
 		setType(product.getType());
 		setAttributes(product.getAttributes());
 	}

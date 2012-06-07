@@ -10,8 +10,10 @@ public class HibernateListener implements ServletContextListener {
 		HibernateUtil.getSessionFactory();
 	}
 	
-	public void cintextDestroyed(ServletContextEvent event) {
+	@Override
+	public void contextDestroyed(ServletContextEvent arg0) {
 		HibernateUtil.getSessionFactory().close();
+		
 	}
 	
 

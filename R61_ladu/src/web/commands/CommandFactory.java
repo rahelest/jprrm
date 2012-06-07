@@ -13,6 +13,10 @@ public class CommandFactory {
 	 * käske.Tagastab selle controllerile.
 	 */
 	public Command[] findCommands(Map<String, String> map) {
+		
+		/*
+		 * Suunab ümber, kas productcommandfactoryle vm?
+		 */
 		return null;
 		
 	}

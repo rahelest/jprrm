@@ -1,7 +1,8 @@
 <head>
 	<link rel="stylesheet" href="css/nav.css">
 	<style type="text/css">
-		nav { display:block; margin:0 auto 20px; border:1px solid #222; position:relative; background-color:#6a6a6a; font:16px Tahoma, Sans-serif; }
+		body {font:16px Tahoma, Sans-serif;}
+		nav { display:block; margin:0 auto 20px auto; border:1px solid #222; position:relative; background-color:#6a6a6a; width:1000px}
 		nav ul { padding:0; margin:0; }
 		nav li { position:relative; float:left; list-style-type:none; }
 		nav ul:after { content:"."; display:block; height:0; clear:both; visibility:hidden; }
@@ -15,6 +16,10 @@
 		nav ul ul a { padding:5px 10px; border-left:none; border-right:none; font-size:14px; border-top: 1px solid white;}
 		nav ul ul a:hover { background-color:#555; }
 		nav ul li:hover ul {display:block;}
+		
+		section {margin: 0 auto; width:1000px;}
+		aside {width: 250px;}
+		aside, details {display: inline-block; padding: 10px; vertical-align: top; max-width: 705px;}
 	</style>
 </head>
 <body>
@@ -22,9 +27,8 @@
 	<ul>
 		<li><a class="topnav" href="#">Tooted</a>
 			<ul class="subnav1">
-				<li><a href="otsi_tuubiga.jsp">Otsi tüübi järgi</a></li>
+				<li><a href="otsi_tuubiga.jsp">Vaata tootepuud</a></li>
 				<li><a href="otsi_tuubita.jsp">Otsi ilma tüübita</a></li>
-				<li><a href="lisa_toode.jsp">Lisa</a></li>
 			</ul>
 		</li>
 		<li><a class="topnav" href="#">Laod</a>

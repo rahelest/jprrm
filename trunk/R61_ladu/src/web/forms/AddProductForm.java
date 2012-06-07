@@ -2,7 +2,13 @@ package web.forms;
 
 import java.util.HashMap;
 
-public class ItemForm {
+public class AddProductForm {
+
+	String name;
+	String description;
+	String sale_price;
+	HashMap<String, String> attributes;
+	String type;
 
 	public String getName() {
 		return name;
@@ -36,9 +42,11 @@ public class ItemForm {
 		this.attributes = attributes;
 	}
 
-	String name;
-	String description;
-	String sale_price;
+	public String getType() {
+		return type;
+	}
 
-	HashMap<String, String> attributes;
+	public void setType(String type) {
+		this.type = type;
+	}
 }

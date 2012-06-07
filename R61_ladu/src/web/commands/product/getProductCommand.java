@@ -22,7 +22,7 @@ public class getProductCommand implements Command {
 			ProductForm form = new ProductForm();
 			
 			form.getDataFromModel(product);
-			req.setAttribute("AutoForm", form);
+			req.setAttribute("ProductForm", form);
 			
 			return 1;
 			

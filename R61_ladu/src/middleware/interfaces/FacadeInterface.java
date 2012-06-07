@@ -6,6 +6,7 @@ package middleware.interfaces;
 import java.util.List;
 import java.util.Map;
 
+import web.forms.ProductForm;
 import web.forms.SearchForm;
 
 import backend.model.AuthInfo;
@@ -14,7 +15,6 @@ import backend.model.CustomerSearchCriteria;
 import backend.model.PriceList;
 import backend.model.PriceListInfo;
 import backend.model.Product;
-import backend.model.ProductSearchCriteria;
 import backend.model.Subject;
 import backend.model.Transaction;
 
@@ -28,7 +28,7 @@ public interface FacadeInterface {
 	public List<Product> searchProducts(SearchForm form);
 	public Map<String, String> getAttributesOfType(int type_id);
 	public List<Product> getProductsByCatalog(int catalog_id);
-	public int createProduct(Product newProduct);   
+	public int createProduct(ProductForm form);   //INT ON ID? EBAÕNN ON -1? KUI EI, VÕIKS
 	public int updateProduct(Product updatedProduct);
 	public int incrementStock(Transaction change);
 	public int moveStock(Transaction movement);

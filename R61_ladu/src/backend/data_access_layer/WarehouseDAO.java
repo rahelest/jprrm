@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import db.DbConnection;
 import backend.model.Product;
 
 public class WarehouseDAO implements DAOInterface {

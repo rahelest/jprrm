@@ -2,7 +2,9 @@ package web.forms;
 
 import java.util.HashMap;
 
-public class ChangeProductForm {
+import backend.model.Product;
+
+public class ProductForm {
 
 	String name;
 	String description;
@@ -50,4 +52,11 @@ public class ChangeProductForm {
 		this.type = type;
 	}
 
+	public void getDataFromModel(Product product) {
+		setName(product.getName());
+		setDescription(product.getDescription());
+		setSale_price(product.getSalePrice());
+		setType(product.getType());
+		setAttributes(product.getAttributes());
+	}
 }

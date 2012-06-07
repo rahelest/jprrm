@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+
+
+
+
+<table-filter match-schema="ladu" match-name=".*" />
+	<table-filter match-schema="subjektid" match-name=".*" />
+	<table schema="subjektid" name="subject_attribute">
+		<column name="subject_attribute"></column>
+		<column name="subject_fk"></column>
+		<column name="subject_attribute_type_fk"></column>
+		<column name="subject_type_fk"></column>
+		<column name="orderby"></column>
+		<column name="value_text"></column>
+		<column name="value_number"></column>
+		<column name="value_date"></column>
+		<column name="data_type"></column>
+	</table>
+	<table schema="subjektid" name="subject_attribute_type">
+		<column name="subject_attribute_type"></column>
+		<column name="subject_type_fk"></column>
+		<column name="type_name"></column>
+		<column name="data_type"></column>
+		<column name="orderby"></column>
+		<column name="required"></column>
+		<column name="multiple_attributes"></column>
+		<column name="created_by_default"></column>
+	</table>
+	<table schema="subjektid" name="address_type">
+		<column name="address_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="subjektid" name="employee">
+		<column name="employee"></column>
+		<column name="person_fk"></column>
+		<column name="enterprise_fk"></column>
+		<column name="struct_unit_fk"></column>
+		<column name="active"></column>
+	</table>
+	<table schema="subjektid" name="enterprise_person_relation">
+		<column name="enterprise_person_relation"></column>
+		<column name="person_fk"></column>
+		<column name="enterprise_fk"></column>
+		<column name="ent_per_relation_type_fk"></column>
+	</table>
+	<table schema="subjektid" name="subject_type">
+		<column name="subject_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="subjektid" name="struct_unit">
+		<column name="struct_unit"></column>
+		<column name="enterprise_fk"></column>
+		<column name="upper_unit_fk"></column>
+		<column name="level"></column>
+		<column name="name"></column>
+	</table>
+	<table schema="subjektid" name="address">
+		<column name="address"></column>
+		<column name="address_type_fk"></column>
+		<column name="subject_fk"></column>
+		<column name="subject_type_fk"></column>
+		<column name="country"></column>
+		<column name="county"></column>
+		<column name="town_village"></column>
+		<column name="street_address"></column>
+		<column name="zipcode"></column>
+	</table>
+	<table schema="ladu" name="price_list_status_type">
+		<column name="price_list_status_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="ladu" name="item_store">
+		<column name="item_store"></column>
+		<column name="store_fk"></column>
+		<column name="item_fk"></column>
+		<column name="item_count"></column>
+	</table>
+	<table schema="ladu" name="customer_price_list">
+		<column name="customer_price_list"></column>
+		<column name="customer_fk"></column>
+		<column name="price_list_fk"></column>
+	</table>
+	<table schema="subjektid" name="ent_per_relation_type">
+		<column name="ent_per_relation_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="subjektid" name="employee_role_type">
+		<column name="employee_role_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="ladu" name="item_action">
+		<column name="item_action"></column>
+		<column name="item_action_type_fk"></column>
+		<column name="item_fk"></column>
+		<column name="store_from_fk"></column>
+		<column name="store_to_fk"></column>
+		<column name="action_date"></column>
+		<column name="created_by"></column>
+		<column name="item_count"></column>
+		<column name="action_price"></column>
+		<column name="action_note"></column>
+		<column name="created"></column>
+	</table>
+	<table schema="ladu" name="price_list">
+		<column name="price_list"></column>
+		<column name="price_list_status_type_fk"></column>
+		<column name="default_discount_xtra"></column>
+		<column name="date_from"></column>
+		<column name="date_to"></column>
+		<column name="note"></column>
+		<column name="created_by"></column>
+		<column name="created"></column>
+		<column name="updated_by"></column>
+		<column name="updated"></column>
+	</table>
+	<table schema="ladu" name="store">
+		<column name="store"></column>
+		<column name="name"></column>
+	</table>
+	<table schema="ladu" name="item">
+		<column name="item"></column>
+		<column name="unit_type_fk"></column>
+		<column name="supplier_enterprise_fk"></column>
+		<column name="item_type_fk"></column>
+		<column name="name"></column>
+		<column name="store_price"></column>
+		<column name="sale_price"></column>
+		<column name="producer"></column>
+		<column name="description"></column>
+		<column name="producer_code"></column>
+		<column name="single_item"></column>
+		<column name="upper_item_fk"></column>
+		<column name="serial_no"></column>
+		<column name="created"></column>
+	</table>
+	<table schema="subjektid" name="contact">
+		<column name="contact"></column>
+		<column name="subject_fk"></column>
+		<column name="contact_type_fk"></column>
+		<column name="value_text"></column>
+		<column name="orderby"></column>
+		<column name="subject_type_fk"></column>
+		<column name="note"></column>
+	</table>
+	<table schema="subjektid" name="user_account">
+		<column name="user_account"></column>
+		<column name="subject_type_fk"></column>
+		<column name="subject_fk"></column>
+		<column name="username"></column>
+		<column name="passw"></column>
+		<column name="status"></column>
+		<column name="valid_from"></column>
+		<column name="valid_to"></column>
+		<column name="created_by"></column>
+		<column name="created"></column>
+		<column name="password_never_expires"></column>
+	</table>
+	<table schema="subjektid" name="contact_type">
+		<column name="contact_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="subjektid" name="employee_role">
+		<column name="employee_role"></column>
+		<column name="employee_fk"></column>
+		<column name="employee_role_type_fk"></column>
+		<column name="active"></column>
+	</table>
+	<table schema="subjektid" name="customer">
+		<column name="customer"></column>
+		<column name="subject_fk"></column>
+		<column name="subject_type_fk"></column>
+	</table>
+	<table schema="ladu" name="item_type">
+		<column name="item_type"></column>
+		<column name="type_name"></column>
+		<column name="level"></column>
+		<column name="super_type_fk"></column>
+	</table>
+	<table schema="subjektid" name="enterprise">
+		<column name="enterprise"></column>
+		<column name="name"></column>
+		<column name="full_name"></column>
+		<column name="created_by"></column>
+		<column name="updated_by"></column>
+		<column name="created"></column>
+		<column name="updated"></column>
+	</table>
+	<table schema="subjektid" name="person">
+		<column name="person"></column>
+		<column name="first_name"></column>
+		<column name="last_name"></column>
+		<column name="identity_code"></column>
+		<column name="birth_date"></column>
+		<column name="created_by"></column>
+		<column name="updated_by"></column>
+		<column name="created"></column>
+		<column name="updated"></column>
+	</table>
+	<table schema="ladu" name="item_action_type">
+		<column name="item_action_type"></column>
+		<column name="type_name"></column>
+	</table>
+	<table schema="ladu" name="item_attribute">
+		<column name="item_attribute"></column>
+		<column name="item_attribute_type_fk"></column>
+		<column name="item_fk"></column>
+		<column name="type_name"></column>
+		<column name="value_text"></column>
+		<column name="value_number"></column>
+		<column name="value_date"></column>
+		<column name="data_type"></column>
+		<column name="orderby"></column>
+	</table>
+	<table schema="ladu" name="item_price_list">
+		<column name="item_price_list"></column>
+		<column name="price_list_fk"></column>
+		<column name="item_fk"></column>
+		<column name="discount_xtra"></column>
+		<column name="sale_price"></column>
+		<column name="created"></column>
+	</table>
+	<table schema="ladu" name="type_attribute">
+		<column name="type_attribute"></column>
+		<column name="item_type_fk"></column>
+		<column name="item_attribute_type_fk"></column>
+		<column name="orderby"></column>
+		<column name="required"></column>
+		<column name="created_by_default"></column>
+	</table>
+	<table schema="ladu" name="item_attribute_type">
+		<column name="item_attribute_type"></column>
+		<column name="type_name"></column>
+		<column name="multiple_attributes"></column>
+		<column name="data_type"></column>
+	</table>
+	<table schema="ladu" name="unit_type">
+		<column name="unit_type"></column>
+		<column name="type_name"></column>
+		<column name="long_name"></column>
+	</table>
+</hibernate-reverse-engineering>

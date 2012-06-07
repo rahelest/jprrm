@@ -20,7 +20,7 @@ public class EventAndUIStatusFinder {
 	 * LISAMINE: vali tüüp, lisa.
 	 */
 
-	public Map<String, String> find(HttpServletRequest request, HttpServletResponse response) {
+	public static Map<String, String> find(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, String> events = new HashMap<String, String>();
 		
 		try {if (!request.getParameter("id").equals(null)) {

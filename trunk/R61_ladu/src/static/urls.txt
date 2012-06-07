@@ -1,0 +1,13 @@
+TÜÜP:
+
+	VAATA selle tüübi LISTI - p?type=10
+	
+	NUPUD: 
+		lisa uus    p?type=10&action=new
+		muuda valitut    p?id=10
+		otsi tüübist	p?type=10&action=search
+		
+		
+CPU/s - kõik objektid
+/s?id=1 - üks objektid, andmeid saab muuta
+s?action=save

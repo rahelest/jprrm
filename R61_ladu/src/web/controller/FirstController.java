@@ -4,15 +4,22 @@ import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import middleware.MyLogger;
 
-@SuppressWarnings("serial")
+
+@WebServlet(value = { "/s" }, loadOnStartup = 1)
 public class FirstController extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7936929581445658939L;
+
 	public void init() {
 		try {
 			super.init();

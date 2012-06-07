@@ -13,12 +13,12 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 	<servlet>
-		<servlet-name>WarehouseServlet</servlet-name>
-		<servlet-class>frontend.commands.Command</servlet-class>
+		<servlet-name>FirstController</servlet-name>
+		<servlet-class>web.controller.FirstController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>WarehouseServlet</servlet-name>
-		<url-pattern>/Warehouse</url-pattern>
+		<servlet-name>FirstController</servlet-name>
+		<url-pattern>/R61_ladu</url-pattern>
 	</servlet-mapping>
 	<listener>
 		<listener-class>backend.service_layer.HibernateListener</listener-class>

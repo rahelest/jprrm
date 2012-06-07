@@ -3,8 +3,10 @@
  */
 package middleware.interfaces;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import web.forms.SearchForm;
 
 import backend.model.AuthInfo;
 import backend.model.Customer;
@@ -21,9 +23,10 @@ import backend.model.Transaction;
  */
 public interface FacadeInterface {
 	public int getActionResult(); 
-	public HashMap getErrors(); 
+	public Map getErrors(); 
 	public Product getProductById(int product_id);
-	public List<Product> searchProducts(ProductSearchCriteria productSearchCriteria);
+	public List<Product> searchProducts(SearchForm form);
+	public Map<String, String> getAttributesOfType(int type_id);
 	public List<Product> getProductsByCatalog(int catalog_id);
 	public int createProduct(Product newProduct);   
 	public int updateProduct(Product updatedProduct);

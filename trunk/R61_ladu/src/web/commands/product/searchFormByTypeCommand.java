@@ -1,28 +1,34 @@
 package web.commands.product;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import middleware.MyLogger;
-import backend.model.Product;
-
 import web.commands.Command;
 import web.control.ProductServiceFactory;
-import web.forms.ProductForm;
+import web.forms.SearchForm;
 
-public class addProductCommand implements Command {
+public class searchFormByTypeCommand implements Command {
 
 	@Override
 	public int execute(HttpServletRequest req, HttpServletResponse res) {
 		
 		try {
-			int productID = Integer.parseInt(req.getParameter("id"));
-			Product product = ProductServiceFactory.getService().getProductById(productID);
+			int type = Integer.parseInt(req.getParameter("type"));
+			Map<String, String> attributes = ProductServiceFactory.getService().getAttributesOfType(type);
 			
-			ProductForm form = new ProductForm();
+			SearchForm form = new SearchForm();
 			
-			form.getDataFromModel(product);
-			req.setAttribute("AutoForm", form);
+
+			/*
+			 * Kõige tähtsam on leida vajalikud atribuudid!
+			 */
+			
+			form.setAttributes(attributes);
+			
+			req.setAttribute("SearchForm", form);
 			
 			return 1;
 			
@@ -33,5 +39,4 @@ public class addProductCommand implements Command {
 		}
 		return 0;
 	}
-
 }

@@ -1,7 +1,9 @@
 package web.forms;
 
-public class TypelessSearchForm {
+import java.util.Map;
 
+public class SearchForm {
+	
 	String name;
 	String description;
 	String manufacturers_code;
@@ -11,7 +13,8 @@ public class TypelessSearchForm {
 	String sale_price_end;
 	String warehouse_price_start;
 	String warehouse_price_end;
-	String attribute;
+	Map<String, String> attributes;
+	String type;
 
 	public String getName() {
 		return name;
@@ -85,12 +88,20 @@ public class TypelessSearchForm {
 		this.warehouse_price_end = warehouse_price_end;
 	}
 
-	public String getAttribute() {
-		return attribute;
+	public Map<String, String> getAttributes() {
+		return attributes;
 	}
 
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
+	public void setAttributes(Map<String, String> attributes2) {
+		this.attributes = attributes2;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

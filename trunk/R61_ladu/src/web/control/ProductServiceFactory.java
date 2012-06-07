@@ -2,22 +2,24 @@ package web.control;
 
 import java.util.ResourceBundle;
 
+import middleware.interfaces.FacadeInterface;
+
 import backend.model.service.ProductCatalogTree;
 import backend.model.service.ProductService;
 
 public class ProductServiceFactory {
 	
-	ProductCatalogTreeEmulator treeEmu;
-	ProductServiceEmulator servEmu;
+	static ProductCatalogTreeEmulator treeEmu;
+	static ProductServiceEmulator servEmu;
 	
-	ProductCatalogTree tree;
-	ProductService serv;
+	static ProductCatalogTree tree;
+	static ProductService serv;
 
 	/*
 	 * ‹hendus kas emu vıi backiga. M‰‰rab faili j‰rgi.
 	 */
            
-    public ProductServiceFactory() {
+    public static void initialize() {
     	ResourceBundle bundle = ResourceBundle.getBundle("ApplicationSetup");
 	     String type = bundle.getString("service_type");
 	    if (type == "real_backend_service") {
@@ -38,7 +40,7 @@ public class ProductServiceFactory {
     	}
     }
     
-    public Object getService() {
+    public static FacadeInterface getService() {
     	if (serv != null) {
     		return serv;
     	} else {

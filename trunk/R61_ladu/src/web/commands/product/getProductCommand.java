@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import backend.model.Product;
 
 import middleware.MyLogger;
-import middleware.interfaces.FacadeInterface;
 import web.commands.Command;
+import web.control.ProductServiceFactory;
 import web.forms.ProductForm;
 
 public class getProductCommand implements Command {
@@ -17,7 +17,7 @@ public class getProductCommand implements Command {
 		
 		try {
 			int productID = Integer.parseInt(req.getParameter("id"));
-			Product product = FacadeInterface.getProductById();
+			Product product = ProductServiceFactory.getService().getProductById(productID);
 			
 			ProductForm form = new ProductForm();
 			
@@ -28,6 +28,8 @@ public class getProductCommand implements Command {
 			
 		} catch (NumberFormatException e) {
 			MyLogger.error("getProductCommand: Id is not an integer! " + e.getMessage());
+		} catch (Exception e) {
+			MyLogger.error("getProductCommand: " + e.getMessage());
 		}
 		return 0;
 	}

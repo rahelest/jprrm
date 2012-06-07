@@ -16,6 +16,7 @@ public class FirstController extends HttpServlet {
 	public void init() {
 		try {
 			super.init();
+			MyLogger.info("Initialization");
 		} catch (ServletException e) {
 			MyLogger.error("FirstController initError: " + e.getMessage());
 		}		

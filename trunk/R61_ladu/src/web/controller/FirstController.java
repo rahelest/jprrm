@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.io.IOException;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,10 +21,13 @@ public class FirstController extends HttpServlet {
 		}		
 	}
 	
-	public void doGet(HttpServletRequest req, HttpServletResponse res) {
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		//TODO: logging in and out.
 		
-		ServletContext context = getServletConfig().getServletContext();
+		getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(req, res);
+		
+		/*ServletContext context = getServletConfig().getServletContext();
 		
 		Controller controller = (new ControllerFactory()).create(req, res);
 		String whereToGo = controller.control(req, res);
@@ -30,11 +35,11 @@ public class FirstController extends HttpServlet {
 			(new ViewManager()).go(whereToGo, req, res, context);
 		} catch (Exception e) {
 			MyLogger.error("FirstController: " + e.getMessage());
-		}
+		}*/
 		
 	}
 	
-	public void doPost(HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		doGet(request, response);
 	}
 }

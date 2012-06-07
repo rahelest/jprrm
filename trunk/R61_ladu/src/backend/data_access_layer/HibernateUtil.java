@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 @SuppressWarnings("deprecation")
-public class HibernateUtil {
+public class HibernateUtil {/*
 	private static final SessionFactory sessionFactory;
 	static {
 		try {
@@ -20,5 +20,5 @@ public class HibernateUtil {
 
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
-	}
+	}*/
 }

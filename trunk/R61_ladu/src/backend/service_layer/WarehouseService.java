@@ -2,6 +2,10 @@ package backend.service_layer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import web.forms.ProductForm;
+import web.forms.SearchForm;
 
 import middleware.interfaces.FacadeInterface;
 
@@ -37,22 +41,9 @@ public class WarehouseService implements FacadeInterface {
 	}
 
 	@Override
-	public List<Product> searchProducts(
-			ProductSearchCriteria productSearchCriteria) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Product> getProductsByCatalog(int catalog_id) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public int createProduct(Product newProduct) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -124,6 +115,24 @@ public class WarehouseService implements FacadeInterface {
 
 	@Override
 	public int logOut(AuthInfo details) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Product> searchProducts(SearchForm form) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<String, String> getAttributesOfType(int type_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int createProduct(ProductForm form) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -19,7 +19,7 @@ public class WarehouseDAO implements DAOInterface {
 		productList = null;
 		Session session = null;
 		try {
-			session = HibernateUtil.getSessionFactory().getCurrentSession();
+//			session = HibernateUtil.getSessionFactory().getCurrentSession();
 			session.beginTransaction();
 			productList = session.createQuery("from Auto as a").list();
 

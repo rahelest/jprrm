@@ -17,6 +17,8 @@ public class CommandFactory {
 		/*
 		 * Suunab ümber, kas productcommandfactoryle vm?
 		 */
+		
+		
 		return null;
 		
 	}

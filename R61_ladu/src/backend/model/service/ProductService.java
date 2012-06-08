@@ -136,4 +136,10 @@ public class ProductService implements FacadeInterface {
 		return 0;
 	}
 
+	@Override
+	public int updateProduct(Product updatedProduct) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

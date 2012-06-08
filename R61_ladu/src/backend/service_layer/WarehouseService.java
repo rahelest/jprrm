@@ -137,4 +137,10 @@ public class WarehouseService implements FacadeInterface {
 		return 0;
 	}
 
+	@Override
+	public int updateProduct(ProductForm form) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import middleware.MyLogger;
 
 
-@WebServlet(value = { "/s" }, loadOnStartup = 1)
+@WebServlet(value = { "/" }, loadOnStartup = 1)
 public class FirstController extends HttpServlet {
 	
 	/**

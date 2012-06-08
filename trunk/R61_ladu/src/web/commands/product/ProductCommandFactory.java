@@ -33,7 +33,13 @@ public class ProductCommandFactory {
 		
 		commands.add(new getProductCatalogTree());
 		
-		return (Command[]) commands.toArray();
+		Command[] commandArray = new Command[commands.size()];
+		
+		for (int i = 0; i < commands.size(); i++) {
+			commandArray[i] = commands.get(i);
+		}
+		
+		return commandArray;
 	}
 
 }

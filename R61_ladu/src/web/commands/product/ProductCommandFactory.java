@@ -7,17 +7,37 @@ import web.commands.Command;
 
 public class ProductCommandFactory {
 
-	public Command[] getCommand(Map<String, String> events) {
+	public Command[] getCommand(String event) {
 		
 		ArrayList<Command> commands = new ArrayList<Command>();
 		
-		if (events.containsKey("id")) {
-			commands.add(new getProductCommand());
-		} else if (events.containsKey("new")) {
+		if (event.equals("getProductAddForm")) {
+			commands.add(new addProductFormCommand());
+		} else if (event.equals("addProduct")) {
 			commands.add(new addProductCommand());
-		} else if (events.containsKey("search")) {
+		} else if (event.equals("getProduct")) {
+			commands.add(new getProductCommand());
+		} else if (event.equals("changeProduct")) {
+			commands.add(new addProductCommand());
+		} else if (event.equals("viewProducts")) {
+			
+		} else if (event.equals("deleteProduct")) {
+			
+		} else if (event.equals("getTypeSearchForm")) {
+			
+		} else if (event.equals("doTypeSearch")) {
+			
+		} else if (event.equals("doTypelessSearch")) {
+			
+		}
+		
+		if (event.equals("id")) {
+			commands.add(new getProductCommand());
+		} else if (event.equals("new")) {
+			commands.add(new addProductCommand());
+		} else if (event.equals("search")) {
 			commands.add(new searchByTypeCommand());
-		} else if (events.containsKey("type")) {
+		} else if (event.equals("type")) {
 			commands.add(new showByTypeCommand());
 		}		 
 		

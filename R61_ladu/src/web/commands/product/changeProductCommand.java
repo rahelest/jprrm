@@ -36,7 +36,7 @@ public class changeProductCommand implements Command {
 			}
 			form.setAttributes(attributes);
 			
-			List<Product> products = ProductServiceFactory.getService().updateProduct(form);
+			int result = ProductServiceFactory.getService().updateProduct(form);
 			List<ProductForm> productForms = new ArrayList<>();
 			
 			for (Product p : products) {

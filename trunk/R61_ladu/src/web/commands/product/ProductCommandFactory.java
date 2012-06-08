@@ -18,28 +18,20 @@ public class ProductCommandFactory {
 		} else if (event.equals("getProduct")) {
 			commands.add(new getProductCommand());
 		} else if (event.equals("changeProduct")) {
-			commands.add(new addProductCommand());
+			commands.add(new changeProductCommand());
 		} else if (event.equals("viewProducts")) {
-			
-		} else if (event.equals("deleteProduct")) {
-			
-		} else if (event.equals("getTypeSearchForm")) {
-			
-		} else if (event.equals("doTypeSearch")) {
-			
-		} else if (event.equals("doTypelessSearch")) {
-			
-		}
-		
-		if (event.equals("id")) {
-			commands.add(new getProductCommand());
-		} else if (event.equals("new")) {
-			commands.add(new addProductCommand());
-		} else if (event.equals("search")) {
-			commands.add(new searchByTypeCommand());
-		} else if (event.equals("type")) {
 			commands.add(new showByTypeCommand());
-		}		 
+		} else if (event.equals("deleteProduct")) {
+			//TODO
+		} else if (event.equals("getTypeSearchForm")) {
+			commands.add(new searchFormByTypeCommand());
+		} else if (event.equals("doTypeSearch")) {
+			commands.add(new searchByTypeCommand());
+		} else if (event.equals("doTypelessSearch")) {
+			commands.add(new searchWithoutTypeCommand());
+		}	 
+		
+		commands.add(new getProductCatalogTree());
 		
 		return (Command[]) commands.toArray();
 	}

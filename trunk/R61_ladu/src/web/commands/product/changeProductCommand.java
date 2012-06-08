@@ -1,18 +1,14 @@
 package web.commands.product;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import middleware.MyLogger;
-import backend.model.Product;
 import web.commands.Command;
 import web.control.ProductServiceFactory;
 import web.forms.ProductForm;
-import web.forms.SearchForm;
 
 public class changeProductCommand implements Command {
 
@@ -20,7 +16,7 @@ public class changeProductCommand implements Command {
 	public int execute(HttpServletRequest req, HttpServletResponse res) {
 		
 		try {
-			int id = Integer.parseInt(req.getParameter("id"));
+			int type = Integer.parseInt(req.getParameter("type"));
 			
 			ProductForm form = new ProductForm();
 			
@@ -28,6 +24,7 @@ public class changeProductCommand implements Command {
 			form.setName(req.getParameter("name"));
 			form.setType(req.getParameter("type"));
 			form.setSale_price(req.getParameter("sale_price"));
+			form.setId(req.getParameter("id"));
 
 			
 			Map<String, String> attributes = ProductServiceFactory.getService().getAttributesOfType(type);
@@ -37,17 +34,15 @@ public class changeProductCommand implements Command {
 			form.setAttributes(attributes);
 			
 			int result = ProductServiceFactory.getService().updateProduct(form);
-			List<ProductForm> productForms = new ArrayList<>();
+			req.setAttribute("ProductForm", form);
 			
-			for (Product p : products) {
-				ProductForm pForm = new ProductForm();
-				pForm.getDataFromModel(p);
-				productForms.add(pForm);
+			if (result < 0) {
+				//TODO: ei saanud lisatud.. MIKS?
+				return -1;
+			} else {
+				//TODO: edu, suuna vaatamisse?
+				return 1;
 			}
-			
-			req.setAttribute("ResultList", productForms);
-			
-			return 1;
 			
 		} catch (NumberFormatException e) {
 			MyLogger.error("getProductCommand: Id is not an integer! " + e.getMessage());

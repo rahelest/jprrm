@@ -10,7 +10,6 @@ import middleware.MyLogger;
 import web.commands.Command;
 import web.control.ProductServiceFactory;
 import web.forms.ProductForm;
-import web.forms.SearchForm;
 
 public class addProductFormCommand implements Command {
 

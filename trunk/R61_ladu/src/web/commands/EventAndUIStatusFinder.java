@@ -73,6 +73,8 @@ public class EventAndUIStatusFinder {
 				} else {
 					event = "undefined";
 				}
+			} else {
+				event = "undefined";
 			}
 			
 			

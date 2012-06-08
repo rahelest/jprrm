@@ -2,6 +2,7 @@ package web.control;
 
 import java.util.ResourceBundle;
 
+import middleware.interfaces.CatalogTree;
 import middleware.interfaces.FacadeInterface;
 
 import backend.model.service.ProductCatalogTree;
@@ -32,7 +33,7 @@ public class ProductServiceFactory {
 	}
    
     
-    public Object getTree() {
+    public static CatalogTree getTree() {
     	if (tree != null) {
     		return tree;
     	} else {

@@ -37,8 +37,9 @@ public class FirstController extends HttpServlet {
 		
 		ServletContext context = getServletConfig().getServletContext();
 		
-		Controller controller = (new ControllerFactory()).create(req, res);
-		String whereToGo = controller.control(req, res);
+		Controller controller = (new ControllerFactory()).create(req, res); // tagastab uue tühja controlleri
+		String whereToGo = controller.control(req, res); // jooksutab leitud käsud
+		//show_product, start ja error
 		try {
 			(new ViewManager()).go(whereToGo, req, res, context);
 		} catch (Exception e) {

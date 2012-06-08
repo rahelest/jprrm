@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import middleware.MyLogger;
 
 /***
- * Tuvastab mode ja saadab edasivastavasse controllerisse.
+ * Tuvastab mode ja saadab edasi vastavasse controllerisse.
  * @author rahrja
  *
  */

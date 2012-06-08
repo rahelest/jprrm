@@ -1,9 +1,6 @@
 package web.commands;
 
-import java.util.Map;
-
 import web.commands.product.ProductCommandFactory;
-import web.commands.warehouse.WarehouseCommandFactory;
 
 public class CommandFactory {
 	
@@ -15,13 +12,13 @@ public class CommandFactory {
 	 * staatuste/sündmuste teenindamiseks vajalikke'
 	 * käske.Tagastab selle controllerile.
 	 */
-	public Command[] findCommands(Map<String, String> map) {
+	public Command[] findCommands(String event) {
 		
 		/*
 		 * Suunab ümber, kas productcommandfactoryle vm?
 		 */
 		
-		Command[] c1 = new ProductCommandFactory().getCommand(map);
+		new ProductCommandFactory().getCommand(event);
 
 		
 		return null;

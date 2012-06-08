@@ -2,10 +2,12 @@ package web.control;
 
 import java.util.ArrayList;
 
-public class ProductCatalogTreeEmulator {
+import middleware.interfaces.CatalogTree;
+
+public class ProductCatalogTreeEmulator implements CatalogTree {
 	
 	@SuppressWarnings("rawtypes")
-	public ArrayList[] getCatalogTree() {
+	public static ArrayList[] getCatalogTree() {
 		ArrayList<String> names = new ArrayList<>();
 		ArrayList<Integer> parents = new ArrayList<Integer>();
 		

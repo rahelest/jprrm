@@ -1,5 +1,7 @@
 package backend.model.service;
 
-public class ProductCatalogTree {
+import middleware.interfaces.CatalogTree;
+
+public class ProductCatalogTree implements CatalogTree {
 
 }

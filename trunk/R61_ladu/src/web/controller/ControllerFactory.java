@@ -3,7 +3,7 @@ package web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import middleware.MyLogger;
+import org.apache.log4j.Logger;
 
 /***
  * Tuvastab mode ja saadab edasi vastavasse controllerisse.
@@ -11,6 +11,8 @@ import middleware.MyLogger;
  *
  */
 public class ControllerFactory {
+	
+	private Logger MyLogger = Logger.getLogger(FirstController.class);
 	
 	public Controller create (HttpServletRequest req, HttpServletResponse res) {
 		String mode = req.getParameter("mode");

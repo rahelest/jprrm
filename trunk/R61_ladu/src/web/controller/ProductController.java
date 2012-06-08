@@ -18,7 +18,7 @@ public class ProductController implements Controller {
 	public String control(HttpServletRequest req, HttpServletResponse res) {
 		
 		ProductCommandFactory pcf = new ProductCommandFactory();
-		String event = EventAndUIStatusFinder.find(req, res);
+		String event = EventAndUIStatusFinder.find(req, res); //?action=viewProducts&type=9
 		Command[] commands = pcf.getCommand(event);
 		
 		for (Command c : commands) {
@@ -27,8 +27,10 @@ public class ProductController implements Controller {
 			/*
 			 * Tagastab koha, kuhu vaja tagasi minna
 			 */
-			if ((event.equals("addProduct") || event.equals("getproduct"))) {
+			if ((event.equals("addProduct") || event.equals("getProduct"))) {
 				return "show_product";
+			} else if (event.equals("viewProducts"))  {
+				return event;
 			} else {
 				return "start";
 			}

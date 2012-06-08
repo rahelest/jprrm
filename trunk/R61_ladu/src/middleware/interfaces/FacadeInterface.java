@@ -28,7 +28,7 @@ public interface FacadeInterface {
 	public List<Product> searchProducts(SearchForm form);
 	public Map<String, String> getAttributesOfType(int type_id);
 	public List<Product> getProductsByCatalog(int catalog_id);
-	public int createProduct(ProductForm form);   //INT ON ID? EBAÕNN ON -1? KUI EI, VÕIKS
+	public int createProduct(ProductForm form);   //INT ON ID? EBAï¿½NN ON -1? KUI EI, Vï¿½IKS
 	public int updateProduct(ProductForm form);   // SIIN KA
 	public int incrementStock(Transaction change);
 	public int moveStock(Transaction movement);
@@ -41,5 +41,6 @@ public interface FacadeInterface {
 	public int setNewPriceListDiscount(PriceList priceList, int discount);
 	public int logIn(AuthInfo details);
 	public int logOut(AuthInfo details);
+	int updateProduct(Product updatedProduct);
 	
 }

@@ -1,3 +1,4 @@
+package backend.model.hibernate_output;
 // default package
 // Generated Jun 8, 2012 6:23:43 AM by Hibernate Tools 3.4.0.CR1
 

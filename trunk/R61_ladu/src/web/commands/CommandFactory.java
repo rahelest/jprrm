@@ -2,6 +2,9 @@ package web.commands;
 
 import java.util.Map;
 
+import web.commands.product.ProductCommandFactory;
+import web.commands.warehouse.WarehouseCommandFactory;
+
 public class CommandFactory {
 	
 	/*
@@ -18,6 +21,8 @@ public class CommandFactory {
 		 * Suunab ümber, kas productcommandfactoryle vm?
 		 */
 		
+		Command[] c1 = new ProductCommandFactory().getCommand(map);
+
 		
 		return null;
 		

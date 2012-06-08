@@ -33,9 +33,9 @@ public class FirstController extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 		//TODO: logging in and out.
 		
-		getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(req, res);
+//		getServletConfig().getServletContext().getRequestDispatcher("/index.jsp").forward(req, res);
 		
-		/*ServletContext context = getServletConfig().getServletContext();
+		ServletContext context = getServletConfig().getServletContext();
 		
 		Controller controller = (new ControllerFactory()).create(req, res);
 		String whereToGo = controller.control(req, res);
@@ -43,7 +43,7 @@ public class FirstController extends HttpServlet {
 			(new ViewManager()).go(whereToGo, req, res, context);
 		} catch (Exception e) {
 			MyLogger.error("FirstController: " + e.getMessage());
-		}*/
+		}
 		
 	}
 	

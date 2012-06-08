@@ -9,13 +9,18 @@ import web.commands.Command;
 import web.commands.EventAndUIStatusFinder;
 import web.commands.product.ProductCommandFactory;
 
+/***
+ * Product modega seotud info.
+ * @author rahrja
+ *
+ */
 public class ProductController implements Controller {
 
 	@Override
 	public String control(HttpServletRequest req, HttpServletResponse res) {
 		
 		ProductCommandFactory pcf = new ProductCommandFactory();
-		Map<String, String> event = EventAndUIStatusFinder.find(req, res);
+		String event = EventAndUIStatusFinder.find(req, res);
 		Command[] commands = pcf.getCommand(event);
 		
 		for (Command c : commands) {

@@ -14,42 +14,68 @@ public class EventAndUIStatusFinder {
 	 * Leiab sündmused ja staatused, vastavalt 
 	 * URLile.
 	 * 
-	 * nt show_products_in_catalog
-	 * insert_product
-	 * 
-	 * LISAMINE: vali tüüp, lisa.
+
+	add product VIEW FORM
+	add product POST
+	view product
+	view products of this type
+	change product POST
+	delete product POST
+	
+	search for products by type FORM
+	search for products by type POST
+	
+	search for products without type POST (form on püsiv)
+
 	 */
 
-	public static Map<String, String> find(HttpServletRequest request, HttpServletResponse response) {
-		Map<String, String> events = new HashMap<String, String>();
+	public static String find(HttpServletRequest request, HttpServletResponse response) {
+		String mode = request.getParameter("mode");
+		String action = request.getParameter("action");
+		String event = action;
 		
 		try {
-			if (!request.getParameter("id").equals(null)) {
-				events.put("id", request.getParameter("id"));
-				//TODO: otsi id järgi toodet
-			} else if (!request.getParameter("type").equals(null) && !request.getParameter("action").equals(null)) {
-				String action = request.getParameter("action");
-				if (action.equals("new")) {
-					//TODO: vastava tüübi jaoks uue form
-					events.put("new", request.getParameter("type"));
-				} else if (action.equals("search")) {
-					//TODO: vastava tüübi jaoks otsinguform
-					events.put("search", request.getParameter("type"));
+			if (mode.equals("product")) {
+				
+				if (action.equals("getProductAddForm")) {
+
+				} else if (action.equals("addProduct")) {
+					
+				} else if (action.equals("getProduct")) {
+					
+				} else if (action.equals("changeProduct")) {
+					
+				} else if (action.equals("viewProducts")) {
+					
+				} else if (action.equals("deleteProduct")) {
+					
+				} else if (action.equals("getTypeSearchForm")) {
+					
+				} else if (action.equals("doTypeSearch")) {
+					
+				} else if (action.equals("doTypelessSearch")) {
+					
 				} else {
-					//TODO: mingi vale action
-					events.put("fault", request.getParameter("id"));
+					event = "undefined";
 				}
-			} else if (request.getParameter("type").equals(null)) {
-				//TODO: vastava tootetüübi listi näitamine
-				events.put("type", request.getParameter("type"));
-			} else {
-				//TODO: mingi uus käsk, mida pole veel 
-				events.put("fault", request.getParameter("id"));
+			} else if (mode.equals("warehouse")) {
+				
+				if (action.equals("addToWarehouse")) {
+					
+				} else if (action.equals("removeFromWarehouse")) {
+					
+				} else if (action.equals("moveBetweenWarehouses")) {
+					
+				} else {
+					event = "undefined";
+				}
 			}
+			
+			
 			
 		} catch (Exception e) {
 			MyLogger.error("Fault at EventAndUIStatusFinder: " + e.getMessage());
 		}
-		return events;		
+		return event;		
 	}
 }

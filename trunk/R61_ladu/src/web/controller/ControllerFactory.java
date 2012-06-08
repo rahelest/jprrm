@@ -5,6 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import middleware.MyLogger;
 
+/***
+ * Tuvastab mode ja saadab edasivastavasse controllerisse.
+ * @author rahrja
+ *
+ */
 public class ControllerFactory {
 	
 	public Controller create (HttpServletRequest req, HttpServletResponse res) {

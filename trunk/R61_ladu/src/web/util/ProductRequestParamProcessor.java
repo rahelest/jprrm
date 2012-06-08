@@ -6,7 +6,7 @@ import web.forms.ProductForm;
 
 public class ProductRequestParamProcessor {
 	
-	public ProductForm getProductAddData(HttpServletRequest req) {
+	public static ProductForm getProductAddData(HttpServletRequest req) {
 		ProductForm form = new ProductForm();
 		
 		form.setName(req.getParameter("name"));
@@ -18,7 +18,7 @@ public class ProductRequestParamProcessor {
 		return form;
 	}
 	
-	public ProductForm getProductChangeData(HttpServletRequest req) {
+	public static ProductForm getProductChangeData(HttpServletRequest req) {
 		
 		ProductForm form = new ProductForm();
 		

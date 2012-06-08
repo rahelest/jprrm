@@ -23,8 +23,14 @@ public class ProductController implements Controller {
 		
 		for (Command c : commands) {
 			int result = c.execute(req, res);
-			if (result == 1 && event.equals("id")) {
+			
+			/*
+			 * Tagastab koha, kuhu vaja tagasi minna
+			 */
+			if ((event.equals("addProduct") || event.equals("getproduct"))) {
 				return "show_product";
+			} else {
+				return "start";
 			}
 		}
 		
@@ -36,7 +42,7 @@ public class ProductController implements Controller {
 		
 		
 		
-		return null;
+		return "error";
 	}
 
 }

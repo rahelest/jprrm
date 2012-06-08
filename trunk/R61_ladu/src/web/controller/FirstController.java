@@ -43,7 +43,7 @@ public class FirstController extends HttpServlet {
 		if (controller != null) {
 			whereToGo = controller.control(req, res); // jooksutab leitud käsud
 		}
-		//show_product, start ja error
+		//show_product, start ja error, viewProducts
 		try {
 			(new ViewManager()).go(whereToGo, req, res, context);
 		} catch (Exception e) {

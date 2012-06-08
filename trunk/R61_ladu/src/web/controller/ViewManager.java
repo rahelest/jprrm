@@ -13,6 +13,8 @@ public class ViewManager {
 		
 		if (whereToGo.equals("show_product")) {
 			context.getRequestDispatcher("/WEB-INF/JSP/product.jsp").forward(req, res);
+		} else if (whereToGo.equals("viewProducts")) {
+			context.getRequestDispatcher("/WEB-INF/JSP/productlist.jsp").forward(req, res);
 		} else if (whereToGo.equals("start")) {
 			context.getRequestDispatcher("/WEB-INF/JSP/index.jsp").forward(req, res);
 		} else {

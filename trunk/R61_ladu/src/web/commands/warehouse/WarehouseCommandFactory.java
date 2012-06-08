@@ -12,14 +12,12 @@ public class WarehouseCommandFactory {
 		ArrayList<Command> commands = new ArrayList<Command>();
 		
 		if (events.containsKey("id")) {
-			commands.add(new getProductCommand());
+			commands.add(new addToWarehouseCommand());
 		} else if (events.containsKey("new")) {
-			commands.add(new addProductCommand());
+			commands.add(new removeFromWarehouseCommand());
 		} else if (events.containsKey("search")) {
-			commands.add(new searchByTypeCommand());
-		} else if (events.containsKey("type")) {
-			commands.add(new showByTypeCommand());
-		}		 
+			commands.add(new moveBetweenWarehousesCommand());
+		}	 
 		
 		return (Command[]) commands.toArray();
 	}

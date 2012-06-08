@@ -43,12 +43,7 @@ public class ProductService implements FacadeInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override
-	public int updateProduct(Product updatedProduct) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 	@Override
 	public int incrementStock(Transaction change) {
@@ -131,6 +126,12 @@ public class ProductService implements FacadeInterface {
 
 	@Override
 	public int createProduct(ProductForm form) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateProduct(ProductForm form) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

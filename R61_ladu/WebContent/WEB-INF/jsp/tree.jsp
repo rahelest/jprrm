@@ -1,3 +1,14 @@
+<%@ page import="java.util.ArrayList"  %> 
+<jsp:useBean id="tree" scope="request" type="java.util.ArrayList[]" />
+
+<%
+ArrayList names = tree[0];
+ArrayList parents = tree[1];
+for (String name : names) {
+	a.
+}
+%>
+
 <section>
 	<aside>
 		<ul>

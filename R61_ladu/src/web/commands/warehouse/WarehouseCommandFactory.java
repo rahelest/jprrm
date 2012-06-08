@@ -1,21 +1,19 @@
 package web.commands.warehouse;
 
 import java.util.ArrayList;
-import java.util.Map;
-
 import web.commands.Command;
 
 public class WarehouseCommandFactory {
 	
-	public Command[] getCommand(Map<String, String> events) {
+	public Command[] getCommand(String event) {
 		
 		ArrayList<Command> commands = new ArrayList<Command>();
 		
-		if (events.containsKey("id")) {
+		if (event.equals("id")) {
 			commands.add(new addToWarehouseCommand());
-		} else if (events.containsKey("new")) {
+		} else if (event.equals("new")) {
 			commands.add(new removeFromWarehouseCommand());
-		} else if (events.containsKey("search")) {
+		} else if (event.equals("search")) {
 			commands.add(new moveBetweenWarehousesCommand());
 		}	 
 		

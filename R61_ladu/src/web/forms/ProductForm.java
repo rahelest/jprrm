@@ -11,6 +11,7 @@ public class ProductForm {
 	String sale_price;
 	Map<String, String> attributes;
 	String type;
+	String id;
 
 	public String getName() {
 		return name;
@@ -58,5 +59,13 @@ public class ProductForm {
 		setSale_price(product.getSale_price() + "");
 		setType(product.getType());
 		setAttributes(product.getAttributes());
+	}
+
+	public void setId(String id) {
+		this.id = id;	
+	}
+	
+	public String getId() {
+		return id;
 	}
 }

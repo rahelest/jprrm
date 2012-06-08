@@ -7,14 +7,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import middleware.MyLogger;
+import org.apache.log4j.Logger;
+
 import backend.model.Product;
 import web.commands.Command;
 import web.control.ProductServiceFactory;
+import web.controller.FirstController;
 import web.forms.ProductForm;
 import web.forms.SearchForm;
 
 public class searchByTypeCommand implements Command {
+	
+	private Logger MyLogger = Logger.getLogger(FirstController.class);
 
 	@Override
 	public int execute(HttpServletRequest req, HttpServletResponse res) {

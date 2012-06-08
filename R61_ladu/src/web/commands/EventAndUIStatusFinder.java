@@ -3,9 +3,13 @@ package web.commands;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import middleware.MyLogger;
+import org.apache.log4j.Logger;
+
+import web.controller.FirstController;
 
 public class EventAndUIStatusFinder {
+	
+	private static Logger MyLogger = Logger.getLogger(FirstController.class);
 	
 	/*
 	 * Leiab sündmused ja staatused, vastavalt 
@@ -26,10 +30,13 @@ public class EventAndUIStatusFinder {
 
 	 */
 
-	public static String find(HttpServletRequest request, HttpServletResponse response) {
-		String mode = request.getParameter("mode");
-		String action = request.getParameter("action");
+	public static String find(HttpServletRequest req, HttpServletResponse res) {
+		String mode = req.getParameter("mode");
+		String action = req.getParameter("action");
+		if (action == null) action = "";
 		String event = action;
+		
+//		?action=viewProducts&type=9
 		
 		try {
 			if (mode.equals("product")) {
@@ -42,7 +49,7 @@ public class EventAndUIStatusFinder {
 					
 				} else if (action.equals("changeProduct")) {
 					
-				} else if (action.equals("viewProducts")) {
+				} else if (action.equals("viewProducts") && req.getParameter("type") != null) {
 					
 				} else if (action.equals("deleteProduct")) {
 					

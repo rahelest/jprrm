@@ -3,14 +3,18 @@ package web.commands.product;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import backend.model.Product;
 
-import middleware.MyLogger;
 import web.commands.Command;
 import web.control.ProductServiceFactory;
+import web.controller.FirstController;
 import web.forms.ProductForm;
 
 public class getProductCommand implements Command {
+	
+	private Logger MyLogger = Logger.getLogger(FirstController.class);
 
 	@Override
 	public int execute(HttpServletRequest req, HttpServletResponse res) {

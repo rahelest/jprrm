@@ -29,7 +29,7 @@ public interface FacadeInterface {
 	public Map<String, String> getAttributesOfType(int type_id);
 	public List<Product> getProductsByCatalog(int catalog_id);
 	public int createProduct(ProductForm form);   //INT ON ID? EBAÕNN ON -1? KUI EI, VÕIKS
-	public int updateProduct(Product updatedProduct);
+	public int updateProduct(ProductForm form);   // SIIN KA
 	public int incrementStock(Transaction change);
 	public int moveStock(Transaction movement);
 	public int makePriceList(PriceListInfo details);

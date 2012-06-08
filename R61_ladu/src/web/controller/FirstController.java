@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import middleware.MyLogger;
+import org.apache.log4j.Logger;
 
 
 @WebServlet(value = { "/" }, loadOnStartup = 1)
@@ -19,6 +19,7 @@ public class FirstController extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 7936929581445658939L;
+	private Logger MyLogger = Logger.getLogger(FirstController.class);
 
 	public void init() {
 		try {
@@ -38,7 +39,10 @@ public class FirstController extends HttpServlet {
 		ServletContext context = getServletConfig().getServletContext();
 		
 		Controller controller = (new ControllerFactory()).create(req, res); // tagastab uue tühja controlleri
-		String whereToGo = controller.control(req, res); // jooksutab leitud käsud
+		String whereToGo = "start";
+		if (controller != null) {
+			whereToGo = controller.control(req, res); // jooksutab leitud käsud
+		}
 		//show_product, start ja error
 		try {
 			(new ViewManager()).go(whereToGo, req, res, context);

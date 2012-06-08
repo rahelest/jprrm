@@ -1,5 +1,6 @@
 package web.control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,8 +125,20 @@ public class ProductServiceEmulator implements FacadeInterface {
 
 	@Override
 	public List<Product> searchProducts(SearchForm form) {
-		// TODO Auto-generated method stub
-		return null;
+		String type = form.getType();
+		List<Product> products = new ArrayList<>();
+		
+		if (type == "5") {
+			products.add(getProductById(0));
+			products.add(getProductById(0));
+			
+		} else if (type == "7") {
+			products.add(getProductById(0));
+			products.add(getProductById(0));
+			products.add(getProductById(0));
+		}
+		
+		return products;
 	}
 
 	@Override

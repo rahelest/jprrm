@@ -12,11 +12,11 @@ public class ViewManager {
 	public void go(String whereToGo, HttpServletRequest req, HttpServletResponse res, ServletContext context) throws ServletException, IOException {
 		
 		if (whereToGo.equals("show_product")) {
-			context.getRequestDispatcher("/product.jsp").forward(req, res);
+			context.getRequestDispatcher("/WEB-INF/JSP/product.jsp").forward(req, res);
 		} else if (whereToGo.equals("start")) {
-			context.getRequestDispatcher("/index.jsp").forward(req, res);
+			context.getRequestDispatcher("/WEB-INF/JSP/index.jsp").forward(req, res);
 		} else {
-			context.getRequestDispatcher("/error.jsp").forward(req, res);
+			context.getRequestDispatcher("/WEB-INF/JSP/error.jsp").forward(req, res);
 		}
 		
 	}

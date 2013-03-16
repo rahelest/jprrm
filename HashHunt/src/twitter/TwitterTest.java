@@ -21,9 +21,9 @@ public final class TwitterTest {
             @Override
             public void onStatus(Status status) {
             	if (status.getPlace() != null) {
-            		System.out.println("GEO: " + status.getPlace() + " @" + status.getUser().getScreenName() + " - " + status.getText());
+            		System.out.println(status.getPlace() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
             	} else {
-            		System.out.print("");
+//            		System.out.print("");
             	}
             }
 

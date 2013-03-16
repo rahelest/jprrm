@@ -9,7 +9,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import com.aetrion.flickr.*;
+import com.aetrion.flickr.Flickr;
+import com.aetrion.flickr.FlickrException;
+import com.aetrion.flickr.REST;
+import com.aetrion.flickr.RequestContext;
 import com.aetrion.flickr.activity.ActivityInterface;
 import com.aetrion.flickr.activity.Event;
 import com.aetrion.flickr.activity.Item;
@@ -17,7 +20,6 @@ import com.aetrion.flickr.activity.ItemList;
 import com.aetrion.flickr.auth.Auth;
 import com.aetrion.flickr.auth.Permission;
 import com.aetrion.flickr.util.IOUtilities;
-
 
 /**
  * Demonstration of howto use the ActivityInterface.
@@ -37,7 +39,7 @@ public class ActivityExample {
       throws ParserConfigurationException, IOException {
         InputStream in = null;
         try {
-            in = getClass().getResourceAsStream("/setup.properties");
+            in = getClass().getResourceAsStream("setup.properties");
             properties = new Properties();
             properties.load(in);
         } finally {

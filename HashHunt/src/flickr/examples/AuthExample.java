@@ -39,7 +39,7 @@ public class AuthExample {
     public AuthExample() throws ParserConfigurationException, IOException, SAXException {
         InputStream in = null;
         try {
-            in = getClass().getResourceAsStream("/setup.properties");
+            in = getClass().getResourceAsStream("setup.properties");
             properties = new Properties();
             properties.load(in);
         } finally {

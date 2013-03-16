@@ -20,8 +20,8 @@ public final class TwitterTest {
         StatusListener listener = new StatusListener() {
             @Override
             public void onStatus(Status status) {
-            	if (status.getPlace() != null) {
-            		System.out.println(status.getPlace() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
+            	if (status.getGeoLocation() != null) {
+            		System.out.println(status.getGeoLocation() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
             	} else {
 //            		System.out.print("");
             	}

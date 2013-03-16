@@ -3,7 +3,10 @@ package flickr.examples;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -19,6 +22,14 @@ import com.aetrion.flickr.activity.Item;
 import com.aetrion.flickr.activity.ItemList;
 import com.aetrion.flickr.auth.Auth;
 import com.aetrion.flickr.auth.Permission;
+import com.aetrion.flickr.photos.Extras;
+import com.aetrion.flickr.photos.GeoData;
+import com.aetrion.flickr.photos.Photo;
+import com.aetrion.flickr.photos.PhotoList;
+import com.aetrion.flickr.photos.PhotosInterface;
+import com.aetrion.flickr.photos.SearchParameters;
+import com.aetrion.flickr.photosets.PhotosetsInterface;
+import com.aetrion.flickr.tags.Tag;
 import com.aetrion.flickr.util.IOUtilities;
 
 /**
@@ -60,7 +71,7 @@ public class ActivityExample {
     }
 
     public void showActivity() throws FlickrException, IOException, SAXException {
-        ActivityInterface iface = f.getActivityInterface();
+        /*ActivityInterface iface = f.getActivityInterface();
         ItemList list = iface.userComments(10, 0);
         for (int j = 0; j < list.size(); j++) {
             Item item = (Item) list.get(j);
@@ -95,7 +106,43 @@ public class ActivityExample {
                 System.out.println("Value:      " + ((Event) events.get(i)).getValue());
                 System.out.println("Dateadded:  " + ((Event) events.get(i)).getDateadded() + "\n");
             }
+        }*/
+        
+//        System.out.println(requestContext.getRequestContext());
+        
+        
+        PhotosInterface ph = f.getPhotosInterface();
+        
+        SearchParameters searchParam = new SearchParameters();
+        searchParam.setHasGeo(true);
+        Set extras = new HashSet();
+        extras.add(Extras.GEO);
+        extras.add(Extras.TAGS);
+        searchParam.setExtras(extras);
+        
+        
+        Photo photo = null;
+        PhotoList rec = ph.search(searchParam, 0, 0);
+        for (int i= 0; i < rec.size(); i++) {
+        	photo = (Photo) rec.get(i);
+        	System.out.print(i + ": " + photo.getGeoData() + ": ");
+        	for (Object ot : photo.getTags()) {
+        		
+        		Tag t = (Tag) ot;
+        		System.out.print(t.getValue() + ", ");
+        		
+        	}
+        	System.out.println();
         }
+        /*System.out.println(rec.getPage());
+        System.out.println(rec.getPages());
+        System.out.println(rec.getPerPage());
+        System.out.println(rec.getTotal());
+        System.out.println(rec.get(0));*/
+        
+        /*
+        System.out.println(searchParam.getTagMode());
+        System.out.println(ph.search(searchParam, 50, 1));*/
     }
 
     public static void main(String[] args) {

@@ -73,17 +73,24 @@ public class FlickrSearch {
         
         
         Photo photo = null;
-        PhotoList rec = ph.search(searchParam, 0, 0);
-        for (int i= 0; i < rec.size(); i++) {
-        	photo = (Photo) rec.get(i);
-        	System.out.print(i + ": " + photo.getGeoData() + ": ");
-        	for (Object ot : photo.getTags()) {
-        		
-        		Tag t = (Tag) ot;
-        		System.out.print(t.getValue() + ", ");
-        		
-        	}
-        	System.out.println();
+        
+        int realI = 0;
+        String output = "";
+        for (int j = 200; j <= 200; j++) {
+        	
+	        PhotoList rec = ph.search(searchParam, 500, j);
+	        for (int i= 0; i < rec.size(); i++) {
+	        	photo = (Photo) rec.get(i);
+	        	output = realI + ": " + photo.getGeoData() + ": ";
+	        	for (Object ot : photo.getTags()) {
+	        		
+	        		Tag t = (Tag) ot;
+	        		output += t.getValue() + ", ";
+	        		
+	        	}
+	        	System.out.println();
+	        	realI++;
+	        }
         }
         /*System.out.println(rec.getPage());
         System.out.println(rec.getPages());

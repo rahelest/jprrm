@@ -14,7 +14,7 @@ public class Writer {
 	BufferedWriter out = null;
 
 	public Writer() {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
 		Date date = new Date();
 		try {
 			fstream = new FileWriter("data_" + dateFormat.format(date) + ".csv");

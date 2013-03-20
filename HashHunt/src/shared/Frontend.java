@@ -2,12 +2,20 @@ package shared;
 
 import java.util.Scanner;
 
+import flickr.FlickrSearch;
+
 import twitter.TwitterTest;
 import twitter4j.TwitterException;
 
-public class Frontend {
+public class Frontend {	
+	
 	public static void main(String[] args) {
-		TwitterTest twitter = new TwitterTest();
+		
+		Writer writer = new Writer();
+		Chopshop chopShop = new Chopshop(writer);
+		TwitterTest twitter = new TwitterTest(chopShop);
+//		FlickrSearch flickr = new FlickrSearch(chopShop);
+		
 		while (true) {
 			Scanner scanner = new Scanner(System.in);
 			System.out.print("> ");
@@ -34,5 +42,5 @@ public class Frontend {
 				continue;
 			}
 		}
-	}
+	}	
 }

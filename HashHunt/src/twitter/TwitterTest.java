@@ -1,11 +1,19 @@
 package twitter;
 
+import shared.Chopshop;
+import shared.Writer;
 import twitter4j.*;
 
 public final class TwitterTest implements Runnable{
 
 	TwitterStream twitterStream;
 	Boolean notrunning = true;
+	Chopshop chopper = null;
+	Boolean debug = false;
+
+	public TwitterTest(Chopshop chopShop) {
+		this.chopper = chopShop;
+	}
 
 	public void run() {
 		if (notrunning) {
@@ -15,9 +23,13 @@ public final class TwitterTest implements Runnable{
 				@Override
 				public void onStatus(Status status) {
 					if (status.getGeoLocation() != null) {
-						System.out.println(status.getGeoLocation() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
+						if (debug) {
+							System.out.println(status.getGeoLocation() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
+						} else {
+							chopper.stringify(status.getGeoLocation() + " " + status.getText());
+						}						
 					} else {
-						//            		System.out.print("");
+						//TODO donothing?
 					}
 				}
 
@@ -55,5 +67,11 @@ public final class TwitterTest implements Runnable{
 		twitterStream.shutdown();
 		notrunning = true;
 		//    	this.stop();
+	}
+	
+	public static void main(String[] args) {
+		TwitterTest test = new TwitterTest(new Chopshop(new Writer()));
+		test.debug = true;
+		test.run();
 	}
 }

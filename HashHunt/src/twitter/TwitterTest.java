@@ -24,9 +24,9 @@ public final class TwitterTest implements Runnable{
 				public void onStatus(Status status) {
 					if (status.getGeoLocation() != null) {
 						if (debug) {
-							System.out.println(status.getGeoLocation() + /*" @" + status.getUser().getScreenName() + */" - " + status.getText());
+							System.out.println(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
 						} else {
-							chopper.stringify(status.getGeoLocation() + " " + status.getText());
+							chopper.stringify(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
 						}						
 					} else {
 						//TODO donothing?

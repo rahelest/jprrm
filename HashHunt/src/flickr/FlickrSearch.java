@@ -102,7 +102,7 @@ public class FlickrSearch implements Runnable {
 				for (Object ot : photo.getTags()) {
 
 					Tag t = (Tag) ot;
-					output += "#" + t.getValue() + ", ";
+					output += "#" + t.getValue() + " ";
 
 				}
 				chopper.insert(photo.getGeoData().getLatitude(), photo.getGeoData().getLongitude(), output);

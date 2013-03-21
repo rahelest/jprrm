@@ -31,4 +31,13 @@ public class Chopshop {
 		writer.addToQueue(result);
 	}
 
+	public void insert(float latitude, float longitude, String textOrTags) {
+		String result = latitude + "," + longitude;
+		String[] words = textOrTags.split(" ");
+		for (String word : words) {
+			result += "," + word;
+		}		
+		writer.addToQueue(result);
+	}
+
 }

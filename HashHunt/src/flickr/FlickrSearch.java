@@ -6,46 +6,19 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
-import shared.Chopshop;
-import shared.Writer;
-
-import com.aetrion.flickr.Flickr;
-import com.aetrion.flickr.FlickrException;
-import com.aetrion.flickr.REST;
-import com.aetrion.flickr.RequestContext;
-import com.aetrion.flickr.auth.Auth;
-import com.aetrion.flickr.auth.Permission;
-import com.aetrion.flickr.photos.Extras;
-import com.aetrion.flickr.photos.Photo;
-import com.aetrion.flickr.photos.PhotoList;
-import com.aetrion.flickr.photos.PhotosInterface;
-import com.aetrion.flickr.photos.SearchParameters;
+import shared.*;
+import com.aetrion.flickr.*;
+import com.aetrion.flickr.auth.*;
+import com.aetrion.flickr.photos.*;
 import com.aetrion.flickr.tags.Tag;
 import com.aetrion.flickr.util.IOUtilities;
 
 public class FlickrSearch implements Runnable {
-	static String apiKey;
-	static String sharedSecret;
-	Flickr f;
-	REST rest;
-	RequestContext requestContext;
-	Properties properties = null;
-
-	PhotosInterface ph = null;
-	SearchParameters searchParam = null;
-	Photo photo = null;
-	int realI = 0;
-	int pageNum = 1;
-	String output = "";
+	
+	Flickr f = null;
 	Boolean running = true;
-	PhotoList rec = null;
-	int totalPages;
-
 	Chopshop chopper = null;
 
 	public FlickrSearch(Chopshop chopShop) throws ParserConfigurationException,
@@ -55,6 +28,7 @@ public class FlickrSearch implements Runnable {
 		 */
 		this.chopper = chopShop;
 		InputStream in = null;
+		Properties properties = null;
 		try {
 			in = getClass().getResourceAsStream("setup.properties");
 			properties = new Properties();
@@ -64,36 +38,60 @@ public class FlickrSearch implements Runnable {
 		}
 		f = new Flickr(properties.getProperty("apiKey"),
 				properties.getProperty("secret"), new REST());
-		requestContext = RequestContext.getRequestContext();
+		RequestContext requestContext = RequestContext.getRequestContext();
 		Auth auth = new Auth();
 		auth.setPermission(Permission.READ);
 		auth.setToken(properties.getProperty("token"));
 		requestContext.setAuth(auth);
 		Flickr.debugRequest = false;
 		Flickr.debugStream = false;
-
-		ph = f.getPhotosInterface();
-
-		searchParam = new SearchParameters();
-		searchParam.setHasGeo(true);
-		searchParam.setMinUploadDate(new Date(1, 3, 2013));
-		Set<String> extras = new HashSet<String>();
-
-		extras.add(Extras.DATE_UPLOAD);
-		extras.add(Extras.GEO);
-		extras.add(Extras.TAGS);
-		searchParam.setExtras(extras);
-
-		rec = ph.search(searchParam, 200, 0);
-		System.out.println("GetPages: " + rec.getPages());
-		System.out.println("Total: " + rec.getTotal());
-		totalPages = rec.getPages();
+		
 
 		this.run();
+	}
+	
+	@SuppressWarnings("deprecation")
+	private PhotoList doSearch() throws IOException, SAXException, FlickrException {
+		
+		PhotosInterface ph = f.getPhotosInterface();
+		SearchParameters searchParam = new SearchParameters();
+		
+		searchParam.setHasGeo(true);
+		searchParam.setMinUploadDate(new Date(1, 3, 2013));
+		Set<String> whatToShow = new HashSet<String>();
+
+		whatToShow.add(Extras.DATE_UPLOAD);
+		whatToShow.add(Extras.GEO);
+		whatToShow.add(Extras.TAGS);
+		searchParam.setExtras(whatToShow);
+
+		PhotoList photoList = ph.search(searchParam, 200, 0);
+		
+		System.out.println("GetPages: " + photoList.getPages());
+		System.out.println("Total: " + photoList.getTotal());
+		
+		
+		return photoList;
+		
 	}
 
 	@Override
 	public void run() {
+		
+		Photo photo = null;
+		int pageNum = 1;
+		String output = "";
+		
+		PhotoList rec;
+		try {
+			rec = doSearch();
+		} catch (IOException | SAXException | FlickrException e) {
+			System.out.println("Probleem otsingu teostamisel, katkestan: " + e.getMessage());
+			e.printStackTrace();
+			return;
+		}
+		int totalPages = rec.getPages();
+		
 
 		while (running && pageNum <= totalPages) {
 
@@ -107,8 +105,7 @@ public class FlickrSearch implements Runnable {
 					output += "#" + t.getValue() + ", ";
 
 				}
-				writer.writeToFile(output);
-				realI++;
+				chopper.insert(photo.getGeoData().getLatitude(), photo.getGeoData().getLongitude(), output);
 			}
 			if (pageNum % 1000 == 0)
 				System.out.print(Math.floor(pageNum / 1000) + " ");
@@ -122,7 +119,7 @@ public class FlickrSearch implements Runnable {
 
 	public static void main(String[] args) {
 		try {
-			new FlickrSearch();
+			new FlickrSearch(new Chopshop(new Writer()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

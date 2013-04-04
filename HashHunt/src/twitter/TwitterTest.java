@@ -1,5 +1,8 @@
 package twitter;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import shared.Chopshop;
 import shared.Writer;
 import twitter4j.*;
@@ -26,7 +29,8 @@ public final class TwitterTest implements Runnable{
 						if (debug) {
 							System.out.println(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
 						} else {
-							chopper.stringify(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
+							String time = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
+							chopper.stringify(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + time + " " + status.getText());
 						}						
 					} else {
 						//TODO donothing?

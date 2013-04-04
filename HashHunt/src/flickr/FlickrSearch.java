@@ -107,6 +107,7 @@ public class FlickrSearch implements Runnable {
 					output += "#" + t.getValue() + " ";
 
 				}
+				//TODO kirjuta siia kolmandaks kellaaeg ja neljandaks kasutajanimi
 				chopper.stringify(photo.getGeoData().getLatitude() + " " + photo.getGeoData().getLongitude() + " " + URL + " " + output);
 			}
 			if (pageNum % 1000 == 0)

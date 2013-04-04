@@ -97,15 +97,17 @@ public class FlickrSearch implements Runnable {
 
 			for (int i = 0; i < rec.size(); i++) {
 				photo = (Photo) rec.get(i);
-				output = photo.getGeoData().getLatitude() + ";"
-						+ photo.getGeoData().getLongitude() + ";";
+				//output = photo.getGeoData().getLatitude() + ";"
+					//	+ photo.getGeoData().getLongitude() + ";";
+				String URL;
+				URL = photo.getUrl();
 				for (Object ot : photo.getTags()) {
 
 					Tag t = (Tag) ot;
 					output += "#" + t.getValue() + " ";
 
 				}
-				chopper.insert(photo.getGeoData().getLatitude(), photo.getGeoData().getLongitude(), output);
+				chopper.stringify(photo.getGeoData().getLatitude() + " " + photo.getGeoData().getLongitude() + " " + URL + " " + output);
 			}
 			if (pageNum % 1000 == 0)
 				System.out.print(Math.floor(pageNum / 1000) + " ");

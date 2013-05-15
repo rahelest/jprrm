@@ -1,15 +1,15 @@
 package wordnet;
 
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Properties;
+
+import shared.SystemCaller;
 
 public class WordNet {
 
 	String wordNetPropertiesPath = "src\\wordnet\\wordnet.properties";
-	String wordNetPath;
+	String wordNetPath = "WordNet\\2.1\\bin\\";
 
 	public WordNet() {
 
@@ -21,48 +21,16 @@ public class WordNet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		wordNetPath = properties.getProperty("PATH");
+		//wordNetPath = properties.getProperty("PATH");
 	}
 
-	public String getWord(String word) {
-		String result = "";
-
-		try {
-			
-			Runtime runTime = Runtime.getRuntime();
-
-			String command = "cmd /c wn " + word + " -n1 -hypen";
-			Process process = runTime.exec(
-					"cmd /c cd " + wordNetPath);
-			
-			process.waitFor();
-
-			process = runTime.exec(command);
-
-			process.waitFor();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					process.getInputStream()));
-			String line = reader.readLine();
-
-			while (line != null) {
-				result += line;
-				line = reader.readLine();
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return result;
+	public void getWord(String word) {
+		SystemCaller sysCall = new SystemCaller();
+		System.out.println(sysCall.execute(wordNetPath + "wn.exe " + word + " -hypen"));
 	}
 
 	public static void main(String[] args) {
 		WordNet wn = new WordNet();
-		System.out.println(wn.getWord("dog"));
+		wn.getWord("dog");
 	}
 }

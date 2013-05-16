@@ -1,13 +1,12 @@
 package wordnet;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class WordNetResult {
 	
 	String word;
 	
-	ArrayList<LinkedList<String>> hypernyms = new ArrayList<LinkedList<String>>();
+	ArrayList<ArrayList<String>> hypernyms = new ArrayList<ArrayList<String>>();
 	
 	public WordNetResult(String word) {
 		this.word = word;
@@ -21,12 +20,21 @@ public class WordNetResult {
 		this.word = word;
 	}
 
-	public ArrayList<LinkedList<String>> getHypernyms() {
+	public ArrayList<ArrayList<String>> getHypernyms() {
 		return hypernyms;
 	}
 
-	public void addHypernyms(LinkedList<String> hypernyms) {
-		this.hypernyms.add(hypernyms);
+	public void addHypernyms(ArrayList<String> hypernyms2) {
+		this.hypernyms.add(hypernyms2);
+	}
+	
+	public String toString() {
+		String result = word + " (" + hypernyms.size() + "):\n";
+		
+		for (ArrayList<String> h: hypernyms) {
+			result += h + "\n";
+		}
+		return result;
 	}
 	
 

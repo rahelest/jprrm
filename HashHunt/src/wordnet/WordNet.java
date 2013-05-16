@@ -26,7 +26,7 @@ public class WordNet {
 
 	public void getWord(String word) {
 		SystemCaller sysCall = new SystemCaller();
-		System.out.println(sysCall.execute(wordNetPath + "wn.exe " + word + " -hypen"));
+		sysCall.execute(wordNetPath + "wn.exe " + word + " -hypen");
 	}
 
 	public static void main(String[] args) {

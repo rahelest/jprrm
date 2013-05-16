@@ -1,25 +1,35 @@
 package wordnet;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class WordNetResultProcessor extends Thread {
 	
 	int HYPERNYMLEVEL = 5;
-	final int HOMONYMS;
-	
-	enum Mode {
-		SENSE, TOBEADDED, TOBESKIPPED;
-	}
+	int HOMONYMS = 5;
 	
 	LinkedList<String> hypernymTrees = new LinkedList<String>();
+	final Object lock = new Object();
+	
+	enum Mode {
+		SYNONYMS,
+		HYPERNYMS;
+	}
+	
+	
+	public WordNetResultProcessor() {
+		this.start();
+	}
 	
 	public WordNetResultProcessor(int homonyms) {
 		HOMONYMS = homonyms;
+		this.start();
 	}
 	
 	public WordNetResultProcessor(int homonyms, int hypernymlevel) {
 		HOMONYMS = homonyms;
 		HYPERNYMLEVEL = hypernymlevel;
+		this.start();
 	}
 	
 	@Override
@@ -32,7 +42,6 @@ public class WordNetResultProcessor extends Thread {
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -40,47 +49,65 @@ public class WordNetResultProcessor extends Thread {
 	}
 
 	private void parseHypernymTree() {
-		String parsee = hypernymTrees.removeFirst();
-		Mode mode = Mode.SENSE;
+		String parsee = null;
+		synchronized (lock) {
+			parsee = hypernymTrees.removeFirst();
+		}
+		Mode mode = Mode.SYNONYMS;
 		
 		String[] rows = parsee.split("\n");
-		String[] termArray = rows[0].split(" ");
+		System.out.println(rows[1]);
+		String[] termArray = rows[1].split(" ");
 		
 		WordNetResult wnR = new WordNetResult(termArray[termArray.length - 1]);
-		LinkedList<String> hypernyms = null;
+		System.out.println(wnR.word);
+		ArrayList<String> hypernyms = new ArrayList<String>();
 		
 		int hypernymLevel = 0;
-		int homonyms = 0;
+		int homonymNumber = 0;
 		
-		for (int i = 1; i < rows.length; i++) {
-			
+		for (int i = 6; i < rows.length && homonymNumber <= HOMONYMS; i++) {;
 			switch(mode) {
-			case SENSE:
-				hypernyms = new LinkedList<String>();
-				mode = Mode.TOBEADDED;
+			case SYNONYMS:
+				hypernyms.add(rows[i]);
+				mode = Mode.HYPERNYMS;
 				break;
-			case TOBEADDED:
-				
-				break;
-			case TOBESKIPPED:
-				
+			case HYPERNYMS:
+				if (!rows[i].startsWith("Sense ")) {
+					int equalSignIndex = rows[i].indexOf("=>");
+					if (equalSignIndex >= 0) {
+						String row = rows[i].substring(equalSignIndex + 3);
+						hypernymLevel = (equalSignIndex) / 4;
+						
+						if (hypernymLevel <= HYPERNYMLEVEL) {
+							if (hypernyms.size() - 1 < hypernymLevel) {
+								hypernyms.add(row);
+							} else {
+								String hyp = hypernyms.get(hypernymLevel);
+								hypernyms.set(hypernymLevel, hyp + ", " + row);
+							}
+						}
+					}
+				} else {
+					homonymNumber++;					
+					wnR.addHypernyms((ArrayList<String>) hypernyms.clone());
+					hypernyms.clear();
+					mode = Mode.SYNONYMS;
+				}
 				break;
 			default:
 				System.out.println("UNKNOWN MODE");
 			}
-			
-			if (rows[i].startsWith("Sense ")) {
-				
-			}
 		}
 		
-		
-		wnR.addHypernyms(hypernyms);
-		
+		System.out.println(wnR);
 	}
 	
 	public void addHypernymTree(String hypTree) {
-		hypernymTrees.addLast(hypTree);
+		synchronized (lock) {
+			hypernymTrees.addLast(hypTree);
+		}
+		
 	}
 
 }

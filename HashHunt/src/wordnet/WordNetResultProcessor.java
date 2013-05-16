@@ -4,7 +4,8 @@ import java.util.LinkedList;
 
 public class WordNetResultProcessor extends Thread {
 	
-	final int HYPERNYMLEVEL = 5;
+	int HYPERNYMLEVEL = 5;
+	final int HOMONYMS;
 	
 	enum Mode {
 		SENSE, TOBEADDED, TOBESKIPPED;
@@ -12,11 +13,27 @@ public class WordNetResultProcessor extends Thread {
 	
 	LinkedList<String> hypernymTrees = new LinkedList<String>();
 	
+	public WordNetResultProcessor(int homonyms) {
+		HOMONYMS = homonyms;
+	}
+	
+	public WordNetResultProcessor(int homonyms, int hypernymlevel) {
+		HOMONYMS = homonyms;
+		HYPERNYMLEVEL = hypernymlevel;
+	}
+	
 	@Override
 	public void run() {
 		while (true) {
 			if (!hypernymTrees.isEmpty()) {
 				parseHypernymTree();
+			}
+			
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		
@@ -26,10 +43,15 @@ public class WordNetResultProcessor extends Thread {
 		String parsee = hypernymTrees.removeFirst();
 		Mode mode = Mode.SENSE;
 		
+		String[] rows = parsee.split("\n");
 		String[] termArray = rows[0].split(" ");
 		
 		WordNetResult wnR = new WordNetResult(termArray[termArray.length - 1]);
 		LinkedList<String> hypernyms = null;
+		
+		int hypernymLevel = 0;
+		int homonyms = 0;
+		
 		for (int i = 1; i < rows.length; i++) {
 			
 			switch(mode) {
@@ -44,7 +66,7 @@ public class WordNetResultProcessor extends Thread {
 				
 				break;
 			default:
-				throw new Exception("Unknown mode!");
+				System.out.println("UNKNOWN MODE");
 			}
 			
 			if (rows[i].startsWith("Sense ")) {

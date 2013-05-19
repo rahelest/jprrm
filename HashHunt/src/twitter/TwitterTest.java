@@ -1,9 +1,12 @@
 package twitter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import shared.Chopshop;
+import shared.WordFilter;
 import shared.Writer;
 import twitter4j.*;
 
@@ -73,7 +76,7 @@ public final class TwitterTest implements Runnable{
 		//    	this.stop();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		TwitterTest test = new TwitterTest(new Chopshop(new Writer()));
 		test.debug = true;
 		test.run();

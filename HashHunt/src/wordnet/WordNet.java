@@ -9,7 +9,7 @@ import shared.SystemCaller;
 public class WordNet {
 
 	String wordNetPropertiesPath = "src\\wordnet\\wordnet.properties";
-	String wordNetPath = "WordNet\\2.1\\bin\\";
+	String wordNetPath = null;
 
 	public WordNet() {
 
@@ -21,7 +21,7 @@ public class WordNet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//wordNetPath = properties.getProperty("PATH");
+		wordNetPath = properties.getProperty("PATH");
 	}
 
 	public void getWord(String word) {

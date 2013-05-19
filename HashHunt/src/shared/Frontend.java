@@ -1,5 +1,7 @@
 package shared;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import flickr.FlickrSearch;
@@ -9,7 +11,7 @@ import twitter4j.TwitterException;
 
 public class Frontend {	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
 		Writer writer = new Writer();
 		Chopshop chopShop = new Chopshop(writer);

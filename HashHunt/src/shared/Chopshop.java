@@ -1,11 +1,15 @@
 package shared;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class Chopshop {
 	
 	private Writer writer = null;
 	
-	public Chopshop(Writer writer) {
+	public Chopshop(Writer writer) throws FileNotFoundException, IOException {
 		this.writer = writer;
+		WordFilter.initialize();
 	}
 
 	public void stringify(String data) {
@@ -28,7 +32,9 @@ public class Chopshop {
 		String result = latitude + "," + longitude;
 		String[] words = textOrTags.split(" ");
 		for (String word : words) {
-			result += "," + word;
+			if (WordFilter.checkSuitability(word)) {
+				result += "," + word;
+			}
 		}		
 		writer.addToQueue(result);
 	}

@@ -28,16 +28,16 @@ public final class TwitterTest implements Runnable{
 			StatusListener listener = new StatusListener() {
 				@Override
 				public void onStatus(Status status) {
-					if (status.getGeoLocation() != null) {
-						if (debug) {
-							System.out.println(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
-						} else {
-							String time = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
-							chopper.stringify(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + time + " " + status.getUser() + " "+ status.getText());
-						}						
-					} else {
-						//TODO donothing?
-					}
+//					if (status.getGeoLocation() != null) {
+//						if (debug) {
+//							System.out.println(status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + status.getText());
+//						} else {
+//							String time = new SimpleDateFormat("dd.MM.yyyy_HH:mm:ss").format(Calendar.getInstance().getTime());
+							chopper.stringify(/*status.getGeoLocation().getLatitude() + " " + status.getGeoLocation().getLongitude() + " " + time + " " + status.getUser() + " "+ */status.getText());
+//						}						
+//					} else {
+//						//TODO donothing?
+//					}
 				}
 
 				@Override

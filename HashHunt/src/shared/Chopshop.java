@@ -18,25 +18,13 @@ public class Chopshop {
 		
 		String[] words = data.split(" ");
 		for (String word : words) {
-			result += "\"" + word + "\"" + ",";
-			
-			
-//			if (words. >= words.length) {
-//				result += ",";
-//			}
-		}		
-		writer.addToQueue(result);
-	}
-
-	public void insert(float latitude, float longitude, String textOrTags) {
-		String result = latitude + "," + longitude;
-		String[] words = textOrTags.split(" ");
-		for (String word : words) {
 			if (WordFilter.checkSuitability(word)) {
-				result += "," + word;
+				result += "\"" + word + "\"" + ",";
 			} else System.out.println("Found one: " + word);
 		}		
-		writer.addToQueue(result);
+//		writer.addToQueue(result);
+		System.out.println(result);
 	}
+
 
 }

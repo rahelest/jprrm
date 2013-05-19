@@ -1,11 +1,10 @@
 package wordnet;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class WordNetResultProcessor extends Thread {
 	
-	int HYPERNYMLEVEL = 5;
+	int HYPERNYMLEVEL = 3;
 	int HOMONYMS = 5;
 	
 	LinkedList<String> hypernymTrees = new LinkedList<String>();
@@ -61,15 +60,16 @@ public class WordNetResultProcessor extends Thread {
 		
 		WordNetResult wnR = new WordNetResult(termArray[termArray.length - 1]);
 		System.out.println(wnR.word);
-		ArrayList<String> hypernyms = new ArrayList<String>();
+		
+		Sense sense = new Sense();
 		
 		int hypernymLevel = 0;
 		int homonymNumber = 0;
 		
-		for (int i = 6; i < rows.length && homonymNumber <= HOMONYMS; i++) {;
+		for (int i = 6; i < rows.length && homonymNumber < HOMONYMS; i++) {;
 			switch(mode) {
 			case SYNONYMS:
-				hypernyms.add(rows[i]);
+				sense.setSynonyms(rows[i]);
 				mode = Mode.HYPERNYMS;
 				break;
 			case HYPERNYMS:
@@ -77,21 +77,16 @@ public class WordNetResultProcessor extends Thread {
 					int equalSignIndex = rows[i].indexOf("=>");
 					if (equalSignIndex >= 0) {
 						String row = rows[i].substring(equalSignIndex + 3);
-						hypernymLevel = (equalSignIndex) / 4;
+						hypernymLevel = equalSignIndex / 4 - 1;
 						
-						if (hypernymLevel <= HYPERNYMLEVEL) {
-							if (hypernyms.size() - 1 < hypernymLevel) {
-								hypernyms.add(row);
-							} else {
-								String hyp = hypernyms.get(hypernymLevel);
-								hypernyms.set(hypernymLevel, hyp + ", " + row);
-							}
+						if (hypernymLevel < HYPERNYMLEVEL) {
+							sense.addHypernyms(hypernymLevel, row);
 						}
 					}
 				} else {
-					homonymNumber++;					
-					wnR.addHypernyms((ArrayList<String>) hypernyms.clone());
-					hypernyms.clear();
+					homonymNumber++;
+					wnR.addSense((Sense) sense.clone());
+					sense = new Sense();
 					mode = Mode.SYNONYMS;
 				}
 				break;

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class WordNetResult {
 	
 	String word;
-	
-	ArrayList<ArrayList<String>> hypernyms = new ArrayList<ArrayList<String>>();
+	ArrayList<Sense> senses = new ArrayList<Sense>();
+
 	
 	public WordNetResult(String word) {
 		this.word = word;
@@ -19,20 +19,21 @@ public class WordNetResult {
 	public void setWord(String word) {
 		this.word = word;
 	}
-
-	public ArrayList<ArrayList<String>> getHypernyms() {
-		return hypernyms;
-	}
-
-	public void addHypernyms(ArrayList<String> hypernyms2) {
-		this.hypernyms.add(hypernyms2);
-	}
 	
+	public ArrayList<Sense> getSenses() {
+		return senses;
+	}
+
+	public void addSense(Sense sense) {
+		this.senses.add(sense);
+	}
+
 	public String toString() {
-		String result = word + " (" + hypernyms.size() + "):\n";
+		String result = word + " (" + senses.size() + "):\n";
 		
-		for (ArrayList<String> h: hypernyms) {
-			result += h + "\n";
+		int i = 0;
+		for (Sense s: senses) {
+			result += "\tSENSE " + i++ + ":\n" + s + "\n";
 		}
 		return result;
 	}

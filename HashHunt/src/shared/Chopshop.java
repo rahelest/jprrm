@@ -34,7 +34,7 @@ public class Chopshop {
 		for (String word : words) {
 			if (WordFilter.checkSuitability(word)) {
 				result += "," + word;
-			}
+			} else System.out.println("Found one: " + word);
 		}		
 		writer.addToQueue(result);
 	}

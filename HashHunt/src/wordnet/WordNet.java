@@ -8,7 +8,7 @@ import shared.SystemCaller;
 
 public class WordNet {
 
-	String wordNetPropertiesPath = "src\\wordnet\\wordnet.properties";
+	String wordNetPropertiesPath = "config\\wordnet.properties";
 	String wordNetPath = null;
 
 	public WordNet() {

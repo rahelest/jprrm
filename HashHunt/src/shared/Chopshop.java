@@ -15,13 +15,17 @@ public class Chopshop {
 	public void stringify(String data) {
 		data = data.trim();
 		String result = "";
-		data = data.replaceAll("[\\p{P}\\p{N}]", "");
+		data = data.replaceAll("[\\p{P}\\p{N}\\p{S}]", "");
 		
 		String[] words = data.split(" ");
 		for (String word : words) {
+			 if (!word.matches("\\A\\p{ASCII}*\\z")) {
+				 continue;
+			 }
+			
 			if (WordFilter.checkSuitability(word)) {
 				result += word + ",";
-			} else System.out.println("Found one: " + word);
+			} 
 		}		
 //		writer.addToQueue(result);
 		System.out.println(result);

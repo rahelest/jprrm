@@ -8,11 +8,15 @@ public class SocialStreamQueue<E> {
 	
 	public LinkedList<E> queue = new LinkedList<>();
 	
-	public void addToQueue(E e) {
+	public boolean addToQueue(E e) {
 		if (queue.size() < LIMIT) {
 			queue.add(e);
 			LIMIT++;
-		} else System.out.println("FULL");
+			return true;
+		} else {
+			System.out.println("FULL");
+			return false;
+		}
 	}
 	
 	public E getFromQueue() {

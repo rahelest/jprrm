@@ -6,9 +6,11 @@ import java.io.IOException;
 public class Chopshop {
 	
 	private Writer writer = null;
+	SocialStreamQueue<String> ssq = null;
 	
-	public Chopshop(Writer writer) throws FileNotFoundException, IOException {
+	public Chopshop(Writer writer, SocialStreamQueue<E> ssq) throws FileNotFoundException, IOException {
 		this.writer = writer;
+		this.ssq = ssq;
 		WordFilter.initialize();
 	}
 
@@ -28,6 +30,13 @@ public class Chopshop {
 			} 
 		}		
 //		writer.addToQueue(result);
+		while (!ssq.addToQueue(result)) {
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 		System.out.println(result);
 	}
 

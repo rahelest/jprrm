@@ -20,6 +20,14 @@ public class Sense implements Cloneable {
 	public ArrayList<HypernymLevel> getHypernyms() {
 		return hypernyms;
 	}
+	
+	public ArrayList<String> getAllHypernyms() {
+		ArrayList<String> hyps = new ArrayList<>();
+		for (HypernymLevel h : hypernyms) {
+			hyps.addAll(h.getHypernyms());
+		}
+		return hyps;
+	}
 
 	public void addHypernyms(int level, String hyps) {
 		if (hypernyms.size() <= level) {

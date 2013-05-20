@@ -41,29 +41,47 @@ public class OtterInputGenerator {
 		ArrayList<String> post2 = new ArrayList<>();
 		post2.add("cat");
 		
-		ArrayList<String> syno1 = getAllSynonyms(post1);
-		ArrayList<String> syno2 = getAllSynonyms(post2);
+		WordNetResult wnr1 = getSynonymsAndHypers(post1.get(0));
 		
-		writePairs("synon", syno1, syno2);
+		ArrayList<String> syno1 = getSynos(wnr1);
+		
+		writeSynonPairs(syno1);
+		
+		ArrayList<String> hyper1 = getHypers(wnr1);
+		
+		writeHyperPairs(post1.get(0), hyper1);
+		
+		
+		
 
 	}
 
-	private ArrayList<String> getAllSynonyms(ArrayList<String> post) {
-		ArrayList<String> syns = new ArrayList<>();
-		for (String p: post) {
-			wn.getWord(p);
-			WordNetResult wnr = wn.getResult();
-			syns.addAll(wnr.getSenses().get(0).getSynonyms());
+	private void writeHyperPairs(String word, ArrayList<String> hyper1) throws IOException {
+		for (String h: hyper1) {
+			bufferedWriter.write("hyper(" + word + "," + h + ").\n");
 		}
-		return syns;
+		
 	}
 
-	private void writePairs(String string, ArrayList<String> post1,
-			ArrayList<String> post2) throws IOException {
+	private ArrayList<String> getHypers(WordNetResult wnr) {
+		return wnr.getSenses().get(0).getAllHypernyms();
+	}
+
+	private ArrayList<String> getSynos(WordNetResult wnr) {
+		return wnr.getSenses().get(0).getSynonyms();
+	}
+
+	private WordNetResult getSynonymsAndHypers(String word) {		
+			wn.getWord(word);
+			WordNetResult wnr = wn.getResult();
+			return wnr;
+	}
+
+	private void writeSynonPairs(ArrayList<String> post1) throws IOException {
 		for (String p1: post1) {
-			for (String p2: post2) {
+			for (String p2: post1) {
 				if(!p1.equalsIgnoreCase(p2)) { 
-					bufferedWriter.write(string + "(" + p1 + "," + p2 + ").\n");
+					bufferedWriter.write("synon(" + p1 + "," + p2 + ").\n");
 				}
 			}
 		}

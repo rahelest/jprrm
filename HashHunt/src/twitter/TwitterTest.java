@@ -76,9 +76,9 @@ public final class TwitterTest implements Runnable{
 		//    	this.stop();
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		TwitterTest test = new TwitterTest(new Chopshop(new Writer()));
-		test.debug = true;
-		test.run();
-	}
+//	public static void main(String[] args) throws FileNotFoundException, IOException {
+//		TwitterTest test = new TwitterTest(new Chopshop(new Writer()));
+//		test.debug = true;
+//		test.run();
+//	}
 }

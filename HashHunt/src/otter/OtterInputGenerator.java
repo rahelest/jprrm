@@ -8,22 +8,51 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import flickr.FlickrQueue;
+
+import shared.SocialStreamQueue;
+import twitter.TwitterQueue;
 import wordnet.WordNet;
 import wordnet.WordNetResult;
 
-public class OtterInputGenerator {
+public class OtterInputGenerator extends Thread {
 
 	BufferedWriter bufferedWriter = null;
 	WordNet wn = new WordNet();
+	SocialStreamQueue fq;
+	SocialStreamQueue tq;
 
-	public String generate() throws IOException {
+	public OtterInputGenerator(FlickrQueue fq, TwitterQueue tq) {
+		this.fq = fq;
+		this.tq = tq;
+		this.start();
+	}
 
-		File file = generateFileName();
-		openBuffers(file);
-		writeInparams();
-		writeRules();
-		finalizeFile();
-		return file.getName();
+	public void run() {
+		while (true) {
+			String fileName = generate();
+			File outFile = generateFileName("out");
+			new OtterCaller(fileName, outFile);
+
+		}
+	}
+
+	private String generate() {
+
+		File file;
+		try {
+			file = generateFileName("in");
+
+			openBuffers(file);
+			writeInparams();
+			writeRules();
+			finalizeFile();
+			return file.getName();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private void finalizeFile() throws IOException {
@@ -32,35 +61,33 @@ public class OtterInputGenerator {
 	}
 
 	private void writeRules() throws IOException {
-//		ArrayList<String> post1 = getPost();
-//		ArrayList<String> post2 = getPost();
-		
+		// ArrayList<String> post1 = getPost();
+		// ArrayList<String> post2 = getPost();
+
 		ArrayList<String> post1 = new ArrayList<>();
 		post1.add("dog");
-		
+
 		ArrayList<String> post2 = new ArrayList<>();
 		post2.add("cat");
-		
+
 		WordNetResult wnr1 = getSynonymsAndHypers(post1.get(0));
-		
+
 		ArrayList<String> syno1 = getSynos(wnr1);
-		
+
 		writeSynonPairs(syno1);
-		
+
 		ArrayList<String> hyper1 = getHypers(wnr1);
-		
+
 		writeHyperPairs(post1.get(0), hyper1);
-		
-		
-		
 
 	}
 
-	private void writeHyperPairs(String word, ArrayList<String> hyper1) throws IOException {
-		for (String h: hyper1) {
+	private void writeHyperPairs(String word, ArrayList<String> hyper1)
+			throws IOException {
+		for (String h : hyper1) {
 			bufferedWriter.write("hyper(" + word + "," + h + ").\n");
 		}
-		
+
 	}
 
 	private ArrayList<String> getHypers(WordNetResult wnr) {
@@ -71,21 +98,21 @@ public class OtterInputGenerator {
 		return wnr.getSenses().get(0).getSynonyms();
 	}
 
-	private WordNetResult getSynonymsAndHypers(String word) {		
-			wn.getWord(word);
-			WordNetResult wnr = wn.getResult();
-			return wnr;
+	private WordNetResult getSynonymsAndHypers(String word) {
+		wn.getWord(word);
+		WordNetResult wnr = wn.getResult();
+		return wnr;
 	}
 
 	private void writeSynonPairs(ArrayList<String> post1) throws IOException {
-		for (String p1: post1) {
-			for (String p2: post1) {
-				if(!p1.equalsIgnoreCase(p2)) { 
+		for (String p1 : post1) {
+			for (String p2 : post1) {
+				if (!p1.equalsIgnoreCase(p2)) {
 					bufferedWriter.write("synon(" + p1 + "," + p2 + ").\n");
 				}
 			}
 		}
-		
+
 	}
 
 	private void writeInparams() throws IOException {
@@ -119,16 +146,21 @@ public class OtterInputGenerator {
 
 	}
 
-	private File generateFileName() throws IOException {
+	private File generateFileName(String dir)  {
 		Long unixTime = new Long(System.currentTimeMillis() / 1000L);
 		String unixTimeString = unixTime.toString();
-		String fileName = "OTTER_" + unixTimeString + ".in";
-		
+		String fileName = "OTTER\\OTTER_" + unixTimeString + "." + dir;
+
 		System.out.println(fileName);
 
 		File file = new File(fileName);
 		if (!file.exists()) {
-			file.createNewFile();
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		return file;

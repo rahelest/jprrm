@@ -4,8 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+import otter.OtterCaller;
+import otter.OtterInputGenerator;
+
+import flickr.FlickrQueue;
 import flickr.FlickrSearch;
 
+import twitter.TwitterQueue;
 import twitter.TwitterTest;
 import twitter4j.TwitterException;
 
@@ -14,9 +19,14 @@ public class Frontend {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		
 		Writer writer = new Writer();
-		Chopshop chopShop = new Chopshop(writer);
-		TwitterTest twitter = new TwitterTest(chopShop);
-//		FlickrSearch flickr = new FlickrSearch(chopShop);
+		TwitterQueue tq = new TwitterQueue();
+		FlickrQueue fq = new FlickrQueue();
+		Chopshop tChopShop = new Chopshop(writer, tq);
+		Chopshop fChopShop = new Chopshop(writer, fq);
+		TwitterTest twitter = new TwitterTest(tChopShop);
+		FlickrSearch flickr = new FlickrSearch(fChopShop);
+		
+		OtterInputGenerator oig = new OtterInputGenerator(fq, tq);
 		
 		while (true) {
 			Scanner scanner = new Scanner(System.in);

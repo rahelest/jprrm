@@ -1,6 +1,7 @@
 package flickr;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,18 +21,29 @@ public class FlickrSearch implements Runnable {
 	Boolean running = true;
 	Chopshop chopper = null;
 
-	public FlickrSearch(Chopshop chopShop) throws ParserConfigurationException,
-			IOException, SAXException, FlickrException {
+	public FlickrSearch(Chopshop chopShop) {
 		/*
 		 * Seda kasuta kirjutamiseks, üks tulemus sööda meetodisse
 		 * stringify(string)
 		 */
 		this.chopper = chopShop;
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(
-				"config\\flickr.properties"));
+		try {
+			properties.load(new FileInputStream(
+					"config\\flickr.properties"));
+		
 		f = new Flickr(properties.getProperty("apiKey"),
-				properties.getProperty("secret"), new REST());
+					properties.getProperty("secret"), new REST());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RequestContext requestContext = RequestContext.getRequestContext();
 		Auth auth = new Auth();
 		auth.setPermission(Permission.READ);
@@ -118,7 +130,7 @@ public class FlickrSearch implements Runnable {
 
 	public static void main(String[] args) {
 		try {
-			new FlickrSearch(new Chopshop(new Writer()));
+//			new FlickrSearch(new Chopshop(new Writer(), new FlickrSearch(chopShop)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

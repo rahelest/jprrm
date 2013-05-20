@@ -4,9 +4,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import shared.Executable;
+import shared.ExecutableResult;
 import shared.SystemCaller;
 
-public class WordNet {
+public class WordNet implements Executable {
 
 	String wordNetPropertiesPath = "config\\wordnet.properties";
 	String wordNetPath = null;
@@ -35,7 +37,7 @@ public class WordNet {
 	}
 
 	WordNetResult wnr = null;
-	
+
 	public WordNetResult getResult() {
 		while (wnr == null) {
 			try {
@@ -44,12 +46,13 @@ public class WordNet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		return wnr;
 	}
 
-	public void setResult(WordNetResult parsedHypernymTree) {
-		this.wnr = parsedHypernymTree;
+	public void setResult(ExecutableResult parsedHypernymTree) {
+		this.wnr = (WordNetResult) parsedHypernymTree;
 	}
+
 }

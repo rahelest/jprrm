@@ -1,21 +1,22 @@
 package otter;
 
-import java.io.IOException;
+import java.io.File;
 
+import shared.Executable;
+import shared.ExecutableResult;
 import shared.SystemCaller;
 
-public class OtterCaller {
+public class OtterCaller implements Executable {
 	
 	SystemCaller sysCall = new SystemCaller();
 	
-	public OtterCaller(String inFile) {
-		sysCall.execute(null, "otter < " + inFile);
+	public OtterCaller(String inFile, File outFile) {
+		sysCall.execute(this, "otter < " + inFile + " > " + outFile.getName());
 	}
 
-	
-	public static void main(String[] args) throws IOException {
-		OtterInputGenerator oIG = new OtterInputGenerator();
-		String inFile = oIG.generate();
-//		OtterCaller otterCaller = new OtterCaller(inFile);
+	@Override
+	public void setResult(ExecutableResult execRes) {
+//		execRes.print();
+		
 	}
 }

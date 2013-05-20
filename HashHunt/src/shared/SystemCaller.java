@@ -17,13 +17,13 @@ public class SystemCaller {
 		runTime = Runtime.getRuntime();
 	}
 
-	public void execute(WordNet wn, String command) {
+	public void execute(Executable exec, String command) {
 		System.out.println("COMMAND: " + command);
 		try {
 			p = runTime.exec("cmd /c " + command);
 			
-			new StreamThread(wn, p.getInputStream(), "INPUT");
-			new StreamThread(wn, p.getErrorStream(), "ERROR");
+			new StreamThread(exec, p.getInputStream(), "INPUT");
+			new StreamThread(exec, p.getErrorStream(), "ERROR");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -33,12 +33,12 @@ public class SystemCaller {
 
 		InputStream inpStr;
 		String strType;
-		WordNet wn;
+		Executable exec;
 
-		public StreamThread(WordNet wn, InputStream inpStr, String strType) {
+		public StreamThread(Executable exec, InputStream inpStr, String strType) {
 			this.inpStr = inpStr;
 			this.strType = strType;
-			this.wn = wn;
+			this.exec = exec;
 			this.start();
 		}
 
@@ -52,7 +52,11 @@ public class SystemCaller {
 					result += line + "\n";
 				}
 				if (strType == "INPUT") {
-					wn.setResult(WordNetResultProcessor.parseHypernymTree(result));
+					if (exec.getClass().equals(WordNet.class)) {
+						exec.setResult(WordNetResultProcessor.parseHypernymTree(result));
+					} else {
+						exec.setResult(null);
+					}
 				} else {
 					System.out.print(result.length() > 0 ? "ERROR -> " + result + "\n" : "");
 				}

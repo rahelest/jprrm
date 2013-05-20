@@ -6,9 +6,9 @@ import java.io.IOException;
 public class Chopshop {
 	
 	private Writer writer = null;
-	SocialStreamQueue<String> ssq = null;
+	SocialStreamQueue ssq = null;
 	
-	public Chopshop(Writer writer, SocialStreamQueue<E> ssq) throws FileNotFoundException, IOException {
+	public Chopshop(Writer writer, SocialStreamQueue ssq) throws FileNotFoundException, IOException {
 		this.writer = writer;
 		this.ssq = ssq;
 		WordFilter.initialize();

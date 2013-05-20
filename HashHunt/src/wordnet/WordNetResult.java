@@ -2,7 +2,9 @@ package wordnet;
 
 import java.util.ArrayList;
 
-public class WordNetResult {
+import shared.ExecutableResult;
+
+public class WordNetResult implements ExecutableResult{
 	
 	String word;
 	ArrayList<Sense> senses = new ArrayList<Sense>();

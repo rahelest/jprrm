@@ -2,15 +2,15 @@ package shared;
 
 import java.util.LinkedList;
 
-public class SocialStreamQueue<E> {
+public class SocialStreamQueue {
 	
 	private int LIMIT = 100;
 	
-	public LinkedList<E> queue = new LinkedList<>();
+	public LinkedList<String> queue = new LinkedList<>();
 	
-	public boolean addToQueue(E e) {
+	public boolean addToQueue(String s) {
 		if (queue.size() < LIMIT) {
-			queue.add(e);
+			queue.add(s);
 			LIMIT++;
 			return true;
 		} else {
@@ -19,7 +19,7 @@ public class SocialStreamQueue<E> {
 		}
 	}
 	
-	public E getFromQueue() {
+	public String getFromQueue() {
 		LIMIT--;
 		return queue.getFirst();
 	}

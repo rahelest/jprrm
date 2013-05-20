@@ -23,10 +23,13 @@ public class Frontend {
 		FlickrQueue fq = new FlickrQueue();
 		Chopshop tChopShop = new Chopshop(writer, tq);
 		Chopshop fChopShop = new Chopshop(writer, fq);
+		System.out.println("chopshop");
 		TwitterTest twitter = new TwitterTest(tChopShop);
+		System.out.println("tw ready");
 		FlickrSearch flickr = new FlickrSearch(fChopShop);
+		System.out.println("fl ready");
 		
-		OtterInputGenerator oig = new OtterInputGenerator(fq, tq);
+		
 		
 		while (true) {
 			Scanner scanner = new Scanner(System.in);
@@ -36,6 +39,7 @@ public class Frontend {
 			switch (command) {
 			case "start":
 				twitter.run();
+				OtterInputGenerator oig = new OtterInputGenerator(fq, tq);
 				continue;
 			case "stop":
 				try {

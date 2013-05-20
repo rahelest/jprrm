@@ -126,7 +126,7 @@ public class OtterInputGenerator extends Thread {
 
 		while (line != null) {
 			bufferedWriter.write(line + "\n");
-			System.out.println(line);
+//			System.out.println(line);
 			line = br.readLine();
 		}
 
@@ -151,7 +151,7 @@ public class OtterInputGenerator extends Thread {
 		String unixTimeString = unixTime.toString();
 		String fileName = "OTTER\\OTTER_" + unixTimeString + "." + dir;
 
-		System.out.println(fileName);
+//		System.out.println(fileName);
 
 		File file = new File(fileName);
 		if (!file.exists()) {

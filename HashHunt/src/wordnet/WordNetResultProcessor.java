@@ -57,11 +57,9 @@ public class WordNetResultProcessor extends Thread {
 		Mode mode = Mode.SYNONYMS;
 
 		String[] rows = parsee.split("\n");
-		System.out.println(rows[1]);
 		String[] termArray = rows[1].split(" ");
 
 		WordNetResult wnR = new WordNetResult(termArray[termArray.length - 1]);
-		System.out.println(wnR.word);
 
 		Sense sense = new Sense();
 
@@ -98,7 +96,6 @@ public class WordNetResultProcessor extends Thread {
 			}
 		}
 
-		// System.out.println(wnR);
 //		synchronized (lock2) {
 //			parsedWords.add(wnR);
 //		}

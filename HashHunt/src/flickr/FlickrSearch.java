@@ -29,10 +29,9 @@ public class FlickrSearch implements Runnable {
 		this.chopper = chopShop;
 		Properties properties = new Properties();
 		try {
-			properties.load(new FileInputStream(
-					"config\\flickr.properties"));
-		
-		f = new Flickr(properties.getProperty("apiKey"),
+			properties.load(new FileInputStream("config\\flickr.properties"));
+
+			f = new Flickr(properties.getProperty("apiKey"),
 					properties.getProperty("secret"), new REST());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -52,7 +51,9 @@ public class FlickrSearch implements Runnable {
 		Flickr.debugRequest = false;
 		Flickr.debugStream = false;
 
-		this.run();
+		Thread t = new Thread(this, "Demo Thread");
+		System.out.println("Child thread: " + t);
+		t.start();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -67,11 +68,11 @@ public class FlickrSearch implements Runnable {
 		Set<String> whatToShow = new HashSet<String>();
 
 		whatToShow.add(Extras.DATE_UPLOAD);
-		whatToShow.add(Extras.GEO);
+
 		whatToShow.add(Extras.TAGS);
 		searchParam.setExtras(whatToShow);
 
-		PhotoList photoList = ph.search(searchParam, 200, 0);
+		PhotoList photoList = ph.search(searchParam, 2, 0);
 
 		System.out.println("GetPages: " + photoList.getPages());
 		System.out.println("Total: " + photoList.getTotal());
@@ -96,14 +97,13 @@ public class FlickrSearch implements Runnable {
 			e.printStackTrace();
 			return;
 		}
-		int totalPages = rec.getPages();
+//		int totalPages = rec.getPages();
+		int totalPages = 5;
 
 		while (running && pageNum <= totalPages) {
 
 			for (int i = 0; i < rec.size(); i++) {
 				photo = (Photo) rec.get(i);
-				// output = photo.getGeoData().getLatitude() + ";"
-				// + photo.getGeoData().getLongitude() + ";";
 				String URL;
 				URL = photo.getUrl();
 				for (Object ot : photo.getTags()) {
@@ -114,9 +114,7 @@ public class FlickrSearch implements Runnable {
 				}
 				// TODO kirjuta siia kolmandaks kellaaeg ja neljandaks
 				// kasutajanimi
-				chopper.stringify(photo.getGeoData().getLatitude() + " "
-						+ photo.getGeoData().getLongitude() + " " + URL + " "
-						+ output);
+				chopper.stringify(URL + " " + output);
 			}
 			if (pageNum % 1000 == 0)
 				System.out.print(Math.floor(pageNum / 1000) + " ");
@@ -128,12 +126,4 @@ public class FlickrSearch implements Runnable {
 		running = false;
 	}
 
-	public static void main(String[] args) {
-		try {
-//			new FlickrSearch(new Chopshop(new Writer(), new FlickrSearch(chopShop)));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.exit(0);
-	}
 }

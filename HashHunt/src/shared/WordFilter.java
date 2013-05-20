@@ -18,7 +18,7 @@ public class WordFilter {
 			line = br.readLine();
 		}
 		br.close();
-		System.out.println(excludedWords);
+//		System.out.println(excludedWords);
 		
 	}
 

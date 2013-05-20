@@ -10,7 +10,7 @@ import shared.WordFilter;
 import shared.Writer;
 import twitter4j.*;
 
-public final class TwitterTest implements Runnable{
+public final class TwitterTest implements Runnable {
 
 	TwitterStream twitterStream;
 	Boolean notrunning = true;

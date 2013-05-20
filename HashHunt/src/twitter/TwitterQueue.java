@@ -1,5 +1,7 @@
 package twitter;
 
-public class TwitterQueue implements SocialStreamQueue{
+import shared.SocialStreamQueue;
+
+public class TwitterQueue extends SocialStreamQueue<E> {
 
 }

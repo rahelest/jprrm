@@ -20,6 +20,7 @@ public class SocialStreamQueue {
 	}
 	
 	public String getFromQueue() {
+		if (queue.isEmpty()) return null;
 		LIMIT--;
 		return queue.getFirst();
 	}

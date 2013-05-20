@@ -11,7 +11,7 @@ public class OtterCaller implements Executable {
 	SystemCaller sysCall = new SystemCaller();
 	
 	public OtterCaller(String inFile, File outFile) {
-		sysCall.execute(this, "otter < " + inFile + " > " + outFile.getName());
+		sysCall.execute(this, "OTTER\\otter.exe < " + inFile + " > " + outFile.getName());
 	}
 
 	@Override

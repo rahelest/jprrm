@@ -58,7 +58,7 @@ public class SystemCaller {
 						exec.setResult(null);
 					}
 				} else {
-					System.out.print(result.length() > 0 ? "ERROR -> " + result + "\n" : "");
+					System.out.print(result.length() > 0 ? "ERROR " + exec.getClass().getName() + "-> " + result + "\n" : "");
 				}
 				buffRd.close();
 

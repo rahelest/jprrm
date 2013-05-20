@@ -63,14 +63,22 @@ public class OtterInputGenerator extends Thread {
 	private void writeRules() throws IOException {
 		// ArrayList<String> post1 = getPost();
 		// ArrayList<String> post2 = getPost();
+		
+		String post1 = fq.getFromQueue();
+		System.out.println("P1" + post1);
+		String post2 = tq.getFromQueue();
+		while (post2 == null) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			post2 = tq.getFromQueue();
+		}
+		System.out.println("P2" + post2);
 
-		ArrayList<String> post1 = new ArrayList<>();
-		post1.add("dog");
-
-		ArrayList<String> post2 = new ArrayList<>();
-		post2.add("cat");
-
-		WordNetResult wnr1 = getSynonymsAndHypers(post1.get(0));
+		WordNetResult wnr1 = getSynonymsAndHypers(post1);
 
 		ArrayList<String> syno1 = getSynos(wnr1);
 
@@ -78,7 +86,7 @@ public class OtterInputGenerator extends Thread {
 
 		ArrayList<String> hyper1 = getHypers(wnr1);
 
-		writeHyperPairs(post1.get(0), hyper1);
+		writeHyperPairs(post1, hyper1);
 
 	}
 
@@ -149,11 +157,11 @@ public class OtterInputGenerator extends Thread {
 	private File generateFileName(String dir)  {
 		Long unixTime = new Long(System.currentTimeMillis() / 1000L);
 		String unixTimeString = unixTime.toString();
-		String fileName = "OTTER\\OTTER_" + unixTimeString + "." + dir;
+		String fileName = "OTTER_" + unixTimeString + "." + dir;
 
 //		System.out.println(fileName);
 
-		File file = new File(fileName);
+		File file = new File("OTTER\\" + fileName);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();

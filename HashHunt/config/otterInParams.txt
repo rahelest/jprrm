@@ -1,1 +1,8 @@
-set(binary_res).
+set(prolog_style_variables).
+set(auto).
+set(tptp_eq).
+
+list(sos).
+
+X=X.
+same(X, X).

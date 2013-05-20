@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import wordnet.WordNet;
 import wordnet.WordNetResultProcessor;
 
 public class SystemCaller {
@@ -16,13 +17,13 @@ public class SystemCaller {
 		runTime = Runtime.getRuntime();
 	}
 
-	public void execute(String command) {
+	public void execute(WordNet wn, String command) {
 		System.out.println("COMMAND: " + command);
 		try {
 			p = runTime.exec("cmd /c " + command);
 			
-			new StreamThread(p.getInputStream(), "INPUT");
-			new StreamThread(p.getErrorStream(), "ERROR");
+			new StreamThread(wn, p.getInputStream(), "INPUT");
+			new StreamThread(wn, p.getErrorStream(), "ERROR");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -32,10 +33,12 @@ public class SystemCaller {
 
 		InputStream inpStr;
 		String strType;
+		WordNet wn;
 
-		public StreamThread(InputStream inpStr, String strType) {
+		public StreamThread(WordNet wn, InputStream inpStr, String strType) {
 			this.inpStr = inpStr;
 			this.strType = strType;
+			this.wn = wn;
 			this.start();
 		}
 
@@ -49,7 +52,7 @@ public class SystemCaller {
 					result += line + "\n";
 				}
 				if (strType == "INPUT") {
-					new WordNetResultProcessor(5).addHypernymTree(result);
+					wn.setResult(WordNetResultProcessor.parseHypernymTree(result));
 				} else {
 					System.out.print(result.length() > 0 ? "ERROR -> " + result + "\n" : "");
 				}

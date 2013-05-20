@@ -13,7 +13,8 @@ public class Sense implements Cloneable {
 	}
 
 	public void setSynonyms(String synonymString) {
-		this.synonyms.addAll(Arrays.asList(synonymString.split(", ")));
+		synonymString = synonymString.replaceAll("\\s", "");
+		this.synonyms.addAll(Arrays.asList(synonymString.split(",")));
 	}
 
 	public ArrayList<HypernymLevel> getHypernyms() {
